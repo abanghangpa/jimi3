@@ -96,14 +96,19 @@
       ]
     },
     "liquidation_cascade": {
-      "trades": 0,
+      "trades": 1,
       "wins": 0,
-      "losses": 0,
+      "losses": 1,
       "timeouts": 0,
-      "pnl": 0.0,
-      "trade_log": []
+      "pnl": -22.656094989000067,
+      "trade_log": [
+        {
+          "outcome": "LOSS",
+          "ts": "2026-07-22T13:45:10.594386+00:00"
+        }
+      ]
     }
   },
   "paused": {},
-  "last_updated": "2026-07-15T13:01:04.154643+00:00"
+  "last_updated": "2026-07-22T13:45:10.598005+00:00"
 }

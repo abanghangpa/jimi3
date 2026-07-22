@@ -29,7 +29,7 @@ sys.path.insert(0, BASE)
 
 # === V3 REGIME CLASSIFIER (research-backed, jump penalty) ===
 try:
-    from regime_classifier_v3 import RegimeClassifierV3 as RegimeClassifierActive
+    from regime_classifier_v4 import RegimeClassifierV4 as RegimeClassifierActive
     _V3_AVAILABLE = True
 except ImportError:
     RegimeClassifierActive = None
