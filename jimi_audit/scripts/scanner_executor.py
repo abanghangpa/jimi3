@@ -1261,13 +1261,12 @@ def get_latest_signals(gate, monitor):
 
         # === CONDITIONAL DIRECTIONAL GATE ===
         if CONDITIONAL_GATE_ENABLED:
-            cdg = CONDITIONAL_DIRECTION_GATE.get(regime, {})
+            cdg = CONDITIONAL_DIRECTION_GATE.get(rc.regime, {})
             cdg_allowed = cdg.get("allowed", ["LONG", "SHORT"])
             if direction not in cdg_allowed:
-                rejected["other"].append(f"{strat_name}(COND_GATE: {direction} not in {regime})")
+                rejected["other"].append(f"{strat_name}(COND_GATE: {direction} not allowed in {rc.regime})")
                 continue
             rejected["direction"].append(f"{strat_name}({direction}!={cfg['direction']})")
-            continue
 
         group_boost = 1.0
         confirmed_by = []
