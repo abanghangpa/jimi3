@@ -1,14 +1,14 @@
 {
-  "timestamp": "2026-07-22 14:30:00",
-  "price": 1927.76,
+  "timestamp": "2026-07-22 14:45:00",
+  "price": 1930.0,
   "swing_bias": "BEARISH",
-  "phase0": 0.1884085499591528,
+  "phase0": 0.18878328894566768,
   "trend_dir": "UP",
-  "trend_val": 0.38730266415518333,
-  "ema_200": 1878.7255396540222,
+  "trend_val": 0.3879498929705594,
+  "ema_200": 1878.5286658309087,
   "ensemble_passes": true,
   "sweep_blocked": false,
-  "m20_blocked": true,
+  "m20_blocked": false,
   "m9": {
     "regime": "NEUTRAL",
     "raw": 0.5,
@@ -16,12 +16,12 @@
     "status": "PASS"
   },
   "m13": {
-    "bias": "NEUTRAL",
-    "score": 0.5,
-    "status": "SKIP"
+    "bias": "BULLISH",
+    "score": 0.3,
+    "status": "FAIL"
   },
   "m7": {
-    "score": 0.528,
+    "score": 0.409,
     "status": "FAIL"
   },
   "magnets": [
@@ -33,7 +33,7 @@
     ],
     [
       1871.84,
-      1.97,
+      1.98,
       false,
       null
     ],
@@ -41,7 +41,7 @@
       1939.1,
       1.84,
       true,
-      "2026-07-21T14:45:00.000000000"
+      "2026-07-22T00:00:00.000000000"
     ],
     [
       1859.61,
@@ -51,7 +51,7 @@
     ],
     [
       1844.32,
-      1.59,
+      1.6,
       false,
       null
     ]
@@ -64,132 +64,138 @@
     1951.33
   ],
   "target_scores": {
-    "LONG": 1.0,
-    "SHORT": 0.597,
+    "LONG": 0.949,
+    "SHORT": 1.0,
     "long_details": {
       "direction": "LONG",
       "targets": [
         {
           "price": 1939.1,
           "strength": 1.84,
-          "dist_pct": 0.59,
-          "contrib": 0.173
+          "dist_pct": 0.47,
+          "contrib": 0.188
         }
       ],
       "gaps": [
         {
           "price": 1954.39,
-          "dist_pct": 1.38,
-          "contrib": 0.062
+          "dist_pct": 1.26,
+          "contrib": 0.074
         },
         {
           "price": 1951.33,
-          "dist_pct": 1.22,
-          "contrib": 0.078
+          "dist_pct": 1.11,
+          "contrib": 0.089
         }
       ],
       "sr": [
-        {
-          "price": 1934.36,
-          "strength": 62.0,
-          "touches": 68,
-          "bounces": 62,
-          "dist_pct": 0.34,
-          "contrib": 0.249
-        },
         {
           "price": 1938.28,
           "strength": 35.0,
           "touches": 41,
           "bounces": 35,
-          "dist_pct": 0.55,
-          "contrib": 0.218
+          "dist_pct": 0.43,
+          "contrib": 0.236
         },
         {
           "price": 1942.2,
           "strength": 21.0,
           "touches": 23,
           "bounces": 21,
-          "dist_pct": 0.75,
-          "contrib": 0.188
+          "dist_pct": 0.63,
+          "contrib": 0.205
         },
         {
           "price": 1946.12,
           "strength": 9.0,
           "touches": 9,
           "bounces": 9,
-          "dist_pct": 0.95,
-          "contrib": 0.141
+          "dist_pct": 0.84,
+          "contrib": 0.157
         }
       ],
-      "score": 1.0
+      "score": 0.949
     },
     "short_details": {
       "direction": "SHORT",
       "targets": [
         {
+          "price": 1923.82,
+          "strength": 2.82,
+          "dist_pct": 0.32,
+          "contrib": 0.316
+        },
+        {
           "price": 1871.84,
-          "strength": 1.97,
-          "dist_pct": 2.9,
+          "strength": 1.98,
+          "dist_pct": 3.01,
           "contrib": 0.0
         },
         {
           "price": 1859.61,
           "strength": 1.63,
-          "dist_pct": 3.54,
+          "dist_pct": 3.65,
           "contrib": 0.0
         },
         {
           "price": 1844.32,
-          "strength": 1.59,
-          "dist_pct": 4.33,
+          "strength": 1.6,
+          "dist_pct": 4.44,
           "contrib": 0.0
         }
       ],
       "gaps": [
         {
           "price": 1804.58,
-          "dist_pct": 6.39,
+          "dist_pct": 6.5,
           "contrib": 0.0
         },
         {
           "price": 1807.64,
-          "dist_pct": 6.23,
+          "dist_pct": 6.34,
           "contrib": 0.0
         },
         {
           "price": 1810.69,
-          "dist_pct": 6.07,
+          "dist_pct": 6.18,
           "contrib": 0.0
         }
       ],
       "sr": [
         {
+          "price": 1922.6,
+          "strength": 96.0,
+          "touches": 151,
+          "bounces": 96,
+          "dist_pct": 0.38,
+          "contrib": 0.243
+        },
+        {
           "price": 1918.68,
           "strength": 122.0,
-          "touches": 139,
+          "touches": 138,
           "bounces": 122,
-          "dist_pct": 0.47,
-          "contrib": 0.229
+          "dist_pct": 0.59,
+          "contrib": 0.212
         },
         {
           "price": 1914.76,
           "strength": 97.0,
           "touches": 99,
           "bounces": 97,
-          "dist_pct": 0.67,
-          "contrib": 0.199
+          "dist_pct": 0.79,
+          "contrib": 0.182
         },
         {
           "price": 1910.84,
           "strength": 60.0,
           "touches": 61,
           "bounces": 60,
-          "dist_pct": 0.88,
-          "contrib": 0.168
+          "dist_pct": 0.99,
+          "contrib": 0.151
         }
       ],
-      "score": 0.597
+      "score": 1.0
     }
   },
   "sr_levels": [
@@ -197,15 +203,15 @@
       1918.68,
       122.0,
       "SUPPORT",
-      139,
+      138,
       122
     ],
     [
       1926.52,
-      108.0,
+      107.0,
       "SUPPORT",
       141,
-      108
+      107
     ],
     [
       1914.76,
@@ -216,23 +222,23 @@
     ],
     [
       1922.6,
-      95.0,
+      96.0,
       "SUPPORT",
       151,
-      95
+      96
     ],
     [
       1930.44,
-      84.0,
+      83.0,
       "RESISTANCE",
       99,
-      84
+      83
     ],
     [
       1934.36,
       62.0,
       "RESISTANCE",
-      68,
+      69,
       62
     ],
     [
@@ -251,17 +257,17 @@
     ]
   ],
   "derivatives": {
-    "oi": 2370156.0,
-    "oi_usd": 4560513944.0,
-    "oi_roc_1h": 0.465,
-    "ls_ratio": 1.6788,
-    "long_pct": 62.7,
-    "short_pct": 37.3,
-    "ls_zscore": -0.98,
+    "oi": 2374349.0,
+    "oi_usd": 4575916833.0,
+    "oi_roc_1h": 0.859,
+    "ls_ratio": 1.7005,
+    "long_pct": 63.0,
+    "short_pct": 37.0,
+    "ls_zscore": -0.871,
     "positioning": "NEUTRAL",
-    "top_ls_ratio": 1.3546,
+    "top_ls_ratio": 1.3764,
     "whale_signal": "WHALE_BEARISH",
-    "whale_retail_gap": -0.3242,
+    "whale_retail_gap": -0.3241,
     "futures_taker_ratio": 0.7319,
     "futures_flow": "NEUTRAL",
     "funding_rate": 1.4e-05,
@@ -273,16 +279,41 @@
     "factors": []
   },
   "liquidity_levels": {
-    "current_price": 1927.76,
+    "current_price": 1930.0,
     "below": [
       {
-        "price": 1919.51328,
+        "price": 1925.94,
+        "type": "BID_WALL",
+        "strength": 100,
+        "source": "Order book (1152 ETH clustered)",
+        "cascade_risk": "LOW",
+        "dist_pct": -0.21,
+        "swept": false,
+        "swept_at": null,
+        "age_bars": null
+      },
+      {
+        "price": 1924.144,
         "type": "LONG_STOP",
-        "source": "Swing L $1923",
-        "strength": 36.956744269687725,
+        "source": "Swing L $1928",
+        "strength": 38.61830742659758,
         "cluster_size": 5,
-        "dist_pct": -0.43,
+        "dist_pct": -0.3,
         "cascade_risk": "MED",
+        "age_bars": null,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1923.5,
+        "type": "LONG_LIQ",
+        "source": "HVN 2.6x avg vol",
+        "strength": 52.5,
+        "cluster_size": 2,
+        "cascade_risk": "MED",
+        "formed_at": null,
+        "fresh": true,
+        "dist_pct": -0.34,
         "age_bars": null,
         "swept": false,
         "swept_at": null
@@ -291,23 +322,23 @@
         "price": 1905.42,
         "type": "LONG_STOP",
         "source": "Swing L $1915 @ 2026-07-21T17:45",
-        "strength": 86.8,
+        "strength": 83.8,
         "cluster_size": 3,
         "cascade_risk": "MED",
-        "formed_at": 916,
+        "formed_at": 915,
         "fresh": true,
-        "dist_pct": -1.16,
-        "age_bars": 83,
+        "dist_pct": -1.27,
+        "age_bars": 84,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1906.55,
+        "price": 1904.91,
         "type": "LONG_LIQ",
-        "strength": 73.8,
+        "strength": 69.0,
         "source": "OI+leverage est.",
         "cascade_risk": "HIGH",
-        "dist_pct": -1.1,
+        "dist_pct": -1.3,
         "age_bars": null,
         "swept": false,
         "swept_at": null
@@ -316,13 +347,13 @@
         "price": 1895.08,
         "type": "LONG_STOP",
         "source": "Swing L $1905 @ 2026-07-21T02:15",
-        "strength": 72.8,
+        "strength": 69.8,
         "cluster_size": 3,
         "cascade_risk": "MED",
-        "formed_at": 854,
+        "formed_at": 853,
         "fresh": true,
-        "dist_pct": -1.7,
-        "age_bars": 145,
+        "dist_pct": -1.81,
+        "age_bars": 146,
         "swept": false,
         "swept_at": null
       },
@@ -330,13 +361,24 @@
         "price": 1885.94,
         "type": "LONG_STOP",
         "source": "Swing L $1895 @ 2026-07-20T16:45",
-        "strength": 60.4,
+        "strength": 57.4,
         "cluster_size": 3,
         "cascade_risk": "MED",
-        "formed_at": 816,
+        "formed_at": 815,
         "fresh": true,
-        "dist_pct": -2.17,
-        "age_bars": 183,
+        "dist_pct": -2.28,
+        "age_bars": 184,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1885.61,
+        "type": "LONG_LIQ",
+        "strength": 46.8,
+        "source": "OI+leverage est.",
+        "cascade_risk": "MED",
+        "dist_pct": -2.3,
+        "age_bars": null,
         "swept": false,
         "swept_at": null
       },
@@ -344,34 +386,34 @@
         "price": 1878.33,
         "type": "LONG_STOP",
         "source": "Rejection L $1882 @ 2026-07-20T15:15",
-        "strength": 34.5,
+        "strength": 31.8,
         "cluster_size": 2,
         "cascade_risk": "MED",
-        "formed_at": 810,
+        "formed_at": 809,
         "fresh": true,
-        "dist_pct": -2.56,
-        "age_bars": 189,
+        "dist_pct": -2.68,
+        "age_bars": 190,
         "swept": false,
         "swept_at": null
       }
     ],
     "above": [
       {
-        "price": 1932.1132129487178,
+        "price": 1940.0075765384613,
         "type": "SHORT_STOP",
-        "source": "S/R 139 $1919",
-        "strength": 97.60000000000001,
-        "cluster_size": 122,
-        "dist_pct": 0.23,
+        "source": "S/R 141 $1927",
+        "strength": 85.60000000000001,
+        "cluster_size": 107,
+        "dist_pct": 0.52,
         "cascade_risk": "HIGH",
         "age_bars": null,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1937.4,
+        "price": 1939.65,
         "type": "SHORT_LIQ",
-        "strength": 56.2,
+        "strength": 55.1,
         "source": "OI+leverage est.",
         "cascade_risk": "MED",
         "dist_pct": 0.5,
@@ -380,13 +422,12 @@
         "swept_at": null
       },
       {
-        "price": 1940.0075765384613,
-        "type": "SHORT_STOP",
-        "source": "S/R 141 $1927",
-        "strength": 86.4,
-        "cluster_size": 108,
-        "dist_pct": 0.64,
-        "cascade_risk": "HIGH",
+        "price": 1947.37,
+        "type": "SHORT_LIQ",
+        "strength": 57.6,
+        "source": "OI+leverage est.",
+        "cascade_risk": "MED",
+        "dist_pct": 0.9,
         "age_bars": null,
         "swept": false,
         "swept_at": null
@@ -394,22 +435,11 @@
       {
         "price": 1947.901940128205,
         "type": "SHORT_STOP",
-        "source": "S/R 68 $1934",
+        "source": "S/R 69 $1934",
         "strength": 49.6,
         "cluster_size": 62,
-        "dist_pct": 1.04,
+        "dist_pct": 0.93,
         "cascade_risk": "MED",
-        "age_bars": null,
-        "swept": false,
-        "swept_at": null
-      },
-      {
-        "price": 1956.68,
-        "type": "SHORT_LIQ",
-        "strength": 52.7,
-        "source": "OI+leverage est.",
-        "cascade_risk": "MED",
-        "dist_pct": 1.5,
         "age_bars": null,
         "swept": false,
         "swept_at": null
@@ -418,13 +448,24 @@
         "price": 1962.76,
         "type": "SHORT_STOP",
         "source": "Swing H $1953 @ 2026-07-21T08:15",
-        "strength": 70.0,
+        "strength": 73.0,
         "cluster_size": 3,
         "cascade_risk": "MED",
-        "formed_at": 878,
+        "formed_at": 877,
         "fresh": true,
-        "dist_pct": 1.82,
-        "age_bars": 121,
+        "dist_pct": 1.7,
+        "age_bars": 122,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1962.81,
+        "type": "SHORT_LIQ",
+        "strength": 55.1,
+        "source": "OI+leverage est.",
+        "cascade_risk": "MED",
+        "dist_pct": 1.7,
+        "age_bars": null,
         "swept": false,
         "swept_at": null
       }
@@ -434,27 +475,13 @@
         "price": 1905.42,
         "type": "LONG_STOP",
         "source": "Swing L $1915 @ 2026-07-21T17:45",
-        "strength": 86.8,
+        "strength": 83.8,
         "cluster_size": 3,
         "cascade_risk": "MED",
-        "formed_at": 916,
+        "formed_at": 915,
         "fresh": true,
-        "dist_pct": -1.16,
-        "age_bars": 83,
-        "swept": false,
-        "swept_at": null
-      },
-      {
-        "price": 1895.08,
-        "type": "LONG_STOP",
-        "source": "Swing L $1905 @ 2026-07-21T02:15",
-        "strength": 72.8,
-        "cluster_size": 3,
-        "cascade_risk": "MED",
-        "formed_at": 854,
-        "fresh": true,
-        "dist_pct": -1.7,
-        "age_bars": 145,
+        "dist_pct": -1.27,
+        "age_bars": 84,
         "swept": false,
         "swept_at": null
       },
@@ -462,13 +489,27 @@
         "price": 1962.76,
         "type": "SHORT_STOP",
         "source": "Swing H $1953 @ 2026-07-21T08:15",
-        "strength": 70.0,
+        "strength": 73.0,
         "cluster_size": 3,
         "cascade_risk": "MED",
-        "formed_at": 878,
+        "formed_at": 877,
         "fresh": true,
-        "dist_pct": 1.82,
-        "age_bars": 121,
+        "dist_pct": 1.7,
+        "age_bars": 122,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1895.08,
+        "type": "LONG_STOP",
+        "source": "Swing L $1905 @ 2026-07-21T02:15",
+        "strength": 69.8,
+        "cluster_size": 3,
+        "cascade_risk": "MED",
+        "formed_at": 853,
+        "fresh": true,
+        "dist_pct": -1.81,
+        "age_bars": 146,
         "swept": false,
         "swept_at": null
       },
@@ -476,13 +517,13 @@
         "price": 1885.94,
         "type": "LONG_STOP",
         "source": "Swing L $1895 @ 2026-07-20T16:45",
-        "strength": 60.4,
+        "strength": 57.4,
         "cluster_size": 3,
         "cascade_risk": "MED",
-        "formed_at": 816,
+        "formed_at": 815,
         "fresh": true,
-        "dist_pct": -2.17,
-        "age_bars": 183,
+        "dist_pct": -2.28,
+        "age_bars": 184,
         "swept": false,
         "swept_at": null
       },
@@ -490,32 +531,43 @@
         "price": 1878.33,
         "type": "LONG_STOP",
         "source": "Rejection L $1882 @ 2026-07-20T15:15",
-        "strength": 34.5,
+        "strength": 31.8,
         "cluster_size": 2,
         "cascade_risk": "MED",
-        "formed_at": 810,
+        "formed_at": 809,
         "fresh": true,
-        "dist_pct": -2.56,
-        "age_bars": 189,
+        "dist_pct": -2.68,
+        "age_bars": 190,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1927.76,
+        "price": 1925.94,
         "type": "BID_WALL",
         "strength": 100,
-        "source": "Order book (1567 ETH clustered)",
+        "source": "Order book (1152 ETH clustered)",
         "cascade_risk": "LOW",
-        "dist_pct": 0.0,
+        "dist_pct": -0.21,
         "swept": false,
         "swept_at": null,
         "age_bars": null
       },
       {
-        "price": 1927.76,
+        "price": 1925.94,
         "type": "ASK_WALL",
         "strength": 100,
-        "source": "Order book (3565 ETH clustered)",
+        "source": "Order book (1152 ETH clustered)",
+        "cascade_risk": "LOW",
+        "dist_pct": -0.21,
+        "swept": false,
+        "swept_at": null,
+        "age_bars": null
+      },
+      {
+        "price": 1930.0,
+        "type": "BID_WALL",
+        "strength": 100,
+        "source": "Order book (1948 ETH clustered)",
         "cascade_risk": "LOW",
         "dist_pct": 0.0,
         "swept": false,
@@ -523,44 +575,54 @@
         "age_bars": null
       },
       {
-        "price": 1932.1132129487178,
-        "type": "SHORT_STOP",
-        "source": "S/R 139 $1919",
-        "strength": 97.60000000000001,
-        "cluster_size": 122,
-        "dist_pct": 0.23,
-        "cascade_risk": "HIGH",
-        "age_bars": null,
+        "price": 1930.0,
+        "type": "ASK_WALL",
+        "strength": 100,
+        "source": "Order book (3733 ETH clustered)",
+        "cascade_risk": "LOW",
+        "dist_pct": 0.0,
         "swept": false,
-        "swept_at": null
+        "swept_at": null,
+        "age_bars": null
       },
       {
         "price": 1940.0075765384613,
         "type": "SHORT_STOP",
         "source": "S/R 141 $1927",
-        "strength": 86.4,
-        "cluster_size": 108,
-        "dist_pct": 0.64,
+        "strength": 85.60000000000001,
+        "cluster_size": 107,
+        "dist_pct": 0.52,
         "cascade_risk": "HIGH",
         "age_bars": null,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1906.55,
+        "price": 1904.91,
         "type": "LONG_LIQ",
-        "strength": 73.8,
+        "strength": 69.0,
         "source": "OI+leverage est.",
         "cascade_risk": "HIGH",
-        "dist_pct": -1.1,
+        "dist_pct": -1.3,
         "age_bars": null,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1937.4,
+        "price": 1947.37,
         "type": "SHORT_LIQ",
-        "strength": 56.2,
+        "strength": 57.6,
+        "source": "OI+leverage est.",
+        "cascade_risk": "MED",
+        "dist_pct": 0.9,
+        "age_bars": null,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1939.65,
+        "type": "SHORT_LIQ",
+        "strength": 55.1,
         "source": "OI+leverage est.",
         "cascade_risk": "MED",
         "dist_pct": 0.5,
@@ -569,12 +631,26 @@
         "swept_at": null
       },
       {
-        "price": 1956.68,
+        "price": 1962.81,
         "type": "SHORT_LIQ",
-        "strength": 52.7,
+        "strength": 55.1,
         "source": "OI+leverage est.",
         "cascade_risk": "MED",
-        "dist_pct": 1.5,
+        "dist_pct": 1.7,
+        "age_bars": null,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1923.5,
+        "type": "LONG_LIQ",
+        "source": "HVN 2.6x avg vol",
+        "strength": 52.5,
+        "cluster_size": 2,
+        "cascade_risk": "MED",
+        "formed_at": null,
+        "fresh": true,
+        "dist_pct": -0.34,
         "age_bars": null,
         "swept": false,
         "swept_at": null
@@ -588,7 +664,7 @@
         "cascade_risk": "MED",
         "formed_at": null,
         "fresh": true,
-        "dist_pct": 0.66,
+        "dist_pct": 0.54,
         "age_bars": null,
         "swept": false,
         "swept_at": null
@@ -596,101 +672,84 @@
       {
         "price": 1947.901940128205,
         "type": "SHORT_STOP",
-        "source": "S/R 68 $1934",
+        "source": "S/R 69 $1934",
         "strength": 49.6,
         "cluster_size": 62,
-        "dist_pct": 1.04,
+        "dist_pct": 0.93,
         "cascade_risk": "MED",
         "age_bars": null,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1919.51328,
+        "price": 1885.61,
+        "type": "LONG_LIQ",
+        "strength": 46.8,
+        "source": "OI+leverage est.",
+        "cascade_risk": "MED",
+        "dist_pct": -2.3,
+        "age_bars": null,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1924.144,
         "type": "LONG_STOP",
-        "source": "Swing L $1923",
-        "strength": 36.956744269687725,
+        "source": "Swing L $1928",
+        "strength": 38.61830742659758,
         "cluster_size": 5,
-        "dist_pct": -0.43,
+        "dist_pct": -0.3,
         "cascade_risk": "MED",
         "age_bars": null,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1937.48724,
+        "price": 1939.2307199999998,
         "type": "SHORT_STOP",
-        "source": "Swing H $1934",
-        "strength": 35.9469366864479,
+        "source": "Swing H $1935",
+        "strength": 36.29706390328159,
         "cluster_size": 5,
-        "dist_pct": 0.5,
-        "cascade_risk": "MED",
-        "age_bars": null,
-        "swept": false,
-        "swept_at": null
-      },
-      {
-        "price": 1909.51332,
-        "type": "LONG_STOP",
-        "source": "Swing L $1913",
-        "strength": 30.026420992931296,
-        "cluster_size": 5,
-        "dist_pct": -0.95,
-        "cascade_risk": "MED",
-        "age_bars": null,
-        "swept": false,
-        "swept_at": null
-      },
-      {
-        "price": 1951.8491219230768,
-        "type": "SHORT_STOP",
-        "source": "S/R 41 $1938",
-        "strength": 28.0,
-        "cluster_size": 35,
-        "dist_pct": 1.25,
+        "dist_pct": 0.48,
         "cascade_risk": "MED",
         "age_bars": null,
         "swept": false,
         "swept_at": null
       }
     ],
-    "bid_walls": 1,
-    "ask_walls": 1,
-    "high_cascade_zones": 3,
+    "bid_walls": 2,
+    "ask_walls": 2,
+    "high_cascade_zones": 2,
     "liq_source": "binance"
   },
-  "rsi": 50.806897920263474,
-  "vol_trend": 0.2151125268094328,
-  "atr": 8.88483016508714,
-  "range_width": 2.3467651574884845,
-  "vol_ratio": 0.15478982942029298,
-  "vol_ma20": 3000.168375,
-  "oi_proxy": 46.308994974323724,
-  "vwap_dist": 0.03093101567027708,
-  "bar_vol_spike": 0.2151125268094328,
-  "bar_range_expansion": 0.6148670596379232,
+  "rsi": 52.78583978446136,
+  "vol_trend": 0.06996653704506699,
+  "atr": 9.20774169863107,
+  "range_width": 2.3440414507772025,
+  "vol_ratio": 0.15513259095252588,
+  "vol_ma20": 3008.22806,
+  "oi_proxy": 46.17634409008204,
+  "vwap_dist": 0.1488042173755592,
+  "bar_vol_spike": 0.06996653704506699,
+  "bar_range_expansion": 0.6589057544969384,
   "bar_taker_extreme": false,
-  "squeeze_quality": 0.7993191232789421,
-  "raw_taker_ratio": 0.36126210887395804,
-  "raw_bar_range_pct": 0.2168319707847483,
+  "squeeze_quality": 0.7755203090259406,
+  "raw_taker_ratio": 0.48120753361558344,
+  "raw_bar_range_pct": 0.2445595854922294,
   "taker_summary": {
-    "raw": 0.3613,
-    "avg_4h": 0.4708,
-    "avg_12h": 0.487,
-    "avg_24h": 0.5135,
-    "momentum": -0.0161,
-    "acceleration": -0.0013,
+    "raw": 0.4812,
+    "avg_4h": 0.479,
+    "avg_12h": 0.4871,
+    "avg_24h": 0.5147,
+    "momentum": -0.0081,
+    "acceleration": 0.0257,
     "regime": "NEUTRAL",
-    "regime_desc": "balanced (4h=0.471)",
+    "regime_desc": "balanced (4h=0.479)",
     "direction": "SHORT",
-    "score": 0.344,
-    "reason": "4h taker 0.471 (-0.029 from neutral); momentum -0.016; 12h confirms (0.487)",
-    "percentile": 17.0,
+    "score": 0.255,
+    "reason": "4h taker 0.479 (-0.021 from neutral); 12h confirms (0.487)",
+    "percentile": 21.6,
     "recent_divergences": [
-      [
-        "BEARISH",
-        5.07
-      ],
       [
         "BEARISH",
         3.33
@@ -698,81 +757,83 @@
       [
         "BULLISH",
         2.48
+      ],
+      [
+        "BULLISH",
+        1.44
       ]
     ]
   },
   "squeeze": {
-    "squeeze_type": "LONG_SQUEEZE",
+    "squeeze_type": "SHORT_SQUEEZE",
     "squeeze_status": "PENDING",
-    "squeeze_score": 0.259,
+    "squeeze_score": 0.256,
     "squeeze_strong": false,
-    "direction": "SHORT",
+    "direction": "LONG",
     "factors": [
       "15m deep compression: 48 bars",
       "Max coil streak: 32h",
       "DUAL PATH: 15m + 2h both compressed",
-      "\u26a0\ufe0f FAILED_BREAKOUT: failed_breakout_down 6bars ago (spike to $1917.00, close $1920.11)",
-      "Trigger: TAKER_SPIKE \u2192 SHORT",
-      "CVD confirms: SHORT"
+      "\u26a0\ufe0f FAILED_BREAKOUT: failed_breakout_up 13bars ago (spike to $1929.17, close $1922.85)",
+      "Trigger: COIL_DIR \u2192 LONG"
     ],
-    "quality": 0.259,
+    "quality": 0.256,
     "compression_bars": 48,
     "dry_count": 7,
-    "doji_count": 12,
-    "trigger_type": "TAKER_SPIKE",
+    "doji_count": 11,
+    "trigger_type": "COIL_DIR",
     "overrides_regime": true,
-    "ics_boost": 0.05,
+    "ics_boost": 0.1,
     "size_mult": 0.8,
-    "entry_price": 1917.47,
-    "entry_condition": "enter when 15m closes below $1917.47 (\u23f3 waiting)",
+    "entry_price": 1927.16,
+    "entry_condition": "enter when 15m closes above $1927.16 (\u23f3 waiting)",
     "entry_triggered": false,
-    "coil_high": 1924.81,
-    "coil_low": 1919.39,
-    "tp": 1895.26,
-    "sl": 1926.36,
-    "tp_pct": 1.158,
-    "sl_pct": 0.463,
+    "coil_high": 1925.23,
+    "coil_low": 1922.95,
+    "tp": 1950.17,
+    "sl": 1917.95,
+    "tp_pct": 1.194,
+    "sl_pct": 0.478,
     "tp1_source": "ATR",
     "tp_duration_mult": 1.0,
     "coil_hours": 8,
     "box_type": "SIDEWAYS",
     "box_bias": "NEUTRAL",
-    "box_high_slope": -0.000174,
+    "box_high_slope": 0.000214,
     "box_low_slope": 6.7e-05,
-    "box_convergence": 0.291,
-    "box_n_swings": "3H/2L",
-    "compression_maturity": 0.0,
-    "compression_range_ratio": 1.585,
-    "tested_high": 1924.81,
-    "tested_low": 1919.39,
+    "box_convergence": 0.0,
+    "box_n_swings": "4H/2L",
+    "compression_maturity": 0.003,
+    "compression_range_ratio": 1.583,
+    "tested_high": 1925.23,
+    "tested_low": 1922.95,
     "breakout_quality_score": null,
     "breakout_quality_passed": false,
     "breakout_quality_factors": [],
     "retest_detected": false,
     "retest_quality": 0.0,
-    "retest_detail": "no breakout found in window",
+    "retest_detail": "retest failed: closed back inside at bar 997",
     "lifecycle_stage": "FORMING",
     "lifecycle_score": 0.2,
     "failed_breakout": true,
-    "failed_breakout_detail": "failed_breakout_down 6bars ago (spike to $1917.00, close $1920.11)",
+    "failed_breakout_detail": "failed_breakout_up 13bars ago (spike to $1929.17, close $1922.85)",
     "gates_all_pass": true,
     "gates_passed": [
       "15m deep compression: 48 bars",
       "Max coil streak: 32h",
       "DUAL PATH: 15m + 2h both compressed",
-      "\u26a0\ufe0f FAILED_BREAKOUT: failed_breakout_down 6bars ago (spike to $1917.00, close $1920.11)",
-      "Trigger: TAKER_SPIKE \u2192 SHORT",
-      "CVD confirms: SHORT"
+      "\u26a0\ufe0f FAILED_BREAKOUT: failed_breakout_up 13bars ago (spike to $1929.17, close $1922.85)",
+      "Trigger: COIL_DIR \u2192 LONG"
     ],
     "gates_failed": [],
-    "short_score": 0,
-    "long_score": 0.259,
+    "short_score": 0.256,
+    "long_score": 0,
     "path_a": {
       "fired": true,
       "compressed": true,
       "comp_bars": 48,
       "dry": 7,
-      "doji": 12
+      "doji": 11
     },
     "path_b": {
       "fired": true,
@@ -781,85 +842,89 @@
       "coil_hours": 8,
       "max_streak_hours": 32,
       "hist_flip": false,
-      "hist_value": -1.594,
-      "delta_pct": 0.0827,
+      "hist_value": -1.395,
+      "delta_pct": 0.0723,
       "direction": "LONG",
-      "dif": 4.311,
-      "dea": 5.906
+      "dif": 4.56,
+      "dea": 5.955
     },
     "_box_info": {
       "box_type": "SIDEWAYS",
-      "high_slope": -0.000174,
+      "high_slope": 0.000214,
       "low_slope": 6.7e-05,
-      "high_r2": 0.415,
+      "high_r2": 0.259,
       "low_r2": 1.0,
-      "convergence": 0.291,
+      "convergence": 0.0,
       "swing_highs": [
         [
-          8,
+          7,
           1939.4
         ],
         [
-          25,
+          24,
           1926.5
         ],
         [
-          32,
+          31,
           1933.62
+        ],
+        [
+          44,
+          1955.92
         ]
       ],
       "swing_lows": [
         [
-          20,
+          19,
           1910.68
         ],
         [
-          40,
+          39,
           1913.26
         ]
       ],
       "bias": "NEUTRAL",
-      "n_swings_h": 3,
+      "n_swings_h": 4,
       "n_swings_l": 2
     }
   },
   "exchange_activity": {
     "snapshots": {
       "binance": {
-        "funding_rate": 3.753e-05,
-        "oi": 2372224.0,
+        "funding_rate": 3.992e-05,
+        "oi": 2376582.0,
         "ls_ratio": 1.6983,
-        "mark_price": 1927.39
+        "mark_price": 1928.62123256
       },
       "okx": {
         "funding_rate": null,
-        "oi": 7811608.0,
-        "ls_ratio": 1.1238,
+        "oi": 7851035.0,
+        "ls_ratio": 1.1757,
         "mark_price": null
       },
       "bybit": {
-        "funding_rate": 3.775e-05,
+        "funding_rate": 3.647e-05,
         "oi": 837854.0,
         "ls_ratio": 1.9533,
-        "mark_price": 1927.07
+        "mark_price": 1928.43
       },
       "htx": {
         "funding_rate": null,
-        "oi": 677989.0,
+        "oi": 677684.0,
         "ls_ratio": null,
         "mark_price": null
       },
       "phemex": {
-        "funding_rate": 3.352e-05,
-        "oi": 82055.0,
+        "funding_rate": 4.45e-05,
+        "oi": 82155.0,
         "ls_ratio": null,
-        "mark_price": 1927.17
+        "mark_price": 1929.14
       },
       "kraken": {
         "funding_rate": 8.09e-06,
         "oi": null,
         "ls_ratio": null,
-        "mark_price": 1926.31744476713
+        "mark_price": 1927.44126100438
       },
       "coinbaseinternational": {
         "funding_rate": 1e-06,
@@ -869,35 +934,35 @@
       }
     },
     "signals": {
-      "funding_spread": 3.675e-05,
+      "funding_spread": 4.35e-05,
       "funding_spread_exchanges": [
-        "bybit",
+        "phemex",
         "coinbaseinternational"
       ],
       "funding_by_exchange": {
         "kraken": 8.09e-06,
-        "coinbaseinternational": 1e-06,
-        "bybit": 3.775e-05,
-        "phemex": 3.352e-05,
-        "binance": 3.753e-05
+        "bybit": 3.647e-05,
+        "binance": 3.992e-05,
+        "phemex": 4.45e-05,
+        "coinbaseinternational": 1e-06
       },
-      "funding_mean": 2.358e-05,
+      "funding_mean": 2.6e-05,
       "funding_outliers": {},
       "oi_shares": {
-        "bybit": 0.0711,
-        "phemex": 0.007,
-        "htx": 0.0575,
-        "binance": 0.2013,
-        "okx": 0.663
+        "okx": 0.6639,
+        "bybit": 0.0709,
+        "binance": 0.201,
+        "phemex": 0.0069,
+        "htx": 0.0573
       },
-      "oi_total": 11781729.0,
+      "oi_total": 11825310.0,
       "oi_dominant_exchange": "okx",
-      "oi_concentration": 0.4886,
-      "ls_spread": 0.8295,
+      "oi_concentration": 0.4895,
+      "ls_spread": 0.7776,
       "ls_by_exchange": {
+        "okx": 1.1757,
         "bybit": 1.9533,
-        "binance": 1.6983,
-        "okx": 1.1238
+        "binance": 1.6983
       },
       "ls_most_bullish": "bybit",
       "ls_most_bearish": "okx",
@@ -924,208 +989,206 @@
         "buy_pct": null,
         "max_ask": null
       },
-      "okx": {
-        "price": 1928.62,
-        "vol_24h": 82594.0,
-        "ob_ratio": 3.3034,
-        "trade_ratio": 39.2261,
-        "buy_pct": 97.5,
+      "bybit": {
+        "price": 1929.28,
+        "vol_24h": 69746.0,
+        "ob_ratio": 0.8518,
+        "trade_ratio": 0.6232,
+        "buy_pct": 38.4,
         "max_ask": {
-          "price": 1928.6,
-          "size": 10.36
+          "price": 1929.76,
+          "size": 7.49
         }
       },
-      "bybit": {
-        "price": 1928.56,
-        "vol_24h": 71320.0,
-        "ob_ratio": 1.7515,
-        "trade_ratio": 1.1165,
-        "buy_pct": 52.8,
+      "okx": {
+        "price": 1929.17,
+        "vol_24h": 82559.0,
+        "ob_ratio": 3.3974,
+        "trade_ratio": 0.2207,
+        "buy_pct": 18.1,
         "max_ask": {
-          "price": 1929.0,
-          "size": 3.18
+          "price": 1929.6,
+          "size": 4.97
         }
       },
       "binance": {
-        "price": 1928.73,
-        "vol_24h": 253630.0,
-        "ob_ratio": 7.4799,
-        "trade_ratio": 14.3788,
-        "buy_pct": 93.5,
+        "price": 1929.19,
+        "vol_24h": 252594.0,
+        "ob_ratio": 8.4548,
+        "trade_ratio": 0.3333,
+        "buy_pct": 25.0,
         "max_ask": {
-          "price": 1928.94,
-          "size": 10.12
+          "price": 1929.41,
+          "size": 9.56
         }
       },
       "htx": {
-        "price": 1927.85,
-        "vol_24h": 18864.0,
-        "ob_ratio": 0.6521,
-        "trade_ratio": 0.9015,
-        "buy_pct": 47.4,
+        "price": 1928.74,
+        "vol_24h": 18728.0,
+        "ob_ratio": 0.8614,
+        "trade_ratio": 1.7174,
+        "buy_pct": 63.2,
         "max_ask": {
-          "price": 1930.04,
-          "size": 28.43
+          "price": 1929.03,
+          "size": 11.96
         }
       },
       "coinbase": {
-        "price": 1927.2,
+        "price": 1928.29,
         "vol_24h": null,
-        "ob_ratio": 3.4134,
-        "trade_ratio": 0.0784,
-        "buy_pct": 7.3,
+        "ob_ratio": 1.4223,
+        "trade_ratio": 1.4549,
+        "buy_pct": 59.3,
         "max_ask": {
-          "price": 1927.91,
-          "size": 10.8
+          "price": 1928.75,
+          "size": 14.27
         }
       }
     },
     "spot_signals": {
       "basis": {
-        "bybit": -0.0773,
-        "binance": -0.0695
+        "bybit": -0.0441,
+        "binance": -0.0295
       },
-      "basis_avg": -0.0734,
+      "basis_avg": -0.0368,
       "basis_state": "BACKWARDATION",
       "spot_vol_shares": {
-        "okx": 0.1937,
-        "bybit": 0.1673,
-        "binance": 0.5948,
+        "bybit": 0.1646,
+        "okx": 0.1949,
+        "binance": 0.5963,
         "htx": 0.0442
       },
-      "spot_vol_total": 426409.0,
+      "spot_vol_total": 423628.0,
       "spot_vol_dominant": "binance",
       "spot_ob_ratios": {
-        "okx": 3.3034,
-        "bybit": 1.7515,
-        "binance": 7.4799,
-        "htx": 0.6521,
-        "coinbase": 3.4134
+        "bybit": 0.8518,
+        "okx": 3.3974,
+        "binance": 8.4548,
+        "htx": 0.8614,
+        "coinbase": 1.4223
       },
-      "spot_ob_avg": 3.3201,
+      "spot_ob_avg": 2.9975,
       "spot_sell_walls": [],
       "spot_bid_support": [
         "okx",
-        "bybit",
-        "binance",
-        "coinbase"
+        "binance"
       ],
       "spot_trade_ratios": {
-        "okx": 39.2261,
-        "bybit": 1.1165,
-        "binance": 14.3788,
-        "htx": 0.9015,
-        "coinbase": 0.0784
+        "bybit": 0.6232,
+        "okx": 0.2207,
+        "binance": 0.3333,
+        "htx": 1.7174,
+        "coinbase": 1.4549
       },
-      "spot_trade_avg": 11.1403,
-      "spot_flow": "BUYERS",
-      "spot_flow_okx": "BUYERS",
-      "spot_flow_binance": "BUYERS",
-      "spot_flow_coinbase": "SELLERS",
-      "spot_vol_okx": 82594.0,
-      "spot_vol_bybit": 71320.0,
-      "spot_vol_binance": 253630.0,
-      "spot_vol_htx": 18864.0
+      "spot_trade_avg": 0.8699,
+      "spot_flow": "SELLERS",
+      "spot_flow_bybit": "SELLERS",
+      "spot_flow_okx": "SELLERS",
+      "spot_flow_binance": "SELLERS",
+      "spot_flow_htx": "BUYERS",
+      "spot_flow_coinbase": "BUYERS",
+      "spot_vol_bybit": 69746.0,
+      "spot_vol_okx": 82559.0,
+      "spot_vol_binance": 252594.0,
+      "spot_vol_htx": 18728.0
     },
-    "score": 0.56,
+    "score": 0.54,
     "status": "PASS",
     "direction_details": {
-      "funding_spread": 3.675e-05,
-      "funding_mean": 2.358e-05,
+      "funding_spread": 4.35e-05,
+      "funding_mean": 2.6e-05,
       "funding_trends": {
         "binance": "STABLE",
         "okx": "FALLING",
         "bybit": "FALLING"
       },
       "oi_migration": "BALANCED",
-      "ls_spread": 0.8295,
+      "ls_spread": 0.7776,
       "ls_by_exchange": {
+        "okx": 1.1757,
         "bybit": 1.9533,
-        "binance": 1.6983,
-        "okx": 1.1238
+        "binance": 1.6983
       },
       "funding_outliers": {},
-      "exchange_score": 0.56,
+      "exchange_score": 0.54,
       "factors": [
-        "okx funding falling (bullish)",
-        "bybit funding falling (bullish)",
-        "htx funding falling (bullish)",
-        "L/S divergence 0.83",
-        "most bullish exchange: bybit"
+        "phemex funding rising (bearish)",
+        "kraken funding rising (bearish)",
+        "L/S divergence 0.78",
+        "most bearish exchange: okx"
       ]
     },
-    "spot_score": 0.55,
+    "spot_score": 0.53,
     "spot_status": "PASS",
     "spot_details": {
-      "basis_avg": -0.0734,
+      "basis_avg": -0.0368,
       "basis_state": "BACKWARDATION",
-      "spot_ob_avg": 3.3201,
+      "spot_ob_avg": 2.9975,
       "spot_sell_walls": [],
-      "spot_flow": "BUYERS",
-      "spot_trade_avg": 11.1403,
-      "spot_score": 0.55,
+      "spot_flow": "SELLERS",
+      "spot_trade_avg": 0.8699,
+      "spot_score": 0.53,
       "factors": [
-        "futures discount -0.0734% (bearish sentiment)",
-        "spot bids dominate (ratio=3.320)",
-        "spot flow: buyers (11.14)"
+        "futures discount -0.0368% (confirms bearish)",
+        "strong spot bid support (ratio=2.998)",
+        "spot flow: sellers (0.87)"
       ]
     }
   },
   "breakout_confirm": {
-    "status": "WEAK",
-    "passed": 4,
+    "status": "CONFIRMED",
+    "passed": 5,
     "total": 7,
-    "score": 0.571,
+    "score": 0.714,
     "filters": [
       {
         "name": "CVD Flip",
         "passed": true,
-        "detail": "CVD flipped: M4=NONE M4b=NONE taker=0.361"
+        "detail": "CVD flipped: M4=NONE M4b=NONE taker=0.481"
       },
       {
         "name": "BTC Confluence",
         "passed": true,
-        "detail": "BTC 7d ROC=+0.0% trend=0.50 (stable/bearish)"
+        "detail": "BTC 7d ROC=+0.0% trend=0.50 (stable/bullish)"
       },
       {
         "name": "Volume Surge",
         "passed": false,
-        "detail": "Volume 0.22x MA20 \u2014 need 1.5x for breakout"
+        "detail": "Volume 0.07x MA20 \u2014 need 1.5x for breakout"
       },
       {
         "name": "OI Expansion",
         "passed": true,
-        "detail": "OI rising +0.465%/hr (new shorts entering) \u2705"
+        "detail": "OI rising +0.859%/hr (new longs entering) \u2705"
       },
       {
         "name": "Liquidity Hold",
-        "passed": false,
-        "detail": "Swept $1924: failed to hold for 3 bars"
+        "passed": true,
+        "detail": "no unswept magnets in direction (auto-pass)"
       },
       {
         "name": "Spot Flow",
         "passed": false,
-        "detail": "Spot flow: 9% weighted SHORT-aligned \u2014 sellers on coinbase"
+        "detail": "Spot flow: 9% weighted LONG-aligned \u2014 sellers on binance, okx, bybit"
       },
       {
         "name": "Funding Stay",
         "passed": true,
-        "detail": "Funding +0.0014% (longs paying \u2014 fuels squeeze)"
+        "detail": "Funding +0.0014% (neutral \u2014 fuels squeeze)"
       }
     ],
     "reason": null
   },
-  "squeeze_ics_boost_half": true,
   "direction": "LONG",
   "direction_resolver": {
-    "direction": "LONG",
-    "size_mult": 0.31,
+    "direction": "SHORT",
+    "size_mult": 0.524,
     "action": "TRADEABLE",
-    "reason": "NEUTRAL + NEUTRAL structure \u2192 LONG"
+    "reason": "NEUTRAL + BULLISH structure \u2192 SHORT"
   },
   "m21": {
     "status": "PASS",
-    "score": 0.55,
+    "score": 0.5,
     "phase": "MARKUP",
     "zone": "PREMIUM",
     "kill_zone": "NY_OPEN",
@@ -1135,12 +1198,12 @@
       "phase_confidence": 0.7,
       "phase_details": {
         "reason": "HH+HL, price above EQ",
-        "position": 0.924,
+        "position": 0.926,
         "hh": "True",
         "hl": "True",
         "lh": "False",
         "ll": "False",
-        "vol_recent": 47755.0,
+        "vol_recent": 47928.0,
         "vol_prior": 31320.0
       },
       "premium_discount": {
@@ -1148,7 +1211,7 @@
         "eq": 1879.49,
         "range_hi": 1955.92,
         "range_lo": 1803.05,
-        "position": 0.816,
+        "position": 0.83,
         "long_allowed": false,
         "short_allowed": true
       },
@@ -1164,8 +1227,8 @@
       },
       "range_info": null,
       "reasons": [
-        "Markup phase favors LONG",
-        "Buying in premium zone",
+        "Markup phase penalizes SHORT",
+        "Selling in premium zone \u2014 favorable",
         "In kill zone: NY_OPEN"
       ]
     }
@@ -1387,10 +1450,10 @@
   "_m23_decay_mult": 0.4,
   "m72": {
     "status": "PASS",
-    "score": 0.38,
+    "score": 0.62,
     "details": {
       "classification": "BTC_DOMINANT",
-      "btc_dominance": 56.6
+      "btc_dominance": 56.63
     }
   },
   "m22": {
@@ -2110,7 +2173,7 @@
     "phase": "MULTI_DAY",
     "release_type": "CLAIMS",
     "release_date": "2026-07-17",
-    "hours_since": 121.0,
+    "hours_since": 121.3,
     "trade_action": "TRAIL_STOPS",
     "size_multiplier": 1.0,
     "session_data": {
@@ -2121,7 +2184,7 @@
   },
   "m1": {
     "direction": "NEUTRAL",
-    "score": 0.535
+    "score": 0.57
   },
   "m2": {
     "status": "PASS",
@@ -2129,25 +2192,25 @@
   },
   "m3": {
     "status": "PASS",
-    "score": 0.406
+    "score": 0.593
   },
   "m4": {
     "status": "PASS",
-    "score": 0.045,
+    "score": 0.007,
     "div": {
-      "layer_a_div": "BEARISH",
-      "layer_a_score": 0.41,
-      "layer_b_cross": "ABOVE_STALE",
+      "layer_a_div": "BULLISH",
+      "layer_a_score": 0.534,
+      "layer_b_cross": "CONFLICT_ABOVE",
       "layer_b_zl_state": "ABOVE",
-      "layer_b_score": 0.5,
+      "layer_b_score": 0.2,
       "layer_b_bars_since": "46",
-      "combined": 0.464,
-      "sigmoid_gate": 0.097,
+      "combined": 0.334,
+      "sigmoid_gate": 0.022,
       "atr_mult": 1.0,
       "basing_detected": false,
       "atr_compressed_basing": false,
       "basing_atr_boost": 1.0,
-      "score": 0.045
+      "score": 0.007
     }
   },
   "squeeze_filters": {
@@ -2160,7 +2223,7 @@
   "squeeze_confirmed": true,
   "m5": {
     "status": "PASS",
-    "score": 0.965
+    "score": 0.89
   },
   "m8": {
     "status": "PASS",
@@ -2168,19 +2231,19 @@
     "rate": 1.4e-05
   },
   "m10": {
-    "status": "FAIL",
-    "score": 0.379,
+    "status": "PASS",
+    "score": 0.62,
     "details": {
       "btc_ema_diff": -0.0185,
       "ethbtc_roc7": -0.0084,
-      "btc_roc7": 0.0144,
-      "macro_agreement": "1/3 agree",
-      "m10_score": 0.379,
+      "btc_roc7": 0.015,
+      "macro_agreement": "2/3 agree",
+      "m10_score": 0.62,
       "m10_components": {
-        "btc_trend": 0.223,
-        "ethbtc_rel": 0.416,
-        "btc_momentum": 0.587,
-        "consensus": 0.4
+        "btc_trend": 0.777,
+        "ethbtc_rel": 0.584,
+        "btc_momentum": 0.41,
+        "consensus": 0.6
       }
     }
   },
@@ -2189,160 +2252,123 @@
     "score": 0.5
   },
   "m12": {
-    "status": "PASS",
-    "score": 0.5,
+    "status": "FAIL",
+    "score": 0.35,
     "details": {
-      "bid_ask_ratio": 2.3234,
+      "bid_ask_ratio": 1.8057,
       "bid_walls": 2,
-      "ask_walls": 1,
-      "largest_bid": 29.8382,
-      "largest_ask": 28.3067,
-      "ob_score": 0.5
+      "ask_walls": 3,
+      "largest_bid": 32.6474,
+      "largest_ask": 12.0673,
+      "ob_score": 0.35
     }
   },
   "m14": {
-    "status": "PASS",
-    "score": 0.55
+    "status": "FAIL",
+    "score": 0.3
   },
   "m17": {
-    "zone_price": 1930.44,
-    "direction": "LONG",
-    "composite": 0.4668,
+    "zone_price": 1926.52,
+    "direction": "SHORT",
+    "composite": 0.4681,
     "verdict": "CONTESTED",
     "zone_volume": {
       "status": "THICK",
-      "zone_vol_ratio": 2.077,
-      "zone_lo": 1920.79,
-      "zone_hi": 1940.09
+      "zone_vol_ratio": 2.006,
+      "zone_lo": 1916.89,
+      "zone_hi": 1936.15
     },
     "rejection": {
-      "status": "ZONE_BREAKING",
-      "touches": 203,
-      "rejects": 26,
-      "accepts": 177,
-      "reject_rate": 0.128,
-      "vol_ratio_on_reject": 1.099,
-      "avg_wick_above": 2.62
+      "status": "MODERATE_DEFENDER",
+      "touches": 223,
+      "rejects": 15,
+      "accepts": 208,
+      "reject_rate": 0.067,
+      "vol_ratio_on_reject": 1.231,
+      "avg_wick_above": 2.71
     },
     "defender": {
       "status": "NEUTRAL",
-      "oi_roc_1h": 0.465,
-      "ls_zscore": -0.98,
+      "oi_roc_1h": 0.859,
+      "ls_zscore": -0.87,
       "positioning": "NEUTRAL",
       "whale": "WHALE_BEARISH",
       "factors": []
     },
     "readiness": {
-      "momentum": 0.17,
-      "vol_surge": 0.215,
+      "momentum": 0.291,
+      "vol_surge": 0.07,
       "avg_vol_surge": 1.0,
-      "dist_to_zone": 0.139,
+      "dist_to_zone": -0.18,
       "factors": [
         "At zone but no momentum/volume"
       ]
     },
-    "confirmation": [
-      "Rejections weakening (13% reject rate)"
-    ],
+    "confirmation": [],
     "needed": [
       "Need sustained volume to penetrate thick zone",
       "Need vol > 1.2x on breakout candle"
     ],
     "status": "PASS",
-    "score": 0.4668
+    "score": 0.4681
   },
   "m20": {
     "status": "PASS",
-    "breakout_direction": "DOWNSIDE",
-    "contrarian_direction": "LONG",
-    "level": 1919.41,
-    "breakout_quality": 0.6,
+    "breakout_direction": "UPSIDE",
+    "contrarian_direction": "SHORT",
+    "level": 1933.62,
+    "breakout_quality": 0.55,
     "quality_signals": [
-      "strong_body=0.69"
+      "vol_spike=2.47x"
     ],
     "failure": {
       "failed": true,
       "status": "FAILED",
-      "bars_since": 28,
-      "failure_bar": 973,
-      "return_distance": 0.01151395480902981,
-      "max_close": 1941.51
+      "bars_since": 4,
+      "failure_bar": 997,
+      "return_distance": 0.0044269298000641005,
+      "min_close": 1925.06
     },
-    "reversal_score": 0.8,
+    "reversal_score": 0.75,
     "reversal_details": {
       "status": "SCORED",
-      "vol_mult": 2.05,
+      "vol_mult": 1.0,
       "avg_body_ratio": 0.54,
-      "bars_to_fail": 28,
+      "bars_to_fail": 4,
       "details": [
-        "vol_expansion=2.05x",
+        "seller_dominant=0.429",
         "body_conviction=0.54",
-        "consecutive=6/9"
+        "moderate_failure=4bars"
       ]
     },
-    "bars_since_breakout": 28,
+    "bars_since_breakout": 4,
     "final_score": 1.0,
     "score": 1.0
   },
-  "ics": 0.4768,
+  "ics": 0.4864,
   "effective_floor": 0.48,
-  "taker_score": 0.328,
+  "taker_score": 0.3725,
   "cross_asset": {
     "score": 0.5
   },
-  "veto": "Soft vetoes: M10",
+  "veto": "CLEAR",
   "threshold": 0.5,
-  "m20_direct_signal": true,
-  "m20_direct_score": 1.0,
-  "ics_bypassed_by_m20": true,
-  "limit_entry": {
-    "entry_price": 1922.6,
-    "entry_source": "SUPPORT",
-    "entry_level": 1922.6,
-    "entry_dist_pct": 0.2676,
-    "reason": "SUPPORT @ $1922.60 (str=95, dist=+0.27%)"
-  },
-  "what_if": {
-    "direction": "LONG",
-    "entry": 1922.6,
-    "entry_source": "SUPPORT",
-    "entry_reason": "SUPPORT @ $1922.60 (str=95, dist=+0.27%)",
-    "market_entry": 1927.76,
-    "sl": 1892.6,
-    "tp1": 1932.6,
-    "tp2": 1937.4,
-    "tp3": 1939.1043,
-    "sl_pct": 1.5603869759700406,
-    "tp1_pct": 0.5201289919900136,
-    "sl_source": "ATR",
-    "tp1_source": "ATR",
-    "tp2_source": "UNSWEPT_POOL",
-    "tp3_source": "UNSWEPT_POOL",
-    "rr1": 0.33333333333333337,
-    "nearest_support": 0,
-    "nearest_resist": 0,
-    "invalidation": [
-      "BEARISH CVD divergence active \u2014 momentum against you",
-      "Whales bearish \u2014 smart money against direction",
-      "Phase0=0.188 (death zone <0.2) \u2014 weak macro context"
-    ]
-  },
-  "status": "M20_BLOCKED",
-  "reason": "M20 contrarian block: signal matches M20 contrarian LONG (46.0% WR expected)",
+  "status": "SIGNAL",
+  "reason": "OB v4 LONG: ratio=0.396 top5=0.897 persist=8m delta=0.1215 regime=RANGING",
   "timeframe": "15m",
   "dual_strategy": {
     "base": {
-      "timestamp": "2026-07-22 14:30:00",
-      "price": 1927.76,
+      "timestamp": "2026-07-22 14:45:00",
+      "price": 1930.0,
       "regime": "NEUTRAL",
       "direction": "LONG",
       "swing_bias": "BEARISH",
       "trend_dir": "UP",
-      "m13_bias": "NEUTRAL"
+      "m13_bias": "BULLISH"
     },
     "strategy_a": {
-      "status": "NO_SIGNAL",
-      "reason": "ICS 0.264 < 0.50",
+      "status": "FILTERED",
+      "reason": "survival_no_momentum",
       "mode": "scalp"
     },
     "strategy_b": {
@@ -2352,92 +2378,171 @@
     }
   },
   "order_flow": {
-    "ob_imbalance": 1.7784,
+    "ob_imbalance": 8.4089,
     "ob_consensus": "NEUTRAL",
-    "trade_taker": 0.5825,
-    "trade_net_flow": 8484.267022000025,
+    "trade_taker": 0.4248,
+    "trade_net_flow": -2994.6091099999976,
     "liq_imbalance": null,
     "funding_avg": 2.7e-05
   },
   "power_of_3": {
-    "phase": "AMBIGUOUS",
-    "confidence": 0.15,
-    "direction": "NEUTRAL",
-    "narrative": "Phase ambiguous \u2014 insufficient signal alignment.",
-    "signals_for": [],
-    "signals_against": [
-      "ACCUMULATION score=0.15",
-      "DISTRIBUTION score=0.05"
+    "phase": "MANIPULATION",
+    "confidence": 0.2,
+    "direction": "LONG",
+    "narrative": "Secondary LONG setup: price swept $1940 SHORT, hit target $1919 7 bars ago, then bounced +0.7% to $1930. Watching for continuation to sweep_retest $1940 (+0.5%). Invalidation below $1911.",
+    "signals_for": [
+      "Bounce +0.7% from reversal target $1919",
+      "Target: sweep_retest $1940 (sweep $1940 / target $1919)"
     ],
-    "key_level": null,
-    "key_level_name": "",
-    "trade_bias": "AVOID",
-    "sweep_status": "NONE",
-    "sweep_level": null,
-    "reversal_target": null,
-    "reversal_target_name": "",
+    "signals_against": [
+      "Secondary setup \u2014 reduced confidence (0.5x)",
+      "Original sweep was 14 bars ago"
+    ],
+    "key_level": 1939.65,
+    "key_level_name": "secondary_from_judas_sweep_target",
+    "trade_bias": "WATCH",
+    "sweep_status": "SECONDARY",
+    "sweep_level": 1939.65,
+    "reversal_target": 1939.65,
+    "reversal_target_name": "midpoint_retest",
     "timing_signal": "NONE",
-    "entry_zone_low": null,
-    "entry_zone_high": null,
-    "invalidation": null,
+    "entry_zone_low": 1930.0,
+    "entry_zone_high": 1939.65,
+    "invalidation": 1911.249,
     "target_tiers": [],
     "sweep_completeness": null,
-    "zone_sweep": null
+    "zone_sweep": null,
+    "judas_sweep_stats": {
+      "estimated_sweep_pct": 0.5000000000000047,
+      "depth_match": {
+        "depth_label": "extreme (0.5-1.0%)",
+        "depth_count": 19,
+        "depth_reversal_rate": 0.947,
+        "depth_avg_drop": 1.5,
+        "overall_reversal_rate": 0.825,
+        "overall_avg_drop": 1.68,
+        "overall_median_drop": 1.18,
+        "avg_extension": 2.45,
+        "median_time_bars": 6,
+        "mean_time_bars": 10,
+        "p75_time_bars": 15,
+        "recent_reversal_rate": 0.796,
+        "recent_avg_drop": 1.96
+      },
+      "historical": {
+        "count": 526,
+        "reversal_gt_03": 0.825,
+        "reversal_gt_05": 0.684,
+        "reversal_gt_10": 0.475,
+        "avg_drop": 1.68,
+        "median_drop": 1.18,
+        "avg_extension": 2.45
+      },
+      "time_to_reversal": {
+        "median_bars": 6,
+        "mean_bars": 10,
+        "p75_bars": 15,
+        "max_bars": 48
+      },
+      "recent": {
+        "count": 142,
+        "reversal_gt_03": 0.796,
+        "reversal_gt_05": 0.641,
+        "reversal_gt_10": 0.423,
+        "avg_drop": 1.96,
+        "median_drop": 1.15
+      }
+    }
   },
   "multi_strategy": {
     "total_strategies": 20,
-    "signals_fired": 2,
+    "signals_fired": 3,
     "best": {
-      "strategy": "failed_breakout",
-      "source": "strategy:failed_breakout",
-      "type": "event",
+      "strategy": "orderbook_imbalance",
+      "source": "strategy:orderbook_imbalance",
+      "type": "flow",
       "direction": "LONG",
-      "conviction": 0.81,
-      "entry": 1927.76,
-      "sl": 1917.1,
-      "tp1": 1945.53,
-      "tp2": 1963.3,
-      "tp3": 1981.07,
-      "sl_pct": 0.553,
-      "tp1_pct": 0.922,
-      "rr1": 1.67,
+      "conviction": 0.9,
+      "entry": 1930.0,
+      "sl": 1916.19,
+      "tp1": 1948.42,
+      "tp2": 1966.83,
+      "tp3": 1985.25,
+      "sl_pct": 0.716,
+      "tp1_pct": 0.954,
+      "rr1": 1.33,
       "size_mult": 0.8,
-      "reason": "Failed BO v2 LONG: m20_module $1927.76 held=28bars quality=0.40",
-      "bypass_gates": true,
+      "reason": "OB v4 LONG: ratio=0.396 top5=0.897 persist=8m delta=0.1215 regime=RANGING",
+      "bypass_gates": false,
       "details": {
-        "level": 1927.76,
-        "level_type": "m20_module",
-        "bars_held": 28,
-        "quality": 0.4,
-        "vol_ratio": 0.15478982942029298,
-        "vol_regime": "NEUTRAL",
-        "version": "v2"
+        "ob_ratio": 0.395742,
+        "top5_ratio": 0.89665,
+        "persistence_min": 8,
+        "ob_delta_5m": 0.121454,
+        "top5_delta_5m": 0.174411,
+        "trend": "BUY_STRENGTHENING",
+        "recent_spoofs": 0,
+        "vol_ratio": 0.15513259095252588,
+        "vwap_dev": 0,
+        "regime": "RANGING",
+        "version": "v4"
       }
     },
     "all_signals": [
       {
+        "strategy": "orderbook_imbalance",
+        "source": "strategy:orderbook_imbalance",
+        "type": "flow",
+        "direction": "LONG",
+        "conviction": 0.9,
+        "entry": 1930.0,
+        "sl": 1916.19,
+        "tp1": 1948.42,
+        "tp2": 1966.83,
+        "tp3": 1985.25,
+        "sl_pct": 0.716,
+        "tp1_pct": 0.954,
+        "rr1": 1.33,
+        "size_mult": 0.8,
+        "reason": "OB v4 LONG: ratio=0.396 top5=0.897 persist=8m delta=0.1215 regime=RANGING",
+        "bypass_gates": false,
+        "details": {
+          "ob_ratio": 0.395742,
+          "top5_ratio": 0.89665,
+          "persistence_min": 8,
+          "ob_delta_5m": 0.121454,
+          "top5_delta_5m": 0.174411,
+          "trend": "BUY_STRENGTHENING",
+          "recent_spoofs": 0,
+          "vol_ratio": 0.15513259095252588,
+          "vwap_dev": 0,
+          "regime": "RANGING",
+          "version": "v4"
+        }
+      },
+      {
         "strategy": "failed_breakout",
         "source": "strategy:failed_breakout",
         "type": "event",
-        "direction": "LONG",
-        "conviction": 0.81,
-        "entry": 1927.76,
-        "sl": 1917.1,
-        "tp1": 1945.53,
-        "tp2": 1963.3,
-        "tp3": 1981.07,
-        "sl_pct": 0.553,
-        "tp1_pct": 0.922,
+        "direction": "SHORT",
+        "conviction": 0.815,
+        "entry": 1930.0,
+        "sl": 1941.05,
+        "tp1": 1911.58,
+        "tp2": 1893.17,
+        "tp3": 1874.75,
+        "sl_pct": 0.573,
+        "tp1_pct": 0.954,
         "rr1": 1.67,
         "size_mult": 0.8,
-        "reason": "Failed BO v2 LONG: m20_module $1927.76 held=28bars quality=0.40",
+        "reason": "Failed BO v2 SHORT: m20_module $1930.00 held=4bars quality=0.45",
         "bypass_gates": true,
         "details": {
-          "level": 1927.76,
+          "level": 1930.0,
           "level_type": "m20_module",
-          "bars_held": 28,
-          "quality": 0.4,
-          "vol_ratio": 0.15478982942029298,
+          "bars_held": 4,
+          "quality": 0.44999999999999996,
+          "vol_ratio": 0.15513259095252588,
           "vol_regime": "NEUTRAL",
           "version": "v2"
         }
@@ -2447,24 +2552,24 @@
         "source": "strategy:whale_watch",
         "type": "flow",
         "direction": "LONG",
-        "conviction": 0.7141,
-        "entry": 1927.76,
-        "sl": 1917.1,
-        "tp1": 1941.09,
-        "tp2": 1949.97,
-        "tp3": 1963.3,
-        "sl_pct": 0.553,
-        "tp1_pct": 0.691,
+        "conviction": 0.6453,
+        "entry": 1930.0,
+        "sl": 1918.95,
+        "tp1": 1943.81,
+        "tp2": 1953.02,
+        "tp3": 1966.83,
+        "sl_pct": 0.573,
+        "tp1_pct": 0.716,
         "rr1": 1.25,
         "size_mult": 0.7,
-        "reason": "Whale v2 LONG: net_flow=-32812ETH LS=1.68 z=-0.21 dur=225m",
+        "reason": "Whale v2 LONG: net_flow=-32812ETH LS=1.70 z=1.11 dur=15m",
         "bypass_gates": false,
         "details": {
           "net_exchange_flow_24h": -32811.88,
           "whale_strength": 0.6562376,
-          "ls_ratio": 1.6788,
-          "ls_zscore": -0.2122887590450691,
-          "duration_min": 225,
+          "ls_ratio": 1.7005,
+          "ls_zscore": 1.1100190550287479,
+          "duration_min": 15,
           "total_transfers": 27532,
           "recent_signals": 0,
           "version": "v2"
@@ -2475,83 +2580,136 @@
   "regime_router": {
     "regime": "UP",
     "blocked": [],
-    "allowed_count": 2,
+    "allowed_count": 3,
     "blocked_count": 0
   },
   "strategy_signal": {
-    "strategy": "failed_breakout",
-    "source": "strategy:failed_breakout",
-    "type": "event",
+    "strategy": "orderbook_imbalance",
+    "source": "strategy:orderbook_imbalance",
+    "type": "flow",
     "direction": "LONG",
-    "conviction": 0.81,
-    "entry": 1927.76,
-    "sl": 1917.1,
-    "tp1": 1945.53,
-    "tp2": 1963.3,
-    "tp3": 1981.07,
-    "sl_pct": 0.553,
-    "tp1_pct": 0.922,
-    "rr1": 1.67,
+    "conviction": 0.9,
+    "entry": 1930.0,
+    "sl": 1916.19,
+    "tp1": 1948.42,
+    "tp2": 1966.83,
+    "tp3": 1985.25,
+    "sl_pct": 0.716,
+    "tp1_pct": 0.954,
+    "rr1": 1.33,
     "size_mult": 0.8,
-    "reason": "Failed BO v2 LONG: m20_module $1927.76 held=28bars quality=0.40",
-    "bypass_gates": true,
+    "reason": "OB v4 LONG: ratio=0.396 top5=0.897 persist=8m delta=0.1215 regime=RANGING",
+    "bypass_gates": false,
     "details": {
-      "level": 1927.76,
-      "level_type": "m20_module",
-      "bars_held": 28,
-      "quality": 0.4,
-      "vol_ratio": 0.15478982942029298,
-      "vol_regime": "NEUTRAL",
-      "version": "v2"
+      "ob_ratio": 0.395742,
+      "top5_ratio": 0.89665,
+      "persistence_min": 8,
+      "ob_delta_5m": 0.121454,
+      "top5_delta_5m": 0.174411,
+      "trend": "BUY_STRENGTHENING",
+      "recent_spoofs": 0,
+      "vol_ratio": 0.15513259095252588,
+      "vwap_dev": 0,
+      "regime": "RANGING",
+      "version": "v4"
     }
   },
-  "source": "strategy:failed_breakout",
-  "entry": 1927.76,
-  "sl": 1917.1,
-  "tp1": 1945.53,
-  "tp2": 1963.3,
-  "tp3": 1981.07,
-  "sl_pct": 0.553,
-  "tp1_pct": 0.922,
+  "source": "strategy:orderbook_imbalance",
+  "entry": 1930.0,
+  "sl": 1916.19,
+  "tp1": 1948.42,
+  "tp2": 1966.83,
+  "tp3": 1985.25,
+  "sl_pct": 0.716,
+  "tp1_pct": 0.954,
   "m20_filter": {
-    "blocked": true,
-    "reason": "M20 contrarian block: signal matches M20 contrarian LONG (46.0% WR expected)",
-    "level": 1919.41,
-    "level_type": "support",
-    "staleness": "very_stale",
+    "blocked": false,
+    "reason": "",
+    "level": 1933.62,
+    "level_type": "resistance",
+    "staleness": "fresh",
+    "quality": "mid"
+  },
+  "m20_entry_level": {
+    "price": 1933.62,
+    "type": "resistance",
     "quality": "mid"
   },
   "ensemble": {
     "consensus": "LONG",
     "agree_count": 2,
-    "total_fired": 2,
-    "weighted_score": 1.3621,
+    "total_fired": 3,
+    "weighted_score": 1.7253,
     "agreeing_strategies": [
       {
-        "strategy": "failed_breakout",
-        "conviction": 0.81,
-        "weight": 0.8,
-        "weighted": 0.648
+        "strategy": "orderbook_imbalance",
+        "conviction": 0.9,
+        "weight": 1.2,
+        "weighted": 1.08
       },
       {
         "strategy": "whale_watch",
-        "conviction": 0.7141,
+        "conviction": 0.6453,
         "weight": 1.0,
-        "weighted": 0.7141
+        "weighted": 0.6453
       }
     ],
-    "disagreeing_strategies": [],
-    "ensemble_conviction": 0.6811,
+    "disagreeing_strategies": [
+      {
+        "strategy": "failed_breakout",
+        "conviction": 0.815,
+        "weight": 0.8,
+        "weighted": 0.652
+      }
+    ],
+    "ensemble_conviction": 0.8627,
     "passes": true,
-    "reason": "Ensemble: 2 strategies agree LONG (weighted=1.36)"
+    "reason": "Ensemble: 2 strategies agree LONG (weighted=1.73)"
   },
   "confirmation_status": {
-    "confirmed": [],
+    "confirmed": [
+      {
+        "signal_id": "2026-07-22 14:30:00_main_pipeline_LONG",
+        "timestamp": "2026-07-22 14:30:00",
+        "price": 1928.97,
+        "direction": "LONG",
+        "source": "main_pipeline",
+        "ics": 0.4875,
+        "entry": 1922.6,
+        "sl": 1892.6,
+        "tp1": 1939.1043,
+        "tp2": 1940.0075765384613,
+        "tp3": 1942.47,
+        "sl_pct": 1.5603869759700406,
+        "tp1_pct": 0.8584364922500811,
+        "hold_window_hours": 4,
+        "confirm_bars": 3,
+        "added_at": "2026-07-22T14:41:24.442359+00:00",
+        "status": "CONFIRMED_3BAR",
+        "bars_waited": 3,
+        "confirmation_prices": [
+          1928.97,
+          1927.48,
+          1930.0
+        ],
+        "ensemble": null,
+        "confirmed_at": "2026-07-22 14:45:00",
+        "confirmation_price": 1930.0,
+        "confirmation_avg3": 1928.8166666666666,
+        "price_vs_entry_pct": 0.3848954540726147
+      }
+    ],
     "expired": [],
     "pending_count": 0
   },
+  "confirmation": {
+    "status": "PENDING",
+    "bars_to_confirm": 3,
+    "hold_window_hours": 2
+  },
+  "hold_window_hours": 2,
   "macro_calendar": {
-    "now": "2026-07-22T14:32:31.563080+00:00",
+    "now": "2026-07-22T14:47:33.899699+00:00",
     "phase": "LATE_MONTH",
     "phase_desc": "Tokyo CPI, Core PCE, PMI prep",
     "next_major": "FOMC Rate Decision (8d 4h)",
@@ -2563,8 +2721,8 @@
         "country": "\ud83c\udde9\ud83c\uddea Germany",
         "tier": 2,
         "impact": "LOW",
-        "countdown": "17h 27m",
-        "hours_until": 17.5,
+        "countdown": "17h 12m",
+        "hours_until": 17.2,
         "time_utc": "08:00",
         "is_next_24h": true,
         "is_next_4h": false,
@@ -2588,8 +2746,8 @@
         "country": "\ud83c\uddfa\ud83c\uddf8 US",
         "tier": 2,
         "impact": "MEDIUM",
-        "countdown": "22h 57m",
-        "hours_until": 23.0,
+        "countdown": "22h 42m",
+        "hours_until": 22.7,
         "time_utc": "13:30",
         "is_next_24h": true,
         "is_next_4h": false,
@@ -2614,7 +2772,7 @@
         "tier": 2,
         "impact": "LOW",
         "countdown": "2d 9h",
-        "hours_until": 58.0,
+        "hours_until": 57.7,
         "time_utc": "00:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2639,7 +2797,7 @@
         "tier": 1,
         "impact": "MEDIUM",
         "countdown": "2d 19h",
-        "hours_until": 67.5,
+        "hours_until": 67.2,
         "time_utc": "10:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2664,7 +2822,7 @@
         "tier": 2,
         "impact": "LOW",
         "countdown": "3d 22h",
-        "hours_until": 95.0,
+        "hours_until": 94.7,
         "time_utc": "13:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2689,7 +2847,7 @@
         "tier": 1,
         "impact": "MEDIUM",
         "countdown": "4d 8h",
-        "hours_until": 105.0,
+        "hours_until": 104.7,
         "time_utc": "23:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2714,7 +2872,7 @@
         "tier": 1,
         "impact": "HIGH",
         "countdown": "5d 22h",
-        "hours_until": 143.0,
+        "hours_until": 142.7,
         "time_utc": "13:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2740,7 +2898,7 @@
         "tier": 1,
         "impact": "MEDIUM",
         "countdown": "5d 22h",
-        "hours_until": 143.0,
+        "hours_until": 142.7,
         "time_utc": "13:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2765,7 +2923,7 @@
         "tier": 1,
         "impact": "MEDIUM",
         "countdown": "6d 9h",
-        "hours_until": 153.5,
+        "hours_until": 153.2,
         "time_utc": "\u2014",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2790,7 +2948,7 @@
         "tier": 1,
         "impact": "HIGH",
         "countdown": "8d 4h",
-        "hours_until": 196.5,
+        "hours_until": 196.2,
         "time_utc": "19:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2816,7 +2974,7 @@
         "tier": 1,
         "impact": "HIGH",
         "countdown": "8d 4h",
-        "hours_until": 197.0,
+        "hours_until": 196.7,
         "time_utc": "19:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2841,7 +2999,7 @@
         "tier": 1,
         "impact": "MEDIUM",
         "countdown": "8d 19h",
-        "hours_until": 211.5,
+        "hours_until": 211.2,
         "time_utc": "10:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2866,7 +3024,7 @@
         "tier": 1,
         "impact": "MEDIUM",
         "countdown": "9d 10h",
-        "hours_until": 226.5,
+        "hours_until": 226.2,
         "time_utc": "01:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2890,8 +3048,8 @@
         "country": "\ud83c\udde8\ud83c\uddf3 China",
         "tier": 1,
         "impact": "MEDIUM",
-        "countdown": "9d 11h",
-        "hours_until": 227.2,
+        "countdown": "9d 10h",
+        "hours_until": 227.0,
         "time_utc": "01:45",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2916,7 +3074,7 @@
         "tier": 2,
         "impact": "MEDIUM",
         "countdown": "11d 23h",
-        "hours_until": 287.5,
+        "hours_until": 287.2,
         "time_utc": "14:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2942,7 +3100,7 @@
         "tier": 2,
         "impact": "LOW",
         "countdown": "11d 23h",
-        "hours_until": 287.5,
+        "hours_until": 287.2,
         "time_utc": "14:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2967,7 +3125,7 @@
         "tier": 2,
         "impact": "LOW",
         "countdown": "12d 12h",
-        "hours_until": 301.0,
+        "hours_until": 300.7,
         "time_utc": "03:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -2992,7 +3150,7 @@
         "tier": 2,
         "impact": "LOW",
         "countdown": "13d 21h",
-        "hours_until": 333.7,
+        "hours_until": 333.5,
         "time_utc": "12:15",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3017,7 +3175,7 @@
         "tier": 2,
         "impact": "MEDIUM",
         "countdown": "13d 23h",
-        "hours_until": 335.5,
+        "hours_until": 335.2,
         "time_utc": "14:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3043,7 +3201,7 @@
         "tier": 1,
         "impact": "HIGH",
         "countdown": "14d 12h",
-        "hours_until": 348.5,
+        "hours_until": 348.2,
         "time_utc": "~03:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3069,7 +3227,7 @@
         "tier": 1,
         "impact": "MEDIUM",
         "countdown": "14d 21h",
-        "hours_until": 357.5,
+        "hours_until": 357.2,
         "time_utc": "12:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3094,7 +3252,7 @@
         "tier": 1,
         "impact": "HIGH",
         "countdown": "14d 22h",
-        "hours_until": 358.7,
+        "hours_until": 358.5,
         "time_utc": "13:15",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3119,7 +3277,7 @@
         "tier": 1,
         "impact": "HIGH",
         "countdown": "15d 22h",
-        "hours_until": 383.0,
+        "hours_until": 382.7,
         "time_utc": "13:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3145,7 +3303,7 @@
         "tier": 2,
         "impact": "LOW",
         "countdown": "16d 12h",
-        "hours_until": 396.5,
+        "hours_until": 396.2,
         "time_utc": "03:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3168,7 +3326,7 @@
         "tier": 1,
         "impact": "MEDIUM",
         "countdown": "18d 10h",
-        "hours_until": 443.0,
+        "hours_until": 442.7,
         "time_utc": "01:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3193,7 +3351,7 @@
         "tier": 1,
         "impact": "MEDIUM",
         "countdown": "20d 9h",
-        "hours_until": 489.5,
+        "hours_until": 489.2,
         "time_utc": "\u2014",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3217,7 +3375,7 @@
         "tier": 1,
         "impact": "HIGHEST",
         "countdown": "20d 22h",
-        "hours_until": 503.0,
+        "hours_until": 502.7,
         "time_utc": "13:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3269,7 +3427,7 @@
         "tier": 2,
         "impact": "LOW",
         "countdown": "21d 15h",
-        "hours_until": 519.5,
+        "hours_until": 519.2,
         "time_utc": "06:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3294,7 +3452,7 @@
         "tier": 2,
         "impact": "MEDIUM",
         "countdown": "21d 22h",
-        "hours_until": 527.0,
+        "hours_until": 526.7,
         "time_utc": "13:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3319,7 +3477,7 @@
         "tier": 2,
         "impact": "LOW",
         "countdown": "22d 23h",
-        "hours_until": 551.5,
+        "hours_until": 551.2,
         "time_utc": "14:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3344,7 +3502,7 @@
         "tier": 2,
         "impact": "MEDIUM",
         "countdown": "23d 22h",
-        "hours_until": 575.0,
+        "hours_until": 574.7,
         "time_utc": "13:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3369,7 +3527,7 @@
         "tier": 2,
         "impact": "LOW",
         "countdown": "25d 22h",
-        "hours_until": 623.0,
+        "hours_until": 622.7,
         "time_utc": "13:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3394,7 +3552,7 @@
         "tier": 1,
         "impact": "MEDIUM",
         "countdown": "26d 15h",
-        "hours_until": 639.5,
+        "hours_until": 639.2,
         "time_utc": "06:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3419,7 +3577,7 @@
         "tier": 1,
         "impact": "HIGH",
         "countdown": "28d 10h",
-        "hours_until": 683.0,
+        "hours_until": 682.7,
         "time_utc": "01:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3444,7 +3602,7 @@
         "tier": 2,
         "impact": "LOW",
         "countdown": "29d 4h",
-        "hours_until": 700.5,
+        "hours_until": 700.2,
         "time_utc": "19:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -4186,9 +4344,35 @@
     "treasury_auction": null
   },
   "signal_eval": {
-    "actionable": null,
-    "reason": "no_signal",
-    "commentary": []
+    "actionable": true,
+    "verdict": "CONSIDER",
+    "price": 1930.0,
+    "entry": 1930.0,
+    "sl": 1916.19,
+    "tp1": 1948.42,
+    "direction": "LONG",
+    "drift_pct": 0.0,
+    "abs_drift_pct": 0.0,
+    "current_rr": 1.334,
+    "original_rr": 1.332,
+    "rr_decay": -0.001,
+    "sl_distance_pct": 0.7155,
+    "tp1_remaining_pct": 0.9544,
+    "sl_hit": false,
+    "tp1_hit": false,
+    "chasing": false,
+    "commentary": [
+      "\u2705 Price near entry \u2014 good fill opportunity.",
+      "   Drift: 0.00% from entry. R:R still 1.33x",
+      "\u26a0\ufe0f Low ICS (0.486) \u2014 signal is marginal even at entry",
+      "",
+      "  \ud83d\udcca TRADFI CONTEXT (M66-M73):",
+      "\ud83d\udcaa Tradfi tailwind (1 for)",
+      "  \ud83d\udd34 M72: BTC dominance high \u2014 ETH underperforms (score=0.620 \u2197 tailwind)"
+    ],
+    "tradfi_headwinds": 0,
+    "tradfi_tailwinds": 1,
+    "tradfi_crisis": false
   },
   "conflict_resolution": {
     "has_conflict": true,
@@ -4196,17 +4380,17 @@
     "severity": "LOW",
     "summary": "LONG bias conflicted: 1 signals against vs 4 supporting. LOW severity.",
     "factors_for": [
+      "M13 structure: BULLISH",
       "Daily swing bias: BEARISH",
       "M3 VWAP PASS \u2014 price above VWAP zone",
-      "M9 regime: NEUTRAL (favorable)",
-      "Spot flow: buyers (supports long)"
+      "M9 regime: NEUTRAL (favorable)"
     ],
     "factors_against": [
       "Whales WHALE_BEARISH \u2014 smart money against LONG"
     ],
     "precaution": "Direction resolver says LONG but smart money disagrees.",
     "action_plan": [
-      "Key level: $1928-$1930 (resistance_level)",
+      "Key level: $1930-$1930 (resistance_level)",
       "Watch for resolution:",
       "  \u2192 WYCKOFF_DISTRIBUTION: sweep + volume rejection",
       "    \u2022 Price sweeps above $1930",
@@ -4219,7 +4403,7 @@
       "    \u2022 No immediate rejection within 2 bars"
     ],
     "forward_test": {
-      "key_level_low": 1927.76,
+      "key_level_low": 1930.0,
       "key_level_high": 1930.44,
       "level_name": "resistance_level",
       "resolution": "PENDING",
@@ -4250,9 +4434,9 @@
       ]
     },
     "historical_pattern": {
-      "position": "range_bottom",
+      "position": "range_top",
       "pattern_key": [
-        "range_bottom",
+        "range_top",
         "NEUTRAL",
         "MARKUP"
       ],

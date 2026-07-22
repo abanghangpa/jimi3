@@ -1,56 +1,56 @@
 {
   "gpt-4o": {
-    "ok": false,
-    "latency_ms": 2423,
-    "provider": null,
-    "error": "{\"error\": {\"message\": \"RetryProviderError: RetryProvider failed:\\nCopilotAccount: NoValidHarFileErro",
-    "last_check": "2026-07-22 14:36:27 UTC",
-    "last_ok": 1784730681.0816064,
-    "last_fail": 1784730987.8419642
+    "ok": true,
+    "latency_ms": 3913,
+    "provider": "Ok \u2705",
+    "error": null,
+    "last_check": "2026-07-22 14:51:46 UTC",
+    "last_ok": 1784731906.6446,
+    "last_fail": 1784731597.183854
   },
   "gpt-4o-mini": {
     "ok": false,
-    "latency_ms": 698,
+    "latency_ms": 1829,
     "provider": null,
     "error": "{\"error\": {\"message\": \"RetryProviderError: RetryProvider failed:\\nApiAirforce: MissingAuthError: Add",
-    "last_check": "2026-07-22 14:36:28 UTC",
+    "last_check": "2026-07-22 14:51:48 UTC",
     "last_ok": 1784683489.6542475,
-    "last_fail": 1784730988.5407681
+    "last_fail": 1784731908.474923
   },
   "deepseek-v3": {
     "ok": false,
-    "latency_ms": 22,
+    "latency_ms": 20,
     "provider": null,
     "error": "{\"error\": {\"message\": \"MissingAuthError: Add a \\\"api_key\\\"\"}, \"model\": \"deepseek-v3\"}",
-    "last_check": "2026-07-22 14:36:28 UTC",
+    "last_check": "2026-07-22 14:51:48 UTC",
     "last_ok": null,
-    "last_fail": 1784730988.5640833
+    "last_fail": 1784731908.4956982
   },
   "llama-3.3-70b": {
     "ok": false,
-    "latency_ms": 1259,
+    "latency_ms": 1638,
     "provider": null,
     "error": "{\"error\": {\"message\": \"RetryProviderError: RetryProvider failed:\\nPollinationsAI: ClientPayloadError",
-    "last_check": "2026-07-22 14:36:29 UTC",
+    "last_check": "2026-07-22 14:51:50 UTC",
     "last_ok": null,
-    "last_fail": 1784730989.8237019
+    "last_fail": 1784731910.1350687
   },
   "gemini-2.0-flash": {
     "ok": false,
-    "latency_ms": 196,
+    "latency_ms": 127,
     "provider": null,
     "error": "{\"error\": {\"message\": \"RetryProviderError: RetryProvider failed:\\nGeminiPro: ResponseError: Error 40",
-    "last_check": "2026-07-22 14:36:30 UTC",
+    "last_check": "2026-07-22 14:51:50 UTC",
     "last_ok": null,
-    "last_fail": 1784730990.0198622
+    "last_fail": 1784731910.2631679
   },
   "mistral-small-24b": {
     "ok": false,
-    "latency_ms": 32,
+    "latency_ms": 28,
     "provider": null,
     "error": "{\"error\": {\"message\": \"MissingAuthError: Add a \\\"api_key\\\"\"}, \"model\": \"mistral-small-24b\"}",
-    "last_check": "2026-07-22 14:36:30 UTC",
+    "last_check": "2026-07-22 14:51:50 UTC",
     "last_ok": null,
-    "last_fail": 1784730990.0527325
+    "last_fail": 1784731910.2917995
   }
 }
