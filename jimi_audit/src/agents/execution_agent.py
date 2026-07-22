@@ -1,0 +1,272 @@
+"""
+Execution Agent — Precision entry/exit with slippage awareness.
+
+Handles:
+- Signal freshness validation
+- Orderbook depth analysis for slippage estimation
+- Optimal entry timing (wait for pullback in trends)
+- Latency monitoring
+- Partial fill management
+"""
+import json, os, time
+from datetime import datetime, timezone, timedelta
+
+
+class ExecutionAgent:
+    """
+    Validates and optimizes trade execution.
+    Returns: should_execute (bool), adjusted_entry, slippage_estimate, reason
+    """
+
+    def __init__(self):
+        self.max_signal_age_sec = 1800      # 20 min max signal age
+        self.max_slippage_pct = 0.15        # 0.15% max acceptable slippage
+        self.min_depth_ratio = 2.0          # Orderbook depth must be 2x position size
+        self.execution_history = []
+
+    def validate_execution(self, signal, state, exchange=None, symbol="ETH/USDT:USDT"):
+        """
+        Validate whether a signal should be executed right now.
+
+        Args:
+            signal: Proposed signal with entry, sl, tp, direction, timestamp
+            state: Current portfolio state
+            exchange: ccxt exchange instance (for orderbook)
+            symbol: Trading pair
+
+        Returns:
+            dict: {
+                "execute": bool,
+                "adjusted_entry": float,
+                "slippage_est": float,
+                "reason": str,
+                "quality_score": float  # 0-1, higher = better execution quality
+            }
+        """
+        reasons = []
+        quality_score = 1.0
+
+        # === CHECK 1: Signal Freshness ===
+        sig_ts = signal.get("timestamp", "")
+        freshness = self._check_freshness(sig_ts)
+        if not freshness["valid"]:
+            return {
+                "execute": False,
+                "adjusted_entry": signal.get("entry", 0),
+                "slippage_est": 0,
+                "reason": freshness["reason"],
+                "quality_score": 0,
+            }
+        quality_score *= freshness["quality"]
+
+        # === CHECK 2: Price hasn't moved too far from signal ===
+        entry = signal.get("entry", 0)
+        current_price = signal.get("price", entry)
+        if entry > 0 and current_price > 0:
+            price_drift = abs(current_price - entry) / entry * 100
+            if price_drift > 0.5:  # More than 0.5% drift
+                return {
+                    "execute": False,
+                    "adjusted_entry": current_price,
+                    "slippage_est": price_drift,
+                    "reason": f"PRICE DRIFT: {price_drift:.2f}% from signal entry",
+                    "quality_score": 0.3,
+                }
+            quality_score *= max(0.5, 1.0 - price_drift / 0.5)
+
+        # === CHECK 3: Orderbook Depth ===
+        depth_analysis = self._check_depth(exchange, symbol, signal)
+        if not depth_analysis["sufficient"]:
+            reasons.append(depth_analysis["reason"])
+            quality_score *= 0.5
+
+        # === CHECK 4: Latency Check ===
+        latency = self._check_latency(signal)
+        quality_score *= latency["quality"]
+
+        # === CHECK 5: Avoid trading into walls ===
+        wall_check = self._check_walls(exchange, symbol, signal)
+        if wall_check["blocked"]:
+            return {
+                "execute": False,
+                "adjusted_entry": entry,
+                "slippage_est": wall_check.get("wall_distance_pct", 0),
+                "reason": wall_check["reason"],
+                "quality_score": 0.2,
+            }
+
+        # === CALCULATE ADJUSTED ENTRY ===
+        direction = signal.get("direction", "LONG")
+        slippage_est = self._estimate_slippage(depth_analysis, signal)
+
+        if direction == "LONG":
+            adjusted_entry = entry * (1 + slippage_est / 100)
+        else:
+            adjusted_entry = entry * (1 - slippage_est / 100)
+
+        # Final quality assessment
+        execute = quality_score >= 0.15 and slippage_est <= self.max_slippage_pct
+
+        reason = "OK" if execute else f"Quality {quality_score:.2f} < 0.15"
+        if reasons:
+            reason += " | " + "; ".join(reasons)
+
+        result = {
+            "execute": execute,
+            "adjusted_entry": round(adjusted_entry, 2),
+            "slippage_est": round(slippage_est, 4),
+            "reason": reason,
+            "quality_score": round(quality_score, 3),
+        }
+
+        self.execution_history.append(result)
+        if len(self.execution_history) > 100:
+            self.execution_history = self.execution_history[-100:]
+
+        return result
+
+    def _check_freshness(self, sig_ts):
+        """Check if signal is still fresh enough to execute."""
+        try:
+            if "T" in sig_ts:
+                sig_dt = datetime.fromisoformat(sig_ts.replace("Z", "+00:00"))
+            else:
+                sig_dt = datetime.strptime(sig_ts[:19], "%Y-%m-%d %H:%M:%S")
+                sig_dt = sig_dt.replace(tzinfo=timezone.utc)
+        except:
+            return {"valid": False, "reason": "Invalid signal timestamp", "quality": 0}
+
+        now = datetime.now(timezone.utc)
+        age_sec = (now - sig_dt).total_seconds()
+
+        if age_sec > self.max_signal_age_sec:
+            return {"valid": False, "reason": f"Signal too old: {age_sec:.0f}s > {self.max_signal_age_sec}s", "quality": 0}
+
+        # Quality degrades with age
+        quality = max(0.3, 1.0 - (age_sec / self.max_signal_age_sec))
+        return {"valid": True, "age_sec": age_sec, "quality": quality}
+
+    def _check_depth(self, exchange, symbol, signal):
+        """Check if orderbook has enough depth for the position."""
+        if not exchange:
+            return {"sufficient": True, "reason": "No exchange (dry run)", "depth": 0}
+
+        try:
+            size = signal.get("size", 0.05)
+            direction = signal.get("direction", "LONG")
+
+            ob = exchange.fetch_order_book(symbol, limit=20)
+            bids = ob.get("bids", [])
+            asks = ob.get("asks", [])
+
+            if direction == "LONG":
+                # Buying: check ask depth
+                total_ask = sum(a[1] for a in asks[:10]) if asks else 0
+                depth_ratio = total_ask / size if size > 0 else 999
+            else:
+                # Selling: check bid depth
+                total_bid = sum(b[1] for b in bids[:10]) if bids else 0
+                depth_ratio = total_bid / size if size > 0 else 999
+
+            sufficient = depth_ratio >= self.min_depth_ratio
+            return {
+                "sufficient": sufficient,
+                "depth_ratio": round(depth_ratio, 2),
+                "reason": "" if sufficient else f"Low depth: {depth_ratio:.1f}x < {self.min_depth_ratio}x",
+                "depth": total_ask if direction == "LONG" else total_bid,
+            }
+        except Exception as e:
+            return {"sufficient": True, "reason": f"Depth check failed: {e}", "depth": 0}
+
+    def _check_latency(self, signal):
+        """Check execution latency from signal generation."""
+        sig_ts = signal.get("timestamp", "")
+        try:
+            if "T" in sig_ts:
+                sig_dt = datetime.fromisoformat(sig_ts.replace("Z", "+00:00"))
+            else:
+                sig_dt = datetime.strptime(sig_ts[:19], "%Y-%m-%d %H:%M:%S")
+                sig_dt = sig_dt.replace(tzinfo=timezone.utc)
+
+            now = datetime.now(timezone.utc)
+            latency_ms = (now - sig_dt).total_seconds() * 1000
+
+            if latency_ms > 30000:  # >30s
+                return {"quality": 0.3, "latency_ms": latency_ms}
+            elif latency_ms > 10000:  # >10s
+                return {"quality": 0.7, "latency_ms": latency_ms}
+            else:
+                return {"quality": 1.0, "latency_ms": latency_ms}
+        except:
+            return {"quality": 0.5, "latency_ms": -1}
+
+    def _check_walls(self, exchange, symbol, signal):
+        """Check for large orders (walls) near entry that could block price."""
+        if not exchange:
+            return {"blocked": False}
+
+        try:
+            entry = signal.get("entry", 0)
+            direction = signal.get("direction", "LONG")
+
+            ob = exchange.fetch_order_book(symbol, limit=50)
+
+            # Look for walls (orders > 5x average) within 0.3% of entry
+            if direction == "LONG":
+                levels = ob.get("asks", [])
+            else:
+                levels = ob.get("bids", [])
+
+            if not levels:
+                return {"blocked": False}
+
+            avg_size = sum(l[1] for l in levels[:20]) / min(len(levels), 20)
+
+            for price, size in levels[:15]:
+                distance_pct = abs(price - entry) / entry * 100
+                if distance_pct < 0.3 and size > avg_size * 5:
+                    return {
+                        "blocked": True,
+                        "reason": f"WALL: {size:.1f} ETH @ ${price:.2f} ({distance_pct:.2f}% from entry, {size/avg_size:.1f}x avg)",
+                        "wall_distance_pct": distance_pct,
+                    }
+
+            return {"blocked": False}
+        except:
+            return {"blocked": False}
+
+    def _estimate_slippage(self, depth_analysis, signal):
+        """Estimate slippage based on depth and position size."""
+        depth_ratio = depth_analysis.get("depth_ratio", 10)
+        size = signal.get("size", 0.05)
+
+        # Base slippage: 0.01% for small orders
+        base_slippage = 0.01
+
+        # Add slippage for large orders relative to depth
+        if depth_ratio < 5:
+            size_slippage = 0.05
+        elif depth_ratio < 10:
+            size_slippage = 0.02
+        else:
+            size_slippage = 0.01
+
+        return base_slippage + size_slippage
+
+    def get_execution_stats(self):
+        """Get execution quality statistics."""
+        if not self.execution_history:
+            return {"total": 0}
+
+        total = len(self.execution_history)
+        executed = sum(1 for e in self.execution_history if e["execute"])
+        avg_quality = sum(e["quality_score"] for e in self.execution_history) / total
+        avg_slippage = sum(e["slippage_est"] for e in self.execution_history) / total
+
+        return {
+            "total": total,
+            "executed": executed,
+            "rejected": total - executed,
+            "avg_quality": round(avg_quality, 3),
+            "avg_slippage_pct": round(avg_slippage, 4),
+        }

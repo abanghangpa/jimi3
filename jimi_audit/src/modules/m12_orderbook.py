@@ -60,25 +60,20 @@ def score_m12_orderbook(direction, live=True):
 
     score = 0.5
 
+    # LONG-only contrarian: mild imbalance = best entry
+    # Extreme imbalances already priced in (high conv returns LESS)
     if direction == 'LONG':
-        if ba_ratio > 1.5:
-            score = 0.75
-        elif ba_ratio > 1.2:
-            score = 0.65
-        elif ba_ratio < 0.7:
-            score = 0.30
-        elif ba_ratio < 0.85:
-            score = 0.40
-        if wall_info.get('bid_walls', 0) > wall_info.get('ask_walls', 0):
-            score = min(score + 0.05, 1.0)
-        elif wall_info.get('ask_walls', 0) > wall_info.get('bid_walls', 0) + 1:
-            score = max(score - 0.05, 0.0)
-    else:
-        if ba_ratio < 0.67:
-            score = 0.75
-        elif ba_ratio < 0.83:
-            score = 0.65
+        if 1.0 < ba_ratio <= 1.2:
+            score = 0.80  # mild bid dominance — best
+        elif 1.2 < ba_ratio <= 1.5:
+            score = 0.65  # moderate
         elif ba_ratio > 1.5:
+            score = 0.50  # extreme — already priced in
+        elif ba_ratio < 1.0:
+            score = 0.30  # asks dominate — skip
+    else:
+        score = 0.30  # SHORT disabled
+        if ba_ratio > 1.5:
             score = 0.30
         elif ba_ratio > 1.2:
             score = 0.40

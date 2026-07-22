@@ -1,0 +1,72 @@
+{
+  "strategy": "liquidation_cascade",
+  "date": "2026-07-19",
+  "agent": "2-4 (Isolation Gate)",
+  "data": {
+    "ohlcv_bars": 88735,
+    "date_range": "2024-01-01 00:00:00 to 2026-07-13 07:30:00",
+    "derivatives_rows": 2790,
+    "oi_coverage_pct": 3.8
+  },
+  "detection": {
+    "total_events": 92,
+    "oi_shock": 57,
+    "oi_extreme_ls": 65,
+    "oi_large_drop": 35
+  },
+  "isolation_gate": {
+    "1-bar (15m)": {
+      "horizon_bars": 1,
+      "n_events": 92,
+      "mean_return_pct": 0.0411,
+      "median_return_pct": -0.0101,
+      "std_pct": 0.2597,
+      "t_stat": 1.5186,
+      "p_value": 0.1323,
+      "direction_correct": "True",
+      "exceeds_costs": "False",
+      "gate_pass": "False"
+    },
+    "4-bar (1h)": {
+      "horizon_bars": 4,
+      "n_events": 92,
+      "mean_return_pct": 0.0954,
+      "median_return_pct": 0.0977,
+      "std_pct": 0.6157,
+      "t_stat": 1.4866,
+      "p_value": 0.1406,
+      "direction_correct": "True",
+      "exceeds_costs": "False",
+      "gate_pass": "False"
+    },
+    "16-bar (4h)": {
+      "horizon_bars": 16,
+      "n_events": 92,
+      "mean_return_pct": 0.3759,
+      "median_return_pct": 0.3089,
+      "std_pct": 1.6066,
+      "t_stat": 2.244,
+      "p_value": 0.0273,
+      "direction_correct": "True",
+      "exceeds_costs": "True",
+      "gate_pass": "True"
+    },
+    "24-bar (6h)": {
+      "horizon_bars": 24,
+      "n_events": 92,
+      "mean_return_pct": 0.2435,
+      "median_return_pct": -0.0915,
+      "std_pct": 1.8154,
+      "t_stat": 1.2868,
+      "p_value": 0.2014,
+      "direction_correct": "True",
+      "exceeds_costs": "True",
+      "gate_pass": "False"
+    }
+  },
+  "look_ahead_bias": "None (mask shifted by 1 bar)",
+  "round_trip_cost": "0.10%",
+  "minimum_events": 500,
+  "verdict": "GATE PASS",
+  "reason": "Isolation gate passed at at least one horizon"
+}

@@ -1,0 +1,157 @@
+"""S2: Squeeze Breakout V7 — FADE the breakout (contrarian mean reversion).
+
+Data shows 71% of BB squeeze breakouts FAIL. This strategy inverts them.
+
+V7 changes (2026-07-18):
+- BB width threshold relaxed: 2% → 3% (more events, edge holds out-of-sample)
+- Price source: use df_15m close, not mid-bar price (fixes scanner detection)
+- Reclassified: Group B confirmation only (no standalone firing)
+- Conviction boost: +0.30 when confirming OBI or Trade Flow
+
+Edge: PF 2.52 over 89,000 candles (2.5 years).
+WR: 17% but each win is 2.5x the loss.
+
+Logic:
+1. BB(20,2) squeeze fires breakout signal (BB width < 3%)
+2. We take the OPPOSITE direction (fade)
+3. SL: 1x ATR against us
+4. TP: 1.5x ATR with us (mean reversion target)
+5. Only fade counter-trend breakouts (with trend filter)
+6. Skip high-volume breakouts (likely real)
+"""
+from .base import BaseStrategy, SignalResult
+import numpy as np
+
+
+class SqueezeBreakoutStrategy(BaseStrategy):
+    min_vol_ratio = 0.0  # no min volume (we want low-vol breakouts)
+    name = 'squeeze_breakout'
+    strategy_type = 'structure'
+    description = 'v7: Fade BB squeeze breakouts (BB<3%, Group B only)'
+
+    def check(self, data, df_15m=None, idx=None, **kwargs):
+        # V7 FIX: Use df_15m close price, not mid-bar price
+        # This fixes the scanner detection issue (scanner fired mid-bar,
+        # missing signals that only appear at bar close)
+        if df_15m is None or idx is None or idx < 60:
+            return None
+
+        closes = df_15m['Close'].values.astype(float)
+        highs = df_15m['High'].values.astype(float)
+        lows = df_15m['Low'].values.astype(float)
+        volumes = df_15m['Volume'].values.astype(float)
+
+        price = closes[idx]  # Use bar close, not data['price']
+        atr = data.get('atr', 0)
+        if not price or not atr:
+            return None
+
+        # BB(20, 2.0)
+        lookback = closes[max(0, idx-19):idx+1]
+        if len(lookback) < 20:
+            return None
+        sma20 = np.mean(lookback)
+        std20 = np.std(lookback)
+        if std20 == 0 or sma20 == 0:
+            return None
+        bb_upper = sma20 + 2 * std20
+        bb_lower = sma20 - 2 * std20
+        bb_width = (bb_upper - bb_lower) / sma20
+
+        # V7: Relaxed squeeze threshold (2% → 3%)
+        if bb_width > 0.03:
+            return None
+
+        # Check if price is breaking out
+        if price <= bb_upper and price >= bb_lower:
+            return None  # not a breakout
+
+        # EMA for trend filter
+        if idx >= 50:
+            ema_50 = np.mean(closes[max(0, idx-49):idx+1])
+        else:
+            ema_50 = sma20
+
+        # Volume
+        avg_vol = np.mean(volumes[max(0, idx-19):idx+1])
+        vol_ratio = volumes[idx] / avg_vol if avg_vol > 0 else 1
+
+        # ── FADE LOGIC ──
+        # Breakout above BB upper → SHORT (fade back to mean)
+        # Breakout below BB lower → LONG (fade back to mean)
+        if price > bb_upper:
+            direction = 'SHORT'
+
+            # Trend filter: don't fade breakouts WITH the trend
+            if price > ema_50:
+                return None  # LONG breakout in uptrend = don't fade
+
+            # Volume filter: skip high-volume breakouts (likely real)
+            if vol_ratio > 1.5:
+                return None
+
+            # Entry/SL/TP
+            entry = price
+            sl = price + atr * 1.0   # 1x ATR above
+            tp = price - atr * 1.5   # 1.5x ATR below (mean reversion)
+
+        elif price < bb_lower:
+            direction = 'LONG'
+
+            # Trend filter
+            if price < ema_50:
+                return None  # SHORT breakout in downtrend = don't fade
+
+            # Volume filter
+            if vol_ratio > 1.5:
+                return None
+
+            entry = price
+            sl = price - atr * 1.0
+            tp = price + atr * 1.5
+
+        else:
+            return None
+
+        # RR check
+        risk = abs(entry - sl)
+        reward = abs(entry - tp)
+        if risk == 0 or reward / risk < 1.0:
+            return None
+
+        # Conviction
+        # V7: Updated squeeze_quality for 3% threshold
+        squeeze_quality = max(0, 1.0 - bb_width / 0.03)
+        conviction = 0.50 + squeeze_quality * 0.15
+        if vol_ratio < 0.8:
+            conviction += 0.1  # very low volume = more likely false breakout
+        conviction = min(conviction, 0.80)
+
+        if conviction < 0.50:
+            return None
+
+        sl_pct = abs(entry - sl) / entry * 100
+        tp_pct = abs(tp - entry) / entry * 100
+
+        return SignalResult(
+            strategy_name=self.name,
+            strategy_type=self.strategy_type,
+            direction=direction,
+            conviction=conviction,
+            entry=entry,
+            sl=sl,
+            tp1=tp,
+            tp2=tp,
+            tp3=tp,
+            sl_pct=sl_pct,
+            tp1_pct=tp_pct,
+            size_mult=1.0,
+            reason=f'SqueezeV7 FADE {direction} bb_w={bb_width*100:.2f}% vol={vol_ratio:.1f}x',
+            details={
+                'bb_width': bb_width,
+                'vol_ratio': vol_ratio,
+                'squeeze_quality': squeeze_quality,
+                'ema_50': ema_50,
+                'version': 'v7_groupB',
+            },
+        )

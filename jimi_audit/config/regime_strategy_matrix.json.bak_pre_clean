@@ -1,0 +1,126 @@
+{
+  "STRONG_DOWN": {
+    "allowed": [
+      "failed_breakout",
+      "trade_flow",
+      "orderbook_imbalance",
+      "judas_sweep",
+      "taker_flow",
+      "funding_arb",
+      "whale_watch",
+      "liquidity_grab",
+      "momentum_v3"
+    ],
+    "blocked": [
+      "structural_break",
+      "regime_switch",
+      "mtf_confluence"
+    ],
+    "notes": "Strong downtrend: favor flow/structural strategies, block trend-following"
+  },
+  "DOWN": {
+    "allowed": [
+      "failed_breakout",
+      "trade_flow",
+      "orderbook_imbalance",
+      "judas_sweep",
+      "taker_flow",
+      "funding_arb",
+      "whale_watch",
+      "liquidity_grab",
+      "momentum_v3",
+      "squeeze_breakout",
+      "kill_zone",
+      "power_of_3",
+      "cascade"
+    ],
+    "blocked": [
+      "structural_break",
+      "regime_switch"
+    ],
+    "notes": "Downtrend: broader strategy set, still block weakest performers"
+  },
+  "RANGING": {
+    "allowed": [
+      "failed_breakout",
+      "trade_flow",
+      "orderbook_imbalance",
+      "judas_sweep",
+      "taker_flow",
+      "funding_arb",
+      "whale_watch",
+      "liquidity_grab",
+      "momentum_v3",
+      "squeeze_breakout",
+      "kill_zone",
+      "power_of_3",
+      "cascade",
+      "structural_break",
+      "cross_asset",
+      "scalp_v2",
+      "positioning_fade",
+      "liquidation_cascade"
+    ],
+    "blocked": [
+      "regime_switch"
+    ],
+    "notes": "Ranging: most strategies allowed, block only weakest"
+  },
+  "UP": {
+    "allowed": [
+      "failed_breakout",
+      "trade_flow",
+      "orderbook_imbalance",
+      "judas_sweep",
+      "taker_flow",
+      "funding_arb",
+      "whale_watch",
+      "liquidity_grab",
+      "momentum_v3",
+      "squeeze_breakout",
+      "kill_zone",
+      "power_of_3",
+      "cascade",
+      "structural_break",
+      "cross_asset",
+      "scalp_v2",
+      "positioning_fade",
+      "liquidation_cascade",
+      "mtf_confluence",
+      "regime_switch",
+      "macro_surprise",
+      "vol_rotation"
+    ],
+    "blocked": [],
+    "notes": "Uptrend: all strategies allowed"
+  },
+  "STRONG_UP": {
+    "allowed": [
+      "failed_breakout",
+      "trade_flow",
+      "orderbook_imbalance",
+      "judas_sweep",
+      "taker_flow",
+      "funding_arb",
+      "whale_watch",
+      "liquidity_grab",
+      "momentum_v3",
+      "squeeze_breakout",
+      "kill_zone",
+      "power_of_3",
+      "cascade",
+      "structural_break",
+      "cross_asset",
+      "scalp_v2",
+      "liquidation_cascade",
+      "mtf_confluence",
+      "regime_switch",
+      "macro_surprise",
+      "vol_rotation"
+    ],
+    "blocked": [
+      "positioning_fade"
+    ],
+    "notes": "Strong uptrend: all except contrarian strategies"
+  }
+}

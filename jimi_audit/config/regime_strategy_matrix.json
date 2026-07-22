@@ -1,126 +1,99 @@
 {
   "STRONG_DOWN": {
     "allowed": [
+      "forced_movement",
       "funding_arb",
       "judas_sweep",
+      "liquidation_cascade",
+      "liquidity_grab",
       "orderbook_imbalance",
+      "squeeze_breakout",
+      "structural_break",
+      "taker_flow",
       "trade_flow",
       "whale_watch"
     ],
     "blocked": [
-      "failed_breakout",
-      "liquidity_grab",
-      "momentum_v3",
-      "mtf_confluence",
-      "regime_switch",
-      "structural_break",
-      "taker_flow"
+      "positioning_fade",
+      "failed_breakout"
     ],
-    "notes": "Strong downtrend: favor flow/structural strategies, block trend-following"
+    "notes": "Strong downtrend: all except ranging/contrarian strategies"
   },
   "DOWN": {
     "allowed": [
+      "forced_movement",
       "funding_arb",
       "judas_sweep",
+      "liquidation_cascade",
+      "liquidity_grab",
       "orderbook_imbalance",
+      "squeeze_breakout",
+      "structural_break",
+      "taker_flow",
       "trade_flow",
       "whale_watch"
     ],
     "blocked": [
-      "cascade",
-      "failed_breakout",
-      "kill_zone",
-      "liquidity_grab",
-      "momentum_v3",
-      "power_of_3",
-      "regime_switch",
-      "squeeze_breakout",
-      "structural_break",
-      "taker_flow"
+      "positioning_fade",
+      "failed_breakout"
     ],
-    "notes": "Downtrend: broader strategy set, still block weakest performers"
+    "notes": "Downtrend: all except ranging/contrarian strategies"
   },
   "RANGING": {
     "allowed": [
-      "cross_asset",
+      "failed_breakout",
+      "forced_movement",
       "funding_arb",
       "judas_sweep",
+      "liquidation_cascade",
+      "liquidity_grab",
       "orderbook_imbalance",
       "positioning_fade",
+      "squeeze_breakout",
+      "structural_break",
+      "taker_flow",
       "trade_flow",
       "whale_watch"
     ],
-    "blocked": [
-      "cascade",
-      "failed_breakout",
-      "kill_zone",
-      "liquidation_cascade",
-      "liquidity_grab",
-      "momentum_v3",
-      "power_of_3",
-      "regime_switch",
-      "scalp_v2",
-      "squeeze_breakout",
-      "structural_break",
-      "taker_flow"
-    ],
-    "notes": "Ranging: most strategies allowed, block only weakest"
+    "blocked": [],
+    "notes": "Ranging: ALL enabled strategies active \u2014 best regime for most strategies"
   },
   "UP": {
     "allowed": [
-      "cross_asset",
+      "failed_breakout",
+      "forced_movement",
       "funding_arb",
       "judas_sweep",
-      "orderbook_imbalance",
-      "positioning_fade",
-      "trade_flow",
-      "whale_watch"
-    ],
-    "blocked": [
-      "cascade",
-      "failed_breakout",
-      "kill_zone",
       "liquidation_cascade",
       "liquidity_grab",
-      "macro_surprise",
-      "momentum_v3",
-      "mtf_confluence",
-      "power_of_3",
-      "regime_switch",
-      "scalp_v2",
+      "orderbook_imbalance",
+      "positioning_fade",
       "squeeze_breakout",
       "structural_break",
       "taker_flow",
-      "vol_rotation"
+      "trade_flow",
+      "whale_watch"
     ],
-    "notes": "Uptrend: all strategies allowed"
+    "blocked": [],
+    "notes": "Uptrend: all strategies active"
   },
   "STRONG_UP": {
     "allowed": [
-      "cross_asset",
+      "forced_movement",
       "funding_arb",
       "judas_sweep",
+      "liquidation_cascade",
+      "liquidity_grab",
       "orderbook_imbalance",
+      "squeeze_breakout",
+      "structural_break",
+      "taker_flow",
       "trade_flow",
       "whale_watch"
     ],
     "blocked": [
-      "cascade",
-      "failed_breakout",
-      "kill_zone",
-      "liquidation_cascade",
-      "liquidity_grab",
-      "macro_surprise",
-      "momentum_v3",
-      "mtf_confluence",
       "positioning_fade",
-      "power_of_3",
-      "regime_switch",
-      "scalp_v2",
-      "squeeze_breakout",
-      "structural_break",
-      "taker_flow",
-      "vol_rotation"
+      "failed_breakout"
     ],
     "notes": "Strong uptrend: all except contrarian strategies"
   }

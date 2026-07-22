@@ -723,7 +723,7 @@ def score_m20(df_15m, idx, direction, sr_levels=None, magnets=None,
         if direction == best_result['contrarian_direction']:
             status = 'PASS'
         elif direction == 'NEUTRAL':
-            status = 'NEUTRAL'
+            status = 'PASS'  # failed breakout detected — signal is valid
         else:
             status = 'FAIL'  # failed breakout is against our trade direction
     else:

@@ -24,6 +24,7 @@ from .s20_liquidation_cascade import LiquidationCascadeStrategy
 from .s21_trade_flow import TradeFlowStrategy
 from .s22_judas_sweep import JudasSweepStrategy
 from .s24_forced_movement import ForcedMovementStrategy
+from .s25_funding_squeeze import FundingSqueezeStrategy
 from .s23_bb_mom6 import BBMom6Strategy
 
 # DISABLED strategies:

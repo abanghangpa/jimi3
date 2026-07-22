@@ -1,0 +1,112 @@
+{
+  "strategy": "taker_flow",
+  "description": "Taker ratio extreme directional",
+  "timestamp": "2026-07-13T06:59:32.866765+00:00",
+  "sets_tested": 20,
+  "sets_passed": 0,
+  "direction_correct": 0,
+  "mean_p_value": 1.0,
+  "overall_result": "SYNTHETIC GATE FAIL",
+  "per_set": {
+    "set_00": {
+      "events": 0,
+      "gate_passed": false,
+      "gate_reason": "Too few (0)"
+    },
+    "set_01": {
+      "events": 0,
+      "gate_passed": false,
+      "gate_reason": "Too few (0)"
+    },
+    "set_02": {
+      "events": 1,
+      "gate_passed": false,
+      "gate_reason": "Too few (1)"
+    },
+    "set_03": {
+      "events": 1,
+      "gate_passed": false,
+      "gate_reason": "Too few (1)"
+    },
+    "set_04": {
+      "events": 0,
+      "gate_passed": false,
+      "gate_reason": "Too few (0)"
+    },
+    "set_05": {
+      "events": 0,
+      "gate_passed": false,
+      "gate_reason": "Too few (0)"
+    },
+    "set_06": {
+      "events": 0,
+      "gate_passed": false,
+      "gate_reason": "Too few (0)"
+    },
+    "set_07": {
+      "events": 0,
+      "gate_passed": false,
+      "gate_reason": "Too few (0)"
+    },
+    "set_08": {
+      "events": 1,
+      "gate_passed": false,
+      "gate_reason": "Too few (1)"
+    },
+    "set_09": {
+      "events": 0,
+      "gate_passed": false,
+      "gate_reason": "Too few (0)"
+    },
+    "set_10": {
+      "events": 1,
+      "gate_passed": false,
+      "gate_reason": "Too few (1)"
+    },
+    "set_11": {
+      "events": 1,
+      "gate_passed": false,
+      "gate_reason": "Too few (1)"
+    },
+    "set_12": {
+      "events": 0,
+      "gate_passed": false,
+      "gate_reason": "Too few (0)"
+    },
+    "set_13": {
+      "events": 0,
+      "gate_passed": false,
+      "gate_reason": "Too few (0)"
+    },
+    "set_14": {
+      "events": 0,
+      "gate_passed": false,
+      "gate_reason": "Too few (0)"
+    },
+    "set_15": {
+      "events": 0,
+      "gate_passed": false,
+      "gate_reason": "Too few (0)"
+    },
+    "set_16": {
+      "events": 0,
+      "gate_passed": false,
+      "gate_reason": "Too few (0)"
+    },
+    "set_17": {
+      "events": 1,
+      "gate_passed": false,
+      "gate_reason": "Too few (1)"
+    },
+    "set_18": {
+      "events": 0,
+      "gate_passed": false,
+      "gate_reason": "Too few (0)"
+    },
+    "set_19": {
+      "events": 0,
+      "gate_passed": false,
+      "gate_reason": "Too few (0)"
+    }
+  }
+}

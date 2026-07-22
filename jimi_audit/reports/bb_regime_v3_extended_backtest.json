@@ -1,0 +1,626 @@
+{
+  "summary": {
+    "total": 2119,
+    "wins": 645,
+    "losses": 1474,
+    "wr": 0.3044,
+    "mean_pnl": -0.0243,
+    "pf": 0.93,
+    "p_value": 0.9358,
+    "equity": 113.01,
+    "max_dd": 49.8,
+    "data_bars": 88735,
+    "date_range": "2024-01-01 00:00:00 to 2026-07-13 07:30:00"
+  },
+  "regime_breakdown": {
+    "BULL": {
+      "trades": 657,
+      "wins": 199,
+      "losses": 458,
+      "pnl": -31.9249
+    },
+    "BEAR": {
+      "trades": 727,
+      "wins": 215,
+      "losses": 512,
+      "pnl": -12.5527
+    },
+    "RANGING": {
+      "trades": 735,
+      "wins": 231,
+      "losses": 504,
+      "pnl": -6.9179
+    }
+  },
+  "sample": [
+    {
+      "bar": 215,
+      "time": "2024-01-03 05:45:00",
+      "regime": "BULL",
+      "direction": "SHORT",
+      "entry": 2376.94,
+      "tp": 2348.42,
+      "sl": 2388.82,
+      "exit": 2348.42,
+      "outcome": "WIN",
+      "pnl_pct": 1.2,
+      "bars_held": 21,
+      "confirmations": [
+        "RSI_DIVERGENCE",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 4.5
+    },
+    {
+      "bar": 238,
+      "time": "2024-01-03 11:30:00",
+      "regime": "BEAR",
+      "direction": "LONG",
+      "entry": 2334.34,
+      "tp": 2362.35,
+      "sl": 2322.67,
+      "exit": 2322.67,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 1,
+      "confirmations": [
+        "RSI_OVERSOLD",
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "DOJI_AT_BAND",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 5.3
+    },
+    {
+      "bar": 242,
+      "time": "2024-01-03 12:30:00",
+      "regime": "BEAR",
+      "direction": "LONG",
+      "entry": 2204.2,
+      "tp": 2230.65,
+      "sl": 2193.18,
+      "exit": 2230.65,
+      "outcome": "WIN",
+      "pnl_pct": 1.2,
+      "bars_held": 1,
+      "confirmations": [
+        "RSI_OVERSOLD",
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "DOJI_AT_BAND",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 5.3
+    },
+    {
+      "bar": 321,
+      "time": "2024-01-04 08:15:00",
+      "regime": "BEAR",
+      "direction": "LONG",
+      "entry": 2222.11,
+      "tp": 2248.78,
+      "sl": 2211.0,
+      "exit": 2211.0,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 8,
+      "confirmations": [
+        "BULLISH_ENGULFING",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 5.0
+    },
+    {
+      "bar": 350,
+      "time": "2024-01-04 15:30:00",
+      "regime": "BULL",
+      "direction": "SHORT",
+      "entry": 2274.79,
+      "tp": 2247.49,
+      "sl": 2286.16,
+      "exit": 2286.16,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 6,
+      "confirmations": [
+        "RSI_OVERBOUGHT",
+        "RSI_DIVERGENCE",
+        "VOL_EXHAUSTION",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 5.3
+    },
+    {
+      "bar": 442,
+      "time": "2024-01-05 14:30:00",
+      "regime": "BEAR",
+      "direction": "LONG",
+      "entry": 2236.36,
+      "tp": 2263.2,
+      "sl": 2225.18,
+      "exit": 2225.18,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 5,
+      "confirmations": [
+        "RSI_DIVERGENCE",
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 6.5
+    },
+    {
+      "bar": 532,
+      "time": "2024-01-06 13:00:00",
+      "regime": "RANGING",
+      "direction": "LONG",
+      "entry": 2233.43,
+      "tp": 2260.23,
+      "sl": 2222.26,
+      "exit": 2238.79,
+      "outcome": "WIN",
+      "pnl_pct": 0.24,
+      "bars_held": 32,
+      "confirmations": [
+        "BULLISH_ENGULFING",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 5.0
+    },
+    {
+      "bar": 538,
+      "time": "2024-01-06 14:30:00",
+      "regime": "RANGING",
+      "direction": "SHORT",
+      "entry": 2243.48,
+      "tp": 2216.56,
+      "sl": 2254.7,
+      "exit": 2254.7,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 17,
+      "confirmations": [
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 4.0
+    },
+    {
+      "bar": 610,
+      "time": "2024-01-07 08:30:00",
+      "regime": "RANGING",
+      "direction": "SHORT",
+      "entry": 2244.39,
+      "tp": 2217.46,
+      "sl": 2255.61,
+      "exit": 2255.61,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 20,
+      "confirmations": [
+        "RSI_DIVERGENCE",
+        "VOL_EXHAUSTION",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 5.0
+    },
+    {
+      "bar": 630,
+      "time": "2024-01-07 13:30:00",
+      "regime": "RANGING",
+      "direction": "SHORT",
+      "entry": 2251.64,
+      "tp": 2224.62,
+      "sl": 2262.9,
+      "exit": 2224.62,
+      "outcome": "WIN",
+      "pnl_pct": 1.2,
+      "bars_held": 9,
+      "confirmations": [
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 4.0
+    },
+    {
+      "bar": 666,
+      "time": "2024-01-07 22:30:00",
+      "regime": "BEAR",
+      "direction": "LONG",
+      "entry": 2226.89,
+      "tp": 2253.61,
+      "sl": 2215.76,
+      "exit": 2215.76,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 1,
+      "confirmations": [
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 4.0
+    },
+    {
+      "bar": 681,
+      "time": "2024-01-08 02:15:00",
+      "regime": "BEAR",
+      "direction": "LONG",
+      "entry": 2199.53,
+      "tp": 2225.92,
+      "sl": 2188.53,
+      "exit": 2188.53,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 1,
+      "confirmations": [
+        "RSI_DIVERGENCE",
+        "REJECTION_WICK",
+        "DOJI_AT_BAND"
+      ],
+      "score": 5.0
+    },
+    {
+      "bar": 701,
+      "time": "2024-01-08 07:15:00",
+      "regime": "RANGING",
+      "direction": "SHORT",
+      "entry": 2225.0,
+      "tp": 2198.3,
+      "sl": 2236.12,
+      "exit": 2236.12,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 18,
+      "confirmations": [
+        "RSI_OVERBOUGHT",
+        "RSI_DIVERGENCE",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 4.8
+    },
+    {
+      "bar": 853,
+      "time": "2024-01-09 21:15:00",
+      "regime": "RANGING",
+      "direction": "SHORT",
+      "entry": 2290.02,
+      "tp": 2262.54,
+      "sl": 2301.47,
+      "exit": 2301.47,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 1,
+      "confirmations": [
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 4.0
+    },
+    {
+      "bar": 855,
+      "time": "2024-01-09 21:45:00",
+      "regime": "RANGING",
+      "direction": "SHORT",
+      "entry": 2317.66,
+      "tp": 2289.85,
+      "sl": 2329.25,
+      "exit": 2329.25,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 1,
+      "confirmations": [
+        "RSI_DIVERGENCE",
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 6.5
+    },
+    {
+      "bar": 857,
+      "time": "2024-01-09 22:15:00",
+      "regime": "BULL",
+      "direction": "SHORT",
+      "entry": 2349.42,
+      "tp": 2321.23,
+      "sl": 2361.17,
+      "exit": 2361.17,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 1,
+      "confirmations": [
+        "RSI_DIVERGENCE",
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "DOJI_AT_BAND",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 7.5
+    },
+    {
+      "bar": 950,
+      "time": "2024-01-10 21:30:00",
+      "regime": "BULL",
+      "direction": "SHORT",
+      "entry": 2511.03,
+      "tp": 2480.9,
+      "sl": 2523.59,
+      "exit": 2523.59,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 1,
+      "confirmations": [
+        "BEARISH_ENGULFING",
+        "VOL_EXHAUSTION",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 5.5
+    },
+    {
+      "bar": 957,
+      "time": "2024-01-10 23:15:00",
+      "regime": "BULL",
+      "direction": "SHORT",
+      "entry": 2584.23,
+      "tp": 2553.22,
+      "sl": 2597.15,
+      "exit": 2597.15,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 6,
+      "confirmations": [
+        "RSI_DIVERGENCE",
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 6.5
+    },
+    {
+      "bar": 1003,
+      "time": "2024-01-11 10:45:00",
+      "regime": "BULL",
+      "direction": "SHORT",
+      "entry": 2636.79,
+      "tp": 2605.15,
+      "sl": 2649.97,
+      "exit": 2649.97,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 2,
+      "confirmations": [
+        "RSI_OVERBOUGHT",
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 4.3
+    },
+    {
+      "bar": 1007,
+      "time": "2024-01-11 11:45:00",
+      "regime": "BULL",
+      "direction": "SHORT",
+      "entry": 2657.9,
+      "tp": 2626.01,
+      "sl": 2671.19,
+      "exit": 2626.01,
+      "outcome": "WIN",
+      "pnl_pct": 1.2,
+      "bars_held": 7,
+      "confirmations": [
+        "RSI_OVERBOUGHT",
+        "RSI_DIVERGENCE",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 4.8
+    },
+    {
+      "bar": 1083,
+      "time": "2024-01-12 06:45:00",
+      "regime": "BULL",
+      "direction": "SHORT",
+      "entry": 2617.64,
+      "tp": 2586.23,
+      "sl": 2630.73,
+      "exit": 2586.23,
+      "outcome": "WIN",
+      "pnl_pct": 1.2,
+      "bars_held": 7,
+      "confirmations": [
+        "BEARISH_ENGULFING",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 5.0
+    },
+    {
+      "bar": 1103,
+      "time": "2024-01-12 11:45:00",
+      "regime": "BULL",
+      "direction": "SHORT",
+      "entry": 2647.59,
+      "tp": 2615.82,
+      "sl": 2660.83,
+      "exit": 2660.83,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 1,
+      "confirmations": [
+        "RSI_OVERBOUGHT",
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "DOJI_AT_BAND",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 5.3
+    },
+    {
+      "bar": 1105,
+      "time": "2024-01-12 12:15:00",
+      "regime": "BULL",
+      "direction": "SHORT",
+      "entry": 2674.82,
+      "tp": 2642.72,
+      "sl": 2688.19,
+      "exit": 2642.72,
+      "outcome": "WIN",
+      "pnl_pct": 1.2,
+      "bars_held": 2,
+      "confirmations": [
+        "RSI_OVERBOUGHT",
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 4.3
+    },
+    {
+      "bar": 1189,
+      "time": "2024-01-13 09:15:00",
+      "regime": "BEAR",
+      "direction": "LONG",
+      "entry": 2544.93,
+      "tp": 2575.47,
+      "sl": 2532.21,
+      "exit": 2532.21,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 3,
+      "confirmations": [
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "DOJI_AT_BAND"
+      ],
+      "score": 4.5
+    },
+    {
+      "bar": 1218,
+      "time": "2024-01-13 16:30:00",
+      "regime": "BULL",
+      "direction": "SHORT",
+      "entry": 2561.58,
+      "tp": 2530.84,
+      "sl": 2574.39,
+      "exit": 2574.39,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 11,
+      "confirmations": [
+        "RSI_DIVERGENCE",
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 6.5
+    },
+    {
+      "bar": 1235,
+      "time": "2024-01-13 20:45:00",
+      "regime": "BULL",
+      "direction": "SHORT",
+      "entry": 2568.76,
+      "tp": 2537.93,
+      "sl": 2581.6,
+      "exit": 2581.6,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 9,
+      "confirmations": [
+        "BEARISH_ENGULFING",
+        "RSI_DIVERGENCE",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 6.0
+    },
+    {
+      "bar": 1262,
+      "time": "2024-01-14 03:30:00",
+      "regime": "RANGING",
+      "direction": "LONG",
+      "entry": 2554.6,
+      "tp": 2585.26,
+      "sl": 2541.83,
+      "exit": 2541.83,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 4,
+      "confirmations": [
+        "RSI_DIVERGENCE",
+        "REJECTION_WICK",
+        "DOJI_AT_BAND",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 5.5
+    },
+    {
+      "bar": 1264,
+      "time": "2024-01-14 04:00:00",
+      "regime": "BEAR",
+      "direction": "LONG",
+      "entry": 2553.49,
+      "tp": 2584.13,
+      "sl": 2540.72,
+      "exit": 2540.72,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 22,
+      "confirmations": [
+        "RSI_DIVERGENCE",
+        "VOL_EXHAUSTION",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 5.0
+    },
+    {
+      "bar": 1265,
+      "time": "2024-01-14 04:15:00",
+      "regime": "BEAR",
+      "direction": "LONG",
+      "entry": 2551.09,
+      "tp": 2581.7,
+      "sl": 2538.33,
+      "exit": 2538.33,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 27,
+      "confirmations": [
+        "RSI_DIVERGENCE",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 4.5
+    },
+    {
+      "bar": 1328,
+      "time": "2024-01-14 20:00:00",
+      "regime": "BEAR",
+      "direction": "LONG",
+      "entry": 2510.99,
+      "tp": 2541.12,
+      "sl": 2498.44,
+      "exit": 2498.44,
+      "outcome": "LOSS",
+      "pnl_pct": -0.5,
+      "bars_held": 12,
+      "confirmations": [
+        "RSI_DIVERGENCE",
+        "VOL_EXHAUSTION",
+        "REJECTION_WICK",
+        "MULTIPLE_TOUCHES"
+      ],
+      "score": 6.5
+    }
+  ]
+}

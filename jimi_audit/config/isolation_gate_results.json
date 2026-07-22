@@ -65,12 +65,13 @@
   },
   "judas_sweep": {
     "passed": true,
-    "p_value": 0.04,
+    "p_value": 0.003,
     "effect_direction": "correct",
-    "mean_return_pct": 0.103,
-    "events": 1895,
-    "date": "2026-07-13",
-    "notes": "RESURRECTED. v3: daily/session H/L + rejection wick + volume. Extended data (88K bars)."
+    "mean_return_pct": 0.154,
+    "events": 1038,
+    "date": "2026-07-19",
+    "direction": "SHORT",
+    "notes": "8-Agent: SHORT only. 1038 evt, +0.154% 4h p=0.003, +0.225% 6h p=0.0004. BULL+LOW best. MID dead."
   },
   "failed_breakout": {
     "passed": true,
@@ -83,13 +84,15 @@
   },
   "bb_mom6": {
     "passed": false,
-    "p_value": 0.3105,
-    "effect_direction": "backwards",
-    "mean_return_pct": -0.714,
-    "events": 2921,
-    "date": "2026-07-12",
     "killed": true,
-    "notes": "KILLED. BB mean reversion has no structural edge on ETH 15m."
+    "p_value": 0.9358,
+    "effect_direction": "backwards",
+    "mean_return_pct": -0.0243,
+    "events": 2119,
+    "wr": 0.304,
+    "pf": 0.93,
+    "date": "2026-07-16",
+    "notes": "KILLED (confirmed). Extended backtest 88K bars: 2119 events, 30.4% WR, PF=0.93, mean=-0.024%. All regimes negative. BB mean reversion has no edge on ETH 15m."
   },
   "momentum_v3": {
     "passed": false,
@@ -112,14 +115,13 @@
     "notes": "KILLED (no data). Zero events. Revived as v3."
   },
   "squeeze_breakout": {
-    "passed": false,
-    "p_value": 1.0,
-    "effect_direction": "n/a",
-    "mean_return_pct": 0.0,
-    "events": 0,
-    "date": "2026-07-13",
-    "killed": true,
-    "notes": "KILLED (no data). Zero events."
+    "passed": true,
+    "p_value": 0.0049,
+    "effect_direction": "correct",
+    "mean_return_pct": 0.2172,
+    "events": 87,
+    "date": "2026-07-14",
+    "notes": "v2: independent ATR/BB squeeze, Q>=0.80, 63.2% WR. 18000-bar backtest."
   },
   "scalp_v2": {
     "passed": false,
@@ -153,12 +155,31 @@
   },
   "liquidation_cascade": {
     "passed": true,
-    "p_value": 0.0,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.0,
-    "events": 0,
-    "date": "2026-07-14",
-    "notes": "v2: real Bybit liquidation data. Bypasses gates."
+    "date": "2026-07-19",
+    "configs": {
+      "OI<-0.01 + LS>1.5": {
+        "passed": true,
+        "events": 87,
+        "mean_pct": 0.3752,
+        "p": 0.0108,
+        "wr": 0.6207
+      },
+      "OI<-0.015 + LS>1.5": {
+        "passed": true,
+        "events": 29,
+        "mean_pct": 0.9761,
+        "p": 0.0003,
+        "wr": 0.8276
+      },
+      "OI<-0.015 only": {
+        "passed": true,
+        "events": 35,
+        "mean_pct": 0.863,
+        "p": 0.0084,
+        "wr": 0.7429
+      }
+    },
+    "notes": "Auto-updated by jimi_toolkit.py gate"
   },
   "taker_flow": {
     "passed": true,
@@ -170,13 +191,10 @@
     "notes": "v2: z-score thresholds. Needs live validation."
   },
   "liquidity_grab": {
-    "passed": true,
-    "p_value": 0.0,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.0,
-    "events": 0,
-    "date": "2026-07-14",
-    "notes": "v2: OB collector + independent S/R + persistence + spoofing. Needs validation."
+    "passed": false,
+    "killed": true,
+    "date": "2026-07-19",
+    "notes": "KILLED: derivatives on ETH perps has no tradeable alpha. v2-v5 all dead."
   },
   "cascade": {
     "passed": false,
@@ -219,13 +237,16 @@
     "notes": "KILLED (real data). Every bar in kill zones = no selectivity."
   },
   "structural_break": {
-    "passed": true,
-    "p_value": 0.0,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.0,
-    "events": 0,
-    "date": "2026-07-14",
-    "notes": "v2: independent BOS/ChoCH detection + momentum confirmation. Needs validation."
+    "passed": false,
+    "killed": true,
+    "p_value": 0.8591,
+    "effect_direction": "backwards",
+    "mean_return_pct": -0.0448,
+    "events": 145,
+    "wr": 0.455,
+    "pf": 0.84,
+    "date": "2026-07-16",
+    "notes": "KILLED. v3 backtest: 145 events, 45.5% WR, PF=0.84. Negative edge \u2014 loses money."
   },
   "vol_rotation": {
     "passed": false,
@@ -238,12 +259,23 @@
     "notes": "KILLED (real data). Effect too small to cover costs."
   },
   "forced_movement": {
-    "passed": true,
-    "p_value": 0.0,
-    "effect_direction": "correct",
+    "passed": false,
+    "p_value": 1.0,
+    "effect_direction": "unknown",
     "mean_return_pct": 0.0,
     "events": 0,
-    "date": "2026-07-14",
-    "notes": "Structural strategy \u2014 bypasses standard gate. Validated by mechanism (OI divergence + funding squeeze + liq cascade), not by statistical gate. Data collection started 2026-07-14."
+    "date": "2026-07-16",
+    "notes": "No historical signals in strategy_signals.jsonl. Needs live data collection before backtesting.",
+    "needs_validation": true
+  },
+  "funding_squeeze": {
+    "passed": true,
+    "p_value": 0.003,
+    "effect_direction": "correct",
+    "mean_return_pct": -0.153,
+    "events": 602,
+    "date": "2026-07-19",
+    "direction": "SHORT",
+    "notes": "FR z-score > 1.25 SHORT. 602 evt, -0.153% 4h p=0.003, WR=53.8%. MID vol PF=3.01. Skip LOW vol."
   }
 }

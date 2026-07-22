@@ -391,6 +391,7 @@ def ensure_csv_fresh(csv_path=None):
 
 
 def run_full_scan(config=None, df_1d_hist=None):
+    print("DEBUG: run_scans started")
     """Run a full scan programmatically and return the result dict.
 
     Mirrors the logic in main() but without argparse/CLI dependencies.
@@ -5891,20 +5892,20 @@ def main():
             if best and not _flip_detected:
                 result['strategy_signal'] = best
                 result['status'] = 'SIGNAL'
-            result['source'] = f"strategy:{best['strategy']}"
-            result['reason'] = best['reason']
-            result['entry'] = best['entry']
-            result['sl'] = best['sl']
-            result['tp1'] = best['tp1']
-            result['tp2'] = best['tp2']
-            result['tp3'] = best['tp3']
-            result['sl_pct'] = best['sl_pct']
-            result['tp1_pct'] = best['tp1_pct']
-            result['direction'] = best['direction']
-            print(f"  🎯 Multi-strategy signal: {best['strategy']} → {best['direction']} "
-                  f"(conviction={best['conviction']:.0%}, rr={best['rr1']:.1f}x)")
-            print(f"     Entry: ${best['entry']:.2f} | SL: ${best['sl']:.2f} ({best['sl_pct']:.2f}%) | "
-                  f"TP1: ${best['tp1']:.2f} ({best['tp1_pct']:.2f}%) | RR: {best['rr1']:.2f}x")
+                result['source'] = f"strategy:{best['strategy']}"
+                result['reason'] = best['reason']
+                result['entry'] = best['entry']
+                result['sl'] = best['sl']
+                result['tp1'] = best['tp1']
+                result['tp2'] = best['tp2']
+                result['tp3'] = best['tp3']
+                result['sl_pct'] = best['sl_pct']
+                result['tp1_pct'] = best['tp1_pct']
+                result['direction'] = best['direction']
+                print(f"  🎯 Multi-strategy signal: {best['strategy']} → {best['direction']} "
+                      f"(conviction={best['conviction']:.0%}, rr={best['rr1']:.1f}x)")
+                print(f"     Entry: ${best['entry']:.2f} | SL: ${best['sl']:.2f} ({best['sl_pct']:.2f}%) | "
+                      f"TP1: ${best['tp1']:.2f} ({best['tp1_pct']:.2f}%) | RR: {best['rr1']:.2f}x")
         elif best:
             print(f"  📊 Multi-strategy best: {best['strategy']} → {best['direction']} "
                   f"(conviction={best['conviction']:.0%}), but main signal already active")
@@ -6053,6 +6054,16 @@ def main():
     with open(scan_file, 'w') as f:
         json.dump(result, f, indent=2, default=str)
     print(f"\n  💾 Saved: {scan_file}")
+
+    # === POST-SCAN LLM ANALYSIS (via free-proxy) ===
+    try:
+        import threading
+        from scripts.post_scan_analysis import run_analysis
+        threading.Thread(target=run_analysis, args=(result,), daemon=True).start()
+        print("  LLM analysis triggered (background)")
+    except Exception as _analysis_err:
+        print(f"  LLM analysis hook error: {_analysis_err}")
+
 
     if args.json:
         # Add conflict resolution and phase detection to JSON output

@@ -1,0 +1,31 @@
+{
+  "events": 372,
+  "horizons": {
+    "1bar": {
+      "mean_pct": 0.0098,
+      "n": 372,
+      "p": 0.6155
+    },
+    "4bar": {
+      "mean_pct": 0.0158,
+      "n": 372,
+      "p": 0.5906
+    },
+    "16bar": {
+      "mean_pct": 0.0368,
+      "n": 372,
+      "p": 0.3986
+    },
+    "24bar": {
+      "mean_pct": 0.0992,
+      "n": 372,
+      "p": 0.1193
+    }
+  },
+  "best_h": "24bar",
+  "best_p": 0.1193,
+  "best_mean_pct": 0.0992,
+  "dir_correct": "True",
+  "gate_passed": false,
+  "reason": "p=0.1193; effect 0.0992% < costs"
+}

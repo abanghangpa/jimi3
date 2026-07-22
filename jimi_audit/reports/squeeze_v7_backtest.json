@@ -1,0 +1,403 @@
+{
+  "timestamp": "2026-07-18T07:44:51.190062+00:00",
+  "data_candles": 89209,
+  "v6_signals": 5,
+  "v7_signals": 39,
+  "v6_default": {
+    "label": "v6_default",
+    "trades": 5,
+    "wins": 2,
+    "losses": 3,
+    "timeouts": 0,
+    "wr": 40.0,
+    "pf": 1.493,
+    "avg_win": 0.9984,
+    "avg_loss": -0.4459,
+    "avg_timeout": 0,
+    "avg_rr": 2.239,
+    "total_pnl": 0.66,
+    "max_dd": 0.47,
+    "sharpe": 33.287,
+    "max_win_streak": 1,
+    "max_loss_streak": 2,
+    "session_stats": {
+      "ASIA": {
+        "trades": 2,
+        "wr": 0.0,
+        "pnl": -0.91
+      },
+      "EU": {
+        "trades": 2,
+        "wr": 50.0,
+        "pnl": 0.91
+      },
+      "US": {
+        "trades": 1,
+        "wr": 100.0,
+        "pnl": 0.65
+      }
+    }
+  },
+  "v7_default": {
+    "label": "v7_default",
+    "trades": 39,
+    "wins": 7,
+    "losses": 29,
+    "timeouts": 3,
+    "wr": 17.95,
+    "pf": 0.554,
+    "avg_win": 0.7874,
+    "avg_loss": -0.3352,
+    "avg_timeout": -0.0766,
+    "avg_rr": 2.349,
+    "total_pnl": -4.44,
+    "max_dd": 5.04,
+    "sharpe": -46.402,
+    "max_win_streak": 2,
+    "max_loss_streak": 9,
+    "session_stats": {
+      "ASIA": {
+        "trades": 12,
+        "wr": 8.3,
+        "pnl": -1.32
+      },
+      "EU": {
+        "trades": 11,
+        "wr": 36.4,
+        "pnl": -0.02
+      },
+      "US": {
+        "trades": 10,
+        "wr": 10.0,
+        "pnl": -2.24
+      },
+      "LATE_US": {
+        "trades": 6,
+        "wr": 16.7,
+        "pnl": -0.86
+      }
+    }
+  },
+  "v6_best": {
+    "label": "v6_default",
+    "trades": 5,
+    "wins": 2,
+    "losses": 3,
+    "timeouts": 0,
+    "wr": 40.0,
+    "pf": 1.493,
+    "avg_win": 0.9984,
+    "avg_loss": -0.4459,
+    "avg_timeout": 0,
+    "avg_rr": 2.239,
+    "total_pnl": 0.66,
+    "max_dd": 0.47,
+    "sharpe": 33.287,
+    "max_win_streak": 1,
+    "max_loss_streak": 2,
+    "session_stats": {
+      "ASIA": {
+        "trades": 2,
+        "wr": 0.0,
+        "pnl": -0.91
+      },
+      "EU": {
+        "trades": 2,
+        "wr": 50.0,
+        "pnl": 0.91
+      },
+      "US": {
+        "trades": 1,
+        "wr": 100.0,
+        "pnl": 0.65
+      }
+    }
+  },
+  "v7_best": {
+    "label": "v7_tp3.0_sl0.75_h8",
+    "trades": 39,
+    "wins": 5,
+    "losses": 27,
+    "timeouts": 7,
+    "wr": 12.82,
+    "pf": 0.689,
+    "avg_win": 1.051,
+    "avg_loss": -0.3446,
+    "avg_timeout": 0.1562,
+    "avg_rr": 3.05,
+    "total_pnl": -2.96,
+    "max_dd": 3.83,
+    "sharpe": -27.585,
+    "max_win_streak": 1,
+    "max_loss_streak": 6,
+    "session_stats": {
+      "ASIA": {
+        "trades": 12,
+        "wr": 8.3,
+        "pnl": -0.37
+      },
+      "EU": {
+        "trades": 11,
+        "wr": 18.2,
+        "pnl": -0.38
+      },
+      "US": {
+        "trades": 10,
+        "wr": 10.0,
+        "pnl": -1.52
+      },
+      "LATE_US": {
+        "trades": 6,
+        "wr": 16.7,
+        "pnl": -0.7
+      }
+    }
+  },
+  "v6_top5": [],
+  "v7_top5": [
+    {
+      "params": {
+        "tp_mult": 3.0,
+        "sl_mult": 0.75,
+        "hold": 8,
+        "cooldown": 2
+      },
+      "stats": {
+        "label": "v7_tp3.0_sl0.75_h8",
+        "trades": 39,
+        "wins": 5,
+        "losses": 27,
+        "timeouts": 7,
+        "wr": 12.82,
+        "pf": 0.689,
+        "avg_win": 1.051,
+        "avg_loss": -0.3446,
+        "avg_timeout": 0.1562,
+        "avg_rr": 3.05,
+        "total_pnl": -2.96,
+        "max_dd": 3.83,
+        "sharpe": -27.585,
+        "max_win_streak": 1,
+        "max_loss_streak": 6,
+        "session_stats": {
+          "ASIA": {
+            "trades": 12,
+            "wr": 8.3,
+            "pnl": -0.37
+          },
+          "EU": {
+            "trades": 11,
+            "wr": 18.2,
+            "pnl": -0.38
+          },
+          "US": {
+            "trades": 10,
+            "wr": 10.0,
+            "pnl": -1.52
+          },
+          "LATE_US": {
+            "trades": 6,
+            "wr": 16.7,
+            "pnl": -0.7
+          }
+        }
+      }
+    },
+    {
+      "params": {
+        "tp_mult": 3.0,
+        "sl_mult": 0.75,
+        "hold": 16,
+        "cooldown": 2
+      },
+      "stats": {
+        "label": "v7_tp3.0_sl0.75_h16",
+        "trades": 39,
+        "wins": 7,
+        "losses": 29,
+        "timeouts": 3,
+        "wr": 17.95,
+        "pf": 0.676,
+        "avg_win": 0.9609,
+        "avg_loss": -0.3352,
+        "avg_timeout": -0.0766,
+        "avg_rr": 2.867,
+        "total_pnl": -3.22,
+        "max_dd": 4.21,
+        "sharpe": -29.172,
+        "max_win_streak": 2,
+        "max_loss_streak": 9,
+        "session_stats": {
+          "ASIA": {
+            "trades": 12,
+            "wr": 8.3,
+            "pnl": -0.98
+          },
+          "EU": {
+            "trades": 11,
+            "wr": 36.4,
+            "pnl": 0.52
+          },
+          "US": {
+            "trades": 10,
+            "wr": 10.0,
+            "pnl": -2.07
+          },
+          "LATE_US": {
+            "trades": 6,
+            "wr": 16.7,
+            "pnl": -0.7
+          }
+        }
+      }
+    },
+    {
+      "params": {
+        "tp_mult": 3.0,
+        "sl_mult": 0.75,
+        "hold": 12,
+        "cooldown": 2
+      },
+      "stats": {
+        "label": "v7_tp3.0_sl0.75_h12",
+        "trades": 39,
+        "wins": 6,
+        "losses": 28,
+        "timeouts": 5,
+        "wr": 15.38,
+        "pf": 0.656,
+        "avg_win": 0.9815,
+        "avg_loss": -0.3382,
+        "avg_timeout": 0.0612,
+        "avg_rr": 2.902,
+        "total_pnl": -3.28,
+        "max_dd": 4.15,
+        "sharpe": -30.718,
+        "max_win_streak": 1,
+        "max_loss_streak": 6,
+        "session_stats": {
+          "ASIA": {
+            "trades": 12,
+            "wr": 8.3,
+            "pnl": -0.51
+          },
+          "EU": {
+            "trades": 11,
+            "wr": 27.3,
+            "pnl": -0.22
+          },
+          "US": {
+            "trades": 10,
+            "wr": 10.0,
+            "pnl": -1.85
+          },
+          "LATE_US": {
+            "trades": 6,
+            "wr": 16.7,
+            "pnl": -0.7
+          }
+        }
+      }
+    },
+    {
+      "params": {
+        "tp_mult": 3.0,
+        "sl_mult": 1.0,
+        "hold": 8,
+        "cooldown": 2
+      },
+      "stats": {
+        "label": "v7_tp3.0_sl1.0_h8",
+        "trades": 39,
+        "wins": 5,
+        "losses": 25,
+        "timeouts": 9,
+        "wr": 12.82,
+        "pf": 0.65,
+        "avg_win": 1.051,
+        "avg_loss": -0.4402,
+        "avg_timeout": 0.2034,
+        "avg_rr": 2.388,
+        "total_pnl": -3.92,
+        "max_dd": 5.14,
+        "sharpe": -33.637,
+        "max_win_streak": 1,
+        "max_loss_streak": 6,
+        "session_stats": {
+          "ASIA": {
+            "trades": 12,
+            "wr": 8.3,
+            "pnl": 0.48
+          },
+          "EU": {
+            "trades": 11,
+            "wr": 18.2,
+            "pnl": -1.01
+          },
+          "US": {
+            "trades": 10,
+            "wr": 10.0,
+            "pnl": -2.28
+          },
+          "LATE_US": {
+            "trades": 6,
+            "wr": 16.7,
+            "pnl": -1.1
+          }
+        }
+      }
+    },
+    {
+      "params": {
+        "tp_mult": 3.0,
+        "sl_mult": 1.25,
+        "hold": 8,
+        "cooldown": 2
+      },
+      "stats": {
+        "label": "v7_tp3.0_sl1.25_h8",
+        "trades": 39,
+        "wins": 6,
+        "losses": 23,
+        "timeouts": 10,
+        "wr": 15.38,
+        "pf": 0.636,
+        "avg_win": 0.9582,
+        "avg_loss": -0.537,
+        "avg_timeout": 0.2041,
+        "avg_rr": 1.784,
+        "total_pnl": -4.56,
+        "max_dd": 6.03,
+        "sharpe": -36.212,
+        "max_win_streak": 2,
+        "max_loss_streak": 5,
+        "session_stats": {
+          "ASIA": {
+            "trades": 12,
+            "wr": 16.7,
+            "pnl": 1.64
+          },
+          "EU": {
+            "trades": 11,
+            "wr": 18.2,
+            "pnl": -1.65
+          },
+          "US": {
+            "trades": 10,
+            "wr": 10.0,
+            "pnl": -3.05
+          },
+          "LATE_US": {
+            "trades": 6,
+            "wr": 16.7,
+            "pnl": -1.5
+          }
+        }
+      }
+    }
+  ],
+  "target_wr": 75.0,
+  "target_pf": 2.0,
+  "target_trades": 200,
+  "targets_met": false
+}

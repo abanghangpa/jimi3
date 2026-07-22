@@ -12,6 +12,10 @@ from pathlib import Path
 def load_data(filepath):
     """Load 15m OHLCV CSV and normalize columns."""
     df = pd.read_csv(filepath, low_memory=False)
+    # Keep only first 11 columns (expected OHLCV fields)
+    expected_cols = 11
+    if df.shape[1] > expected_cols:
+        df = df.iloc[:, :expected_cols]
     df.columns = df.columns.str.strip()
     df['Open time'] = pd.to_datetime(df['Open time'].astype(str).str.strip(), format='mixed')
     # Close time may be raw ms or formatted datetime

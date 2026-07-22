@@ -1,0 +1,282 @@
+"""S06: Liquidity Grab v3 — derivatives-filtered S/R reversal.
+
+v2 → v3 CHANGES:
+1. REMOVED OB collector dependency (too sparse — 150 snapshots)
+2. ADDED derivatives filters: funding rate, OI, taker flow, L/S ratio
+3. FIXED look-ahead bias: S/R detection uses only backward-looking bars
+4. Requires 2+ derivatives confirmations before entry
+5. Funding divergence is the primary signal (structural: crowded positions at S/R get squeezed)
+
+Hypothesis: When funding is high at an S/R level, the crowd is positioned one way.
+The S/R level becomes a trap — funding squeeze forces the reversal.
+"""
+from .base import BaseStrategy, SignalResult
+import numpy as np
+import json, os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+FM_STATE = os.path.join(BASE_DIR, "data", "forced_movement", "fm_state.json")
+DERIV_FILE = os.path.join(BASE_DIR, "data", "derivatives_history", "derivatives_collected.csv")
+
+BAD_HOURS = {4, 5, 6, 19, 20, 22, 23}
+
+
+def _read_fm_state():
+    """Read forced_movement state (funding, OI, basis)."""
+    if not os.path.exists(FM_STATE):
+        return None
+    try:
+        with open(FM_STATE) as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+
+def _read_deriv_history(n=100):
+    """Read last N rows of derivatives history for z-score computation."""
+    if not os.path.exists(DERIV_FILE):
+        return None
+    try:
+        import pandas as pd
+        df = pd.read_csv(DERIV_FILE, on_bad_lines="skip")
+        for c in ["oi", "ls_ratio", "futures_taker_ratio", "funding_rate"]:
+            if c in df.columns:
+                df[c] = pd.to_numeric(df[c], errors="coerce")
+        return df.tail(n)
+    except Exception:
+        return None
+
+
+def _find_sr_levels(df_15m, idx, lookback=96):
+    """
+    Find S/R levels from swing points — BACKWARD LOOKING ONLY.
+    No look-ahead bias: only uses bars before current index.
+    """
+    if idx < lookback:
+        return []
+
+    highs = df_15m["High"].values.astype(float)
+    lows = df_15m["Low"].values.astype(float)
+    volumes = df_15m["Volume"].values.astype(float)
+    levels = []
+
+    # Swing highs: only look BACKWARD (bars[idx-3] to bars[idx-lookback])
+    for i in range(3, min(lookback, idx)):
+        bar_idx = idx - i
+        if bar_idx < 3:
+            continue
+        if (highs[bar_idx] > highs[bar_idx - 1] and
+            highs[bar_idx] > highs[bar_idx - 2] and
+            highs[bar_idx] > highs[bar_idx - 3]):
+            level_price = highs[bar_idx]
+            touches = 0
+            for j in range(max(0, bar_idx - 10), bar_idx + 1):
+                if abs(highs[j] - level_price) / level_price < 0.002:
+                    touches += 1
+            levels.append({
+                "price": level_price, "type": "resistance",
+                "touches": touches, "bars_ago": idx - bar_idx,
+                "strength": touches * (1 + np.log1p(volumes[bar_idx])),
+            })
+
+    # Swing lows: only look BACKWARD
+    for i in range(3, min(lookback, idx)):
+        bar_idx = idx - i
+        if bar_idx < 3:
+            continue
+        if (lows[bar_idx] < lows[bar_idx - 1] and
+            lows[bar_idx] < lows[bar_idx - 2] and
+            lows[bar_idx] < lows[bar_idx - 3]):
+            level_price = lows[bar_idx]
+            touches = 0
+            for j in range(max(0, bar_idx - 10), bar_idx + 1):
+                if abs(lows[j] - level_price) / level_price < 0.002:
+                    touches += 1
+            levels.append({
+                "price": level_price, "type": "support",
+                "touches": touches, "bars_ago": idx - bar_idx,
+                "strength": touches * (1 + np.log1p(volumes[bar_idx])),
+            })
+
+    # Deduplicate: cluster within 0.2%
+    deduped = []
+    for lv in sorted(levels, key=lambda x: x["bars_ago"]):
+        found = False
+        for d in deduped:
+            if abs(lv["price"] - d["price"]) / d["price"] < 0.002:
+                d["touches"] = d.get("touches", 1) + lv.get("touches", 1)
+                d["strength"] = max(d["strength"], lv["strength"])
+                found = True
+                break
+        if not found:
+            deduped.append(lv)
+
+    deduped.sort(key=lambda x: x["strength"], reverse=True)
+    return deduped[:10]
+
+
+class LiquidityGrabStrategy(BaseStrategy):
+    name = "liquidity_grab"
+    strategy_type = "structure"
+    description = "v3: derivatives-filtered S/R (funding + OI + taker + L/S)"
+
+    def check(self, data, df_15m=None, idx=None, **kwargs):
+        price = data.get("price", 0)
+        atr = data.get("atr", 0)
+        if not price or not atr or df_15m is None or idx is None:
+            return None
+
+        # ── SESSION FILTER ──
+        ts = data.get("timestamp", "")
+        if ts:
+            try:
+                hour = int(ts[11:13])
+                if hour in BAD_HOURS:
+                    return None
+            except (ValueError, IndexError):
+                pass
+
+        # ── READ DERIVATIVES STATE ──
+        fm_state = _read_fm_state()
+        if not fm_state:
+            return None
+
+        funding_72h = fm_state.get("funding_72h", {}).get("cumulative_72h", 0)
+        oi_roc = fm_state.get("oi_roc_1h", {}).get("oi_roc", 0)
+        basis = fm_state.get("basis", {}).get("basis_pct", 0)
+
+        # ── READ DERIVATIVES HISTORY FOR Z-SCORES ──
+        deriv = _read_deriv_history(100)
+        ls_zscore = 0
+        taker_zscore = 0
+        funding_rate = 0
+
+        if deriv is not None and len(deriv) > 20:
+            if "ls_ratio" in deriv.columns:
+                ls_mean = deriv["ls_ratio"].mean()
+                ls_std = deriv["ls_ratio"].std()
+                if ls_std > 0:
+                    ls_zscore = (deriv["ls_ratio"].iloc[-1] - ls_mean) / ls_std
+            if "futures_taker_ratio" in deriv.columns:
+                taker_mean = deriv["futures_taker_ratio"].mean()
+                taker_std = deriv["futures_taker_ratio"].std()
+                if taker_std > 0:
+                    taker_zscore = (deriv["futures_taker_ratio"].iloc[-1] - taker_mean) / taker_std
+            if "funding_rate" in deriv.columns:
+                funding_rate = deriv["funding_rate"].iloc[-1]
+
+        # ── FIND S/R LEVELS (backward only) ──
+        sr_levels = _find_sr_levels(df_15m, idx, lookback=96)
+        if not sr_levels:
+            return None
+
+        # ── CHECK IF PRICE IS NEAR A LEVEL ──
+        direction = None
+        best_level = None
+        proximity = 0
+
+        for level in sr_levels:
+            dist = abs(price - level["price"]) / atr
+            if dist < 1.0:
+                if level["type"] == "support" and price > level["price"]:
+                    direction = "LONG"
+                    best_level = level
+                    proximity = 1.0 - dist
+                    break
+                elif level["type"] == "resistance" and price < level["price"]:
+                    direction = "SHORT"
+                    best_level = level
+                    proximity = 1.0 - dist
+                    break
+
+        if not direction or not best_level:
+            return None
+
+        # ── DERIVATIVES CONFIRMATIONS (need 2+) ──
+        confirms = 0
+        confirm_details = []
+
+        # 1. Funding divergence (primary signal)
+        funding_confirm = 0
+        if direction == "LONG":
+            # Negative funding at support = shorts paying, longs have edge
+            if funding_72h < -0.0005:
+                funding_confirm = 1
+                confirm_details.append(f"funding_72h={funding_72h:.6f}")
+            # High positive funding at support = crowded longs, squeeze risk
+            elif funding_72h > 0.001:
+                funding_confirm = 1
+                confirm_details.append(f"funding_crowded={funding_72h:.6f}")
+        elif direction == "SHORT":
+            if funding_72h > 0.0005:
+                funding_confirm = 1
+                confirm_details.append(f"funding_72h={funding_72h:.6f}")
+            elif funding_72h < -0.001:
+                funding_confirm = 1
+                confirm_details.append(f"funding_crowded={funding_72h:.6f}")
+        confirms += funding_confirm
+
+        # 2. OI momentum
+        oi_confirm = 0
+        if abs(oi_roc) > 0.001:  # OI changing significantly
+            oi_confirm = 1
+            confirm_details.append(f"oi_roc={oi_roc:.6f}")
+        confirms += oi_confirm
+
+        # 3. Taker flow direction
+        taker_confirm = 0
+        if direction == "LONG" and taker_zscore > 0.5:
+            taker_confirm = 1
+            confirm_details.append(f"taker_z={taker_zscore:.2f}")
+        elif direction == "SHORT" and taker_zscore < -0.5:
+            taker_confirm = 1
+            confirm_details.append(f"taker_z={taker_zscore:.2f}")
+        confirms += taker_confirm
+
+        # 4. L/S ratio (crowding)
+        ls_confirm = 0
+        if direction == "LONG" and ls_zscore < 0.5:
+            ls_confirm = 1  # not crowded long
+            confirm_details.append(f"ls_z={ls_zscore:.2f}")
+        elif direction == "SHORT" and ls_zscore > -0.5:
+            ls_confirm = 1  # not crowded short
+            confirm_details.append(f"ls_z={ls_zscore:.2f}")
+        confirms += ls_confirm
+
+        # Need 2+ confirmations
+        if confirms < 2:
+            return None
+
+        # ── CONVICTION ──
+        base = 0.35
+        level_bonus = min(best_level["strength"] / 20, 0.15)
+        proximity_bonus = proximity * 0.10
+        confirm_bonus = confirms * 0.08  # up to 0.32 for 4 confirms
+        conviction = min(base + level_bonus + proximity_bonus + confirm_bonus, 0.85)
+
+        if conviction < 0.45:
+            return None
+
+        # ── TP/SL ──
+        sl, tp1, tp2, tp3, sl_pct, tp1_pct = self._calc_levels(
+            price, direction, atr, tp_mults=(1.5, 2.5, 4.0), sl_mult=1.0)
+
+        return SignalResult(
+            strategy_name=self.name, strategy_type=self.strategy_type,
+            direction=direction, conviction=conviction,
+            entry=price, sl=sl, tp1=tp1, tp2=tp2, tp3=tp3,
+            sl_pct=sl_pct, tp1_pct=tp1_pct,
+            size_mult=0.7,
+            reason=(f"Liq grab v3 {direction}: {best_level['type']} "
+                    f"${best_level['price']:.2f} touches={best_level['touches']} "
+                    f"confirms={confirms}/4 [{', '.join(confirm_details)}]"),
+            bypass_gates=False,
+            details={
+                "level_price": best_level["price"], "level_type": best_level["type"],
+                "touches": best_level["touches"], "bars_ago": best_level["bars_ago"],
+                "funding_72h": funding_72h, "oi_roc": oi_roc, "basis_pct": basis,
+                "ls_zscore": ls_zscore, "taker_zscore": taker_zscore,
+                "confirms": confirms, "confirm_details": confirm_details,
+                "proximity": proximity, "version": "v3",
+            },
+        )

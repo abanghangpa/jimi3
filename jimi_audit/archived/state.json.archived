@@ -1,0 +1,19 @@
+{
+  "capital": 200.0,
+  "peak_capital": 200.0,
+  "positions": [],
+  "closed_trades": [],
+  "total_pnl": 0,
+  "total_fees": 0,
+  "trades_count": 0,
+  "wins": 0,
+  "losses": 0,
+  "withdrawals": [],
+  "total_withdrawn": 0,
+  "dd_cooldown_until": null,
+  "dd_triggered_count": 0,
+  "current_strategy": "scanner_executor",
+  "last_signal_check": null,
+  "vol_gate_skips": 0,
+  "vol_gate_active": true
+}

@@ -1,0 +1,74 @@
+{
+  "extreme_long": {
+    "passed": false,
+    "p_value": 0.2962,
+    "effect_direction": "correct",
+    "mean_return_pct": 0.109,
+    "events": 461,
+    "scenario_label": "Extreme Long Crowding"
+  },
+  "extreme_short": {
+    "passed": true,
+    "p_value": 0.0027,
+    "effect_direction": "correct",
+    "mean_return_pct": 0.1563,
+    "events": 2638,
+    "scenario_label": "Extreme Short Crowding"
+  },
+  "oi_crash": {
+    "passed": true,
+    "p_value": 0.0,
+    "effect_direction": "correct",
+    "mean_return_pct": 0.1165,
+    "events": 10073,
+    "scenario_label": "OI Crash"
+  },
+  "whale_accumulation": {
+    "passed": true,
+    "p_value": 0.0534,
+    "effect_direction": "correct",
+    "mean_return_pct": 1.0818,
+    "events": 7406,
+    "scenario_label": "Whale Accumulation"
+  },
+  "whale_distribution": {
+    "passed": true,
+    "p_value": 0.0001,
+    "effect_direction": "correct",
+    "mean_return_pct": 0.1161,
+    "events": 7850,
+    "scenario_label": "Whale Distribution"
+  },
+  "taker_buy_surge": {
+    "passed": true,
+    "p_value": 0.0171,
+    "effect_direction": "correct",
+    "mean_return_pct": 1.2209,
+    "events": 9945,
+    "scenario_label": "Aggressive Taker Buying"
+  },
+  "taker_sell_surge": {
+    "passed": true,
+    "p_value": 0.0,
+    "effect_direction": "correct",
+    "mean_return_pct": 0.1142,
+    "events": 10561,
+    "scenario_label": "Aggressive Taker Selling"
+  },
+  "obi_strong_bid": {
+    "passed": false,
+    "p_value": 0.5644,
+    "effect_direction": "backwards",
+    "mean_return_pct": -0.264,
+    "events": 34,
+    "scenario_label": "Strong Bid Support"
+  },
+  "obi_strong_ask": {
+    "passed": false,
+    "p_value": 0.491,
+    "effect_direction": "correct",
+    "mean_return_pct": 0.1858,
+    "events": 43,
+    "scenario_label": "Strong Ask Pressure"
+  }
+}

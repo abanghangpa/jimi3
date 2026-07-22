@@ -1,0 +1,23 @@
+{
+  "positioning_fade": {
+    "passed": false,
+    "events": 0,
+    "p_value": 1.0,
+    "mean_return_pct": 0,
+    "effect_direction": "insufficient"
+  },
+  "whale_watch": {
+    "passed": false,
+    "events": 0,
+    "p_value": 1.0,
+    "mean_return_pct": 0,
+    "effect_direction": "insufficient"
+  },
+  "trade_flow": {
+    "passed": false,
+    "events": 0,
+    "p_value": 1.0,
+    "mean_return_pct": 0,
+    "effect_direction": "insufficient"
+  }
+}

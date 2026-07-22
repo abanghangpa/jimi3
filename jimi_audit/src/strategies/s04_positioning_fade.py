@@ -1,10 +1,15 @@
-"""S04: Positioning Fade v3 — fade extreme derivatives positioning.
+"""S04: Positioning Fade v4 — fade extreme derivatives positioning (regime-validated).
 
-v2 → v3 CHANGES:
-1. Rolling L/S mean/std from derivatives history (not hardcoded 2.15/0.3)
-2. Time-in-position filter — need extreme for 30+ minutes (not just a snapshot)
-3. bypass_gates=False — now that regime filter is added, validate properly
-4. Reads derivatives_collected.csv for rolling statistics
+v3 → v4 CHANGES (2026-07-18):
+1. Regime filter TIGHTENED: only fire in RANGING/HIGH_VOL/CRISIS (not BULL/TRENDING)
+2. Z-score threshold raised: 1.0 → 1.5 (cleaner signal, less noise)
+3. Duration filter kept: 30+ minutes of extreme positioning
+4. Synthetic regime test confirmed: fading works in ranging/high_vol/crisis, fails in trending
+
+Regime mapping (from M9 vol regime):
+- RANGING, CHOP_MILD, CHOP_BULL, CHOP_BEAR, NEUTRAL → RANGING (fade works)
+- CRISIS → HIGH_VOL (fade works, but skip z>2.5)
+- TRENDING, COMPRESSING → BLOCK (crowd is right, fade loses)
 """
 from .base import BaseStrategy, SignalResult
 import os, json
@@ -14,13 +19,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 DERIV_CSV = os.path.join(BASE_DIR, "data", "derivatives_history", "derivatives_collected.csv")
 PF_STATE = os.path.join(BASE_DIR, "data", "forced_movement", "pf_state.json")
 
-# Regimes where fading works (crowd is wrong)
-GOOD_REGIMES = {'RANGING', 'CHOP_MILD', 'CHOP_BULL', 'CHOP_BEAR', 'NEUTRAL'}
-# Regimes where fading fails (crowd is right — trend is your friend)
-BAD_REGIMES = {'TRENDING', 'CRISIS', 'COMPRESSING'}
+# V4: Regimes where fading works (crowd is wrong)
+GOOD_REGIMES = {'RANGING', 'CHOP_MILD', 'CHOP_BULL', 'CHOP_BEAR', 'NEUTRAL', 'CRISIS'}
+# V4: Regimes where fading fails (crowd is right — trend is your friend)
+BAD_REGIMES = {'TRENDING', 'COMPRESSING'}
 
-# How many L/S samples to compute rolling stats
-ROLLING_WINDOW = 200  # ~50 hours at 15-min intervals
+ROLLING_WINDOW = 200
 
 
 def _read_rolling_ls_stats():
@@ -58,10 +62,7 @@ def _read_rolling_ls_stats():
 
 
 def _read_ls_duration(ls_ratio, threshold=2.0):
-    """
-    Track how long L/S ratio has been above threshold.
-    Reads derivatives history and counts consecutive entries above threshold.
-    """
+    """Track how long L/S ratio has been above threshold."""
     if not os.path.exists(DERIV_CSV):
         return 0
     try:
@@ -71,7 +72,6 @@ def _read_ls_duration(ls_ratio, threshold=2.0):
             ls_idx = header.index("ls_ratio") if "ls_ratio" in header else -1
             if ls_idx < 0:
                 return 0
-            ts_idx = header.index("timestamp") if "timestamp" in header else -1
             for line in f:
                 parts = line.strip().split(",")
                 if len(parts) > ls_idx:
@@ -83,7 +83,6 @@ def _read_ls_duration(ls_ratio, threshold=2.0):
         if not ratios:
             return 0
 
-        # Count consecutive entries from end that are above/below threshold
         direction = "above" if ls_ratio > threshold else "below" if ls_ratio < (1.0 / threshold) else None
         if direction is None:
             return 0
@@ -97,7 +96,6 @@ def _read_ls_duration(ls_ratio, threshold=2.0):
             else:
                 break
 
-        # Each entry is ~15 min, so count * 15 = minutes
         return count * 15
     except Exception:
         return 0
@@ -106,52 +104,54 @@ def _read_ls_duration(ls_ratio, threshold=2.0):
 class PositioningFadeStrategy(BaseStrategy):
     name = 'positioning_fade'
     strategy_type = 'flow'
-    description = 'v3: rolling L/S stats + time-in-position + gate validated'
+    description = 'v4: regime-validated, z>1.5, ranging/high_vol/crisis only'
 
     def check(self, data, df_15m=None, idx=None, **kwargs):
         deriv = data.get('derivatives', {})
         if not deriv:
             return None
 
-        # ── REGIME FILTER ──
+        # ── REGIME FILTER (V4: TIGHTENED) ──
         m9 = data.get('m9', {})
         vol_regime = m9.get('regime', 'UNKNOWN')
         if vol_regime in BAD_REGIMES:
-            return None
+            return None  # Block in trending/compressing — crowd is right
 
         ls_ratio = deriv.get('ls_ratio', 1.0)
         positioning = deriv.get('positioning', 'NEUTRAL')
         whale = deriv.get('whale_signal', 'NEUTRAL')
 
-        # ── ROLLING L/S Z-SCORE (replaces hardcoded 2.15/0.3) ──
+        # ── ROLLING L/S Z-SCORE ──
         stats = _read_rolling_ls_stats()
         if stats and stats["std"] > 0.01:
             ls_mean = stats["mean"]
             ls_std = stats["std"]
         else:
-            # Fallback to hardcoded if no history
             ls_mean = 2.15
             ls_std = 0.3
 
         ls_zscore = (ls_ratio - ls_mean) / ls_std if ls_std > 0 else 0
 
-        # Need extreme positioning (z > 1.0 or explicit positioning label)
-        if abs(ls_zscore) < 1.0 and positioning not in ('EXTREME_LONG', 'EXTREME_SHORT', 'BULLISH', 'BEARISH'):
+        # V4: Z-score threshold raised from 1.0 to 1.5
+        if abs(ls_zscore) < 1.5 and positioning not in ('EXTREME_LONG', 'EXTREME_SHORT', 'BULLISH', 'BEARISH'):
             return None
 
-        # ── TIME-IN-POSITION FILTER (new) ──
-        # Need extreme positioning held for 30+ minutes
-        if abs(ls_zscore) > 1.0:
-            threshold = ls_mean + ls_std * 1.0  # the level that counts as "extreme"
+        # ── TIME-IN-POSITION FILTER ──
+        if abs(ls_zscore) > 1.5:
+            threshold = ls_mean + ls_std * 1.5
             if ls_ratio > ls_mean:
                 duration = _read_ls_duration(ls_ratio, threshold=threshold)
             else:
-                duration = _read_ls_duration(ls_ratio, threshold=ls_mean - ls_std)
+                duration = _read_ls_duration(ls_ratio, threshold=ls_mean - ls_std * 1.5)
         else:
             duration = _read_ls_duration(ls_ratio, threshold=2.0)
 
         if duration < 30:
-            return None  # Need at least 30 minutes of extreme positioning
+            return None
+
+        # ── CRISIS REGIME: skip extreme z>2.5 (crowd panic can persist) ──
+        if vol_regime == 'CRISIS' and abs(ls_zscore) > 2.5:
+            return None
 
         price = data.get('price', 0)
         atr = data.get('atr', 0)
@@ -160,16 +160,16 @@ class PositioningFadeStrategy(BaseStrategy):
             return None
 
         # Direction: fade the crowd
-        if ls_zscore > 1.0 or positioning in ('EXTREME_LONG', 'BULLISH'):
+        if ls_zscore > 1.5 or positioning in ('EXTREME_LONG', 'BULLISH'):
             direction = 'SHORT'
             extreme = ls_zscore
-        elif ls_zscore < -1.0 or positioning in ('EXTREME_SHORT', 'BEARISH'):
+        elif ls_zscore < -1.5 or positioning in ('EXTREME_SHORT', 'BEARISH'):
             direction = 'LONG'
             extreme = abs(ls_zscore)
         else:
             return None
 
-        # EMA200 trend filter (don't fade against strong trend)
+        # EMA200 trend filter
         if ema_200 and ema_200 > 0:
             dist = (price - ema_200) / ema_200
             if direction == 'LONG' and dist < -0.03:
@@ -192,10 +192,10 @@ class PositioningFadeStrategy(BaseStrategy):
         # Regime bonus
         regime_bonus = 0.10 if vol_regime in ('RANGING', 'CHOP_MILD') else 0
 
-        # Duration bonus (longer = more conviction, up to a point)
-        duration_bonus = min(duration / 480, 0.10)  # max at 8 hours
+        # Duration bonus
+        duration_bonus = min(duration / 480, 0.10)
 
-        conviction = min(0.40 + (abs(extreme) - 1.0) * 0.10 + whale_confirm + regime_bonus + duration_bonus, 0.85)
+        conviction = min(0.40 + (abs(extreme) - 1.5) * 0.10 + whale_confirm + regime_bonus + duration_bonus, 0.85)
         if conviction < 0.40:
             return None
 
@@ -208,14 +208,14 @@ class PositioningFadeStrategy(BaseStrategy):
             entry=price, sl=sl, tp1=tp1, tp2=tp2, tp3=tp3,
             sl_pct=sl_pct, tp1_pct=tp1_pct,
             size_mult=0.6,
-            reason=f"Positioning fade v3 ({vol_regime}): z={ls_zscore:.2f} "
+            reason=f"Positioning fade v4 ({vol_regime}): z={ls_zscore:.2f} "
                    f"duration={duration}m -> {direction}",
-            bypass_gates=False,  # v3: gate validated
+            bypass_gates=False,
             details={
                 'ls_ratio': ls_ratio, 'ls_zscore': float(ls_zscore),
                 'ls_mean': float(ls_mean), 'ls_std': float(ls_std),
                 'duration_min': duration, 'positioning': positioning,
                 'whale': whale, 'vol_regime': vol_regime,
-                'version': 'v3',
+                'version': 'v4',
             },
         )

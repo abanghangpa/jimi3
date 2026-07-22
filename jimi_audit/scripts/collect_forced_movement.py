@@ -319,7 +319,7 @@ def collect_basis():
 # ============================================================
 # 4. LIQUIDATION STREAM (Bybit free websocket)
 # ============================================================
-async def liq_stream():
+async def _liq_stream_once():
     """
     Connect to Bybit's free public liquidation websocket.
     No API key needed. Streams real-time liquidation events.
@@ -330,7 +330,7 @@ async def liq_stream():
     print(f"[{datetime.now(timezone.utc).isoformat()}] Connecting to Bybit liquidation stream...")
 
     async with aiohttp.ClientSession() as session:
-        async with session.ws_connect(url, heartbeat=20) as ws:
+        async with session.ws_connect(url, heartbeat=None) as ws:
             await ws.send_json(subscribe_msg)
             print("  ✅ Connected, subscribed to liquidation.ETHUSDT")
 
@@ -355,9 +355,32 @@ async def liq_stream():
                             side_label = "LONG_LIQUIDATION" if liq["side"] == "Sell" else "SHORT_LIQUIDATION"
                             print(f"  💥 {side_label}: {liq['qty']:.1f} ETH @ ${liq['price']:.2f}")
 
+                elif msg.type == aiohttp.WSMsgType.BINARY:
+                    try:
+                        await ws.pong(msg.data)
+                    except Exception:
+                        pass
                 elif msg.type in (aiohttp.WSMsgType.ERROR, aiohttp.WSMsgType.CLOSED):
                     print(f"  ❌ WebSocket closed/error: {msg}")
                     break
+
+
+
+async def liq_stream():
+    """Bybit liquidation websocket with auto-reconnect and exponential backoff."""
+    retry_delay = 1
+    max_delay = 60
+    while True:
+        try:
+            ts = datetime.now(timezone.utc).isoformat()
+            print(f"[{ts}] Connecting to Bybit liquidation stream...")
+            await _liq_stream_once()
+            retry_delay = 1  # Reset on clean disconnect
+        except Exception as e:
+            print(f"  ❌ Error: {e}")
+        print(f"  ⏳ Reconnecting in {retry_delay}s...")
+        await asyncio.sleep(retry_delay)
+        retry_delay = min(retry_delay * 2, max_delay)
 
 
 def get_recent_liquidations(minutes=60):

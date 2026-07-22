@@ -69,6 +69,34 @@ class TradeFlowStrategy(BaseStrategy):
         if taker_ratio is None:
             return None
 
+        # ── TREND ALIGNMENT FILTER (v4 upgrade) ──
+        # Don't generate counter-trend signals when price is trending strongly
+        if df_15m is not None and idx is not None and idx >= 20:
+            closes = df_15m['Close'].values.astype(float)
+            # 1h trend (4 bars of 15m)
+            if idx >= 5:
+                mom_1h = (closes[idx] - closes[idx-4]) / closes[idx-4]
+            else:
+                mom_1h = 0
+            # 4h trend (16 bars)
+            if idx >= 17:
+                mom_4h = (closes[idx] - closes[idx-16]) / closes[idx-16]
+            else:
+                mom_4h = 0
+            
+            # If 1h momentum > 1.5%, only allow LONG signals (skip SHORT)
+            if mom_1h > 0.015 and taker_ratio < 0.45:
+                return None  # Skip SHORT in strong uptrend
+            # If 1h momentum < -1.5%, only allow SHORT signals (skip LONG)
+            if mom_1h < -0.015 and taker_ratio > 0.55:
+                return None  # Skip LONG in strong downtrend
+            # If 4h momentum > 3%, boost LONG conviction
+            if mom_4h > 0.03:
+                pass  # will boost below
+            # If 4h momentum < -3%, boost SHORT conviction
+            if mom_4h < -0.03:
+                pass  # will boost below
+
         # ── COMPUTE Z-SCORE (new) ──
         # Need df_15m for z-score computation
         if df_15m is None or idx is None or idx < 60:

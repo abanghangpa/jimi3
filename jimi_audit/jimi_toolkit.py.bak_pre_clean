@@ -1,0 +1,161 @@
+#!/usr/bin/env python3
+"""
+VPS Analysis Toolkit — extend derivatives data + run isolation gates.
+Run: python3 jimi_toolkit.py [command]
+
+Commands:
+  fetch-deriv    Fetch latest OI/funding/LS from Bybit + Binance
+  extend-oi      Backfill OI history from Binance API
+  gate           Run isolation gate on current data
+  plot           Generate forward return distribution plot
+  shell          Launch interactive IPython shell
+"""
+import os, sys, json, time, argparse
+from datetime import datetime, timezone, timedelta
+
+BASE = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE, "data")
+DERIV_DIR = os.path.join(DATA_DIR, "derivatives_history")
+REPORT_DIR = os.path.join(BASE, "reports")
+
+
+def fetch_derivatives_snapshot():
+    """Fetch current derivatives data from Bybit + Binance."""
+    import requests
+
+    result = {"timestamp": datetime.now(timezone.utc).isoformat()}
+
+    # Bybit: OI
+    try:
+        r = requests.get("https://api.bybit.com/v5/market/tickers",
+                        params={"category": "linear", "symbol": "ETHUSDT"}, timeout=10)
+        r.raise_for_status()
+        d = r.json().get("result", {}).get("list", [{}])[0]
+        result["oi"] = float(d.get("openInterest", 0))
+        result["oi_usd"] = float(d.get("openInterestValue", 0))
+    except Exception as e:
+        print(f"  Bybit tickers: {e}")
+
+    # Bybit: funding rate
+    try:
+        r = requests.get("https://api.bybit.com/v5/market/funding/history",
+                        params={"category": "linear", "symbol": "ETHUSDT", "limit": 1}, timeout=10)
+        r.raise_for_status()
+        d = r.json().get("result", {}).get("list", [{}])[0]
+        result["funding_rate"] = float(d.get("fundingRate", 0))
+    except Exception as e:
+        print(f"  Bybit funding: {e}")
+
+    # Bybit: L/S ratio (from account-ratio endpoint — tickers does NOT have lsRatio)
+    try:
+        r = requests.get("https://api.bybit.com/v5/market/account-ratio",
+                        params={"category": "linear", "symbol": "ETHUSDT",
+                                "period": "5min", "limit": 1}, timeout=10)
+        r.raise_for_status()
+        d = r.json().get("result", {}).get("list", [{}])[0]
+        buy_ratio = float(d.get("buyRatio", 0))
+        sell_ratio = float(d.get("sellRatio", 1))
+        result["ls_ratio"] = round(buy_ratio / sell_ratio, 4) if sell_ratio > 0 else None
+    except Exception as e:
+        print(f"  Bybit LS: {e}")
+
+    # Binance: OI (cross-check via /fapi/v1/openInterest)
+    try:
+        r = requests.get("https://fapi.binance.com/fapi/v1/openInterest",
+                        params={"symbol": "ETHUSDT"}, timeout=10)
+        r.raise_for_status()
+        d = r.json()
+        result["binance_oi"] = float(d.get("openInterest", 0))
+    except Exception as e:
+        print(f"  Binance OI: {e}")
+
+    # Binance: L/S ratio
+    try:
+        r = requests.get("https://fapi.binance.com/futures/data/globalLongShortAccountRatio",
+                        params={"symbol": "ETHUSDT", "period": "5m", "limit": 1}, timeout=10)
+        r.raise_for_status()
+        data = r.json()
+        if isinstance(data, list) and data:
+            result["binance_ls"] = float(data[-1]["longShortRatio"])
+        else:
+            print(f"  Binance LS: unexpected response: {str(data)[:200]}")
+    except Exception as e:
+        print(f"  Binance LS: {e}")
+
+    return result
+
+
+def append_derivatives(snapshot):
+    """Append snapshot to derivatives_collected.csv."""
+    csv_path = os.path.join(DERIV_DIR, "derivatives_collected.csv")
+    ts = snapshot["timestamp"]
+    ts_ms = int(datetime.fromisoformat(ts.replace("Z", "+00:00")).timestamp() * 1000)
+
+    # 14-column row matching the header exactly:
+    # timestamp, timestamp_ms, oi, oi_usd, ls_ratio,
+    # long_pct, short_pct, top_ls_ratio, top_long_pct, top_short_pct,
+    # futures_taker_ratio, futures_buy_vol, futures_sell_vol, funding_rate
+    row = ",".join([
+        str(ts),
+        str(ts_ms),
+        str(snapshot.get("oi", "")),
+        str(snapshot.get("oi_usd", "")),
+        str(snapshot.get("ls_ratio", "")),
+        "",  # long_pct
+        "",  # short_pct
+        "",  # top_ls_ratio
+        "",  # top_long_pct
+        "",  # top_short_pct
+        "",  # futures_taker_ratio
+        "",  # futures_buy_vol
+        "",  # futures_sell_vol
+        str(snapshot.get("funding_rate", "")),
+    ])
+
+    # Check header
+    if os.path.exists(csv_path):
+        with open(csv_path) as f:
+            header = f.readline().strip()
+    else:
+        header = "timestamp,timestamp_ms,oi,oi_usd,ls_ratio,long_pct,short_pct,top_ls_ratio,top_long_pct,top_short_pct,futures_taker_ratio,futures_buy_vol,futures_sell_vol,funding_rate"
+        with open(csv_path, "w") as f:
+            f.write(header + "\n")
+
+    with open(csv_path, "a") as f:
+        f.write(row + "\n")
+
+    return csv_path
+
+
+def fetch_and_store():
+    """Fetch snapshot and store."""
+    print("Fetching derivatives snapshot...")
+    snap = fetch_derivatives_snapshot()
+    print(f"  OI: {snap.get('oi', 'N/A')}")
+    print(f"  LS: {snap.get('ls_ratio', 'N/A')}")
+    print(f"  Funding: {snap.get('funding_rate', 'N/A')}")
+    path = append_derivatives(snap)
+    print(f"  Saved to: {path}")
+    return snap
+
+
+def extend_oi_history(days=30):
+    """Backfill OI history from Binance API."""
+    import requests
+
+    print(f"Fetching {days} days of OI history from Binance...")
+    all_data = []
+    end_time = int(time.time() * 1000)
+    start_time = end_time - (days * 86400 * 1000)
+
+    while start_time < end_time:
+        try:
+    # Binance: OI (cross-check via /fapi/v1/openInterest)
+    try:
+        r = requests.get("https://fapi.binance.com/fapi/v1/openInterest",
+                        params={"symbol": "ETHUSDT"}, timeout=10)
+        r.raise_for_status()
+        d = r.json()
+        result["binance_oi"] = float(d.get("openInterest", 0))
+    except Exception as e:
+        print(f"  Binance OI: {e}")

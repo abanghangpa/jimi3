@@ -1045,17 +1045,19 @@ REGIME_STRATEGY_GATE = {
     "positioning_fade":     {"allowed": ["RANGING", "CHOP_MILD", "CHOP_BEAR", "NEUTRAL", "CRISIS"]},
     "liquidity_grab":       {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
     "liquidation_cascade":  {"allowed": ["RANGING", "BULL", "BEAR", "MILDLY_BEARISH"]},
-    "funding_squeeze":  {"allowed": ["RANGING", "BULL", "BEAR", "MILDLY_BEARISH"]},
+    "funding_squeeze":      {"allowed": ["RANGING", "BULL", "BEAR", "MILDLY_BEARISH"]},
     "orderbook_imbalance":  {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
     "taker_flow":           {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
-    "trade_flow":           {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
-    "judas_sweep":          {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
-    "forced_movement":      {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
-    "squeeze_breakout":     {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
-    "whale_watch":          {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
-    "structural_break":     {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
+    "trade_flow":           {"allowed": ["RANGING", "BULL", "BEAR", "STRESS"]},
+    "judas_sweep":          {"allowed": ["BULL", "BEAR", "STRESS", "RANGING", "MILDLY_BEARISH"]},
+    "forced_movement":      {"allowed": ["STRESS", "BEAR", "MILDLY_BEARISH"]},
+    "squeeze_breakout":     {"allowed": ["RANGING", "BULL", "BEAR", "MILDLY_BEARISH"]},
+    "whale_watch":          {"allowed": ["RANGING", "BEAR", "STRESS", "MILDLY_BEARISH"]},
+    "structural_break":     {"allowed": ["RANGING", "MILDLY_BEARISH"]},
     "funding_arb":          {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
 }
+
+
 
 REGIME_TPSL_SCALE = {
     "BULL":           {"tp_scale": 1.0, "sl_scale": 1.0},
@@ -1074,21 +1076,6 @@ MAX_DIRECTIONAL_EXPOSURE = 0.06    # Max 6% of capital at risk in same direction
 
 # === REGIME-STRATEGY GATE: Which strategies can fire in which regimes ===
 # Format: {strategy: {"allowed": [list of regimes], "blocked": [list of regimes]}}
-# If strategy not listed, it's allowed in all regimes (default pass-through)
-REGIME_STRATEGY_GATE = {
-    "failed_breakout":      {"allowed": ["RANGING"]},
-    "liquidity_grab":       {"allowed": ["RANGING", "MILDLY_BEARISH"]},
-    "squeeze_breakout":     {"allowed": ["RANGING", "BULL", "BEAR", "MILDLY_BEARISH"]},
-    "positioning_fade":     {"allowed": ["RANGING", "CHOP_MILD", "CHOP_BEAR", "NEUTRAL", "CRISIS"]},
-    "whale_watch":          {"allowed": ["RANGING", "BEAR", "STRESS", "MILDLY_BEARISH"]},
-    "trade_flow":           {"allowed": ["RANGING", "BULL", "BEAR", "STRESS"]},
-    "forced_movement":      {"allowed": ["STRESS", "BEAR", "MILDLY_BEARISH"]},
-    "liquidation_cascade":  {"allowed": ["BULL", "BEAR", "STRESS", "RANGING", "MILDLY_BEARISH"]},
-    "orderbook_imbalance":  {"allowed": ["BULL", "BEAR", "STRESS", "RANGING", "MILDLY_BEARISH"]},
-    "taker_flow":           {"allowed": ["BULL", "BEAR", "STRESS", "RANGING", "MILDLY_BEARISH"]},
-    "judas_sweep":          {"allowed": ["BULL", "BEAR", "STRESS", "RANGING", "MILDLY_BEARISH"]},
-    "structural_break":     {"allowed": ["RANGING", "MILDLY_BEARISH"]},
-}
 
 # === REGIME TP/SL SCALING: Multiply TP/SL based on regime ===
 # Multiplier applied to TP and SL distances

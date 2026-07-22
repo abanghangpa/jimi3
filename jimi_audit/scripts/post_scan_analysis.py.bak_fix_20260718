@@ -1,0 +1,187 @@
+"""
+Post-Scan Market Analysis — Calls free-proxy LLM to analyze scan results.
+Called by scanner_executor after each scan cycle.
+"""
+import json, os, sys, time, logging
+from datetime import datetime, timezone
+import httpx
+
+PROXY_URL = "http://localhost:8000/v1/chat/completions"
+PROXY_TIMEOUT = 60
+SCAN_DIR = "/root/.openclaw/workspace/jimi_audit/data/scans"
+ANALYSIS_DIR = "/root/.openclaw/workspace/jimi_audit/data/analysis"
+LOG_FILE = "/root/.openclaw/workspace/jimi_audit/live/logs/analysis.log"
+
+os.makedirs(ANALYSIS_DIR, exist_ok=True)
+os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[logging.FileHandler(LOG_FILE), logging.StreamHandler()]
+)
+log = logging.getLogger("post-scan-analysis")
+
+
+def build_analysis_prompt(scan_data):
+    """Build a concise prompt from scan data for LLM analysis."""
+    ts = scan_data.get("timestamp", "?")
+    price = scan_data.get("price", 0)
+    swing = scan_data.get("swing_bias", "?")
+    trend = scan_data.get("trend_dir", "?")
+    phase0 = scan_data.get("phase0", 0)
+    rsi = scan_data.get("rsi", 0)
+    atr = scan_data.get("atr", 0)
+    vol_trend = scan_data.get("vol_trend", 0)
+
+    # Derivatives
+    deriv = scan_data.get("derivatives", {})
+    ls_ratio = deriv.get("ls_ratio", 0)
+    funding = deriv.get("funding_rate", 0)
+    oi = deriv.get("oi_usd", 0)
+
+    # Liquidity levels
+    liq = scan_data.get("liquidity_levels", {})
+    below = liq.get("below", [])[:3]
+    above = liq.get("above", [])[:3]
+
+    # Squeeze
+    squeeze = scan_data.get("squeeze", {})
+    sq_type = squeeze.get("squeeze_type", "NONE")
+    sq_status = squeeze.get("squeeze_status", "NONE")
+
+    # Cascade risk
+    cascade = scan_data.get("cascade_risk", {})
+    cascade_verdict = cascade.get("verdict", "?")
+
+    # Target scores
+    targets = scan_data.get("target_scores", {})
+    long_score = targets.get("LONG", 0)
+    short_score = targets.get("SHORT", 0)
+
+    # Multi-strategy signals
+    multi = scan_data.get("multi_strategy", {})
+    signals_fired = multi.get("signals_fired", 0)
+    best = multi.get("best", {})
+    best_strat = best.get("strategy", "?") if best else "?"
+    best_dir = best.get("direction", "?") if best else "?"
+
+    # SR levels
+    sr = scan_data.get("sr_levels", [])[:4]
+
+    liq_below_str = ", ".join([f"${l.get('price',0):.0f}({l.get('type','?')})" for l in below])
+    liq_above_str = ", ".join([f"${l.get('price',0):.0f}({l.get('type','?')})" for l in above])
+    sr_str = ", ".join([f"${s[0]:.0f}({s[2]})" for s in sr]) if sr else "none"
+
+    prompt = f"""Analyze this ETH/USDT 15m scan snapshot. Be concise (3-5 sentences max). Focus on actionable edge.
+
+PRICE: ${price:.2f} | Time: {ts}
+STRUCTURE: bias={swing} trend={trend} phase0={phase0:.3f} RSI={rsi:.1f} ATR={atr:.1f}
+DERIVATIVES: L/S={ls_ratio:.2f} funding={funding:.6f} OI=${oi/1e6:.1f}M
+SQUEEZE: {sq_type} ({sq_status}) | Cascade: {cascade_verdict}
+SCORES: LONG={long_score:.3f} SHORT={short_score:.3f}
+SIGNALS: {signals_fired} fired, best={best_strat} {best_dir}
+LIQUIDITY BELOW: {liq_below_str or 'none'}
+LIQUIDITY ABOVE: {liq_above_str or 'none'}
+SR LEVELS: {sr_str}
+
+Question: What is the highest-probability trade setup right now? What key level should we watch? Any red flags?"""
+
+    return prompt
+
+
+def call_proxy(prompt, model="gpt-4o", max_tokens=300):
+    """Call the free-proxy LLM."""
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": "You are a concise crypto trading analyst. Give actionable insights in 3-5 sentences. No fluff."},
+            {"role": "user", "content": prompt}
+        ],
+        "max_tokens": max_tokens,
+        "stream": False,
+        "temperature": 0.3,
+    }
+    try:
+        with httpx.Client(timeout=PROXY_TIMEOUT) as client:
+            resp = client.post(PROXY_URL, json=payload)
+            if resp.status_code == 200:
+                data = resp.json()
+                content = data.get("choices", [{}])[0].get("message", {}).get("content", "")
+                provider = data.get("provider", "unknown")
+                return {"ok": True, "content": content, "provider": provider}
+            else:
+                return {"ok": False, "error": f"HTTP {resp.status_code}: {resp.text[:200]}"}
+    except Exception as e:
+        return {"ok": False, "error": str(e)[:200]}
+
+
+def run_analysis(scan_data=None):
+    """Run post-scan analysis. If no scan_data provided, load latest."""
+    if scan_data is None:
+        scan_files = sorted(
+            [f for f in os.listdir(SCAN_DIR) if f.endswith(".json")],
+            reverse=True
+        )
+        if not scan_files:
+            log.warning("No scan files found")
+            return None
+        with open(os.path.join(SCAN_DIR, scan_files[0])) as f:
+            scan_data = json.load(f)
+
+    ts = scan_data.get("timestamp", "?")
+    price = scan_data.get("price", 0)
+    log.info(f"Analyzing scan: {ts} @ ${price:.2f}")
+
+    # Build prompt
+    prompt = build_analysis_prompt(scan_data)
+    log.info(f"Prompt length: {len(prompt)} chars")
+
+    # Call proxy (try g4f first, then fallback)
+    result = call_proxy(prompt)
+    if not result["ok"]:
+        log.warning(f"Primary call failed: {result['error']}")
+        # Try with different model name
+        result = call_proxy(prompt, model="gemini-2.5-flash")
+    if not result["ok"]:
+        log.warning(f"Fallback failed: {result['error']}")
+        result = call_proxy(prompt, model="deepseek-v3")
+
+    if result["ok"]:
+        analysis = {
+            "timestamp": ts,
+            "price": price,
+            "analysis": result["content"],
+            "provider": result.get("provider", "unknown"),
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+        }
+
+        # Save to file
+        fname = f"analysis_{ts.replace(' ', '_').replace(':', '')}.json"
+        fpath = os.path.join(ANALYSIS_DIR, fname)
+        with open(fpath, "w") as f:
+            json.dump(analysis, f, indent=2)
+
+        # Also save latest
+        with open(os.path.join(ANALYSIS_DIR, "latest.json"), "w") as f:
+            json.dump(analysis, f, indent=2)
+
+        log.info(f"Analysis saved: {fpath}")
+        log.info(f"Provider: {result.get('provider', '?')}")
+        log.info(f"Content: {result['content'][:200]}")
+
+        return analysis
+    else:
+        log.error(f"All providers failed: {result['error']}")
+        return None
+
+
+if __name__ == "__main__":
+    result = run_analysis()
+    if result:
+        print(f"\n{'='*60}")
+        print(f"ANALYSIS ({result['timestamp']})")
+        print(f"{'='*60}")
+        print(result["analysis"])
+    else:
+        print("Analysis failed — no providers available")

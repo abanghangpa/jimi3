@@ -1,0 +1,62 @@
+"""S07: Taker Flow Momentum — follow aggressive taker flow direction."""
+from .base import BaseStrategy, SignalResult
+
+class TakerFlowStrategy(BaseStrategy):
+    name = 'taker_flow'
+    strategy_type = 'flow'
+    description = 'Follow taker buy/sell momentum when flow is aggressive and accelerating'
+
+    def check(self, data, df_15m=None, idx=None, **kwargs):
+        ts = data.get('taker_summary', {})
+        if not ts:
+            return None
+
+        momentum = ts.get('momentum', 0)
+        acceleration = ts.get('acceleration', 0)
+        avg_4h = ts.get('avg_4h', 0.5)
+        regime = ts.get('regime', '')
+
+        # Need strong taker momentum
+        if abs(momentum) < 0.02:
+            return None
+
+        price = data.get('price', 0)
+        atr = data.get('atr', 0)
+        if not price or not atr:
+            return None
+
+        # Direction from taker flow (ATR-relative thresholds)
+        atr_pct = atr / price if price else 0
+        long_thresh = 0.5 + atr_pct * 2  # higher bar in volatile regimes
+        short_thresh = 0.5 - atr_pct * 2
+        if momentum > 0.1 and avg_4h > long_thresh:
+            direction = 'LONG'
+        elif momentum < -0.1 and avg_4h < short_thresh:
+            direction = 'SHORT'
+        else:
+            return None
+
+        # Conviction from momentum strength and acceleration
+        mom_score = min(abs(momentum) / 0.3, 0.4)
+        acc_score = min(abs(acceleration) / 0.2, 0.3) if acceleration != 0 else 0
+        regime_score = 0.2 if regime in ('TRENDING', 'STRONG') else 0.1
+
+        conviction = mom_score + acc_score + regime_score
+        if conviction < 0.5:
+            return None
+
+        sl, tp1, tp2, tp3, sl_pct, tp1_pct = self._calc_levels(
+            price, direction, atr, tp_mults=(0.3, 1.5, 3.0), sl_mult=2.0)
+
+        return SignalResult(
+            strategy_name=self.name, strategy_type=self.strategy_type,
+            direction=direction, conviction=min(conviction, 0.85),
+            entry=price, sl=sl, tp1=tp1, tp2=tp2, tp3=tp3,
+            sl_pct=sl_pct, tp1_pct=tp1_pct,
+            size_mult=0.8,
+            reason=f"Taker flow {direction}: momentum={momentum:.3f} "
+                   f"accel={acceleration:.3f} regime={regime}",
+            bypass_gates=False,
+            details={'momentum': momentum, 'acceleration': acceleration,
+                     'avg_4h': avg_4h, 'regime': regime},
+        )

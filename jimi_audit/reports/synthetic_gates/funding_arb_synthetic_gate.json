@@ -1,0 +1,152 @@
+{
+  "strategy": "funding_arb",
+  "description": "Taker ratio extreme + volume spike mean reversion",
+  "timestamp": "2026-07-13T06:02:27.901171+00:00",
+  "sets_tested": 20,
+  "sets_passed": 0,
+  "direction_correct": 0,
+  "mean_p_value": 1.0,
+  "overall_result": "SYNTHETIC GATE FAIL",
+  "per_set": {
+    "set_00": {
+      "events": 2,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (2 < 5)"
+    },
+    "set_01": {
+      "events": 0,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (0 < 5)"
+    },
+    "set_02": {
+      "events": 1,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (1 < 5)"
+    },
+    "set_03": {
+      "events": 1,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (1 < 5)"
+    },
+    "set_04": {
+      "events": 1,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (1 < 5)"
+    },
+    "set_05": {
+      "events": 0,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (0 < 5)"
+    },
+    "set_06": {
+      "events": 0,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (0 < 5)"
+    },
+    "set_07": {
+      "events": 0,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (0 < 5)"
+    },
+    "set_08": {
+      "events": 1,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (1 < 5)"
+    },
+    "set_09": {
+      "events": 0,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (0 < 5)"
+    },
+    "set_10": {
+      "events": 1,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (1 < 5)"
+    },
+    "set_11": {
+      "events": 2,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (2 < 5)"
+    },
+    "set_12": {
+      "events": 1,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (1 < 5)"
+    },
+    "set_13": {
+      "events": 3,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (3 < 5)"
+    },
+    "set_14": {
+      "events": 1,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (1 < 5)"
+    },
+    "set_15": {
+      "events": 1,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (1 < 5)"
+    },
+    "set_16": {
+      "events": 1,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (1 < 5)"
+    },
+    "set_17": {
+      "events": 0,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (0 < 5)"
+    },
+    "set_18": {
+      "events": 1,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (1 < 5)"
+    },
+    "set_19": {
+      "events": 0,
+      "horizons": {},
+      "t_test": {},
+      "gate_passed": false,
+      "gate_reason": "Too few events (0 < 5)"
+    }
+  }
+}

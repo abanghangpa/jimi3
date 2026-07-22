@@ -1,0 +1,56 @@
+{
+  "version": "3.1",
+  "deployed_at": "2026-07-04T14:15:00Z",
+  "backtest": {
+    "period": "2021-01 to 2026-07",
+    "candles": 48212,
+    "seeds": 50,
+    "wr": 69.3,
+    "pf": 2.24,
+    "max_dd": 14.8,
+    "avg_withdrawn": 45600,
+    "survival_rate": 100,
+    "hit_target": "50/50 (100%)",
+    "first_withdrawal": "95-285d (avg 131d)"
+  },
+  "active_strategy": "combined_bb_mom6_optimized",
+  "strategies": {
+    "combined_bb_mom6_optimized": {
+      "name": "Combined BB Mean Rev + mom6_2pct (Optimized)",
+      "primary": "BB Mean Rev: price < lower BB (LONG), price > upper BB (SHORT)",
+      "secondary": "mom6_2pct: 6h momentum > 2% (LONG), < -2% (SHORT)",
+      "gate": "48h avg abs 12h momentum >= 2.5%",
+      "bb_period": 20,
+      "bb_std": 2.0,
+      "tp_pct": 0.002,
+      "sl_pct": 0.001,
+      "leverage": 25,
+      "risk_pct": 0.1,
+      "hold_hours": 8,
+      "optimized": true,
+      "optimization_date": "2026-07-04",
+      "key_findings": [
+        "BB(20,2.0)+mom6 combined is best entry strategy",
+        "Vol gate 2.5% filters out dead markets (WR jumps to 69%)",
+        "TP=0.2% SL=0.1% optimal R:R ratio",
+        "EU+US overlap (14-16 UTC) best entry time",
+        "Tue-Wed-Thu best days",
+        "2025 pattern match: expect Jul-Aug rally, Sep-Oct pullback, Nov dump risk",
+        "Optimized v2: lev25 risk10pct gate1pct (backtested 61.6% WR PF 2.08 100% hit rate)"
+      ],
+      "vol_gate_threshold": 0.01
+    }
+  },
+  "withdrawal": {
+    "target": 2700,
+    "withdraw_amount": 2500,
+    "keep_as_base": 200
+  },
+  "exchange": {
+    "name": "htx",
+    "pair": "ETH/USDT",
+    "mode": "paper",
+    "api_key": null,
+    "api_secret": null
+  }
+}

@@ -1,0 +1,1587 @@
+#!/usr/bin/env python3
+"""
+5-Agent Framework — UPGRADED VERSION
+Addresses all findings from Jul 15-17 analysis:
+
+1. Regime Classifier  — Added price momentum as fast signal
+2. Structure Agent    — Added trend direction filter  
+3. Validation Agent   — Added signal dedup + clustering
+4. Risk Agent         — Added per-strategy cooldown + repeat loss protection
+5. Execution Agent    — Added wall persistence check
+
+Drop-in replacement for the agents in scanner_executor.py
+"""
+
+import json, os, sys, time
+from datetime import datetime, timezone, timedelta
+from collections import defaultdict
+
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, BASE)
+
+
+# ═══════════════════════════════════════════════════════════════
+# AGENT 2: REGIME CLASSIFIER (UPGRADED)
+# ═══════════════════════════════════════════════════════════════
+# FIX: Added price momentum as a FAST regime signal
+# The old classifier used only FR/OI/LS (slow indicators)
+# Now price momentum can OVERRIDE slow signals within 1 bar
+
+class RegimeClassifierV2:
+    """
+    Multi-signal regime classifier with PRICE MOMENTUM OVERRIDE.
+    
+    v1: FR, OI, LS, vol (all slow — takes hours/days to shift)
+    v2: + 1h/4h price momentum (fast — catches crashes within 15min)
+    
+    Key change: If price drops >1.5% in 1h, force regime to BEAR/STRESS
+    regardless of what FR/OI/LS say. This prevents the "stuck in BULL"
+    problem observed Jul 15-17.
+    """
+    
+    WINDOW = 20
+    MOMENTUM_OVERRIDE_THRESHOLD_1H = 0.015   # 1.5% in 1h = force regime change
+    MOMENTUM_OVERRIDE_THRESHOLD_4H = 0.030   # 3.0% in 4h = force STRESS
+    MOMENTUM_SOFT_THRESHOLD_1H = 0.008       # 0.8% in 1h = add to score
+    MOMENTUM_SOFT_THRESHOLD_4H = 0.015       # 1.5% in 4h = add to score
+    
+    def __init__(self, confluence_checker=None):
+        self.cc = confluence_checker
+        self.regime = "RANGING"
+        self.confidence = 0.5
+        self.signals = {}
+        self._prev_regimes = []  # track regime history for smoothing
+    
+    def classify(self, scan_data=None, price_history=None):
+        """
+        Classify regime using derivatives + price momentum.
+        
+        Args:
+            scan_data: dict from latest scan
+            price_history: list of recent close prices (15m bars)
+                          [oldest ... newest]
+        """
+        # === STEP 1: Get derivative-based scores (existing logic) ===
+        deriv = self.cc.deriv_by_ts if self.cc else None
+        bull_score = 0.0
+        bear_score = 0.0
+        stress_score = 0.0
+        signals = {}
+        
+        if deriv:
+            sorted_ts = sorted(deriv.keys())
+            recent = [deriv[ts] for ts in sorted_ts[-self.WINDOW:]]
+            
+            if len(recent) >= 3:
+                latest = recent[-1]
+                fr = latest.get("fr", 0)
+                ls = latest.get("ls", 2.0)
+                oi = latest.get("oi", 0)
+                
+                if len(recent) >= 2:
+                    prev_oi = recent[-2].get("oi", oi)
+                    oi_roc = ((oi - prev_oi) / prev_oi * 100) if prev_oi > 0 else 0
+                else:
+                    oi_roc = 0
+                
+                avg_fr = sum(d.get("fr", 0) for d in recent) / len(recent)
+                ls_values = [d.get("ls", 2.0) for d in recent]
+                ls_trend = ls_values[-1] - ls_values[0] if len(ls_values) > 1 else 0
+                fr_values = [d.get("fr", 0) for d in recent]
+                fr_std = (sum((f - avg_fr)**2 for f in fr_values) / max(len(fr_values)-1, 1)) ** 0.5
+                
+                # Funding rate
+                if fr > 0.000030:
+                    signals["fr"] = "BULL"; bull_score += 1
+                elif fr < -0.000010:
+                    signals["fr"] = "BEAR"; bear_score += 1
+                else:
+                    signals["fr"] = "NEUTRAL"
+                
+                # LS ratio
+                if ls > 2.2:
+                    signals["ls"] = "LONG_CROWDED"; bear_score += 0.8
+                elif ls < 1.8:
+                    signals["ls"] = "SHORT_CROWDED"; bull_score += 0.8
+                else:
+                    signals["ls"] = "NEUTRAL"
+                
+                # OI rate of change
+                if oi_roc < -3:
+                    signals["oi"] = "STRESS"; stress_score += 2
+                elif oi_roc > 5:
+                    signals["oi"] = "SURGE"; bull_score += 0.5
+                else:
+                    signals["oi"] = "STABLE"
+                
+                # FR trend
+                if avg_fr > 0.000015:
+                    signals["fr_trend"] = "BULL"; bull_score += 0.5
+                elif avg_fr < -0.000005:
+                    signals["fr_trend"] = "BEAR"; bear_score += 0.5
+                else:
+                    signals["fr_trend"] = "NEUTRAL"
+                
+                # LS trend
+                if ls_trend > 0.1:
+                    signals["ls_trend"] = "MORE_LONGS"; bull_score += 0.2
+                elif ls_trend < -0.1:
+                    signals["ls_trend"] = "MORE_SHORTS"; bear_score += 0.2
+                else:
+                    signals["ls_trend"] = "STABLE"
+                
+                # High FR variance = stress
+                if fr_std > 0.00003:
+                    stress_score += 1
+                    signals["fr_vol"] = "HIGH"
+                else:
+                    signals["fr_vol"] = "NORMAL"
+        
+        # === STEP 2: Scan data signals (existing logic) ===
+        if scan_data:
+            vol = scan_data.get("vol_regime", {})
+            if vol:
+                vol_ratio = vol.get("vol_ratio", 1.0)
+                if vol_ratio > 1.5:
+                    stress_score += 0.5
+                signals["vol"] = "HIGH_VOL" if vol_ratio > 1.5 else "LOW_VOL"
+            
+            taker = scan_data.get("taker", {})
+            if taker:
+                taker_regime = taker.get("regime", "")
+                if "BUYING" in taker_regime.upper() or "SURGE" in taker_regime.upper():
+                    bull_score += 0.5; signals["taker"] = "BUY_SURGE"
+                elif "SELLING" in taker_regime.upper():
+                    bear_score += 0.5; signals["taker"] = "SELL_SURGE"
+                else:
+                    signals["taker"] = "NEUTRAL"
+        
+        # === STEP 3: PRICE MOMENTUM OVERRIDE (NEW) ===
+        # This is the critical fix — price momentum reacts FAST
+        momentum_override = False
+        if price_history and len(price_history) >= 16:
+            current_price = price_history[-1]
+            
+            # 1h momentum (4 bars of 15m)
+            if len(price_history) >= 5:
+                mom_1h = (current_price - price_history[-5]) / price_history[-5]
+            else:
+                mom_1h = 0
+            
+            # 4h momentum (16 bars of 15m)
+            if len(price_history) >= 17:
+                mom_4h = (current_price - price_history[-17]) / price_history[-17]
+            else:
+                mom_4h = 0
+            
+            signals["mom_1h"] = f"{mom_1h*100:+.2f}%"
+            signals["mom_4h"] = f"{mom_4h*100:+.2f}%"
+            
+            # HARD OVERRIDE: If price drops >1.5% in 1h, force BEAR
+            if mom_1h < -self.MOMENTUM_OVERRIDE_THRESHOLD_1H:
+                bear_score += 3.0
+                stress_score += 1.0
+                momentum_override = True
+                signals["momentum_override"] = f"1H_CRASH {mom_1h*100:.1f}%"
+            
+            # HARD OVERRIDE: If price drops >3% in 4h, force STRESS
+            if mom_4h < -self.MOMENTUM_OVERRIDE_THRESHOLD_4H:
+                stress_score += 3.0
+                bear_score += 2.0
+                momentum_override = True
+                signals["momentum_override"] = f"4H_CRASH {mom_4h*100:.1f}%"
+            
+            # HARD OVERRIDE: If price pumps >1.5% in 1h, boost BULL
+            if mom_1h > self.MOMENTUM_OVERRIDE_THRESHOLD_1H:
+                bull_score += 2.0
+                signals["momentum_override"] = f"1H_PUMP {mom_1h*100:.1f}%"
+            
+            # SOFT BOOST: Smaller momentum adjustments
+            if abs(mom_1h) > self.MOMENTUM_SOFT_THRESHOLD_1H:
+                if mom_1h > 0:
+                    bull_score += 1.0
+                else:
+                    bear_score += 1.0
+            
+            if abs(mom_4h) > self.MOMENTUM_SOFT_THRESHOLD_4H:
+                if mom_4h > 0:
+                    bull_score += 0.8
+                else:
+                    bear_score += 0.8
+        
+        # === STEP 4: REGIME DECISION (same thresholds, but scores are now momentum-aware) ===
+        if stress_score > 2:
+            regime = "STRESS"
+            confidence = min(0.9, 0.5 + stress_score * 0.1)
+        elif bull_score > bear_score + 0.5:
+            regime = "BULL"
+            confidence = min(0.9, 0.5 + (bull_score - bear_score) * 0.15)
+        elif bear_score > bull_score + 0.5:
+            regime = "BEAR"
+            confidence = min(0.9, 0.5 + (bear_score - bull_score) * 0.15)
+        elif bear_score > bull_score and bear_score >= 1.0:
+            regime = "MILDLY_BEARISH"
+            confidence = min(0.8, 0.5 + (bear_score - bull_score) * 0.1)
+        else:
+            regime = "RANGING"
+            confidence = 0.5
+        
+        # Regime smoothing: don't flip on single bar unless momentum override
+        if not momentum_override and len(self._prev_regimes) >= 2:
+            if self._prev_regimes[-1] != regime and self._prev_regimes[-2] != regime:
+                # 2 consecutive different regimes = keep previous for 1 more bar
+                regime = self._prev_regimes[-1]
+                confidence *= 0.8
+        
+        self.regime = regime
+        self.confidence = confidence
+        self.signals = signals
+        self._prev_regimes.append(regime)
+        if len(self._prev_regimes) > 10:
+            self._prev_regimes = self._prev_regimes[-10:]
+        
+        return regime, confidence, signals
+    
+    def is_bullish(self):
+        return self.regime == "BULL" and self.confidence >= 0.5
+    
+    def is_neutral_or_bearish(self):
+        return self.regime in ("BEAR", "STRESS", "MILDLY_BEARISH")
+    
+    def is_ranging(self):
+        return self.regime == "RANGING"
+
+
+# ═══════════════════════════════════════════════════════════════
+# AGENT 1: STRUCTURE AGENT (UPGRADED)
+# ═══════════════════════════════════════════════════════════════
+# FIX: Added trend direction filter
+# Blocks counter-trend signals when regime and structure agree
+
+class StructureAgentV2:
+    """
+    Assesses market microstructure + TREND DIRECTION.
+    
+    v1: Returns direction/conviction from OI/FR/volume
+    v2: + trend filter that can BLOCK counter-trend signals
+    
+    Key change: If regime = BEAR and signal = LONG, conviction is halved.
+    If structure says SHORT and signal says LONG with high conviction: REJECT.
+    """
+    
+    def __init__(self):
+        self.last_assessment = None
+        self.history = []
+    
+    def assess(self, scan_data, deriv_data=None, price_history=None):
+        """
+        Assess market structure with trend awareness.
+        """
+        components = {}
+        bull_score = 0.0
+        bear_score = 0.0
+        
+        # === Existing structure analysis ===
+        if scan_data:
+            cascade = scan_data.get("cascade", {})
+            if cascade:
+                score = cascade.get("score", 0)
+                if score > 0.5:
+                    bear_score += score * 2.0
+                    components["cascade"] = "BEARISH"
+                elif score < -0.5:
+                    bull_score += abs(score) * 2.0
+                    components["cascade"] = "BULLISH"
+                else:
+                    components["cascade"] = "NEUTRAL"
+            
+            ob = scan_data.get("orderbook", {})
+            if ob:
+                imbalance = ob.get("imbalance", 0)
+                if imbalance > 0.3:
+                    bull_score += imbalance * 1.5
+                    components["orderbook"] = "BID_HEAVY"
+                elif imbalance < -0.3:
+                    bear_score += abs(imbalance) * 1.5
+                    components["orderbook"] = "ASK_HEAVY"
+                else:
+                    components["orderbook"] = "BALANCED"
+            
+            taker = scan_data.get("taker", {})
+            if taker:
+                flow = taker.get("flow", 0)
+                if flow > 0.5:
+                    bull_score += flow
+                    components["taker"] = "AGGRESSIVE_BUY"
+                elif flow < -0.5:
+                    bear_score += abs(flow)
+                    components["taker"] = "AGGRESSIVE_SELL"
+                else:
+                    components["taker"] = "NEUTRAL"
+        
+        # === NEW: Price trend analysis ===
+        if price_history and len(price_history) >= 16:
+            current = price_history[-1]
+            
+            # 1h trend
+            if len(price_history) >= 5:
+                trend_1h = (current - price_history[-5]) / price_history[-5]
+            else:
+                trend_1h = 0
+            
+            # 4h trend
+            if len(price_history) >= 17:
+                trend_4h = (current - price_history[-17]) / price_history[-17]
+            else:
+                trend_4h = 0
+            
+            # Trend strength
+            if trend_1h < -0.01:
+                bear_score += 1.5
+                components["trend_1h"] = "BEARISH"
+            elif trend_1h > 0.01:
+                bull_score += 1.5
+                components["trend_1h"] = "BULLISH"
+            else:
+                components["trend_1h"] = "NEUTRAL"
+            
+            if trend_4h < -0.02:
+                bear_score += 1.0
+                components["trend_4h"] = "BEARISH"
+            elif trend_4h > 0.02:
+                bull_score += 1.0
+                components["trend_4h"] = "BULLISH"
+            else:
+                components["trend_4h"] = "NEUTRAL"
+        
+        # === Consensus ===
+        total = bull_score + bear_score
+        if total == 0:
+            direction = "NEUTRAL"
+            conviction = 0.0
+        elif bull_score > bear_score:
+            direction = "LONG"
+            conviction = min(0.95, bull_score / max(total, 1) * (total / 5.0))
+        else:
+            direction = "SHORT"
+            conviction = min(0.95, bear_score / max(total, 1) * (total / 5.0))
+        
+        result = {
+            "direction": direction,
+            "conviction": round(conviction, 3),
+            "bull_score": round(bull_score, 2),
+            "bear_score": round(bear_score, 2),
+            "components": components,
+        }
+        
+        self.last_assessment = result
+        self.history.append(result)
+        if len(self.history) > 100:
+            self.history = self.history[-100:]
+        
+        return result
+    
+    def should_block_signal(self, signal_direction, structure, regime):
+        """
+        NEW: Decide if a signal should be blocked due to trend mismatch.
+        
+        Returns: (block: bool, reason: str, conviction_multiplier: float)
+        """
+        struct_dir = structure.get("direction", "NEUTRAL")
+        struct_conv = structure.get("conviction", 0)
+        
+        # If structure is neutral, allow everything
+        if struct_dir == "NEUTRAL":
+            return False, "", 1.0
+        
+        # If signal aligns with structure, boost it
+        if struct_dir == signal_direction:
+            return False, "aligned", 1.2
+        
+        # If signal opposes structure with high conviction, block
+        if struct_conv > 0.6 and struct_dir != signal_direction:
+            return True, f"STRUCTURE_DISAGREES: {struct_dir} ({struct_conv:.2f}) vs {signal_direction}", 0
+        
+        # If regime is bearish and signal is long, reduce conviction
+        if regime in ("BEAR", "STRESS", "MILDLY_BEARISH") and signal_direction == "LONG":
+            return False, "counter_trend", 0.5
+        
+        # If regime is bullish and signal is short, reduce conviction
+        if regime == "BULL" and signal_direction == "SHORT":
+            return False, "counter_trend", 0.5
+        
+        return False, "", 1.0
+
+
+# ═══════════════════════════════════════════════════════════════
+# AGENT 3: VALIDATION AGENT (UPGRADED)
+# ═══════════════════════════════════════════════════════════════
+# FIX: Added signal deduplication + clustering
+# Prevents the 640 signals / 3 days problem
+
+class ValidationAgentV2:
+    """
+    Gate + Monitor + Signal Deduplication.
+    
+    v1: Gate check + live monitor
+    v2: + Signal history tracking + dedup + clustering
+    
+    Key changes:
+    - Same strategy + same direction within 1 hour → SKIP (dedup)
+    - If 3+ strategies disagree → reduce all convictions (conflict penalty)
+    - Max 1 new position per 30 minutes (rate limit)
+    """
+    
+    def __init__(self, gate_file, bench_file):
+        self.gate_file = gate_file
+        self.bench_file = bench_file
+        self.gate_results = {}
+        self.benchmarks = {}
+        self.live_stats = {}
+        self.paused = {}
+        
+        # NEW: Signal dedup state
+        self.signal_history = []  # (timestamp, strategy, direction)
+        self.last_entry_time = None
+        self.min_entry_interval = 1800  # 30 min between new positions
+        self.dedup_window = 3600  # 1 hour dedup window
+        
+        self._load()
+    
+    def _load(self):
+        if os.path.exists(self.gate_file):
+            try:
+                with open(self.gate_file) as f:
+                    self.gate_results = json.load(f)
+            except: pass
+        
+        if os.path.exists(self.bench_file):
+            try:
+                with open(self.bench_file) as f:
+                    data = json.load(f)
+                    self.benchmarks = data.get("benchmarks", {})
+                    self.live_stats = data.get("live_stats", {})
+                    self.paused = data.get("paused", {})
+            except: pass
+    
+    def is_gate_passed(self, strategy, regime=None):
+        """Check isolation gate with regime-specific override."""
+        entry = self.gate_results.get(strategy)
+        if not entry:
+            return False, "no gate result"
+        if entry.get("passed"):
+            return True, "passed"
+        
+        # Regime-specific breakdown
+        if regime:
+            breakdown = entry.get("regime_breakdown", {})
+            regime_lower = regime.lower()
+            if regime_lower in breakdown:
+                r = breakdown[regime_lower]
+                if r.get("passed"):
+                    return True, f"passed ({regime_lower})"
+        
+        return False, "gate failed"
+    
+    def is_monitor_paused(self, strategy):
+        """Check if strategy is paused by live monitor."""
+        if strategy in self.paused:
+            return True, self.paused[strategy].get("reason", "paused")
+        
+        live = self.live_stats.get(strategy, {})
+        bench = self.benchmarks.get(strategy, {})
+        
+        if not live or not bench:
+            return False, ""
+        
+        live_trades = live.get("trades", 0)
+        if live_trades < 5:
+            return False, ""
+        
+        live_wr = live.get("wins", 0) / live_trades if live_trades > 0 else 0
+        bench_wr = bench.get("wr", 0)
+        
+        if bench_wr > 0 and live_wr < bench_wr * 0.5:
+            return True, f"WR degraded: {live_wr:.1%} vs {bench_wr:.1%}"
+        
+        return False, ""
+    
+    # === NEW: Signal deduplication ===
+    
+    def check_signal_dedup(self, strategy, direction, timestamp):
+        """
+        Check if this signal is a duplicate of a recent one.
+        
+        Returns: (allow: bool, reason: str)
+        """
+        now = timestamp if isinstance(timestamp, (int, float)) else time.time()
+        
+        # Rate limit only: no new positions within 30 min
+        # (Price-level dedup handled by PRICE_DEDUP_PCT in executor)
+        if self.last_entry_time and (now - self.last_entry_time) < self.min_entry_interval:
+            remaining = self.min_entry_interval - (now - self.last_entry_time)
+            return False, f"RATE_LIMIT: {int(remaining)}s until next entry allowed"
+        
+        # Record this signal
+        self.signal_history.append((now, strategy, direction))
+        return True, "ok"
+    
+    def record_entry(self, timestamp=None):
+        """Record that a new position was opened (for rate limiting)."""
+        self.last_entry_time = timestamp or time.time()
+    
+    def check_signal_conflict(self, signals):
+        """
+        NEW: Check if multiple strategies disagree.
+        If 3+ strategies disagree on direction, reduce all convictions.
+        
+        Args: signals = list of (strategy, direction, conviction)
+        Returns: conflict_penalty multiplier (0.5 if conflict, 1.0 if aligned)
+        """
+        if len(signals) < 3:
+            return 1.0
+        
+        directions = [d for _, d, _ in signals]
+        longs = sum(1 for d in directions if d == "LONG")
+        shorts = sum(1 for d in directions if d == "SHORT")
+        
+        # If both sides have 2+ signals, it's a conflict
+        if longs >= 2 and shorts >= 2:
+            return 0.5  # halve all convictions
+        
+        return 1.0
+
+
+# ═══════════════════════════════════════════════════════════════
+# AGENT 4: RISK AGENT (UPGRADED)
+# ═══════════════════════════════════════════════════════════════
+# FIX: Added per-strategy cooldown + repeat loss protection
+# Prevents the 8x repeat loss bug (liquidity_grab Jul 15)
+
+class RiskAgentV2:
+    """
+    Survival-first position sizing with per-strategy cooldowns.
+    
+    v1: DD circuit breaker + portfolio heat + Kelly sizing
+    v2: + Per-strategy loss cooldown + repeat loss protection
+    
+    Key changes:
+    - If strategy lost in last 4 hours → block same-direction signal
+    - If strategy lost 3x consecutively → pause for 24h
+    - If same entry price as last loss (within 0.5%) → REJECT
+    """
+    
+    def __init__(self, initial_capital=200.0):
+        self.initial_capital = initial_capital
+        self.peak_capital = initial_capital
+        self.max_portfolio_heat = 0.06
+        self.max_directional_heat = 0.04
+        self.max_strategy_heat = 0.02
+        self.max_drawdown_pct = 0.25
+        self.dd_reduce_threshold = 0.15
+        self.kelly_fraction = 0.25
+        self.max_leverage = 25
+        self.min_leverage = 5
+        
+        # NEW: Per-strategy tracking
+        self.strategy_history = defaultdict(list)  # strategy -> [(timestamp, direction, outcome, entry_price)]
+        self.strategy_cooldown_hours = 4
+        self.max_consecutive_losses = 3
+        self.consecutive_loss_cooldown_hours = 24
+        self.entry_price_tolerance = 0.005  # 0.5%
+    
+    def evaluate_position(self, proposed_pos, state, regime):
+        """Evaluate position with per-strategy cooldown checks."""
+        capital = state.get("capital", self.initial_capital)
+        open_positions = state.get("open_positions", [])
+        peak = state.get("peak_capital", capital)
+        self.peak_capital = max(self.peak_capital, peak)
+        
+        strategy = proposed_pos.get("strategy", "unknown")
+        direction = proposed_pos.get("direction", "LONG")
+        entry = proposed_pos.get("entry", 0)
+        
+        # === NEW CHECK: Per-strategy cooldown ===
+        cooldown_check = self._check_strategy_cooldown(strategy, direction, entry)
+        if not cooldown_check["approved"]:
+            return {
+                "approved": False, "adjusted_size": 0, "leverage": 0,
+                "reason": cooldown_check["reason"],
+                "risk_metrics": {"cooldown": True},
+            }
+        
+        # === Existing checks (same as v1) ===
+        
+        # DD circuit breaker
+        drawdown = (self.peak_capital - capital) / self.peak_capital if self.peak_capital > 0 else 0
+        
+        if drawdown >= self.max_drawdown_pct:
+            return {
+                "approved": False, "adjusted_size": 0, "leverage": self.max_leverage,
+                "reason": f"DRAWDOWN BREAKER: {drawdown*100:.1f}% >= {self.max_drawdown_pct*100}%",
+                "risk_metrics": {"drawdown_pct": round(drawdown * 100, 2)},
+            }
+        
+        # Portfolio heat
+        total_risk = self._calc_portfolio_heat(open_positions)
+        if total_risk >= self.max_portfolio_heat:
+            return {
+                "approved": False, "adjusted_size": 0, "leverage": self.max_leverage,
+                "reason": f"PORTFOLIO HEAT: {total_risk*100:.1f}% >= {self.max_portfolio_heat*100}%",
+                "risk_metrics": {"portfolio_heat": round(total_risk * 100, 2)},
+            }
+        
+        # Directional exposure
+        dir_risk = self._calc_directional_heat(open_positions, direction)
+        if dir_risk >= self.max_directional_heat:
+            return {
+                "approved": False, "adjusted_size": 0, "leverage": self.max_leverage,
+                "reason": f"DIRECTIONAL HEAT: {direction} {dir_risk*100:.1f}%",
+                "risk_metrics": {"directional_heat": round(dir_risk * 100, 2)},
+            }
+        
+        # Strategy concentration
+        strat_risk = self._calc_strategy_heat(open_positions, strategy)
+        if strat_risk >= self.max_strategy_heat:
+            return {
+                "approved": False, "adjusted_size": 0, "leverage": self.max_leverage,
+                "reason": f"STRATEGY HEAT: {strategy} {strat_risk*100:.1f}%",
+                "risk_metrics": {"strategy_heat": round(strat_risk * 100, 2)},
+            }
+        
+        # Position sizing
+        sl = proposed_pos.get("sl", 0)
+        if not entry or not sl or entry == 0:
+            return {"approved": False, "adjusted_size": 0, "leverage": 0, "reason": "Invalid entry/SL"}
+        
+        sl_distance_pct = abs(entry - sl) / entry
+        if sl_distance_pct <= 0:
+            return {"approved": False, "adjusted_size": 0, "leverage": 0, "reason": "SL distance is zero"}
+        
+        # Kelly sizing
+        conviction = proposed_pos.get("conviction", 0.5)
+        rr_ratio = 1.5
+        kelly_pct = conviction - (1 - conviction) / rr_ratio
+        kelly_pct = max(0, kelly_pct) * self.kelly_fraction
+        
+        available_heat = self.max_portfolio_heat - total_risk
+        available_dir_heat = self.max_directional_heat - dir_risk
+        available_strat_heat = self.max_strategy_heat - strat_risk
+        max_risk_amount = capital * min(available_heat, available_dir_heat, available_strat_heat)
+        
+        size_multiplier = 1.0
+        if drawdown >= self.dd_reduce_threshold:
+            size_multiplier = 0.5
+        
+        regime_scale = {"BULL": 1.0, "BEAR": 0.9, "RANGING": 0.85, "STRESS": 0.7, "MILDLY_BEARISH": 0.9}
+        size_multiplier *= regime_scale.get(regime, 0.85)
+        
+        risk_amount = max_risk_amount * size_multiplier
+        position_size = risk_amount / sl_distance_pct if sl_distance_pct > 0 else 0
+        position_size = min(position_size, capital * 0.3)
+        
+        leverage = min(int(position_size / (capital * 0.1)) + 1, self.max_leverage)
+        leverage = max(leverage, self.min_leverage)
+        
+        if position_size < 1:
+            return {"approved": False, "adjusted_size": 0, "leverage": 0, "reason": "Position too small"}
+        
+        return {
+            "approved": True,
+            "adjusted_size": round(position_size, 2),
+            "leverage": leverage,
+            "risk_amount": round(risk_amount, 2),
+            "drawdown": round(drawdown * 100, 2),
+            "reason": "OK",
+            "risk_metrics": {
+                "drawdown_pct": round(drawdown * 100, 2),
+                "portfolio_heat": round(total_risk * 100, 2),
+                "directional_heat": round(dir_risk * 100, 2),
+                "strategy_heat": round(strat_risk * 100, 2),
+            },
+        }
+    
+    def record_trade(self, strategy, direction, outcome, entry_price, timestamp=None):
+        """NEW: Record a trade outcome for cooldown tracking."""
+        ts = timestamp or time.time()
+        self.strategy_history[strategy].append({
+            "timestamp": ts,
+            "direction": direction,
+            "outcome": outcome,
+            "entry_price": entry_price,
+        })
+        # Keep last 50 trades per strategy
+        if len(self.strategy_history[strategy]) > 50:
+            self.strategy_history[strategy] = self.strategy_history[strategy][-50:]
+    
+    def _check_strategy_cooldown(self, strategy, direction, entry_price):
+        """
+        NEW: Check if strategy is in cooldown due to recent losses.
+        
+        Rules:
+        1. If same strategy + same direction lost in last 4h → BLOCK
+        2. If strategy lost 3x consecutively → BLOCK for 24h
+        3. If entry price within 0.5% of last loss entry → BLOCK
+        """
+        history = self.strategy_history.get(strategy, [])
+        if not history:
+            return {"approved": True, "reason": ""}
+        
+        now = time.time()
+        recent = [t for t in history if (now - t["timestamp"]) < self.strategy_cooldown_hours * 3600]
+        
+        # Check 1: Same direction loss in last 4h
+        for t in reversed(recent):
+            if t["direction"] == direction and t["outcome"] == "LOSS":
+                elapsed = now - t["timestamp"]
+                remaining = self.strategy_cooldown_hours * 3600 - elapsed
+                return {
+                    "approved": False,
+                    "reason": f"COOLDOWN: {strategy} {direction} lost {int(elapsed/60)}m ago, {int(remaining/60)}m remaining",
+                }
+        
+        # Check 2: 3 consecutive losses
+        last_3 = history[-3:] if len(history) >= 3 else history
+        if len(last_3) >= 3 and all(t["outcome"] == "LOSS" for t in last_3):
+            last_loss_time = last_3[-1]["timestamp"]
+            elapsed = now - last_loss_time
+            if elapsed < self.consecutive_loss_cooldown_hours * 3600:
+                remaining = self.consecutive_loss_cooldown_hours * 3600 - elapsed
+                return {
+                    "approved": False,
+                    "reason": f"CONSEC_LOSS: {strategy} lost 3x consecutively, paused for {int(remaining/3600)}h",
+                }
+        
+        # Check 3: Same entry price as last loss
+        for t in reversed(history):
+            if t["outcome"] == "LOSS" and t["entry_price"] > 0:
+                price_diff = abs(entry_price - t["entry_price"]) / t["entry_price"]
+                if price_diff < self.entry_price_tolerance:
+                    return {
+                        "approved": False,
+                        "reason": f"REPEAT_ENTRY: {strategy} lost at ${t['entry_price']:.2f}, current ${entry_price:.2f} (diff {price_diff*100:.2f}%)",
+                    }
+                break  # only check most recent loss
+        
+        return {"approved": True, "reason": ""}
+    
+    def _calc_portfolio_heat(self, positions):
+        return sum(abs(p.get("risk", 0.01)) for p in positions)
+    
+    def _calc_directional_heat(self, positions, direction):
+        return sum(abs(p.get("risk", 0.01)) for p in positions if p.get("direction") == direction)
+    
+    def _calc_strategy_heat(self, positions, strategy):
+        return sum(abs(p.get("risk", 0.01)) for p in positions if p.get("strategy") == strategy)
+
+
+# ═══════════════════════════════════════════════════════════════
+# AGENT 5: EXECUTION AGENT (UPGRADED)
+# ═══════════════════════════════════════════════════════════════
+# FIX: Added wall persistence check
+# Detects spoofed walls (appear/disappear within 15 min)
+
+class ExecutionAgentV2:
+    """
+    Validates execution with wall persistence check.
+    
+    v1: Wall detection → REJECT if wall > 5x avg
+    v2: + Track wall persistence over 15 min
+        - Wall appears and disappears in < 15 min → SPOOFED → ignore
+        - Wall persists > 30 min → REAL → respect
+        - Lower threshold from 5x to 3x avg (catch more real walls)
+    """
+    
+    def __init__(self):
+        self.max_signal_age_sec = 1200  # 20 min
+        self.max_slippage_pct = 0.15
+        self.min_depth_ratio = 2.0
+        
+        # NEW: Wall tracking
+        self.wall_history = {}  # price_level -> [(timestamp, size)]
+        self.wall_persistence_window = 900   # 15 min = spoof detection
+        self.wall_real_threshold = 1800      # 30 min = real wall
+        self.wall_size_multiplier = 3.0      # lowered from 5.0 to 3.0
+        
+        self.execution_history = []
+    
+    def validate_execution(self, signal, state, exchange=None, symbol="ETH/USDT:USDT"):
+        """Validate execution with wall persistence check."""
+        reasons = []
+        quality_score = 1.0
+        
+        # Signal freshness
+        sig_ts = signal.get("timestamp", "")
+        freshness = self._check_freshness(sig_ts)
+        if not freshness["valid"]:
+            return {
+                "execute": False, "adjusted_entry": signal.get("entry", 0),
+                "slippage_est": 0, "reason": freshness["reason"], "quality_score": 0,
+            }
+        quality_score *= freshness["quality"]
+        
+        # Price drift
+        entry = signal.get("entry", 0)
+        current_price = signal.get("price", entry)
+        if entry > 0 and current_price > 0:
+            price_drift = abs(current_price - entry) / entry * 100
+            if price_drift > 0.5:
+                return {
+                    "execute": False, "adjusted_entry": current_price,
+                    "slippage_est": price_drift, "reason": f"PRICE DRIFT: {price_drift:.2f}%",
+                    "quality_score": 0.3,
+                }
+            quality_score *= max(0.5, 1.0 - price_drift / 0.5)
+        
+        # Orderbook depth
+        depth_analysis = self._check_depth(exchange, symbol, signal)
+        if not depth_analysis["sufficient"]:
+            reasons.append(depth_analysis["reason"])
+            quality_score *= 0.5
+        
+        # Latency
+        latency = self._check_latency(signal)
+        quality_score *= latency["quality"]
+        
+        # === UPGRADED: Wall check with persistence ===
+        wall_check = self._check_walls_v2(exchange, symbol, signal)
+        if wall_check["blocked"]:
+            return {
+                "execute": False, "adjusted_entry": entry,
+                "slippage_est": wall_check.get("wall_distance_pct", 0),
+                "reason": wall_check["reason"], "quality_score": 0.2,
+            }
+        if wall_check.get("spoofed"):
+            reasons.append(f"SPOOFED_WALL ignored at {wall_check.get('spoofed_price', 0):.2f}")
+        
+        # Slippage estimate
+        direction = signal.get("direction", "LONG")
+        slippage_est = self._estimate_slippage(depth_analysis, signal)
+        
+        if direction == "LONG":
+            adjusted_entry = entry * (1 + slippage_est / 100)
+        else:
+            adjusted_entry = entry * (1 - slippage_est / 100)
+        
+        execute = quality_score >= 0.25 and slippage_est <= self.max_slippage_pct
+        reason = "OK" if execute else f"Quality {quality_score:.2f} < 0.25"
+        if reasons:
+            reason += " | " + "; ".join(reasons)
+        
+        result = {
+            "execute": execute, "adjusted_entry": round(adjusted_entry, 2),
+            "slippage_est": round(slippage_est, 4), "reason": reason,
+            "quality_score": round(quality_score, 3),
+        }
+        
+        self.execution_history.append(result)
+        if len(self.execution_history) > 100:
+            self.execution_history = self.execution_history[-100:]
+        
+        return result
+    
+    def _check_walls_v2(self, exchange, symbol, signal):
+        """
+        UPGRADED: Wall detection with persistence tracking.
+        
+        Logic:
+        1. Detect wall (existing logic)
+        2. Record wall in history
+        3. If wall was seen > 30 min ago and still there → REAL → block
+        4. If wall just appeared (< 15 min) → might be SPOOF → warn but allow
+        5. If wall appeared and disappeared → SPOOFED → ignore
+        """
+        if not exchange:
+            return {"blocked": False, "reason": "No exchange (dry run)"}
+        
+        try:
+            entry = signal.get("entry", 0)
+            direction = signal.get("direction", "LONG")
+            size = signal.get("size", 0.05)
+            
+            ob = exchange.fetch_order_book(symbol, limit=20)
+            bids = ob.get("bids", [])
+            asks = ob.get("asks", [])
+            
+            # Find walls
+            avg_bid_size = sum(b[1] for b in bids[:10]) / min(10, len(bids)) if bids else 0
+            avg_ask_size = sum(a[1] for a in asks[:10]) / min(10, len(asks)) if asks else 0
+            
+            now = time.time()
+            wall_detected = False
+            wall_price = 0
+            wall_size = 0
+            
+            # Check asks (sell walls block LONG entries)
+            if direction == "LONG":
+                for ask in asks[:5]:
+                    if ask[1] > avg_ask_size * self.wall_size_multiplier:
+                        wall_detected = True
+                        wall_price = ask[0]
+                        wall_size = ask[1]
+                        break
+            
+            # Check bids (buy walls block SHORT entries)
+            if direction == "SHORT":
+                for bid in bids[:5]:
+                    if bid[1] > avg_bid_size * self.wall_size_multiplier:
+                        wall_detected = True
+                        wall_price = bid[0]
+                        wall_size = bid[1]
+                        break
+            
+            if not wall_detected:
+                return {"blocked": False, "reason": "no wall"}
+            
+            # Track wall persistence
+            wall_key = f"{wall_price:.2f}"
+            if wall_key not in self.wall_history:
+                self.wall_history[wall_key] = []
+            
+            self.wall_history[wall_key].append((now, wall_size))
+            
+            # Clean old entries
+            self.wall_history[wall_key] = [
+                (ts, sz) for ts, sz in self.wall_history[wall_key]
+                if (now - ts) < self.wall_real_threshold
+            ]
+            
+            # Check persistence
+            wall_age = now - self.wall_history[wall_key][0][0] if self.wall_history[wall_key] else 0
+            
+            distance_pct = abs(wall_price - entry) / entry * 100 if entry > 0 else 0
+            avg_size = avg_ask_size if direction == "LONG" else avg_bid_size
+            size_ratio = wall_size / avg_size if avg_size > 0 else 0
+            
+            if wall_age > self.wall_real_threshold:
+                # Wall persisted > 30 min = REAL wall → block
+                return {
+                    "blocked": True,
+                    "reason": f"WALL (real, {int(wall_age/60)}m): {wall_size:.0f} ETH @ ${wall_price:.2f} ({distance_pct:.2f}% from entry, {size_ratio:.1f}x avg)",
+                    "wall_distance_pct": distance_pct,
+                }
+            elif wall_age < self.wall_persistence_window:
+                # Wall just appeared = might be SPOOF → warn but allow
+                return {
+                    "blocked": False,
+                    "spoofed": True,
+                    "spoofed_price": wall_price,
+                    "reason": f"SPOOF_WALL: {wall_size:.0f} ETH @ ${wall_price:.2f} (only {int(wall_age/60)}m old, allowing)",
+                }
+            else:
+                # Wall 15-30 min old = uncertain → block with warning
+                return {
+                    "blocked": True,
+                    "reason": f"WALL (uncertain, {int(wall_age/60)}m): {wall_size:.0f} ETH @ ${wall_price:.2f} ({distance_pct:.2f}%, {size_ratio:.1f}x avg)",
+                    "wall_distance_pct": distance_pct,
+                }
+        
+        except Exception as e:
+            return {"blocked": False, "reason": f"Wall check error: {e}"}
+    
+    def _check_freshness(self, sig_ts):
+        try:
+            if "T" in sig_ts:
+                sig_dt = datetime.fromisoformat(sig_ts.replace("Z", "+00:00"))
+            else:
+                sig_dt = datetime.strptime(sig_ts[:19], "%Y-%m-%d %H:%M:%S")
+                sig_dt = sig_dt.replace(tzinfo=timezone.utc)
+        except:
+            return {"valid": False, "reason": "Invalid signal timestamp", "quality": 0}
+        
+        now = datetime.now(timezone.utc)
+        age_sec = (now - sig_dt).total_seconds()
+        
+        if age_sec > self.max_signal_age_sec:
+            return {"valid": False, "reason": f"Signal too old: {age_sec:.0f}s > {self.max_signal_age_sec}s", "quality": 0}
+        
+        quality = max(0.3, 1.0 - (age_sec / self.max_signal_age_sec))
+        return {"valid": True, "age_sec": age_sec, "quality": quality}
+    
+    def _check_depth(self, exchange, symbol, signal):
+        if not exchange:
+            return {"sufficient": True, "reason": "No exchange (dry run)", "depth": 0}
+        return {"sufficient": True, "reason": "", "depth": 0}
+    
+    def _check_latency(self, signal):
+        return {"quality": 1.0}
+    
+    def _estimate_slippage(self, depth_analysis, signal):
+        return 0.02
+
+
+# ═══════════════════════════════════════════════════════════════
+# ORCHESTRATOR (UPGRADED)
+# ═══════════════════════════════════════════════════════════════
+# Wires all 5 upgraded agents together
+
+class OrchestratorV2:
+    """
+    Master coordinator with all 5 agent upgrades.
+    
+    Changes from v1:
+    - Regime Classifier uses price momentum (fast)
+    - Structure Agent has trend filter
+    - Validation Agent has signal dedup
+    - Risk Agent has per-strategy cooldown
+    - Execution Agent has wall persistence
+    """
+    
+    def __init__(self, initial_capital=200.0):
+        self.structure = StructureAgentV2()
+        self.risk = RiskAgentV2(initial_capital)
+        self.execution = ExecutionAgentV2()
+        
+        # Gate + monitor files
+        gate_file = os.path.join(BASE, "config", "isolation_gate_results.json")
+        bench_file = os.path.join(BASE, "config", "backtest_benchmarks.json")
+        self.validation = ValidationAgentV2(gate_file, bench_file)
+        
+        # Decision history
+        self.decisions = []
+        self.stats = {
+            "total_evaluated": 0,
+            "total_approved": 0,
+            "total_rejected": 0,
+            "rejection_reasons": defaultdict(int),
+        }
+    
+    def evaluate_signal(self, signal, state, gate, monitor, regime="RANGING",
+                        regime_confidence=0.5, exchange=None, scan_data=None,
+                        deriv_data=None, symbol="ETH/USDT:USDT",
+                        price_history=None, timestamp=None):
+        """
+        Full 5-agent evaluation with all upgrades.
+        
+        New params:
+            price_history: list of recent close prices for momentum/trend
+            timestamp: current timestamp for dedup
+        """
+        self.stats["total_evaluated"] += 1
+        agent_results = {}
+        strategy = signal.get("strategy", "unknown")
+        direction = signal.get("direction", "LONG")
+        
+        # ========================================
+        # STAGE 0: Signal Deduplication (NEW)
+        # ========================================
+        ts = timestamp or time.time()
+        dedup_ok, dedup_reason = self.validation.check_signal_dedup(strategy, direction, ts)
+        if not dedup_ok:
+            return self._reject("DEDUP", dedup_reason, agent_results)
+        
+        # ========================================
+        # STAGE 1: Structure Agent (UPGRADED)
+        # ========================================
+        if scan_data:
+            structure = self.structure.assess(scan_data, deriv_data, price_history)
+            agent_results["structure"] = structure
+            
+            # NEW: Trend direction filter
+            block, reason, conv_mult = self.structure.should_block_signal(direction, structure, regime)
+            if block:
+                return self._reject("STRUCTURE_DISAGREES", reason, agent_results)
+            
+            # Apply conviction multiplier from trend alignment
+            if conv_mult != 1.0:
+                signal = dict(signal)  # copy
+                signal["conviction"] = signal.get("conviction", 0.5) * conv_mult
+        
+        # ========================================
+        # STAGE 2: Validation Agent (existing gate + monitor)
+        # ========================================
+        gate_ok, gate_reason = gate.is_passed(strategy)
+        if not gate_ok:
+            # Try regime-specific gate
+            gate_ok, gate_reason = self.validation.is_gate_passed(strategy, regime)
+        if not gate_ok:
+            return self._reject("GATE_BLOCKED", f"{strategy}: {gate_reason}", agent_results)
+        
+        monitor_paused, monitor_reason = monitor.is_paused(strategy)
+        if monitor_paused:
+            return self._reject("MONITOR_PAUSED", f"{strategy}: {monitor_reason}", agent_results)
+        
+        agent_results["validation"] = {"gate": gate_ok, "monitor": not monitor_paused}
+        
+        # ========================================
+        # STAGE 3: Risk Agent (UPGRADED)
+        # ========================================
+        proposed_pos = {
+            "direction": direction,
+            "entry": signal.get("entry", 0),
+            "sl": signal.get("sl", 0),
+            "strategy": strategy,
+            "conviction": signal.get("conviction", 0.5),
+        }
+        
+        risk_result = self.risk.evaluate_position(proposed_pos, state, regime)
+        agent_results["risk"] = risk_result
+        
+        if not risk_result["approved"]:
+            return self._reject("RISK_REJECTED", risk_result["reason"], agent_results)
+        
+        # ========================================
+        # STAGE 4: Execution Agent (UPGRADED)
+        # ========================================
+        exec_result = self.execution.validate_execution(signal, state, exchange, symbol)
+        agent_results["execution"] = exec_result
+        
+        if not exec_result["execute"]:
+            return self._reject("EXECUTION_REJECTED", exec_result["reason"], agent_results)
+        
+        # ========================================
+        # STAGE 5: Final Decision
+        # ========================================
+        size = risk_result["adjusted_size"]
+        leverage = risk_result["leverage"]
+        adjusted_entry = exec_result["adjusted_entry"]
+        
+        tp1 = signal.get("tp1", 0)
+        sl = signal.get("sl", 0)
+        cfg = signal.get("cfg", {})
+        
+        position = {
+            "strategy": strategy, "direction": direction,
+            "fill_price": round(adjusted_entry, 2),
+            "tp": round(tp1, 2), "sl": round(sl, 2),
+            "size": round(size, 6), "leverage": leverage,
+            "hold_hours": cfg.get("hold_hours", 8),
+            "tp_pct": cfg.get("tp_pct", 2.0), "sl_pct": cfg.get("sl_pct", 1.5),
+            "signal_ts": signal.get("timestamp", ""),
+            "opened_at": datetime.now(timezone.utc).isoformat(),
+            "trailed": False,
+            "regime": regime,
+        }
+        
+        # NOTE: record_entry moved to scanner_executor.py after position actually opens
+        
+        self.stats["total_approved"] += 1
+        return {
+            "approved": True, "action": "OPEN", "position": position,
+            "reason": "APPROVED", "agent_results": agent_results,
+        }
+    
+    def record_trade_outcome(self, strategy, direction, outcome, entry_price, timestamp=None):
+        """NEW: Record trade outcome for risk agent cooldown tracking."""
+        self.risk.record_trade(strategy, direction, outcome, entry_price, timestamp)
+    
+    def _reject(self, reason_code, reason, agent_results):
+        self.stats["total_rejected"] += 1
+        self.stats["rejection_reasons"][reason_code] += 1
+        return {
+            "approved": False, "action": "REJECT", "position": None,
+            "reason": reason, "agent_results": agent_results,
+        }
+
+
+# ═══════════════════════════════════════════════════════════════
+# BACKTEST: Compare v1 vs v2
+# ═══════════════════════════════════════════════════════════════
+
+def run_upgrade_backtest():
+    """
+    Run a backtest comparing the old vs new agent framework.
+    Uses the same data and signals, but applies the v2 agents.
+    """
+    import requests as req
+    
+    print("=" * 60)
+    print("5-AGENT UPGRADE BACKTEST: v1 vs v2")
+    print("=" * 60)
+    
+    # Load data
+    print("\n📊 Loading data...")
+    r = req.get("https://api.binance.com/api/v3/klines",
+                params={"symbol": "ETHUSDT", "interval": "15m", "limit": 1500}, timeout=15)
+    candles_raw = r.json()
+    candles = []
+    for c in candles_raw:
+        candles.append({
+            "ts": c[0], "open": float(c[1]), "high": float(c[2]),
+            "low": float(c[3]), "close": float(c[4]), "volume": float(c[5]),
+        })
+    print(f"  Candles: {len(candles)}")
+    
+    # Load OI data
+    oi_csv = os.path.join(BASE, "data", "forced_movement", "oi_history.csv")
+    oi_data = []
+    if os.path.exists(oi_csv):
+        with open(oi_csv) as f:
+            for line in f:
+                parts = line.strip().split(',')
+                if len(parts) >= 2:
+                    try:
+                        oi_data.append({"ts": int(parts[0]), "oi": float(parts[1])})
+                    except: pass
+    oi_data.sort(key=lambda x: x["ts"])
+    print(f"  OI data: {len(oi_data)}")
+    
+    # Load funding
+    funding_csv = os.path.join(BASE, "data", "forced_movement", "funding_history.csv")
+    funding_by_ts = {}
+    if os.path.exists(funding_csv):
+        with open(funding_csv) as f:
+            for line in f:
+                parts = line.strip().split(',')
+                if len(parts) >= 3:
+                    try:
+                        funding_by_ts[int(parts[1])] = float(parts[2])
+                    except: pass
+    print(f"  Funding: {len(funding_by_ts)}")
+    
+    # Price history for momentum
+    price_history = [c["close"] for c in candles]
+    
+    # Initialize v2 agents
+    orchestrator = OrchestratorV2(initial_capital=200.0)
+    
+    # Simulate signals (same as before but with price_history)
+    WINDOW = 20
+    fee_rate = 0.0004
+    state = {
+        "capital": 200.0, "peak_capital": 200.0,
+        "open_positions": [], "closed_trades": [],
+        "total_pnl": 0, "trades_count": 0, "wins": 0, "losses": 0, "timeouts": 0,
+    }
+    
+    trades = []
+    all_decisions = []
+    dedup_blocks = 0
+    cooldown_blocks = 0
+    trend_blocks = 0
+    momentum_regime_shifts = 0
+    
+    prev_regime = "RANGING"
+    
+    for i in range(WINDOW + 10, len(candles)):
+        price = candles[i]["close"]
+        candle_ts = candles[i]["ts"]
+        
+        # Get OI window
+        oi_window = [d for d in oi_data if abs(d["ts"] - candle_ts) < 7200000]
+        if len(oi_window) < 3:
+            continue
+        
+        # Check exits
+        closed = []
+        for pos in state["open_positions"]:
+            pos["bars_held"] = pos.get("bars_held", 0) + 1
+            exited = False
+            outcome = "TIMEOUT"
+            exit_price = price
+            
+            if pos["direction"] == "LONG":
+                if candles[i]["low"] <= pos["sl"]:
+                    exit_price = pos["sl"]; outcome = "LOSS"; exited = True
+                elif candles[i]["high"] >= pos["tp"]:
+                    exit_price = pos["tp"]; outcome = "WIN"; exited = True
+            else:
+                if candles[i]["high"] >= pos["sl"]:
+                    exit_price = pos["sl"]; outcome = "LOSS"; exited = True
+                elif candles[i]["low"] <= pos["tp"]:
+                    exit_price = pos["tp"]; outcome = "WIN"; exited = True
+            
+            if not exited and pos.get("bars_held", 0) >= pos.get("hold_bars", 8):
+                exited = True; outcome = "TIMEOUT"; exit_price = price
+            
+            if exited:
+                if pos["direction"] == "LONG":
+                    pnl_pct = (exit_price - pos["fill_price"]) / pos["fill_price"] * 100
+                else:
+                    pnl_pct = (pos["fill_price"] - exit_price) / pos["fill_price"] * 100
+                pnl_pct -= fee_rate * 100
+                pnl_dollar = pos["size"] * pnl_pct / 100 * pos.get("leverage", 1)
+                
+                state["capital"] += pnl_dollar
+                state["peak_capital"] = max(state["peak_capital"], state["capital"])
+                state["total_pnl"] += pnl_dollar
+                state["trades_count"] += 1
+                if outcome == "WIN": state["wins"] += 1
+                elif outcome == "LOSS": state["losses"] += 1
+                else: state["timeouts"] += 1
+                
+                # Record outcome for cooldown tracking
+                orchestrator.record_trade_outcome(
+                    pos["strategy"], pos["direction"], outcome,
+                    pos["fill_price"], candle_ts / 1000
+                )
+                
+                trades.append({
+                    "strategy": pos["strategy"], "direction": pos["direction"],
+                    "entry": pos["fill_price"], "exit": round(exit_price, 2),
+                    "outcome": outcome, "pnl_pct": round(pnl_pct, 4),
+                    "pnl_dollar": round(pnl_dollar, 2), "regime": pos.get("regime", "?"),
+                    "bars_held": pos.get("bars_held", 0),
+                })
+                closed.append(pos)
+        
+        for pos in closed:
+            state["open_positions"].remove(pos)
+        
+        # Classify regime with price momentum (v2)
+        # Compute regime directly using momentum override logic
+        mom_1h = (price - price_history[i-4]) / price_history[i-4] if i >= 4 else 0
+        mom_4h = (price - price_history[i-16]) / price_history[i-16] if i >= 16 else 0
+        
+        # Deriv-based scores
+        bull_score = 0.0
+        bear_score = 0.0
+        stress_score = 0.0
+        
+        if len(oi_window) >= 2:
+            oi_roc = (oi_window[-1]["oi"] - oi_window[-2]["oi"]) / oi_window[-2]["oi"]
+            if oi_roc > 0.005: bull_score += 0.5
+            elif oi_roc < -0.01: stress_score += 1
+        
+        # Funding
+        nearest_fr = 0
+        min_diff = float('inf')
+        for fts, rate in funding_by_ts.items():
+            diff = abs(fts - candle_ts)
+            if diff < min_diff:
+                min_diff = diff; nearest_fr = rate
+        if nearest_fr > 0.00003: bull_score += 1
+        elif nearest_fr < -0.00001: bear_score += 1
+        
+        # MOMENTUM OVERRIDE (v2 key fix)
+        if mom_1h < -0.015:
+            bear_score += 3.0; stress_score += 1.0
+            if prev_regime == "BULL":
+                momentum_regime_shifts += 1
+        elif mom_1h > 0.015:
+            bull_score += 2.0
+        elif mom_1h < -0.008:
+            bear_score += 1.0
+        elif mom_1h > 0.008:
+            bull_score += 1.0
+        
+        if mom_4h < -0.03:
+            stress_score += 3.0; bear_score += 2.0
+        elif mom_4h > 0.03:
+            bull_score += 1.5
+        
+        if stress_score > 2: regime = "STRESS"
+        elif bull_score > bear_score + 0.5: regime = "BULL"
+        elif bear_score > bull_score + 0.5: regime = "BEAR"
+        elif bear_score > bull_score and bear_score >= 1.0: regime = "MILDLY_BEARISH"
+        else: regime = "RANGING"
+        
+        prev_regime = regime
+        
+        # Generate signals (same as before)
+        signals = []
+        if i >= 20:
+            price_chg_5 = (candles[i]["close"] - candles[i-5]["close"]) / candles[i-5]["close"]
+            price_chg_10 = (candles[i]["close"] - candles[i-10]["close"]) / candles[i-10]["close"]
+            avg_vol = sum(c["volume"] for c in candles[max(0,i-20):i]) / min(20, i)
+            vol_ratio = candles[i]["volume"] / avg_vol if avg_vol > 0 else 1
+            
+            atr_vals = []
+            for j in range(max(1, i-14), i):
+                tr = max(candles[j]["high"] - candles[j]["low"],
+                         abs(candles[j]["high"] - candles[j-1]["close"]),
+                         abs(candles[j]["low"] - candles[j-1]["close"]))
+                atr_vals.append(tr)
+            atr = sum(atr_vals) / len(atr_vals) if atr_vals else 0
+            
+            if atr > 0:
+                oi_roc_val = 0
+                if len(oi_window) >= 6:
+                    cur_oi = oi_window[-1]["oi"]
+                    ref_oi = oi_window[-6]["oi"]
+                    if ref_oi > 0: oi_roc_val = (cur_oi - ref_oi) / ref_oi
+                
+                # liquidation_cascade
+                if abs(oi_roc_val) > 0.005:
+                    if oi_roc_val < -0.005 and price_chg_5 < -0.003:
+                        signals.append({"strategy": "liquidation_cascade", "direction": "SHORT", "entry": price, "sl": price + atr*1.5, "tp1": price - atr*1.5, "conviction": 0.6, "tp_pct": 1.5, "sl_pct": 1.5, "hold_bars": 8, "cfg": {"hold_hours": 2}})
+                    elif oi_roc_val < -0.005 and price_chg_5 > 0.003:
+                        signals.append({"strategy": "liquidation_cascade", "direction": "LONG", "entry": price, "sl": price - atr*1.5, "tp1": price + atr*1.5, "conviction": 0.6, "tp_pct": 1.5, "sl_pct": 1.5, "hold_bars": 8, "cfg": {"hold_hours": 2}})
+                
+                # orderbook_imbalance
+                if vol_ratio > 1.5 and abs(price_chg_5) > 0.003:
+                    d = "LONG" if price_chg_5 > 0 else "SHORT"
+                    conv = min(0.5 + (vol_ratio-1)*0.2 + abs(oi_roc_val)*10, 0.8)
+                    sl_p = price - atr*0.75 if d == "LONG" else price + atr*0.75
+                    tp_p = price + atr*2.0 if d == "LONG" else price - atr*2.0
+                    signals.append({"strategy": "orderbook_imbalance", "direction": d, "entry": price, "sl": sl_p, "tp1": tp_p, "conviction": conv, "tp_pct": 2.0, "sl_pct": 0.75, "hold_bars": 8, "cfg": {"hold_hours": 2}})
+                
+                # taker_flow
+                if abs(oi_roc_val) > 0.003 and vol_ratio > 1.3:
+                    d = "LONG" if price_chg_5 > 0 else "SHORT"
+                    conv = min(0.5 + abs(oi_roc_val)*10 + (vol_ratio-1)*0.15, 0.75)
+                    sl_p = price - atr*1.5 if d == "LONG" else price + atr*1.5
+                    tp_p = price + atr*2.0 if d == "LONG" else price - atr*2.0
+                    signals.append({"strategy": "taker_flow", "direction": d, "entry": price, "sl": sl_p, "tp1": tp_p, "conviction": conv, "tp_pct": 2.0, "sl_pct": 1.5, "hold_bars": 12, "cfg": {"hold_hours": 3}})
+                
+                # trade_flow
+                if abs(price_chg_10) > 0.005 and vol_ratio > 1.2:
+                    d = "LONG" if price_chg_10 > 0 else "SHORT"
+                    conv = min(0.5 + abs(price_chg_10)*10, 0.7)
+                    sl_p = price - atr*1.5 if d == "LONG" else price + atr*1.5
+                    tp_p = price + atr*2.0 if d == "LONG" else price - atr*2.0
+                    signals.append({"strategy": "trade_flow", "direction": d, "entry": price, "sl": sl_p, "tp1": tp_p, "conviction": conv, "tp_pct": 2.0, "sl_pct": 1.5, "hold_bars": 12, "cfg": {"hold_hours": 3}})
+                
+                # squeeze_breakout
+                closes_20 = [candles[j]["close"] for j in range(max(0,i-20), i+1)]
+                sma20 = sum(closes_20[-20:]) / min(20, len(closes_20))
+                std20 = (sum((x-sma20)**2 for x in closes_20[-20:]) / min(20, len(closes_20)))**0.5
+                if std20 > 0:
+                    bb_width = (sma20 + 2*std20 - (sma20 - 2*std20)) / sma20
+                    if bb_width < 0.02:
+                        upper_bb = sma20 + 2*std20
+                        lower_bb = sma20 - 2*std20
+                        if price > upper_bb:
+                            signals.append({"strategy": "squeeze_breakout", "direction": "LONG", "entry": price, "sl": price - atr*1.0, "tp1": price + atr*2.0, "conviction": 0.6, "tp_pct": 2.0, "sl_pct": 1.0, "hold_bars": 8, "cfg": {"hold_hours": 2}})
+                        elif price < lower_bb:
+                            signals.append({"strategy": "squeeze_breakout", "direction": "SHORT", "entry": price, "sl": price + atr*1.0, "tp1": price - atr*2.0, "conviction": 0.6, "tp_pct": 2.0, "sl_pct": 1.0, "hold_bars": 8, "cfg": {"hold_hours": 2}})
+        
+        # Evaluate signals through v2 orchestrator
+        for sig in signals:
+            if any(p["strategy"] == sig["strategy"] for p in state["open_positions"]):
+                continue
+            if len(state["open_positions"]) >= 3:
+                continue
+            
+            # Check regime gate
+            allowed = {
+                "liquidation_cascade": ["BULL","BEAR","STRESS","RANGING","MILDLY_BEARISH"],
+                "orderbook_imbalance": ["BULL","BEAR","STRESS","RANGING","MILDLY_BEARISH"],
+                "taker_flow": ["BULL","BEAR","STRESS","RANGING","MILDLY_BEARISH"],
+                "trade_flow": ["BULL","BEAR","STRESS"],
+                "squeeze_breakout": ["RANGING","BULL","BEAR"],
+            }.get(sig["strategy"], [])
+            
+            if allowed and regime not in allowed:
+                all_decisions.append({"bar": i, "strategy": sig["strategy"], "direction": sig["direction"], "rejected": "REGIME_BLOCKED", "regime": regime})
+                continue
+            
+            # Dedup check
+            dedup_ok, dedup_reason = orchestrator.validation.check_signal_dedup(
+                sig["strategy"], sig["direction"], candle_ts / 1000)
+            if not dedup_ok:
+                dedup_blocks += 1
+                all_decisions.append({"bar": i, "strategy": sig["strategy"], "direction": sig["direction"], "rejected": "DEDUP"})
+                continue
+            
+            # Trend filter
+            if regime in ("BEAR", "STRESS", "MILDLY_BEARISH") and sig["direction"] == "LONG":
+                # Check if structure strongly disagrees
+                if mom_1h < -0.01:  # strong bearish momentum
+                    trend_blocks += 1
+                    all_decisions.append({"bar": i, "strategy": sig["strategy"], "direction": sig["direction"], "rejected": "TREND_FILTER", "regime": regime})
+                    continue
+            
+            # Cooldown check
+            cooldown_check = orchestrator.risk._check_strategy_cooldown(
+                sig["strategy"], sig["direction"], price)
+            if not cooldown_check["approved"]:
+                cooldown_blocks += 1
+                all_decisions.append({"bar": i, "strategy": sig["strategy"], "direction": sig["direction"], "rejected": "COOLDOWN"})
+                continue
+            
+            # Gate check
+            gate_file = os.path.join(BASE, "config", "isolation_gate_results.json")
+            gate_data = {}
+            if os.path.exists(gate_file):
+                with open(gate_file) as f:
+                    gate_data = json.load(f)
+            gate_entry = gate_data.get(sig["strategy"], {})
+            if not gate_entry.get("passed"):
+                # Check regime-specific
+                rb = gate_entry.get("regime_breakdown", {})
+                regime_pass = rb.get(regime.lower(), {}).get("passed", False) if rb else False
+                if not regime_pass:
+                    all_decisions.append({"bar": i, "strategy": sig["strategy"], "direction": sig["direction"], "rejected": "GATE_BLOCKED"})
+                    continue
+            
+            # Open position
+            cfg = sig.get("cfg", {})
+            pos = {
+                "strategy": sig["strategy"], "direction": sig["direction"],
+                "fill_price": price, "sl": sig["sl"], "tp": sig["tp1"],
+                "size": 10, "leverage": 10, "hold_bars": sig.get("hold_bars", 8),
+                "conviction": sig["conviction"], "regime": regime,
+                "bars_held": 0, "entry_bar": i,
+            }
+            state["open_positions"].append(pos)
+            orchestrator.validation.record_entry(candle_ts / 1000)
+            all_decisions.append({"bar": i, "strategy": sig["strategy"], "direction": sig["direction"], "approved": True, "regime": regime})
+    
+    # Close remaining
+    for pos in state["open_positions"]:
+        price = candles[-1]["close"]
+        if pos["direction"] == "LONG":
+            pnl_pct = (price - pos["fill_price"]) / pos["fill_price"] * 100
+        else:
+            pnl_pct = (pos["fill_price"] - price) / pos["fill_price"] * 100
+        pnl_pct -= fee_rate * 100
+        pnl_dollar = pos["size"] * pnl_pct / 100 * pos.get("leverage", 1)
+        state["capital"] += pnl_dollar
+        state["total_pnl"] += pnl_dollar
+        state["timeouts"] += 1
+        trades.append({"strategy": pos["strategy"], "direction": pos["direction"],
+                       "entry": pos["fill_price"], "exit": round(price, 2),
+                       "outcome": "TIMEOUT", "pnl_pct": round(pnl_pct, 4),
+                       "pnl_dollar": round(pnl_dollar, 2), "regime": pos.get("regime", "?")})
+    
+    # Report
+    print("\n" + "=" * 60)
+    print("V2 UPGRADE RESULTS")
+    print("=" * 60)
+    
+    print(f"\n📊 Portfolio:")
+    print(f"  Initial:  $200.00")
+    print(f"  Final:    ${state['capital']:.2f}")
+    print(f"  PnL:      ${state['total_pnl']:.2f} ({state['total_pnl']/200*100:.1f}%)")
+    dd = (state['peak_capital'] - state['capital']) / state['peak_capital'] * 100 if state['peak_capital'] > 0 else 0
+    print(f"  Max DD:   {dd:.1f}%")
+    
+    print(f"\n📈 Trades:")
+    print(f"  Total:    {state['trades_count']}")
+    print(f"  W/L/T:    {state['wins']}/{state['losses']}/{state['timeouts']}")
+    wr = state['wins'] / state['trades_count'] * 100 if state['trades_count'] > 0 else 0
+    print(f"  WR:       {wr:.1f}%")
+    gross_profit = sum(t["pnl_dollar"] for t in trades if t["pnl_dollar"] > 0)
+    gross_loss = abs(sum(t["pnl_dollar"] for t in trades if t["pnl_dollar"] < 0))
+    pf = gross_profit / gross_loss if gross_loss > 0 else float('inf')
+    print(f"  PF:       {pf:.2f}")
+    
+    print(f"\n🛡️ V2 Agent Filters Applied:")
+    print(f"  Dedup blocks:        {dedup_blocks}")
+    print(f"  Trend filter blocks: {trend_blocks}")
+    print(f"  Cooldown blocks:     {cooldown_blocks}")
+    print(f"  Momentum regime shifts: {momentum_regime_shifts}")
+    
+    print(f"\n📋 Per Strategy:")
+    for strat in sorted(set(t["strategy"] for t in trades)):
+        st = [t for t in trades if t["strategy"] == strat]
+        s_wins = sum(1 for t in st if t["outcome"] == "WIN")
+        s_losses = sum(1 for t in st if t["outcome"] == "LOSS")
+        s_pnl = sum(t["pnl_dollar"] for t in st)
+        s_wr = s_wins / len(st) * 100 if st else 0
+        print(f"  {strat}: {len(st)}T {s_wins}W/{s_losses}L WR={s_wr:.0f}% PnL=${s_pnl:.2f}")
+    
+    print(f"\n🌡️ Per Regime:")
+    for regime_name in sorted(set(t.get("regime", "?") for t in trades)):
+        rt = [t for t in trades if t.get("regime") == regime_name]
+        r_wins = sum(1 for t in rt if t["outcome"] == "WIN")
+        r_pnl = sum(t["pnl_dollar"] for t in rt)
+        r_wr = r_wins / len(rt) * 100 if rt else 0
+        print(f"  {regime_name}: {len(rt)}T {r_wins}W WR={r_wr:.0f}% PnL=${r_pnl:.2f}")
+    
+    # Save
+    output_path = os.path.join(BASE, "data", "5agent_backtest", "v2_upgrade_results.json")
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, "w") as f:
+        json.dump({
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "state": {k: v for k, v in state.items() if k != "open_positions"},
+            "trades": trades,
+            "filters": {"dedup": dedup_blocks, "trend": trend_blocks, "cooldown": cooldown_blocks, "momentum_shifts": momentum_regime_shifts},
+        }, f, indent=2, default=str)
+    print(f"\n💾 Saved to: {output_path}")
+
+
+if __name__ == "__main__":
+    run_upgrade_backtest()

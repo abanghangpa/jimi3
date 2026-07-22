@@ -1,0 +1,1349 @@
+{
+  "baseline": {
+    "config": {
+      "tp_pct": 2.5,
+      "sl_pct": 1.0,
+      "hold_hours": 32,
+      "min_conv": 0.7,
+      "lookback": 48,
+      "failure_return_pct": 0.3
+    },
+    "total_trades": 939,
+    "wins": 359,
+    "losses": 488,
+    "timeouts": 92,
+    "win_rate": 38.23,
+    "profit_factor": 0.956,
+    "total_pnl_pct": -29.29,
+    "final_equity": 141.43,
+    "max_drawdown_pct": 54.03,
+    "avg_win_pnl": 3.54,
+    "avg_loss_pnl": -2.3,
+    "avg_held_hours": 9.8,
+    "monthly": {
+      "2025-04": {
+        "wins": 28,
+        "losses": 40,
+        "pnl": -80.42000000000003
+      },
+      "2025-05": {
+        "wins": 33,
+        "losses": 52,
+        "pnl": -10.450000000000006
+      },
+      "2025-06": {
+        "wins": 26,
+        "losses": 39,
+        "pnl": 12.439999999999996
+      },
+      "2025-07": {
+        "wins": 27,
+        "losses": 51,
+        "pnl": 8.330000000000005
+      },
+      "2025-08": {
+        "wins": 29,
+        "losses": 43,
+        "pnl": 9.049999999999994
+      },
+      "2025-09": {
+        "wins": 15,
+        "losses": 45,
+        "pnl": -14.700000000000003
+      },
+      "2025-10": {
+        "wins": 35,
+        "losses": 38,
+        "pnl": 42.84
+      },
+      "2025-11": {
+        "wins": 39,
+        "losses": 47,
+        "pnl": 15.949999999999998
+      },
+      "2025-12": {
+        "wins": 22,
+        "losses": 50,
+        "pnl": -35.39
+      },
+      "2026-01": {
+        "wins": 16,
+        "losses": 56,
+        "pnl": -27.45000000000001
+      },
+      "2026-02": {
+        "wins": 48,
+        "losses": 40,
+        "pnl": 46.46999999999999
+      },
+      "2026-03": {
+        "wins": 26,
+        "losses": 40,
+        "pnl": -6.890000000000001
+      },
+      "2026-04": {
+        "wins": 15,
+        "losses": 39,
+        "pnl": -18.409999999999997
+      }
+    },
+    "meets_target": false,
+    "trades": [
+      {
+        "direction": "LONG",
+        "entry": 2325.5231999999996,
+        "exit": 2308.7189965723705,
+        "sl": 2308.7189965723705,
+        "tp": 2383.66128,
+        "pnl_pct": -0.7626,
+        "pnl_dollar": -1.1,
+        "outcome": "LOSS",
+        "conviction": 0.7386513514831385,
+        "held_hours": 4.0,
+        "opened_at": "2026-04-23T13:15:00+00:00",
+        "closed_at": "2026-04-23T17:15:00+00:00",
+        "breakout_bar": 37192
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2307.13056,
+        "exit": 2317.76,
+        "sl": 2341.93068393584,
+        "tp": 2249.452296,
+        "pnl_pct": -0.5007,
+        "pnl_dollar": -0.71,
+        "outcome": "TIMEOUT",
+        "conviction": 1.0,
+        "held_hours": 32.0,
+        "opened_at": "2026-04-23T17:15:00+00:00",
+        "closed_at": "2026-04-25T01:15:00+00:00",
+        "breakout_bar": 37213
+      },
+      {
+        "direction": "LONG",
+        "entry": 2320.07776,
+        "exit": 2303.1688946852473,
+        "sl": 2303.1688946852473,
+        "tp": 2378.079704,
+        "pnl_pct": -0.7688,
+        "pnl_dollar": -1.09,
+        "outcome": "LOSS",
+        "conviction": 0.9142159636210605,
+        "held_hours": 14.5,
+        "opened_at": "2026-04-25T01:15:00+00:00",
+        "closed_at": "2026-04-25T15:45:00+00:00",
+        "breakout_bar": 37308
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2305.78191,
+        "exit": 2321.1705479162333,
+        "sl": 2321.1705479162333,
+        "tp": 2248.13736225,
+        "pnl_pct": -0.7074,
+        "pnl_dollar": -1.0,
+        "outcome": "LOSS",
+        "conviction": 0.8982338648556026,
+        "held_hours": 13.2,
+        "opened_at": "2026-04-25T15:45:00+00:00",
+        "closed_at": "2026-04-26T05:00:00+00:00",
+        "breakout_bar": 37378
+      },
+      {
+        "direction": "LONG",
+        "entry": 2330.6783499999997,
+        "exit": 2388.9453087499996,
+        "sl": 2311.6381446170717,
+        "tp": 2388.9453087499996,
+        "pnl_pct": 2.46,
+        "pnl_dollar": 3.44,
+        "outcome": "WIN",
+        "conviction": 0.9407400752446429,
+        "held_hours": 19.8,
+        "opened_at": "2026-04-26T05:00:00+00:00",
+        "closed_at": "2026-04-27T00:45:00+00:00",
+        "breakout_bar": 37452
+      },
+      {
+        "direction": "LONG",
+        "entry": 2393.15076,
+        "exit": 2324.0872136385647,
+        "sl": 2324.0872136385647,
+        "tp": 2452.979529,
+        "pnl_pct": -2.9259,
+        "pnl_dollar": -4.19,
+        "outcome": "LOSS",
+        "conviction": 1.0,
+        "held_hours": 4.8,
+        "opened_at": "2026-04-27T00:45:00+00:00",
+        "closed_at": "2026-04-27T05:30:00+00:00",
+        "breakout_bar": 37491
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2323.38429,
+        "exit": 2265.29968275,
+        "sl": 2363.9490429668404,
+        "tp": 2265.29968275,
+        "pnl_pct": 2.46,
+        "pnl_dollar": 3.42,
+        "outcome": "WIN",
+        "conviction": 0.8999999999999999,
+        "held_hours": 31.5,
+        "opened_at": "2026-04-27T05:30:00+00:00",
+        "closed_at": "2026-04-28T13:00:00+00:00",
+        "breakout_bar": 37512
+      },
+      {
+        "direction": "LONG",
+        "entry": 2279.31704,
+        "exit": 2265.794057388198,
+        "sl": 2265.794057388198,
+        "tp": 2336.299966,
+        "pnl_pct": -0.6333,
+        "pnl_dollar": -0.9,
+        "outcome": "LOSS",
+        "conviction": 0.8498059498390095,
+        "held_hours": 0.8,
+        "opened_at": "2026-04-28T13:30:00+00:00",
+        "closed_at": "2026-04-28T14:15:00+00:00",
+        "breakout_bar": 37684
+      },
+      {
+        "direction": "LONG",
+        "entry": 2276.29402,
+        "exit": 2333.2013705,
+        "sl": 2262.5116350668973,
+        "tp": 2333.2013705,
+        "pnl_pct": 2.46,
+        "pnl_dollar": 3.48,
+        "outcome": "WIN",
+        "conviction": 0.8473855980016997,
+        "held_hours": 13.5,
+        "opened_at": "2026-04-28T15:00:00+00:00",
+        "closed_at": "2026-04-29T04:30:00+00:00",
+        "breakout_bar": 37690
+      },
+      {
+        "direction": "LONG",
+        "entry": 2336.92459,
+        "exit": 2278.7381140605007,
+        "sl": 2278.7381140605007,
+        "tp": 2395.34770475,
+        "pnl_pct": -2.5299,
+        "pnl_dollar": -3.67,
+        "outcome": "LOSS",
+        "conviction": 0.8999999999999999,
+        "held_hours": 11.0,
+        "opened_at": "2026-04-29T04:30:00+00:00",
+        "closed_at": "2026-04-29T15:30:00+00:00",
+        "breakout_bar": 37732
+      }
+    ]
+  },
+  "sweep": {
+    "total_configs": 500,
+    "meets_target": 0,
+    "top_10": [
+      {
+        "tp": 1.0,
+        "sl": 0.5,
+        "hold": 32,
+        "conv": 0.8,
+        "trades": 1700,
+        "wr": 62.06,
+        "pf": 0.85,
+        "pnl": -81.92,
+        "dd": 84.11,
+        "score": 0.528,
+        "meets_target": false
+      },
+      {
+        "tp": 1.0,
+        "sl": 0.75,
+        "hold": 32,
+        "conv": 0.8,
+        "trades": 1700,
+        "wr": 62.06,
+        "pf": 0.85,
+        "pnl": -81.92,
+        "dd": 84.11,
+        "score": 0.528,
+        "meets_target": false
+      },
+      {
+        "tp": 1.0,
+        "sl": 1.0,
+        "hold": 32,
+        "conv": 0.8,
+        "trades": 1700,
+        "wr": 62.06,
+        "pf": 0.85,
+        "pnl": -81.92,
+        "dd": 84.11,
+        "score": 0.528,
+        "meets_target": false
+      },
+      {
+        "tp": 1.0,
+        "sl": 1.5,
+        "hold": 32,
+        "conv": 0.8,
+        "trades": 1700,
+        "wr": 62.06,
+        "pf": 0.85,
+        "pnl": -81.92,
+        "dd": 84.11,
+        "score": 0.528,
+        "meets_target": false
+      },
+      {
+        "tp": 1.0,
+        "sl": 2.0,
+        "hold": 32,
+        "conv": 0.8,
+        "trades": 1700,
+        "wr": 62.06,
+        "pf": 0.85,
+        "pnl": -81.92,
+        "dd": 84.11,
+        "score": 0.528,
+        "meets_target": false
+      },
+      {
+        "tp": 1.0,
+        "sl": 0.5,
+        "hold": 32,
+        "conv": 0.6,
+        "trades": 1763,
+        "wr": 60.92,
+        "pf": 0.856,
+        "pnl": -80.3,
+        "dd": 82.37,
+        "score": 0.521,
+        "meets_target": false
+      },
+      {
+        "tp": 1.0,
+        "sl": 0.75,
+        "hold": 32,
+        "conv": 0.6,
+        "trades": 1763,
+        "wr": 60.92,
+        "pf": 0.856,
+        "pnl": -80.3,
+        "dd": 82.37,
+        "score": 0.521,
+        "meets_target": false
+      },
+      {
+        "tp": 1.0,
+        "sl": 1.0,
+        "hold": 32,
+        "conv": 0.6,
+        "trades": 1763,
+        "wr": 60.92,
+        "pf": 0.856,
+        "pnl": -80.3,
+        "dd": 82.37,
+        "score": 0.521,
+        "meets_target": false
+      },
+      {
+        "tp": 1.0,
+        "sl": 1.5,
+        "hold": 32,
+        "conv": 0.6,
+        "trades": 1763,
+        "wr": 60.92,
+        "pf": 0.856,
+        "pnl": -80.3,
+        "dd": 82.37,
+        "score": 0.521,
+        "meets_target": false
+      },
+      {
+        "tp": 1.0,
+        "sl": 2.0,
+        "hold": 32,
+        "conv": 0.6,
+        "trades": 1763,
+        "wr": 60.92,
+        "pf": 0.856,
+        "pnl": -80.3,
+        "dd": 82.37,
+        "score": 0.521,
+        "meets_target": false
+      }
+    ],
+    "best_config": "tp1.0_sl0.5_h8_c0.5"
+  },
+  "best_sweep": {
+    "config": {
+      "tp_pct": 1.0,
+      "sl_pct": 0.5,
+      "hold_hours": 8,
+      "min_conv": 0.5,
+      "lookback": 48,
+      "failure_return_pct": 0.3
+    },
+    "total_trades": 2715,
+    "wins": 1310,
+    "losses": 903,
+    "timeouts": 502,
+    "win_rate": 48.25,
+    "profit_factor": 0.807,
+    "total_pnl_pct": -94.13,
+    "final_equity": 11.74,
+    "max_drawdown_pct": 94.52,
+    "avg_win_pnl": 0.6,
+    "avg_loss_pnl": -0.7,
+    "avg_held_hours": 3.3,
+    "monthly": {
+      "2025-04": {
+        "wins": 115,
+        "losses": 105,
+        "pnl": -88.15000000000002
+      },
+      "2025-05": {
+        "wins": 134,
+        "losses": 122,
+        "pnl": -14.60000000000002
+      },
+      "2025-06": {
+        "wins": 84,
+        "losses": 97,
+        "pnl": -17.219999999999995
+      },
+      "2025-07": {
+        "wins": 104,
+        "losses": 96,
+        "pnl": -0.9900000000000007
+      },
+      "2025-08": {
+        "wins": 104,
+        "losses": 117,
+        "pnl": -15.799999999999992
+      },
+      "2025-09": {
+        "wins": 64,
+        "losses": 106,
+        "pnl": -5.460000000000002
+      },
+      "2025-10": {
+        "wins": 114,
+        "losses": 116,
+        "pnl": -13.8
+      },
+      "2025-11": {
+        "wins": 147,
+        "losses": 107,
+        "pnl": -0.81
+      },
+      "2025-12": {
+        "wins": 89,
+        "losses": 113,
+        "pnl": -9.72
+      },
+      "2026-01": {
+        "wins": 60,
+        "losses": 121,
+        "pnl": -12.47
+      },
+      "2026-02": {
+        "wins": 131,
+        "losses": 108,
+        "pnl": -6.410000000000013
+      },
+      "2026-03": {
+        "wins": 98,
+        "losses": 108,
+        "pnl": -2.5999999999999983
+      },
+      "2026-04": {
+        "wins": 66,
+        "losses": 89,
+        "pnl": -0.23000000000000054
+      }
+    },
+    "meets_target": false,
+    "trades": [
+      {
+        "direction": "SHORT",
+        "entry": 2291.28642,
+        "exit": 2277.96,
+        "sl": 2327.6557989942435,
+        "tp": 2268.3735558,
+        "pnl_pct": 0.5416,
+        "pnl_dollar": 0.06,
+        "outcome": "TIMEOUT",
+        "conviction": 0.8999999999999999,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-27T23:15:00+00:00",
+        "closed_at": "2026-04-28T07:15:00+00:00",
+        "breakout_bar": 37594
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2275.68204,
+        "exit": 2273.35,
+        "sl": 2298.705267985929,
+        "tp": 2252.9252196,
+        "pnl_pct": 0.0625,
+        "pnl_dollar": 0.01,
+        "outcome": "TIMEOUT",
+        "conviction": 1.0,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-28T07:15:00+00:00",
+        "closed_at": "2026-04-28T15:15:00+00:00",
+        "breakout_bar": 37616
+      },
+      {
+        "direction": "LONG",
+        "entry": 2275.62335,
+        "exit": 2298.3795834999996,
+        "sl": 2262.4689478782593,
+        "tp": 2298.3795834999996,
+        "pnl_pct": 0.96,
+        "pnl_dollar": 0.12,
+        "outcome": "WIN",
+        "conviction": 0.8410715488659937,
+        "held_hours": 4.2,
+        "opened_at": "2026-04-28T15:15:00+00:00",
+        "closed_at": "2026-04-28T19:30:00+00:00",
+        "breakout_bar": 37691
+      },
+      {
+        "direction": "LONG",
+        "entry": 2301.3990999999996,
+        "exit": 2314.14,
+        "sl": 2269.9617336628794,
+        "tp": 2324.4130909999994,
+        "pnl_pct": 0.5136,
+        "pnl_dollar": 0.06,
+        "outcome": "TIMEOUT",
+        "conviction": 1.0,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-28T19:30:00+00:00",
+        "closed_at": "2026-04-29T03:30:00+00:00",
+        "breakout_bar": 37678
+      },
+      {
+        "direction": "LONG",
+        "entry": 2316.45414,
+        "exit": 2339.6186814,
+        "sl": 2279.4164604198686,
+        "tp": 2339.6186814,
+        "pnl_pct": 0.96,
+        "pnl_dollar": 0.12,
+        "outcome": "WIN",
+        "conviction": 0.8999999999999999,
+        "held_hours": 1.0,
+        "opened_at": "2026-04-29T03:30:00+00:00",
+        "closed_at": "2026-04-29T04:30:00+00:00",
+        "breakout_bar": 37732
+      },
+      {
+        "direction": "LONG",
+        "entry": 2336.92459,
+        "exit": 2314.04,
+        "sl": 2278.7381140605007,
+        "tp": 2360.2938359,
+        "pnl_pct": -1.0193,
+        "pnl_dollar": -0.13,
+        "outcome": "TIMEOUT",
+        "conviction": 0.8999999999999999,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-29T04:30:00+00:00",
+        "closed_at": "2026-04-29T12:30:00+00:00",
+        "breakout_bar": 37732
+      },
+      {
+        "direction": "LONG",
+        "entry": 2316.3540399999997,
+        "exit": 2278.910580717348,
+        "sl": 2278.910580717348,
+        "tp": 2339.5175803999996,
+        "pnl_pct": -1.6565,
+        "pnl_dollar": -0.2,
+        "outcome": "LOSS",
+        "conviction": 0.8999999999999999,
+        "held_hours": 3.0,
+        "opened_at": "2026-04-29T12:30:00+00:00",
+        "closed_at": "2026-04-29T15:30:00+00:00",
+        "breakout_bar": 37732
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2271.41631,
+        "exit": 2248.7021469,
+        "sl": 2308.551372078168,
+        "tp": 2248.7021469,
+        "pnl_pct": 0.96,
+        "pnl_dollar": 0.11,
+        "outcome": "WIN",
+        "conviction": 0.8999999999999999,
+        "held_hours": 2.5,
+        "opened_at": "2026-04-29T15:30:00+00:00",
+        "closed_at": "2026-04-29T18:00:00+00:00",
+        "breakout_bar": 37742
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2239.21854,
+        "exit": 2270.48,
+        "sl": 2337.2961268395616,
+        "tp": 2216.8263546,
+        "pnl_pct": -1.4361,
+        "pnl_dollar": -0.17,
+        "outcome": "TIMEOUT",
+        "conviction": 1.0,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-29T18:00:00+00:00",
+        "closed_at": "2026-04-30T02:00:00+00:00",
+        "breakout_bar": 37766
+      },
+      {
+        "direction": "LONG",
+        "entry": 2272.7504799999997,
+        "exit": 2245.6580104969667,
+        "sl": 2245.6580104969667,
+        "tp": 2295.4779848,
+        "pnl_pct": -1.2321,
+        "pnl_dollar": -0.15,
+        "outcome": "LOSS",
+        "conviction": 0.874248222967922,
+        "held_hours": 0.5,
+        "opened_at": "2026-04-30T02:00:00+00:00",
+        "closed_at": "2026-04-30T02:30:00+00:00",
+        "breakout_bar": 37800
+      }
+    ]
+  },
+  "with_sweep_filter": {
+    "config": {
+      "tp_pct": 1.0,
+      "sl_pct": 0.5,
+      "hold_hours": 8,
+      "min_conv": 0.5,
+      "lookback": 48,
+      "failure_return_pct": 0.3
+    },
+    "total_trades": 2538,
+    "wins": 1191,
+    "losses": 888,
+    "timeouts": 459,
+    "win_rate": 46.93,
+    "profit_factor": 0.796,
+    "total_pnl_pct": -93.73,
+    "final_equity": 12.54,
+    "max_drawdown_pct": 93.94,
+    "avg_win_pnl": 0.61,
+    "avg_loss_pnl": -0.68,
+    "avg_held_hours": 3.3,
+    "monthly": {
+      "2025-04": {
+        "wins": 102,
+        "losses": 103,
+        "pnl": -76.79999999999995
+      },
+      "2025-05": {
+        "wins": 128,
+        "losses": 119,
+        "pnl": -20.090000000000018
+      },
+      "2025-06": {
+        "wins": 75,
+        "losses": 94,
+        "pnl": -18.220000000000024
+      },
+      "2025-07": {
+        "wins": 90,
+        "losses": 87,
+        "pnl": -1.960000000000003
+      },
+      "2025-08": {
+        "wins": 92,
+        "losses": 107,
+        "pnl": -13.209999999999999
+      },
+      "2025-09": {
+        "wins": 59,
+        "losses": 103,
+        "pnl": -7.739999999999997
+      },
+      "2025-10": {
+        "wins": 95,
+        "losses": 112,
+        "pnl": -18.389999999999997
+      },
+      "2025-11": {
+        "wins": 139,
+        "losses": 106,
+        "pnl": -1.7600000000000038
+      },
+      "2025-12": {
+        "wins": 73,
+        "losses": 106,
+        "pnl": -8.510000000000002
+      },
+      "2026-01": {
+        "wins": 51,
+        "losses": 118,
+        "pnl": -13.27000000000001
+      },
+      "2026-02": {
+        "wins": 130,
+        "losses": 109,
+        "pnl": -5.4500000000000135
+      },
+      "2026-03": {
+        "wins": 96,
+        "losses": 101,
+        "pnl": -1.55
+      },
+      "2026-04": {
+        "wins": 61,
+        "losses": 82,
+        "pnl": -0.4300000000000004
+      }
+    },
+    "meets_target": false,
+    "trades": [
+      {
+        "direction": "SHORT",
+        "entry": 2291.28642,
+        "exit": 2277.96,
+        "sl": 2327.6557989942435,
+        "tp": 2268.3735558,
+        "pnl_pct": 0.5416,
+        "pnl_dollar": 0.07,
+        "outcome": "TIMEOUT",
+        "conviction": 0.8999999999999999,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-27T23:15:00+00:00",
+        "closed_at": "2026-04-28T07:15:00+00:00",
+        "breakout_bar": 37594
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2275.68204,
+        "exit": 2273.35,
+        "sl": 2298.705267985929,
+        "tp": 2252.9252196,
+        "pnl_pct": 0.0625,
+        "pnl_dollar": 0.01,
+        "outcome": "TIMEOUT",
+        "conviction": 1.0,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-28T07:15:00+00:00",
+        "closed_at": "2026-04-28T15:15:00+00:00",
+        "breakout_bar": 37616
+      },
+      {
+        "direction": "LONG",
+        "entry": 2275.62335,
+        "exit": 2298.3795834999996,
+        "sl": 2262.4689478782593,
+        "tp": 2298.3795834999996,
+        "pnl_pct": 0.96,
+        "pnl_dollar": 0.12,
+        "outcome": "WIN",
+        "conviction": 0.8410715488659937,
+        "held_hours": 4.2,
+        "opened_at": "2026-04-28T15:15:00+00:00",
+        "closed_at": "2026-04-28T19:30:00+00:00",
+        "breakout_bar": 37691
+      },
+      {
+        "direction": "LONG",
+        "entry": 2301.3990999999996,
+        "exit": 2314.14,
+        "sl": 2269.9617336628794,
+        "tp": 2324.4130909999994,
+        "pnl_pct": 0.5136,
+        "pnl_dollar": 0.07,
+        "outcome": "TIMEOUT",
+        "conviction": 1.0,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-28T19:30:00+00:00",
+        "closed_at": "2026-04-29T03:30:00+00:00",
+        "breakout_bar": 37678
+      },
+      {
+        "direction": "LONG",
+        "entry": 2316.45414,
+        "exit": 2339.6186814,
+        "sl": 2279.4164604198686,
+        "tp": 2339.6186814,
+        "pnl_pct": 0.96,
+        "pnl_dollar": 0.12,
+        "outcome": "WIN",
+        "conviction": 0.8999999999999999,
+        "held_hours": 1.0,
+        "opened_at": "2026-04-29T03:30:00+00:00",
+        "closed_at": "2026-04-29T04:30:00+00:00",
+        "breakout_bar": 37732
+      },
+      {
+        "direction": "LONG",
+        "entry": 2328.9466199999997,
+        "exit": 2294.6,
+        "sl": 2279.034154112305,
+        "tp": 2352.2360861999996,
+        "pnl_pct": -1.5148,
+        "pnl_dollar": -0.2,
+        "outcome": "TIMEOUT",
+        "conviction": 0.8999999999999999,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-29T05:30:00+00:00",
+        "closed_at": "2026-04-29T13:30:00+00:00",
+        "breakout_bar": 37732
+      },
+      {
+        "direction": "LONG",
+        "entry": 2296.8945999999996,
+        "exit": 2278.6520198354647,
+        "sl": 2278.6520198354647,
+        "tp": 2319.8635459999996,
+        "pnl_pct": -0.8342,
+        "pnl_dollar": -0.11,
+        "outcome": "LOSS",
+        "conviction": 0.7573878720824633,
+        "held_hours": 2.0,
+        "opened_at": "2026-04-29T13:30:00+00:00",
+        "closed_at": "2026-04-29T15:30:00+00:00",
+        "breakout_bar": 37734
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2271.41631,
+        "exit": 2248.7021469,
+        "sl": 2308.551372078168,
+        "tp": 2248.7021469,
+        "pnl_pct": 0.96,
+        "pnl_dollar": 0.12,
+        "outcome": "WIN",
+        "conviction": 0.8999999999999999,
+        "held_hours": 2.5,
+        "opened_at": "2026-04-29T15:30:00+00:00",
+        "closed_at": "2026-04-29T18:00:00+00:00",
+        "breakout_bar": 37742
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2239.21854,
+        "exit": 2270.48,
+        "sl": 2337.2961268395616,
+        "tp": 2216.8263546,
+        "pnl_pct": -1.4361,
+        "pnl_dollar": -0.19,
+        "outcome": "TIMEOUT",
+        "conviction": 1.0,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-29T18:00:00+00:00",
+        "closed_at": "2026-04-30T02:00:00+00:00",
+        "breakout_bar": 37766
+      },
+      {
+        "direction": "LONG",
+        "entry": 2272.7504799999997,
+        "exit": 2245.6580104969667,
+        "sl": 2245.6580104969667,
+        "tp": 2295.4779848,
+        "pnl_pct": -1.2321,
+        "pnl_dollar": -0.16,
+        "outcome": "LOSS",
+        "conviction": 0.874248222967922,
+        "held_hours": 0.5,
+        "opened_at": "2026-04-30T02:00:00+00:00",
+        "closed_at": "2026-04-30T02:30:00+00:00",
+        "breakout_bar": 37800
+      }
+    ]
+  },
+  "with_fr_filter": {
+    "config": {
+      "tp_pct": 1.0,
+      "sl_pct": 0.5,
+      "hold_hours": 8,
+      "min_conv": 0.5,
+      "lookback": 48,
+      "failure_return_pct": 0.3
+    },
+    "total_trades": 2715,
+    "wins": 1310,
+    "losses": 903,
+    "timeouts": 502,
+    "win_rate": 48.25,
+    "profit_factor": 0.807,
+    "total_pnl_pct": -94.13,
+    "final_equity": 11.74,
+    "max_drawdown_pct": 94.52,
+    "avg_win_pnl": 0.6,
+    "avg_loss_pnl": -0.7,
+    "avg_held_hours": 3.3,
+    "monthly": {
+      "2025-04": {
+        "wins": 115,
+        "losses": 105,
+        "pnl": -88.15000000000002
+      },
+      "2025-05": {
+        "wins": 134,
+        "losses": 122,
+        "pnl": -14.60000000000002
+      },
+      "2025-06": {
+        "wins": 84,
+        "losses": 97,
+        "pnl": -17.219999999999995
+      },
+      "2025-07": {
+        "wins": 104,
+        "losses": 96,
+        "pnl": -0.9900000000000007
+      },
+      "2025-08": {
+        "wins": 104,
+        "losses": 117,
+        "pnl": -15.799999999999992
+      },
+      "2025-09": {
+        "wins": 64,
+        "losses": 106,
+        "pnl": -5.460000000000002
+      },
+      "2025-10": {
+        "wins": 114,
+        "losses": 116,
+        "pnl": -13.8
+      },
+      "2025-11": {
+        "wins": 147,
+        "losses": 107,
+        "pnl": -0.81
+      },
+      "2025-12": {
+        "wins": 89,
+        "losses": 113,
+        "pnl": -9.72
+      },
+      "2026-01": {
+        "wins": 60,
+        "losses": 121,
+        "pnl": -12.47
+      },
+      "2026-02": {
+        "wins": 131,
+        "losses": 108,
+        "pnl": -6.410000000000013
+      },
+      "2026-03": {
+        "wins": 98,
+        "losses": 108,
+        "pnl": -2.5999999999999983
+      },
+      "2026-04": {
+        "wins": 66,
+        "losses": 89,
+        "pnl": -0.23000000000000054
+      }
+    },
+    "meets_target": false,
+    "trades": [
+      {
+        "direction": "SHORT",
+        "entry": 2291.28642,
+        "exit": 2277.96,
+        "sl": 2327.6557989942435,
+        "tp": 2268.3735558,
+        "pnl_pct": 0.5416,
+        "pnl_dollar": 0.06,
+        "outcome": "TIMEOUT",
+        "conviction": 0.8999999999999999,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-27T23:15:00+00:00",
+        "closed_at": "2026-04-28T07:15:00+00:00",
+        "breakout_bar": 37594
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2275.68204,
+        "exit": 2273.35,
+        "sl": 2298.705267985929,
+        "tp": 2252.9252196,
+        "pnl_pct": 0.0625,
+        "pnl_dollar": 0.01,
+        "outcome": "TIMEOUT",
+        "conviction": 1.0,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-28T07:15:00+00:00",
+        "closed_at": "2026-04-28T15:15:00+00:00",
+        "breakout_bar": 37616
+      },
+      {
+        "direction": "LONG",
+        "entry": 2275.62335,
+        "exit": 2298.3795834999996,
+        "sl": 2262.4689478782593,
+        "tp": 2298.3795834999996,
+        "pnl_pct": 0.96,
+        "pnl_dollar": 0.12,
+        "outcome": "WIN",
+        "conviction": 0.8410715488659937,
+        "held_hours": 4.2,
+        "opened_at": "2026-04-28T15:15:00+00:00",
+        "closed_at": "2026-04-28T19:30:00+00:00",
+        "breakout_bar": 37691
+      },
+      {
+        "direction": "LONG",
+        "entry": 2301.3990999999996,
+        "exit": 2314.14,
+        "sl": 2269.9617336628794,
+        "tp": 2324.4130909999994,
+        "pnl_pct": 0.5136,
+        "pnl_dollar": 0.06,
+        "outcome": "TIMEOUT",
+        "conviction": 1.0,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-28T19:30:00+00:00",
+        "closed_at": "2026-04-29T03:30:00+00:00",
+        "breakout_bar": 37678
+      },
+      {
+        "direction": "LONG",
+        "entry": 2316.45414,
+        "exit": 2339.6186814,
+        "sl": 2279.4164604198686,
+        "tp": 2339.6186814,
+        "pnl_pct": 0.96,
+        "pnl_dollar": 0.12,
+        "outcome": "WIN",
+        "conviction": 0.8999999999999999,
+        "held_hours": 1.0,
+        "opened_at": "2026-04-29T03:30:00+00:00",
+        "closed_at": "2026-04-29T04:30:00+00:00",
+        "breakout_bar": 37732
+      },
+      {
+        "direction": "LONG",
+        "entry": 2336.92459,
+        "exit": 2314.04,
+        "sl": 2278.7381140605007,
+        "tp": 2360.2938359,
+        "pnl_pct": -1.0193,
+        "pnl_dollar": -0.13,
+        "outcome": "TIMEOUT",
+        "conviction": 0.8999999999999999,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-29T04:30:00+00:00",
+        "closed_at": "2026-04-29T12:30:00+00:00",
+        "breakout_bar": 37732
+      },
+      {
+        "direction": "LONG",
+        "entry": 2316.3540399999997,
+        "exit": 2278.910580717348,
+        "sl": 2278.910580717348,
+        "tp": 2339.5175803999996,
+        "pnl_pct": -1.6565,
+        "pnl_dollar": -0.2,
+        "outcome": "LOSS",
+        "conviction": 0.8999999999999999,
+        "held_hours": 3.0,
+        "opened_at": "2026-04-29T12:30:00+00:00",
+        "closed_at": "2026-04-29T15:30:00+00:00",
+        "breakout_bar": 37732
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2271.41631,
+        "exit": 2248.7021469,
+        "sl": 2308.551372078168,
+        "tp": 2248.7021469,
+        "pnl_pct": 0.96,
+        "pnl_dollar": 0.11,
+        "outcome": "WIN",
+        "conviction": 0.8999999999999999,
+        "held_hours": 2.5,
+        "opened_at": "2026-04-29T15:30:00+00:00",
+        "closed_at": "2026-04-29T18:00:00+00:00",
+        "breakout_bar": 37742
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2239.21854,
+        "exit": 2270.48,
+        "sl": 2337.2961268395616,
+        "tp": 2216.8263546,
+        "pnl_pct": -1.4361,
+        "pnl_dollar": -0.17,
+        "outcome": "TIMEOUT",
+        "conviction": 1.0,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-29T18:00:00+00:00",
+        "closed_at": "2026-04-30T02:00:00+00:00",
+        "breakout_bar": 37766
+      },
+      {
+        "direction": "LONG",
+        "entry": 2272.7504799999997,
+        "exit": 2245.6580104969667,
+        "sl": 2245.6580104969667,
+        "tp": 2295.4779848,
+        "pnl_pct": -1.2321,
+        "pnl_dollar": -0.15,
+        "outcome": "LOSS",
+        "conviction": 0.874248222967922,
+        "held_hours": 0.5,
+        "opened_at": "2026-04-30T02:00:00+00:00",
+        "closed_at": "2026-04-30T02:30:00+00:00",
+        "breakout_bar": 37800
+      }
+    ]
+  },
+  "with_both_filters": {
+    "config": {
+      "tp_pct": 1.0,
+      "sl_pct": 0.5,
+      "hold_hours": 8,
+      "min_conv": 0.5,
+      "lookback": 48,
+      "failure_return_pct": 0.3
+    },
+    "total_trades": 2538,
+    "wins": 1191,
+    "losses": 888,
+    "timeouts": 459,
+    "win_rate": 46.93,
+    "profit_factor": 0.796,
+    "total_pnl_pct": -93.73,
+    "final_equity": 12.54,
+    "max_drawdown_pct": 93.94,
+    "avg_win_pnl": 0.61,
+    "avg_loss_pnl": -0.68,
+    "avg_held_hours": 3.3,
+    "monthly": {
+      "2025-04": {
+        "wins": 102,
+        "losses": 103,
+        "pnl": -76.79999999999995
+      },
+      "2025-05": {
+        "wins": 128,
+        "losses": 119,
+        "pnl": -20.090000000000018
+      },
+      "2025-06": {
+        "wins": 75,
+        "losses": 94,
+        "pnl": -18.220000000000024
+      },
+      "2025-07": {
+        "wins": 90,
+        "losses": 87,
+        "pnl": -1.960000000000003
+      },
+      "2025-08": {
+        "wins": 92,
+        "losses": 107,
+        "pnl": -13.209999999999999
+      },
+      "2025-09": {
+        "wins": 59,
+        "losses": 103,
+        "pnl": -7.739999999999997
+      },
+      "2025-10": {
+        "wins": 95,
+        "losses": 112,
+        "pnl": -18.389999999999997
+      },
+      "2025-11": {
+        "wins": 139,
+        "losses": 106,
+        "pnl": -1.7600000000000038
+      },
+      "2025-12": {
+        "wins": 73,
+        "losses": 106,
+        "pnl": -8.510000000000002
+      },
+      "2026-01": {
+        "wins": 51,
+        "losses": 118,
+        "pnl": -13.27000000000001
+      },
+      "2026-02": {
+        "wins": 130,
+        "losses": 109,
+        "pnl": -5.4500000000000135
+      },
+      "2026-03": {
+        "wins": 96,
+        "losses": 101,
+        "pnl": -1.55
+      },
+      "2026-04": {
+        "wins": 61,
+        "losses": 82,
+        "pnl": -0.4300000000000004
+      }
+    },
+    "meets_target": false,
+    "trades": [
+      {
+        "direction": "SHORT",
+        "entry": 2291.28642,
+        "exit": 2277.96,
+        "sl": 2327.6557989942435,
+        "tp": 2268.3735558,
+        "pnl_pct": 0.5416,
+        "pnl_dollar": 0.07,
+        "outcome": "TIMEOUT",
+        "conviction": 0.8999999999999999,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-27T23:15:00+00:00",
+        "closed_at": "2026-04-28T07:15:00+00:00",
+        "breakout_bar": 37594
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2275.68204,
+        "exit": 2273.35,
+        "sl": 2298.705267985929,
+        "tp": 2252.9252196,
+        "pnl_pct": 0.0625,
+        "pnl_dollar": 0.01,
+        "outcome": "TIMEOUT",
+        "conviction": 1.0,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-28T07:15:00+00:00",
+        "closed_at": "2026-04-28T15:15:00+00:00",
+        "breakout_bar": 37616
+      },
+      {
+        "direction": "LONG",
+        "entry": 2275.62335,
+        "exit": 2298.3795834999996,
+        "sl": 2262.4689478782593,
+        "tp": 2298.3795834999996,
+        "pnl_pct": 0.96,
+        "pnl_dollar": 0.12,
+        "outcome": "WIN",
+        "conviction": 0.8410715488659937,
+        "held_hours": 4.2,
+        "opened_at": "2026-04-28T15:15:00+00:00",
+        "closed_at": "2026-04-28T19:30:00+00:00",
+        "breakout_bar": 37691
+      },
+      {
+        "direction": "LONG",
+        "entry": 2301.3990999999996,
+        "exit": 2314.14,
+        "sl": 2269.9617336628794,
+        "tp": 2324.4130909999994,
+        "pnl_pct": 0.5136,
+        "pnl_dollar": 0.07,
+        "outcome": "TIMEOUT",
+        "conviction": 1.0,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-28T19:30:00+00:00",
+        "closed_at": "2026-04-29T03:30:00+00:00",
+        "breakout_bar": 37678
+      },
+      {
+        "direction": "LONG",
+        "entry": 2316.45414,
+        "exit": 2339.6186814,
+        "sl": 2279.4164604198686,
+        "tp": 2339.6186814,
+        "pnl_pct": 0.96,
+        "pnl_dollar": 0.12,
+        "outcome": "WIN",
+        "conviction": 0.8999999999999999,
+        "held_hours": 1.0,
+        "opened_at": "2026-04-29T03:30:00+00:00",
+        "closed_at": "2026-04-29T04:30:00+00:00",
+        "breakout_bar": 37732
+      },
+      {
+        "direction": "LONG",
+        "entry": 2328.9466199999997,
+        "exit": 2294.6,
+        "sl": 2279.034154112305,
+        "tp": 2352.2360861999996,
+        "pnl_pct": -1.5148,
+        "pnl_dollar": -0.2,
+        "outcome": "TIMEOUT",
+        "conviction": 0.8999999999999999,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-29T05:30:00+00:00",
+        "closed_at": "2026-04-29T13:30:00+00:00",
+        "breakout_bar": 37732
+      },
+      {
+        "direction": "LONG",
+        "entry": 2296.8945999999996,
+        "exit": 2278.6520198354647,
+        "sl": 2278.6520198354647,
+        "tp": 2319.8635459999996,
+        "pnl_pct": -0.8342,
+        "pnl_dollar": -0.11,
+        "outcome": "LOSS",
+        "conviction": 0.7573878720824633,
+        "held_hours": 2.0,
+        "opened_at": "2026-04-29T13:30:00+00:00",
+        "closed_at": "2026-04-29T15:30:00+00:00",
+        "breakout_bar": 37734
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2271.41631,
+        "exit": 2248.7021469,
+        "sl": 2308.551372078168,
+        "tp": 2248.7021469,
+        "pnl_pct": 0.96,
+        "pnl_dollar": 0.12,
+        "outcome": "WIN",
+        "conviction": 0.8999999999999999,
+        "held_hours": 2.5,
+        "opened_at": "2026-04-29T15:30:00+00:00",
+        "closed_at": "2026-04-29T18:00:00+00:00",
+        "breakout_bar": 37742
+      },
+      {
+        "direction": "SHORT",
+        "entry": 2239.21854,
+        "exit": 2270.48,
+        "sl": 2337.2961268395616,
+        "tp": 2216.8263546,
+        "pnl_pct": -1.4361,
+        "pnl_dollar": -0.19,
+        "outcome": "TIMEOUT",
+        "conviction": 1.0,
+        "held_hours": 8.0,
+        "opened_at": "2026-04-29T18:00:00+00:00",
+        "closed_at": "2026-04-30T02:00:00+00:00",
+        "breakout_bar": 37766
+      },
+      {
+        "direction": "LONG",
+        "entry": 2272.7504799999997,
+        "exit": 2245.6580104969667,
+        "sl": 2245.6580104969667,
+        "tp": 2295.4779848,
+        "pnl_pct": -1.2321,
+        "pnl_dollar": -0.16,
+        "outcome": "LOSS",
+        "conviction": 0.874248222967922,
+        "held_hours": 0.5,
+        "opened_at": "2026-04-30T02:00:00+00:00",
+        "closed_at": "2026-04-30T02:30:00+00:00",
+        "breakout_bar": 37800
+      }
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+"""S02: Squeeze Breakout — volatility compression → expansion trade."""
+from .base import BaseStrategy, SignalResult
+
+class SqueezeBreakoutStrategy(BaseStrategy):
+    name = 'squeeze_breakout'
+    strategy_type = 'event'
+    description = 'Trade squeeze release when M18 detects volatility compression expansion'
+
+    def check(self, data, df_15m=None, idx=None, **kwargs):
+        squeeze = data.get('squeeze', {})
+        confirmed = data.get('squeeze_confirmed', False)
+        if not confirmed or squeeze.get('squeeze_status') != 'TRIGGERED':
+            return None
+
+        direction = squeeze.get('direction', 'NEUTRAL')
+        if direction == 'NEUTRAL':
+            return None
+
+        price = data.get('price', 0)
+        atr = data.get('atr', 0)
+        if not price or not atr:
+            return None
+
+        # Conviction from squeeze quality and compression duration
+        quality = squeeze.get('squeeze_quality', 0.5)
+        bars = squeeze.get('compression_bars', 0)
+        duration_bonus = min(bars / 50, 0.3)  # longer compression = bigger move
+        score = squeeze.get('squeeze_score', 0.5)
+        conviction = min(quality * 0.5 + score * 0.3 + duration_bonus, 0.95)
+
+        sl, tp1, tp2, tp3, sl_pct, tp1_pct = self._calc_levels(
+            price, direction, atr, tp_mults=(0.5, 1.5, 3.0), sl_mult=1.5)
+
+        return SignalResult(
+            strategy_name=self.name, strategy_type=self.strategy_type,
+            direction=direction, conviction=conviction,
+            entry=price, sl=sl, tp1=tp1, tp2=tp2, tp3=tp3,
+            sl_pct=sl_pct, tp1_pct=tp1_pct,
+            size_mult=1.0,
+            reason=f"Squeeze {squeeze.get('squeeze_type')} → {direction} "
+                   f"(quality={quality:.2f}, bars={bars})",
+            bypass_gates=True,
+            details={'squeeze_type': squeeze.get('squeeze_type'), 'quality': quality,
+                     'compression_bars': bars, 'direction': direction},
+        )

@@ -55,6 +55,16 @@ class OrderBookImbalanceStrategy(BaseStrategy):
             except (ValueError, IndexError):
                 pass
 
+        # — BEAR REGIME FILTER (skip bear trends - S/R breaks through) —
+        ema200 = data.get("ema200", 0)
+        if ema200:
+            try:
+                dist_from_ema = (price - ema200) / ema200 * 100
+                if dist_from_ema < -2.0:
+                    return None  # bear trend - S/R doesn't hold
+            except (ValueError, IndexError):
+                pass
+
         # ── READ OB STATE ──
         ob_state = _read_ob_state()
         if not ob_state:

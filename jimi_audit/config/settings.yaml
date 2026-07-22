@@ -16,7 +16,7 @@ ICS_THRESHOLD_CAUTION: 0.52    # lowered from 0.65 — slight caution bump for p
 ICS_FLOOR: 0.48       # keep original — 0.48-0.55 bucket has positive edge
 
 # ─── M4b: INTRABAR CVD (LucF-style) ─────────────────────────
-M4B_INTRABAR_ENABLED: true
+M4B_INTRABAR_ENABLED: false
 M4B_INTRABAR_HOURS: 72
 ICS_FLOOR_M4_FALSE: 0.48
 ICS_CEILING: 0.75       # relaxed — 0.7+ bucket was strong in 10d attribution
@@ -461,7 +461,7 @@ M23_COMBO_ENABLED: true           # Enable CPI×PPI×Claims combo matrix
 # ─── CASCADE META-AGGREGATOR ───────────────────────────────
 # Generic cascade engine: scores regional macro release chains
 # as unified signals. Each cascade has a weight in the global score.
-CASCADE_ENABLED: true                  # Master switch for all cascades
+CASCADE_ENABLED: false
 CASCADE_US_INFLATION_ENABLED: true     # CPI→PPI→PCE→FOMC→Presser→Minutes
 CASCADE_US_LABOR_ENABLED: true         # ADP→JOLTS→NFP→Unemployment→Claims
 CASCADE_US_ACTIVITY_ENABLED: true      # ISM Mfg→ISM Svc→Retail→Durables→GDP

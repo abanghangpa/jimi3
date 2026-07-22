@@ -1,0 +1,84 @@
+{
+  "momentum_v3": {
+    "extreme_long": {
+      "passed": false,
+      "p_value": 0.5329,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.0669,
+      "events": 749,
+      "scenario_label": "Extreme Long Crowding"
+    },
+    "extreme_short": {
+      "passed": false,
+      "p_value": 0.5329,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.0669,
+      "events": 749,
+      "scenario_label": "Extreme Short Crowding"
+    },
+    "oi_crash": {
+      "passed": false,
+      "p_value": 0.5329,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.0669,
+      "events": 749,
+      "scenario_label": "OI Crash"
+    },
+    "whale_accum": {
+      "passed": false,
+      "p_value": 0.5329,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.0669,
+      "events": 749,
+      "scenario_label": "Whale Accumulation"
+    },
+    "whale_dist": {
+      "passed": false,
+      "p_value": 0.5329,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.0669,
+      "events": 749,
+      "scenario_label": "Whale Distribution"
+    },
+    "taker_buy": {
+      "passed": false,
+      "p_value": 0.5329,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.0669,
+      "events": 749,
+      "scenario_label": "Aggressive Taker Buying"
+    },
+    "taker_sell": {
+      "passed": false,
+      "p_value": 0.5329,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.0669,
+      "events": 749,
+      "scenario_label": "Aggressive Taker Selling"
+    },
+    "squeeze_long": {
+      "passed": false,
+      "p_value": 0.5329,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.0669,
+      "events": 749,
+      "scenario_label": "Long Squeeze Setup"
+    },
+    "squeeze_short": {
+      "passed": false,
+      "p_value": 0.5329,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.0669,
+      "events": 749,
+      "scenario_label": "Short Squeeze Setup"
+    },
+    "neutral": {
+      "passed": false,
+      "p_value": 0.5329,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.0669,
+      "events": 749,
+      "scenario_label": "Neutral / Mean Reversion"
+    }
+  }
+}

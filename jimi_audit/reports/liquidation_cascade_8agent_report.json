@@ -1,0 +1,613 @@
+{
+  "strategy": "liquidation_cascade",
+  "date": "2026-07-19",
+  "protocol": "8-Agent",
+  "phase1": {
+    "agent_1": {
+      "data_quality": "PASS",
+      "look_ahead_bias": "NONE (shifted by 1 bar)",
+      "oi_coverage": "3.8% (limited \u2014 backfilled data is hourly)",
+      "concern": "liquidation_events.jsonl EMPTY \u2014 no real liq data"
+    },
+    "agent_2": {
+      "events": 92,
+      "verdict": "CONDITIONAL PASS",
+      "note": "92 events detected via OI-based methods only"
+    },
+    "agent_3": {
+      "15m": "FAIL (below costs)",
+      "1h": "FAIL (below costs)",
+      "4h": "PASS (+0.376%, exceeds 0.10% cost)",
+      "6h": "FAIL (p>0.1)"
+    },
+    "agent_4": {
+      "events": 92,
+      "minimum": 500,
+      "verdict": "FAIL \u2014 below 500 minimum",
+      "note": "92 events is insufficient for high-confidence claims"
+    }
+  },
+  "phase2": {
+    "agent_5_stress": {
+      "oi_roc < -0.005 | 4bar": {
+        "config": "oi_roc < -0.005",
+        "horizon": 4,
+        "n": 298,
+        "mean_pct": 0.0466,
+        "p": 0.2769,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "oi_roc < -0.005 | 16bar": {
+        "config": "oi_roc < -0.005",
+        "horizon": 16,
+        "n": 298,
+        "mean_pct": 0.1753,
+        "p": 0.0424,
+        "dir_ok": "True",
+        "pass": "True"
+      },
+      "oi_roc < -0.005 | 24bar": {
+        "config": "oi_roc < -0.005",
+        "horizon": 24,
+        "n": 298,
+        "mean_pct": 0.0568,
+        "p": 0.5626,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "oi_roc < -0.01 | 4bar": {
+        "config": "oi_roc < -0.01",
+        "horizon": 4,
+        "n": 96,
+        "mean_pct": 0.0895,
+        "p": 0.1552,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "oi_roc < -0.01 | 16bar": {
+        "config": "oi_roc < -0.01",
+        "horizon": 16,
+        "n": 96,
+        "mean_pct": 0.3243,
+        "p": 0.0425,
+        "dir_ok": "True",
+        "pass": "True"
+      },
+      "oi_roc < -0.01 | 24bar": {
+        "config": "oi_roc < -0.01",
+        "horizon": 24,
+        "n": 96,
+        "mean_pct": 0.1778,
+        "p": 0.3225,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "oi_roc < -0.015 | 4bar": {
+        "config": "oi_roc < -0.015",
+        "horizon": 4,
+        "n": 35,
+        "mean_pct": 0.2919,
+        "p": 0.0277,
+        "dir_ok": "True",
+        "pass": "True"
+      },
+      "oi_roc < -0.015 | 16bar": {
+        "config": "oi_roc < -0.015",
+        "horizon": 16,
+        "n": 35,
+        "mean_pct": 0.863,
+        "p": 0.0084,
+        "dir_ok": "True",
+        "pass": "True"
+      },
+      "oi_roc < -0.015 | 24bar": {
+        "config": "oi_roc < -0.015",
+        "horizon": 24,
+        "n": 35,
+        "mean_pct": 0.7751,
+        "p": 0.0138,
+        "dir_ok": "True",
+        "pass": "True"
+      },
+      "oi_roc < -0.02 | 4bar": {
+        "config": "oi_roc < -0.02",
+        "horizon": 4,
+        "n": 15,
+        "mean_pct": 0.1831,
+        "p": 0.4665,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "oi_roc < -0.02 | 16bar": {
+        "config": "oi_roc < -0.02",
+        "horizon": 16,
+        "n": 15,
+        "mean_pct": 0.1297,
+        "p": 0.725,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "oi_roc < -0.02 | 24bar": {
+        "config": "oi_roc < -0.02",
+        "horizon": 24,
+        "n": 15,
+        "mean_pct": -0.1696,
+        "p": 0.5794,
+        "dir_ok": "False",
+        "pass": "False"
+      },
+      "oi_roc < -0.01 + ls>1.8 | 4bar": {
+        "config": "oi_roc < -0.01 + ls>1.8",
+        "horizon": 4,
+        "n": 65,
+        "mean_pct": 0.0823,
+        "p": 0.2851,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "oi_roc < -0.01 + ls>1.8 | 16bar": {
+        "config": "oi_roc < -0.01 + ls>1.8",
+        "horizon": 16,
+        "n": 65,
+        "mean_pct": 0.1097,
+        "p": 0.5109,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "oi_roc < -0.01 + ls>1.8 | 24bar": {
+        "config": "oi_roc < -0.01 + ls>1.8",
+        "horizon": 24,
+        "n": 65,
+        "mean_pct": -0.113,
+        "p": 0.5768,
+        "dir_ok": "False",
+        "pass": "False"
+      },
+      "oi_roc < -0.015 + vol>0.12 | 4bar": {
+        "config": "oi_roc < -0.015 + vol>0.12",
+        "horizon": 4,
+        "n": 35,
+        "mean_pct": 0.2919,
+        "p": 0.0277,
+        "dir_ok": "True",
+        "pass": "True"
+      },
+      "oi_roc < -0.015 + vol>0.12 | 16bar": {
+        "config": "oi_roc < -0.015 + vol>0.12",
+        "horizon": 16,
+        "n": 35,
+        "mean_pct": 0.863,
+        "p": 0.0084,
+        "dir_ok": "True",
+        "pass": "True"
+      },
+      "oi_roc < -0.015 + vol>0.12 | 24bar": {
+        "config": "oi_roc < -0.015 + vol>0.12",
+        "horizon": 24,
+        "n": 35,
+        "mean_pct": 0.7751,
+        "p": 0.0138,
+        "dir_ok": "True",
+        "pass": "True"
+      },
+      "oi_roc < -0.01 + price_down | 4bar": {
+        "config": "oi_roc < -0.01 + price_down",
+        "horizon": 4,
+        "n": 27,
+        "mean_pct": 0.1577,
+        "p": 0.0864,
+        "dir_ok": "True",
+        "pass": "True"
+      },
+      "oi_roc < -0.01 + price_down | 16bar": {
+        "config": "oi_roc < -0.01 + price_down",
+        "horizon": 16,
+        "n": 27,
+        "mean_pct": -0.0046,
+        "p": 0.9836,
+        "dir_ok": "False",
+        "pass": "False"
+      },
+      "oi_roc < -0.01 + price_down | 24bar": {
+        "config": "oi_roc < -0.01 + price_down",
+        "horizon": 24,
+        "n": 27,
+        "mean_pct": 0.2883,
+        "p": 0.2304,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "oi_roc < -0.01 + price_up | 4bar": {
+        "config": "oi_roc < -0.01 + price_up",
+        "horizon": 4,
+        "n": 29,
+        "mean_pct": -0.0621,
+        "p": 0.6291,
+        "dir_ok": "False",
+        "pass": "False"
+      },
+      "oi_roc < -0.01 + price_up | 16bar": {
+        "config": "oi_roc < -0.01 + price_up",
+        "horizon": 16,
+        "n": 29,
+        "mean_pct": 0.6203,
+        "p": 0.1131,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "oi_roc < -0.01 + price_up | 24bar": {
+        "config": "oi_roc < -0.01 + price_up",
+        "horizon": 24,
+        "n": 29,
+        "mean_pct": 0.1332,
+        "p": 0.7775,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "oi_roc < -0.01 + trend_bear | 4bar": {
+        "config": "oi_roc < -0.01 + trend_bear",
+        "horizon": 4,
+        "n": 37,
+        "mean_pct": 0.0056,
+        "p": 0.9529,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "oi_roc < -0.01 + trend_bear | 16bar": {
+        "config": "oi_roc < -0.01 + trend_bear",
+        "horizon": 16,
+        "n": 37,
+        "mean_pct": 0.3594,
+        "p": 0.0569,
+        "dir_ok": "True",
+        "pass": "True"
+      },
+      "oi_roc < -0.01 + trend_bear | 24bar": {
+        "config": "oi_roc < -0.01 + trend_bear",
+        "horizon": 24,
+        "n": 37,
+        "mean_pct": -0.0954,
+        "p": 0.7313,
+        "dir_ok": "False",
+        "pass": "False"
+      },
+      "oi_roc < -0.01 + trend_bull | 4bar": {
+        "config": "oi_roc < -0.01 + trend_bull",
+        "horizon": 4,
+        "n": 59,
+        "mean_pct": 0.1421,
+        "p": 0.0897,
+        "dir_ok": "True",
+        "pass": "True"
+      },
+      "oi_roc < -0.01 + trend_bull | 16bar": {
+        "config": "oi_roc < -0.01 + trend_bull",
+        "horizon": 16,
+        "n": 59,
+        "mean_pct": 0.3023,
+        "p": 0.1954,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "oi_roc < -0.01 + trend_bull | 24bar": {
+        "config": "oi_roc < -0.01 + trend_bull",
+        "horizon": 24,
+        "n": 59,
+        "mean_pct": 0.3492,
+        "p": 0.1394,
+        "dir_ok": "True",
+        "pass": "False"
+      }
+    },
+    "agent_6_regime": {
+      "LOW_vol_4bar": {
+        "regime": "LOW vol",
+        "horizon": 4,
+        "n": 16,
+        "mean_pct": 0.222,
+        "p": 0.0195,
+        "pass": "True"
+      },
+      "LOW_vol_16bar": {
+        "regime": "LOW vol",
+        "horizon": 16,
+        "n": 16,
+        "mean_pct": 0.1522,
+        "p": 0.204,
+        "pass": "False"
+      },
+      "LOW_vol_24bar": {
+        "regime": "LOW vol",
+        "horizon": 24,
+        "n": 16,
+        "mean_pct": -0.0113,
+        "p": 0.9057,
+        "pass": "False"
+      },
+      "MID_vol_4bar": {
+        "regime": "MID vol",
+        "horizon": 4,
+        "n": 39,
+        "mean_pct": 0.0881,
+        "p": 0.4454,
+        "pass": "False"
+      },
+      "MID_vol_16bar": {
+        "regime": "MID vol",
+        "horizon": 16,
+        "n": 39,
+        "mean_pct": 0.7302,
+        "p": 0.0287,
+        "pass": "True"
+      },
+      "MID_vol_24bar": {
+        "regime": "MID vol",
+        "horizon": 24,
+        "n": 39,
+        "mean_pct": 0.4836,
+        "p": 0.2267,
+        "pass": "False"
+      },
+      "HIGH_vol_4bar": {
+        "regime": "HIGH vol",
+        "horizon": 4,
+        "n": 41,
+        "mean_pct": 0.0392,
+        "p": 0.6752,
+        "pass": "False"
+      },
+      "HIGH_vol_16bar": {
+        "regime": "HIGH vol",
+        "horizon": 16,
+        "n": 41,
+        "mean_pct": 0.0053,
+        "p": 0.978,
+        "pass": "False"
+      },
+      "HIGH_vol_24bar": {
+        "regime": "HIGH vol",
+        "horizon": 24,
+        "n": 41,
+        "mean_pct": -0.0393,
+        "p": 0.8293,
+        "pass": "False"
+      },
+      "BULL_4bar": {
+        "regime": "BULL",
+        "horizon": 4,
+        "n": 62,
+        "mean_pct": 0.1466,
+        "p": 0.0723,
+        "pass": "True"
+      },
+      "BULL_16bar": {
+        "regime": "BULL",
+        "horizon": 16,
+        "n": 62,
+        "mean_pct": 0.3064,
+        "p": 0.169,
+        "pass": "False"
+      },
+      "BULL_24bar": {
+        "regime": "BULL",
+        "horizon": 24,
+        "n": 62,
+        "mean_pct": 0.3074,
+        "p": 0.1722,
+        "pass": "False"
+      },
+      "BEAR_4bar": {
+        "regime": "BEAR",
+        "horizon": 4,
+        "n": 34,
+        "mean_pct": -0.0146,
+        "p": 0.8826,
+        "pass": "False"
+      },
+      "BEAR_16bar": {
+        "regime": "BEAR",
+        "horizon": 16,
+        "n": 34,
+        "mean_pct": 0.357,
+        "p": 0.0788,
+        "pass": "True"
+      },
+      "BEAR_24bar": {
+        "regime": "BEAR",
+        "horizon": 24,
+        "n": 34,
+        "mean_pct": -0.0585,
+        "p": 0.8467,
+        "pass": "False"
+      },
+      "2026_4bar": {
+        "regime": "2026",
+        "horizon": 4,
+        "n": 96,
+        "mean_pct": 0.0895,
+        "p": 0.1552,
+        "pass": "False"
+      },
+      "2026_16bar": {
+        "regime": "2026",
+        "horizon": 16,
+        "n": 96,
+        "mean_pct": 0.3243,
+        "p": 0.0425,
+        "pass": "True"
+      },
+      "2026_24bar": {
+        "regime": "2026",
+        "horizon": 24,
+        "n": 96,
+        "mean_pct": 0.1778,
+        "p": 0.3225,
+        "pass": "False"
+      }
+    },
+    "agent_7_confluence": {
+      "base (oi_roc < -0.01)": {
+        "n": 96,
+        "mean_pct": 0.3243,
+        "wr": 0.5833,
+        "pf": 1.8127,
+        "p": 0.0425,
+        "delta_pf": 0.0,
+        "pass": "True"
+      },
+      "+ vol_ratio > 0.12": {
+        "n": 96,
+        "mean_pct": 0.3243,
+        "wr": 0.5833,
+        "pf": 1.8127,
+        "p": 0.0425,
+        "delta_pf": 0.0,
+        "pass": "True"
+      },
+      "+ vol_ratio > 0.15": {
+        "n": 96,
+        "mean_pct": 0.3243,
+        "wr": 0.5833,
+        "pf": 1.8127,
+        "p": 0.0425,
+        "delta_pf": 0.0,
+        "pass": "True"
+      },
+      "+ ls_ratio > 1.5": {
+        "n": 87,
+        "mean_pct": 0.3752,
+        "wr": 0.6207,
+        "pf": 2.2134,
+        "p": 0.0108,
+        "delta_pf": 0.4007,
+        "pass": "True"
+      },
+      "+ ls_ratio > 2.0": {
+        "n": 33,
+        "mean_pct": -0.0837,
+        "wr": 0.4848,
+        "pf": 0.7811,
+        "p": 0.6586,
+        "delta_pf": -1.0315,
+        "pass": "False"
+      },
+      "+ trend == BEAR": {
+        "n": 37,
+        "mean_pct": 0.3594,
+        "wr": 0.7297,
+        "pf": 2.4308,
+        "p": 0.0569,
+        "delta_pf": 0.6182,
+        "pass": "True"
+      },
+      "+ trend == BULL": {
+        "n": 59,
+        "mean_pct": 0.3023,
+        "wr": 0.4915,
+        "pf": 1.6147,
+        "p": 0.1954,
+        "delta_pf": -0.198,
+        "pass": "False"
+      },
+      "+ price_down > 0.5%": {
+        "n": 27,
+        "mean_pct": -0.0046,
+        "wr": 0.4074,
+        "pf": 0.9907,
+        "p": 0.9836,
+        "delta_pf": -0.822,
+        "pass": "False"
+      },
+      "+ price_up > 0.5%": {
+        "n": 29,
+        "mean_pct": 0.6203,
+        "wr": 0.6207,
+        "pf": 2.7156,
+        "p": 0.1131,
+        "delta_pf": 0.903,
+        "pass": "False"
+      },
+      "+ mid vol only": {
+        "n": 32,
+        "mean_pct": 0.7334,
+        "wr": 0.625,
+        "pf": 3.0465,
+        "p": 0.0406,
+        "delta_pf": 1.2339,
+        "pass": "True"
+      },
+      "+ oi_roc < -0.015": {
+        "n": 35,
+        "mean_pct": 0.863,
+        "wr": 0.7429,
+        "pf": 3.6644,
+        "p": 0.0084,
+        "delta_pf": 1.8517,
+        "pass": "True"
+      },
+      "+ oi_roc < -0.015 + mid vol": {
+        "n": 12,
+        "mean_pct": 2.2217,
+        "wr": 0.9167,
+        "pf": 35.5201,
+        "p": 0.0024,
+        "delta_pf": 33.7074,
+        "pass": "True"
+      }
+    },
+    "agent_8_alt": {
+      "OI crash only (roc < -0.02)": {
+        "n": 15,
+        "mean_pct": 0.1297,
+        "p": 0.725,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "Volume spike + OI drop": {
+        "n": 96,
+        "mean_pct": 0.3243,
+        "p": 0.0425,
+        "dir_ok": "True",
+        "pass": "True"
+      },
+      "Price momentum only (>1% 4bar)": {
+        "n": 9230,
+        "mean_pct": 0.0499,
+        "p": 0.015,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "OI divergence (OI down + price up)": {
+        "n": 29,
+        "mean_pct": 0.6203,
+        "p": 0.1131,
+        "dir_ok": "True",
+        "pass": "False"
+      },
+      "OI convergence (OI down + price down)": {
+        "n": 27,
+        "mean_pct": -0.0046,
+        "p": 0.9836,
+        "dir_ok": "False",
+        "pass": "False"
+      },
+      "Funding extreme (>0.05%)": {
+        "n": 222,
+        "mean_pct": -0.396,
+        "p": 0.0004,
+        "dir_ok": "False",
+        "pass": "False"
+      },
+      "LS ratio extreme (>2.5 or <0.4)": {
+        "n": 437,
+        "mean_pct": 0.2946,
+        "p": 0.0,
+        "dir_ok": "True",
+        "pass": "True"
+      }
+    }
+  },
+  "verdict": "CONDITIONAL PASS \u2014 Gate passes but sample too small",
+  "reason": "The mechanism shows real edge at 4h horizon (OI ROC < -0.015: +0.839%, p=0.018). However, only 92 events detected (need 500+). SHORT signals only. MID vol regime works, HIGH vol does not. The detection method (OI-based) is valid but the liquidation data source is broken."
+}

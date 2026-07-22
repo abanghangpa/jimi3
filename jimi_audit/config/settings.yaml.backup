@@ -11,8 +11,8 @@
 MACRO_CACHE_TTL_DAYS: 7
 
 # ─── GATE THRESHOLDS ─────────────────────────────────────────
-ICS_THRESHOLD_NORMAL: 0.65     # raised from 0.62 — 0.65+ bucket has 76% WR
-ICS_THRESHOLD_CAUTION: 0.65
+ICS_THRESHOLD_NORMAL: 0.50     # lowered from 0.65 — mean ICS is 0.50, old threshold blocked 99.4%
+ICS_THRESHOLD_CAUTION: 0.52    # lowered from 0.65 — slight caution bump for phase0 >= 0.40
 ICS_FLOOR: 0.48       # keep original — 0.48-0.55 bucket has positive edge
 
 # ─── M4b: INTRABAR CVD (LucF-style) ─────────────────────────
@@ -40,18 +40,18 @@ ICS_PRECHECK_THRESHOLD: 0.45
 #   ICS threshold raised to 0.62 (weights lower = easier to cross).
 M1_WEIGHT: 0.00       # INVERTED 2026: Δ=-0.047, winners score LOWER → zero
 M2_WEIGHT: 0.00       # veto-only (also inverted: Δ=-0.023)
-M3_WEIGHT: 0.25       # STRONG predictor 2026: Δ=+0.060, boost (was 0.20)
-M4_WEIGHT: 0.20       # STRONG predictor 2026: Δ=+0.106, boost (was 0.15)
+M3_WEIGHT: 0.22       # STRONG predictor 2026: Δ=+0.060, boost (was 0.20)
+M4_WEIGHT: 0.18       # STRONG predictor 2026: Δ=+0.106, boost (was 0.15)
 M5_WEIGHT: 0.00       # no signal power 2026: Δ=+0.003 → zero
-M10_WEIGHT: 0.15      # moderate, neutral predictor 2026: Δ=+0.007 (was 0.20)
+M10_WEIGHT: 0.12      # moderate, neutral predictor 2026: Δ=+0.007 (was 0.20)
 M11_WEIGHT: 0.00      # INVERTED — high scores predict losses → zero
-M13_WEIGHT: 0.10      # structural bias, keep
-M14_WEIGHT: 0.08      # sweep-retest, keep
-M8_WEIGHT: 0.10       # funding rate, keep
-M6_WEIGHT: 0.08       # derivatives, keep
-M20_WEIGHT: 0.10      # failed breakout detector
+M13_WEIGHT: 0.08      # structural bias, keep
+M14_WEIGHT: 0.06      # sweep-retest, keep
+M8_WEIGHT: 0.08       # funding rate, keep
+M6_WEIGHT: 0.06       # derivatives, keep
+M20_WEIGHT: 0.08      # failed breakout detector
 TAKER_ENABLED: true
-TAKER_WEIGHT: 0.08    # taker flow momentum + regime
+TAKER_WEIGHT: 0.06    # taker flow momentum + regime
 TAKER_DEVIATION_THRESHOLD: 0.02   # min deviation from 0.50 to score
 TAKER_MOMENTUM_BONUS: 0.20       # max score from momentum
 TAKER_12H_AGREE_BONUS: 0.15      # bonus when 12h confirms
@@ -1144,7 +1144,7 @@ ADAPTIVE_MOM_EXIT_AFTER: 24        # exit after 24 bars (6h) no progress
 
 # ─── M66: USD/JPY CARRY TRADE ───────────────────────────────
 M66_ENABLED: true
-M66_WEIGHT: 0.08
+M66_WEIGHT: 0.02
 M66_ALERT_THRESH: -0.3       # % drop in 5m to trigger alert
 M66_CONFIRMED_THRESH: -0.8   # % drop in 15m = confirmed carry unwind
 M66_CARRY_ALERT_SCORE: 0.65
@@ -1152,19 +1152,19 @@ M66_CARRY_CONFIRMED_SCORE: 0.80
 
 # ─── M67: DXY DIVERGENCE ────────────────────────────────────
 M67_ENABLED: true
-M67_WEIGHT: 0.06
+M67_WEIGHT: 0.02
 M67_DXY_THRESH: 0.2          # % DXY move in 15m to be significant
 M67_DIVERGENCE_ETH_THRESH: 0.05  # % ETH move to count as "moving"
 
 # ─── M68: 10Y YIELD + TIPS ──────────────────────────────────
 M68_ENABLED: true
-M68_WEIGHT: 0.10
+M68_WEIGHT: 0.03
 M68_ALERT_BPS: 5.0           # 5bps in 1h = significant
 M68_EXTREME_BPS: 10.0        # 10bps in 1h = extreme, suppress longs
 
 # ─── M69: VIX REGIME ────────────────────────────────────────
 M69_ENABLED: true
-M69_WEIGHT: 0.08
+M69_WEIGHT: 0.03
 M69_COMPLACENT_THRESH: 15.0
 M69_ELEVATED_THRESH: 20.0
 M69_FEAR_THRESH: 30.0
@@ -1173,23 +1173,23 @@ M69_SPIKE_DELTA: 3.0         # 3-point single-session spike = risk-off
 
 # ─── M70: WTI CRUDE OIL ─────────────────────────────────────
 M70_ENABLED: true
-M70_WEIGHT: 0.05
+M70_WEIGHT: 0.02
 M70_ALERT_THRESH: 3.0        # % move in 4h to trigger
 
 # ─── M71: GOLD + DXY GEOPOLITICAL ───────────────────────────
 M71_ENABLED: true
-M71_WEIGHT: 0.06
+M71_WEIGHT: 0.02
 M71_ALERT_THRESH: 1.0        # % move in 4h to trigger
 
 # ─── M72: BTC DOMINANCE ─────────────────────────────────────
 M72_ENABLED: true
-M72_WEIGHT: 0.10
+M72_WEIGHT: 0.04
 M72_HIGH_THRESH: 55.0        # BTC.D > 55% = altcoin suppression
 M72_LOW_THRESH: 48.0         # BTC.D < 48% = altcoin season
 
 # ─── M73: STABLECOIN MINTS ──────────────────────────────────
 M73_ENABLED: true
-M73_WEIGHT: 0.05
+M73_WEIGHT: 0.02
 M73_LARGE_MINT_THRESH: 500000000    # $500M single-day mint
 M73_MEGA_MINT_THRESH: 1000000000    # $1B single-day mint
 M73_LARGE_BURN_THRESH: 500000000    # $500M burn

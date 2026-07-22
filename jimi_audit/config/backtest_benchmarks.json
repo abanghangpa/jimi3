@@ -1,0 +1,109 @@
+{
+  "benchmarks": {
+    "orderbook_imbalance": {
+      "wr": 0.78,
+      "pf": 2.3,
+      "date": "2026-07-05"
+    },
+    "funding_arb": {
+      "wr": 0.72,
+      "pf": 2.1,
+      "date": "2026-07-05"
+    },
+    "positioning_fade": {
+      "wr": 0.7,
+      "pf": 2.0,
+      "date": "2026-07-05"
+    },
+    "trade_flow": {
+      "wr": 0.75,
+      "pf": 2.2,
+      "date": "2026-07-05"
+    },
+    "squeeze_breakout": {
+      "wr": 0.8,
+      "pf": 3.16,
+      "date": "2026-07-05"
+    },
+    "cross_asset": {
+      "wr": 0.68,
+      "pf": 1.61,
+      "date": "2026-07-05"
+    }
+  },
+  "live_stats": {
+    "trade_flow": {
+      "trades": 3,
+      "wins": 2,
+      "losses": 1,
+      "timeouts": 0,
+      "pnl": -183.73666076221144,
+      "trade_log": [
+        {
+          "outcome": "LOSS",
+          "ts": "2026-07-14T04:33:49.362598+00:00"
+        },
+        {
+          "outcome": "WIN",
+          "ts": "2026-07-14T10:06:34.268418+00:00"
+        },
+        {
+          "outcome": "WIN",
+          "ts": "2026-07-15T12:49:59.142827+00:00"
+        }
+      ]
+    },
+    "taker_flow": {
+      "trades": 2,
+      "wins": 0,
+      "losses": 2,
+      "timeouts": 0,
+      "pnl": -672.5776819070137,
+      "trade_log": [
+        {
+          "outcome": "LOSS",
+          "ts": "2026-07-14T08:38:00.102467+00:00"
+        },
+        {
+          "outcome": "LOSS",
+          "ts": "2026-07-14T10:55:57.693117+00:00"
+        }
+      ]
+    },
+    "liquidity_grab": {
+      "trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "timeouts": 0,
+      "pnl": 0.0,
+      "trade_log": []
+    },
+    "orderbook_imbalance": {
+      "trades": 2,
+      "wins": 1,
+      "losses": 1,
+      "timeouts": 0,
+      "pnl": 3.865856789279672,
+      "trade_log": [
+        {
+          "outcome": "LOSS",
+          "ts": "2026-07-15T07:00:21.195654+00:00"
+        },
+        {
+          "outcome": "WIN",
+          "ts": "2026-07-15T12:49:59.285830+00:00"
+        }
+      ]
+    },
+    "liquidation_cascade": {
+      "trades": 0,
+      "wins": 0,
+      "losses": 0,
+      "timeouts": 0,
+      "pnl": 0.0,
+      "trade_log": []
+    }
+  },
+  "paused": {},
+  "last_updated": "2026-07-15T13:01:04.154643+00:00"
+}

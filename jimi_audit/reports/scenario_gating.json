@@ -1,0 +1,290 @@
+{
+  "positioning_fade": {
+    "extreme_long": {
+      "passed": false,
+      "p_value": 0.0242,
+      "effect_direction": "backwards",
+      "mean_return_pct": -0.8711,
+      "events": 13180,
+      "scenario_label": "Extreme Long Crowding"
+    },
+    "extreme_short": {
+      "passed": true,
+      "p_value": 0.0242,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.8711,
+      "events": 13180,
+      "scenario_label": "Extreme Short Crowding"
+    },
+    "oi_crash": {
+      "passed": true,
+      "p_value": 0.0421,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.8337,
+      "events": 11340,
+      "scenario_label": "OI Crash / Liquidation Cascade"
+    },
+    "whale_accumulation": {
+      "passed": false,
+      "p_value": 0.0418,
+      "effect_direction": "backwards",
+      "mean_return_pct": -0.8321,
+      "events": 11357,
+      "scenario_label": "Whale Accumulation"
+    },
+    "whale_distribution": {
+      "passed": true,
+      "p_value": 0.0242,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.8711,
+      "events": 13180,
+      "scenario_label": "Whale Distribution"
+    },
+    "taker_buy_surge": {
+      "passed": false,
+      "p_value": 0.3448,
+      "effect_direction": "backwards",
+      "mean_return_pct": -0.6995,
+      "events": 2838,
+      "scenario_label": "Aggressive Taker Buying"
+    },
+    "taker_sell_surge": {
+      "passed": true,
+      "p_value": 0.0241,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.8726,
+      "events": 13165,
+      "scenario_label": "Aggressive Taker Selling"
+    },
+    "obi_strong_bid": {
+      "passed": false,
+      "p_value": 0.353,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.7891,
+      "events": 2473,
+      "scenario_label": "Strong Order Book Bid Support"
+    },
+    "obi_strong_ask": {
+      "passed": false,
+      "p_value": 0.1195,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.793,
+      "events": 7062,
+      "scenario_label": "Strong Order Book Ask Pressure"
+    },
+    "neutral_mean": {
+      "passed": false,
+      "p_value": 0.353,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.7891,
+      "events": 2473,
+      "scenario_label": "Neutral / Mean Reversion"
+    }
+  },
+  "whale_watch": {
+    "extreme_long": {
+      "passed": false,
+      "p_value": 0.0242,
+      "effect_direction": "backwards",
+      "mean_return_pct": -0.8711,
+      "events": 13180,
+      "scenario_label": "Extreme Long Crowding"
+    },
+    "extreme_short": {
+      "passed": true,
+      "p_value": 0.0242,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.8711,
+      "events": 13180,
+      "scenario_label": "Extreme Short Crowding"
+    },
+    "oi_crash": {
+      "passed": true,
+      "p_value": 0.0755,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.669,
+      "events": 11056,
+      "scenario_label": "OI Crash / Liquidation Cascade"
+    },
+    "whale_accumulation": {
+      "passed": true,
+      "p_value": 0.0242,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.8711,
+      "events": 13180,
+      "scenario_label": "Whale Accumulation"
+    },
+    "whale_distribution": {
+      "passed": false,
+      "p_value": 0.0242,
+      "effect_direction": "backwards",
+      "mean_return_pct": -0.8711,
+      "events": 13180,
+      "scenario_label": "Whale Distribution"
+    },
+    "taker_buy_surge": {
+      "passed": false,
+      "p_value": 0.1066,
+      "effect_direction": "backwards",
+      "mean_return_pct": -0.8371,
+      "events": 6956,
+      "scenario_label": "Aggressive Taker Buying"
+    },
+    "taker_sell_surge": {
+      "passed": true,
+      "p_value": 0.0243,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.8906,
+      "events": 12883,
+      "scenario_label": "Aggressive Taker Selling"
+    },
+    "obi_strong_bid": {
+      "passed": false,
+      "p_value": 0.5719,
+      "effect_direction": "backwards",
+      "mean_return_pct": -0.4788,
+      "events": 4266,
+      "scenario_label": "Strong Order Book Bid Support"
+    },
+    "obi_strong_ask": {
+      "passed": false,
+      "p_value": 0.1134,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.8328,
+      "events": 6838,
+      "scenario_label": "Strong Order Book Ask Pressure"
+    },
+    "neutral_mean": {
+      "passed": false,
+      "p_value": 0.5719,
+      "effect_direction": "backwards",
+      "mean_return_pct": -0.4788,
+      "events": 4266,
+      "scenario_label": "Neutral / Mean Reversion"
+    }
+  },
+  "cross_asset": {
+    "extreme_long": {
+      "passed": false,
+      "p_value": 0.0242,
+      "effect_direction": "backwards",
+      "mean_return_pct": -0.8713,
+      "events": 13177,
+      "scenario_label": "Extreme Long Crowding"
+    },
+    "extreme_short": {
+      "passed": true,
+      "p_value": 0.0242,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.8711,
+      "events": 13180,
+      "scenario_label": "Extreme Short Crowding"
+    },
+    "oi_crash": {
+      "passed": false,
+      "p_value": 0.0242,
+      "effect_direction": "backwards",
+      "mean_return_pct": -0.8711,
+      "events": 13180,
+      "scenario_label": "OI Crash / Liquidation Cascade"
+    },
+    "whale_accumulation": {
+      "passed": true,
+      "p_value": 0.0242,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.8711,
+      "events": 13180,
+      "scenario_label": "Whale Accumulation"
+    },
+    "whale_distribution": {
+      "passed": false,
+      "p_value": 0.0242,
+      "effect_direction": "backwards",
+      "mean_return_pct": -0.8711,
+      "events": 13180,
+      "scenario_label": "Whale Distribution"
+    },
+    "taker_buy_surge": {
+      "passed": true,
+      "p_value": 0.0426,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.7439,
+      "events": 12676,
+      "scenario_label": "Aggressive Taker Buying"
+    },
+    "taker_sell_surge": {
+      "passed": false,
+      "p_value": 0.0242,
+      "effect_direction": "backwards",
+      "mean_return_pct": -0.8713,
+      "events": 13177,
+      "scenario_label": "Aggressive Taker Selling"
+    },
+    "obi_strong_bid": {
+      "passed": false,
+      "p_value": 0.1186,
+      "effect_direction": "correct",
+      "mean_return_pct": 0.8524,
+      "events": 6625,
+      "scenario_label": "Strong Order Book Bid Support"
+    },
+    "obi_strong_ask": {
+      "passed": false,
+      "p_value": 0.1039,
+      "effect_direction": "backwards",
+      "mean_return_pct": -0.8894,
+      "events": 6559,
+      "scenario_label": "Strong Order Book Ask Pressure"
+    },
+    "neutral_mean": {
+      "passed": false,
+      "p_value": 0.3032,
+      "effect_direction": "backwards",
+      "mean_return_pct": -2.1475,
+      "events": 998,
+      "scenario_label": "Neutral / Mean Reversion"
+    }
+  },
+  "orderbook_imbalance": {
+    "extreme_short": {
+      "passed": true,
+      "p_value": 0.0282,
+      "effect_direction": "correct",
+      "mean_return_pct": 1.633,
+      "events": 6244,
+      "scenario_label": "Extreme Short Crowding"
+    },
+    "whale_accumulation": {
+      "passed": true,
+      "p_value": 0.0283,
+      "effect_direction": "correct",
+      "mean_return_pct": 1.6228,
+      "events": 6278,
+      "scenario_label": "Whale Accumulation"
+    },
+    "taker_buy_surge": {
+      "passed": true,
+      "p_value": 0.0288,
+      "effect_direction": "correct",
+      "mean_return_pct": 1.7303,
+      "events": 5870,
+      "scenario_label": "Aggressive Taker Buying"
+    },
+    "obi_strong_bid": {
+      "passed": true,
+      "p_value": 0.0283,
+      "effect_direction": "correct",
+      "mean_return_pct": 1.6228,
+      "events": 6278,
+      "scenario_label": "Strong Order Book Bid Support"
+    },
+    "neutral_mean": {
+      "passed": false,
+      "p_value": 0.3204,
+      "effect_direction": "correct",
+      "mean_return_pct": 2.0107,
+      "events": 1032,
+      "scenario_label": "Neutral / Mean Reversion"
+    }
+  }
+}

@@ -1,0 +1,316 @@
+{
+  "orderbook_imbalance": {
+    "passed": true,
+    "p_value": 0.0,
+    "effect_direction": "correct",
+    "mean_return_pct": 0.156,
+    "events": 1233,
+    "round_trip_cost_pct": 0.1,
+    "best_horizon": 24,
+    "date": "2026-07-12",
+    "method": "LIVE L2 data. LONG-only.",
+    "notes": "Re-tested with real data."
+  },
+  "bb_mom6_plus_extreme": {
+    "passed": false,
+    "p_value": 0.7716,
+    "effect_direction": "backwards",
+    "mean_return_pct": -0.029,
+    "events": 326,
+    "round_trip_cost_pct": 0.1,
+    "date": "2026-07-12",
+    "method": "Backtest confluence with extreme positioning",
+    "notes": "CONFLUENCE FAIL: mean=-0.029%. n=326 events with extreme positioning. Still negative."
+  },
+  "bb_mom6": {
+    "passed": false,
+    "p_value": 0.3105,
+    "effect_direction": "backwards",
+    "mean_return_pct": -0.714,
+    "events": 2921,
+    "round_trip_cost_pct": 0.1,
+    "date": "2026-07-12",
+    "method": "Regime-stratified backtest (standalone)",
+    "notes": "STANDALONE FAIL: mean=-0.714%, backwards direction. Earlier +1.016% was 13-event noise.",
+    "regime_breakdown": {
+      "bear_2018": {
+        "events": 2189,
+        "mean_return_pct": -0.932,
+        "p_value": 0.3211
+      },
+      "chop_2026": {
+        "events": 606,
+        "mean_return_pct": -0.012,
+        "p_value": 0.8584
+      }
+    }
+  },
+  "cross_asset_plus_obi": {
+    "passed": true,
+    "p_value": 0.0,
+    "effect_direction": "correct",
+    "mean_return_pct": 0.661,
+    "events": 82,
+    "round_trip_cost_pct": 0.1,
+    "best_horizon": 24,
+    "date": "2026-07-12",
+    "method": "Confluence: cross_asset + OBI LONG",
+    "notes": "82 events. cross_asset SHORT + OBI LONG = +0.719%."
+  },
+  "cross_asset": {
+    "passed": true,
+    "p_value": 0.0,
+    "effect_direction": "correct",
+    "mean_return_pct": 0.661,
+    "events": 82,
+    "round_trip_cost_pct": 0.1,
+    "best_horizon": 24,
+    "date": "2026-07-12",
+    "notes": "Confluence with OBI LONG."
+  },
+  "momentum_v3": {
+    "passed": false,
+    "p_value": 0.0,
+    "effect_direction": "correct",
+    "mean_return_pct": 0,
+    "events": 7490,
+    "round_trip_cost_pct": 0.1,
+    "date": "2026-07-12",
+    "method": "Scenario gating (synthetic data)",
+    "notes": "KILLED: 0% mean return across 7490 events. 0/10 scenarios passed. Family kill - momentum state filters have no edge.",
+    "killed": true,
+    "kill_date": "2026-07-13"
+  },
+  "funding_arb": {
+    "passed": true,
+    "events": 226,
+    "mean_return_pct": 0.21,
+    "p_value": 0.054,
+    "effect_direction": "correct",
+    "round_trip_cost_pct": 0.1,
+    "best_horizon": "24bar",
+    "date": "2026-07-13",
+    "method": "Multi-factor: taker z-score > 1.25 + round number proximity (rd < 0.03) + volume > 1.0",
+    "notes": "RESURRECTED. v1 had 0 events. v3 multi-factor + extended data (88K bars) passes.",
+    "config": {
+      "z_threshold": 1.25,
+      "round_dist": 0.03,
+      "vol_threshold": 1.0
+    }
+  },
+  "positioning_fade": {
+    "passed": true,
+    "p_value": 0.0241,
+    "effect_direction": "correct",
+    "mean_return_pct": 0.871,
+    "events": 13180,
+    "round_trip_cost_pct": 0.1,
+    "date": "2026-07-12",
+    "method": "Scenario gating (synthetic data)",
+    "notes": "PASS in 4/10 scenarios. Bearish/stress only."
+  },
+  "trade_flow": {
+    "passed": true,
+    "p_value": 0.0,
+    "effect_direction": "correct",
+    "mean_return_pct": 0,
+    "events": 49011,
+    "round_trip_cost_pct": 0.1,
+    "date": "2026-07-12",
+    "method": "Scenario gating (synthetic data)",
+    "notes": "PASS in 6/9 scenarios."
+  },
+  "squeeze_breakout": {
+    "passed": false,
+    "p_value": null,
+    "effect_direction": "unknown",
+    "mean_return_pct": null,
+    "events": 0,
+    "round_trip_cost_pct": 0.1,
+    "date": "2026-07-13",
+    "method": "No events detected",
+    "notes": "KILLED: Zero events. No data to gate. Revivable via synthetic data protocol.",
+    "killed": true,
+    "kill_date": "2026-07-13"
+  },
+  "failed_breakout": {
+    "passed": false,
+    "p_value": 0.2757,
+    "effect_direction": "correct",
+    "mean_return_pct": 0.152,
+    "events": 133,
+    "round_trip_cost_pct": 0.1,
+    "date": "2026-07-12",
+    "method": "Regime-stratified backtest (pooled)",
+    "notes": "POOLED FAIL but REGIME-SPECIFIC: works in 2026 chop (p=0.048, mean=+0.46%), fails in 2018 bear. Only deploy in ranging markets.",
+    "regime_breakdown": {
+      "bear_2018": {
+        "passed": false,
+        "events": 73,
+        "mean_return_pct": -0.09,
+        "p_value": 0.6027,
+        "label": "2018 Bear"
+      },
+      "chop_2026": {
+        "passed": true,
+        "events": 58,
+        "mean_return_pct": 0.462,
+        "p_value": 0.0475,
+        "label": "2026 Chop"
+      }
+    }
+  },
+  "whale_watch": {
+    "passed": true,
+    "p_value": 0.0243,
+    "effect_direction": "correct",
+    "mean_return_pct": 0.891,
+    "events": 12883,
+    "round_trip_cost_pct": 0.1,
+    "date": "2026-07-12",
+    "method": "Scenario gating (synthetic data)",
+    "notes": "PASS in 4/10 scenarios. Bearish/stress only."
+  },
+  "scalp_v2": {
+    "passed": false,
+    "events": 0,
+    "mean_return_pct": null,
+    "p_value": null,
+    "effect_direction": "unknown",
+    "notes": "KILLED: 0/20 sets passed, 2/20 correct direction. Too few events.",
+    "killed": true,
+    "kill_date": "2026-07-13"
+  },
+  "power_of_3": {
+    "passed": false,
+    "events": 0,
+    "mean_return_pct": null,
+    "p_value": null,
+    "effect_direction": "unknown",
+    "notes": "KILLED: 2/20 passed, 9/20 correct dir. Phase detection too noisy.",
+    "killed": true,
+    "kill_date": "2026-07-13"
+  },
+  "macro_surprise": {
+    "passed": false,
+    "events": 0,
+    "mean_return_pct": null,
+    "p_value": null,
+    "effect_direction": "unknown",
+    "notes": "KILLED: 2/20 passed, 4/20 correct dir. Funding extremes don't predict reversion.",
+    "killed": true,
+    "kill_date": "2026-07-13"
+  },
+  "liquidation_cascade": {
+    "passed": false,
+    "events": 0,
+    "mean_return_pct": null,
+    "p_value": null,
+    "effect_direction": "unknown",
+    "notes": "KILLED: 2/20 passed, 6/20 correct dir. Cascade direction unpredictable.",
+    "killed": true,
+    "kill_date": "2026-07-13"
+  },
+  "judas_sweep": {
+    "passed": true,
+    "events": 1895,
+    "mean_return_pct": 0.103,
+    "p_value": 0.04,
+    "effect_direction": "correct",
+    "round_trip_cost_pct": 0.1,
+    "best_horizon": "24bar",
+    "date": "2026-07-13",
+    "method": "Multi-factor: daily/session H/L sweep + rejection wick (1.5x body) + volume > 1.0",
+    "notes": "RESURRECTED. v1 used rolling fractals (noise). v3 structural levels + volume confirmation passes.",
+    "config": {
+      "vol_threshold": 1.0,
+      "wick_multiplier": 1.5,
+      "levels": [
+        "daily_high",
+        "daily_low",
+        "session_high",
+        "session_low"
+      ]
+    }
+  },
+  "taker_flow": {
+    "passed": false,
+    "events": 0,
+    "mean_return_pct": null,
+    "p_value": null,
+    "effect_direction": "unknown",
+    "notes": "KILLED: 0/20 passed, 0/20 correct dir. Zero events. Complete failure.",
+    "killed": true,
+    "kill_date": "2026-07-13"
+  },
+  "liquidity_grab": {
+    "passed": false,
+    "events": 0,
+    "mean_return_pct": null,
+    "p_value": null,
+    "effect_direction": "unknown",
+    "notes": "KILLED: 2/20 passed, 9/20 correct dir. L2 imbalance not predictive.",
+    "killed": true,
+    "kill_date": "2026-07-13"
+  },
+  "cascade": {
+    "passed": false,
+    "events": 0,
+    "mean_return_pct": null,
+    "p_value": null,
+    "effect_direction": "unknown",
+    "notes": "KILLED: 2/20 passed, 6/20 correct dir. Same failure as liquidation_cascade.",
+    "killed": true,
+    "kill_date": "2026-07-13"
+  },
+  "mtf_confluence": {
+    "passed": false,
+    "events": 0,
+    "mean_return_pct": null,
+    "p_value": null,
+    "effect_direction": "unknown",
+    "notes": "KILLED: 2/20 passed, 8/20 correct dir. EMA alignment too noisy.",
+    "killed": true,
+    "kill_date": "2026-07-13"
+  },
+  "vol_rotation": {
+    "passed": false,
+    "events": 1071,
+    "mean_return_pct": 0.0238,
+    "p_value": 0.1552,
+    "effect_direction": "correct",
+    "notes": "KILLED: Real data - correct direction but effect < costs (0.024% vs 0.10%).",
+    "killed": true,
+    "kill_date": "2026-07-13"
+  },
+  "kill_zone": {
+    "passed": false,
+    "events": 6177,
+    "mean_return_pct": -0.0118,
+    "p_value": 0.0162,
+    "effect_direction": "backwards",
+    "notes": "KILLED: Real data - direction backwards. Session timing has no directional edge.",
+    "killed": true,
+    "kill_date": "2026-07-13"
+  },
+  "structural_break": {
+    "passed": false,
+    "events": 559,
+    "mean_return_pct": -0.0419,
+    "p_value": 0.0677,
+    "effect_direction": "backwards",
+    "notes": "KILLED: Real data - direction backwards. 50-bar breaks reverse often.",
+    "killed": true,
+    "kill_date": "2026-07-13"
+  },
+  "regime_switch": {
+    "passed": false,
+    "events": 876,
+    "mean_return_pct": -0.0538,
+    "p_value": 0.0838,
+    "effect_direction": "backwards",
+    "notes": "KILLED: Real data - direction backwards. ATR percentile catches late moves.",
+    "killed": true,
+    "kill_date": "2026-07-13"
+  }
+}

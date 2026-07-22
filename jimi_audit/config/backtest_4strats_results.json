@@ -1,0 +1,12 @@
+{
+  "forced_movement": {
+    "passed": false,
+    "p_value": 1.0,
+    "effect_direction": "unknown",
+    "mean_return_pct": 0.0,
+    "events": 0,
+    "date": "2026-07-16",
+    "notes": "No historical signals found in strategy_signals.jsonl"
+  },
+  "liquidation_cascade": {
+    "passed": 
