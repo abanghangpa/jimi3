@@ -1266,7 +1266,6 @@ def get_latest_signals(gate, monitor):
             if direction not in cdg_allowed:
                 rejected["other"].append(f"{strat_name}(COND_GATE: {direction} not allowed in {rc.regime})")
                 continue
-            rejected["direction"].append(f"{strat_name}({direction}!={cfg['direction']})")
 
         group_boost = 1.0
         confirmed_by = []
