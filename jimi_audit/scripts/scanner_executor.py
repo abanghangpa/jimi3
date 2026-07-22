@@ -1077,6 +1077,20 @@ MAX_DIRECTIONAL_EXPOSURE = 0.06    # Max 6% of capital at risk in same direction
 # === REGIME-STRATEGY GATE: Which strategies can fire in which regimes ===
 # Format: {strategy: {"allowed": [list of regimes], "blocked": [list of regimes]}}
 
+# === CONDITIONAL DIRECTIONAL GATE (backtested 2026-07-22) ===
+# Based on regime x direction matrix: LONG+BEAR and SHORT+BULL are portfolio killers
+# PF: LONG+BEAR=0.31, SHORT+BULL=0.29 (catastrophic)
+# PF: LONG+BULL=3.51, SHORT+BEAR=3.31, MB both >2.0
+CONDITIONAL_DIRECTION_GATE = {
+    "BULL":             {"allowed": ["LONG"]},
+    "BEAR":             {"allowed": ["SHORT"]},
+    "MILDLY_BEARISH":   {"allowed": ["LONG", "SHORT"]},
+    "RANGING":          {"allowed": ["LONG", "SHORT"]},
+    "STRESS":           {"allowed": ["LONG", "SHORT"]},
+}
+CONDITIONAL_GATE_ENABLED = True
+MIN_HOLD_BARS = 6  # No TP/exit before bar 6 (noise filter)
+
 # === REGIME TP/SL SCALING: Multiply TP/SL based on regime ===
 # Multiplier applied to TP and SL distances
 REGIME_TPSL_SCALE = {
@@ -1243,6 +1257,15 @@ def get_latest_signals(gate, monitor):
                     continue
 
         if cfg["direction"] and direction != cfg["direction"]:
+            rejected["direction"].append(f"{strat_name}({direction}!={cfg['direction']})")
+
+        # === CONDITIONAL DIRECTIONAL GATE ===
+        if CONDITIONAL_GATE_ENABLED:
+            cdg = CONDITIONAL_DIRECTION_GATE.get(regime, {})
+            cdg_allowed = cdg.get("allowed", ["LONG", "SHORT"])
+            if direction not in cdg_allowed:
+                rejected["other"].append(f"{strat_name}(COND_GATE: {direction} not in {regime})")
+                continue
             rejected["direction"].append(f"{strat_name}({direction}!={cfg['direction']})")
             continue
 
