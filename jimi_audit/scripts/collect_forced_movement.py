@@ -330,7 +330,7 @@ async def _liq_stream_once():
     print(f"[{datetime.now(timezone.utc).isoformat()}] Connecting to Bybit liquidation stream...")
 
     async with aiohttp.ClientSession() as session:
-        async with session.ws_connect(url, heartbeat=None) as ws:
+        async with session.ws_connect(url, heartbeat=30) as ws:
             await ws.send_json(subscribe_msg)
             print("  ✅ Connected, subscribed to liquidation.ETHUSDT")
 
@@ -356,6 +356,11 @@ async def _liq_stream_once():
                             print(f"  💥 {side_label}: {liq['qty']:.1f} ETH @ ${liq['price']:.2f}")
 
                 elif msg.type == aiohttp.WSMsgType.BINARY:
+                    try:
+                        await ws.pong(msg.data)
+                    except Exception:
+                        pass
+                elif msg.type == aiohttp.WSMsgType.PING:
                     try:
                         await ws.pong(msg.data)
                     except Exception:
