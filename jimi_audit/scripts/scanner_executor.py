@@ -976,7 +976,7 @@ STRATEGY_CONFIGS = {
     "taker_flow": {"tp_pct": 2.0, "sl_pct": 1.5, "hold_hours": 8, "direction": None, "enabled": False, "group": "A", "min_conviction": 0.50, "notes": "v2: z-score thresholds + session filter + flow acceleration. Needs gate validation."},
     "vol_rotation": {"tp_pct": 0.5, "sl_pct": 1.0, "hold_hours": 8, "direction": None, "enabled": False, "group": "B"},
     "kill_zone": {"tp_pct": 0.5, "sl_pct": 1.0, "hold_hours": 8, "direction": None, "enabled": False, "group": "A"},
-    "liquidity_grab": {"tp_pct": 2.0, "sl_pct": 1.5, "hold_hours": 12, "direction": None, "enabled": True, "group": "A", "min_conviction": 0.45, "notes": "v3.1: derivatives-filtered S/R, ranging-only regime. Gate: 55 events, +0.360% mean, PF=2.21, p=0.049."},
+    "liquidity_grab": {"tp_pct": 2.0, "sl_pct": 1.5, "hold_hours": 12, "direction": None, "enabled": False, "group": "A", "min_conviction": 0.45, "notes": "v3.1: derivatives-filtered S/R, ranging-only regime. Gate: 55 events, +0.360% mean, PF=2.21, p=0.049."},
     "cascade": {"tp_pct": 0.5, "sl_pct": 1.0, "hold_hours": 8, "direction": None, "enabled": False, "group": "A"},
     "mtf_confluence": {"tp_pct": 0.5, "sl_pct": 1.0, "hold_hours": 8, "direction": None, "enabled": False, "group": "A"},
     "momentum_v3": {"tp_pct": 0.5, "sl_pct": 1.0, "hold_hours": 8, "direction": None, "enabled": False, "group": "B"},
