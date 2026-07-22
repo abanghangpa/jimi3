@@ -1,11 +1,11 @@
 {
-  "timestamp": "2026-07-07 09:00:00",
-  "price": 1770.28,
+  "timestamp": "2026-07-22 13:30:00",
+  "price": 1930.24,
   "swing_bias": "BEARISH",
-  "phase0": 0.10241511095588374,
+  "phase0": 0.18658076041018415,
   "trend_dir": "UP",
-  "trend_val": 0.23148022981768193,
-  "ema_200": 1711.1566014613284,
+  "trend_val": 0.38635035103616155,
+  "ema_200": 1878.5968003454332,
   "ensemble_passes": true,
   "sweep_blocked": false,
   "m20_blocked": true,
@@ -16,481 +16,522 @@
     "status": "PASS"
   },
   "m13": {
-    "bias": "BULLISH",
-    "score": 0.804,
-    "status": "PASS"
+    "bias": "BEARISH",
+    "score": 0.3,
+    "status": "FAIL"
   },
   "m7": {
-    "score": 0.529,
+    "score": 0.528,
     "status": "FAIL"
   },
   "magnets": [
     [
-      1762.6,
-      4.24,
+      1924.51,
+      2.89,
       true,
-      "2026-07-06T09:15:00.000"
+      "2026-07-21T15:00:00.000"
     ],
     [
-      1790.92,
-      2.08,
-      true,
-      "2026-07-06T16:00:00.000"
-    ],
-    [
-      1700.3,
-      1.71,
+      1870.53,
+      2.06,
       false,
       null
     ],
     [
-      1575.69,
-      1.61,
+      1939.5,
+      1.63,
+      true,
+      "2026-07-21T13:45:00.000"
+    ],
+    [
+      1843.54,
+      1.4,
       false,
       null
     ],
     [
-      1621.0,
-      1.53,
+      1885.52,
+      1.28,
       false,
       null
     ]
   ],
   "gaps": [
-    1824.9,
-    1830.57,
-    1671.98,
-    1677.64,
-    1819.24
+    1804.55,
+    1807.55,
+    1951.5,
+    1948.5,
+    1810.55
   ],
   "target_scores": {
-    "LONG": 0.732,
-    "SHORT": 1.0,
+    "LONG": 0.892,
+    "SHORT": 0.804,
     "long_details": {
       "direction": "LONG",
       "targets": [
         {
-          "price": 1790.92,
-          "strength": 2.08,
-          "dist_pct": 1.17,
-          "contrib": 0.116
+          "price": 1939.5,
+          "strength": 1.63,
+          "dist_pct": 0.48,
+          "contrib": 0.165
         }
       ],
       "gaps": [
         {
-          "price": 1824.9,
-          "dist_pct": 3.09,
-          "contrib": 0.0
+          "price": 1951.5,
+          "dist_pct": 1.1,
+          "contrib": 0.09
         },
         {
-          "price": 1830.57,
-          "dist_pct": 3.41,
-          "contrib": 0.0
-        },
-        {
-          "price": 1819.24,
-          "dist_pct": 2.77,
-          "contrib": 0.0
+          "price": 1948.5,
+          "dist_pct": 0.95,
+          "contrib": 0.105
         }
       ],
       "sr": [
         {
-          "price": 1777.84,
-          "strength": 71.0,
-          "touches": 77,
-          "bounces": 71,
-          "dist_pct": 0.43,
-          "contrib": 0.236
+          "price": 1939.19,
+          "strength": 27.0,
+          "touches": 37,
+          "bounces": 27,
+          "dist_pct": 0.46,
+          "contrib": 0.23
         },
         {
-          "price": 1781.42,
-          "strength": 66.0,
-          "touches": 78,
-          "bounces": 66,
-          "dist_pct": 0.63,
-          "contrib": 0.206
+          "price": 1943.13,
+          "strength": 16.0,
+          "touches": 18,
+          "bounces": 16,
+          "dist_pct": 0.67,
+          "contrib": 0.2
         },
         {
-          "price": 1785.01,
-          "strength": 81.0,
-          "touches": 81,
-          "bounces": 81,
-          "dist_pct": 0.83,
-          "contrib": 0.175
+          "price": 1947.08,
+          "strength": 6.0,
+          "touches": 6,
+          "bounces": 6,
+          "dist_pct": 0.87,
+          "contrib": 0.101
         }
       ],
-      "score": 0.732
+      "score": 0.892
     },
     "short_details": {
       "direction": "SHORT",
       "targets": [
         {
-          "price": 1762.6,
-          "strength": 4.24,
-          "dist_pct": 0.43,
-          "contrib": 0.313
-        },
-        {
-          "price": 1700.3,
-          "strength": 1.71,
-          "dist_pct": 3.95,
+          "price": 1870.53,
+          "strength": 2.06,
+          "dist_pct": 3.09,
           "contrib": 0.0
         },
         {
-          "price": 1575.69,
-          "strength": 1.61,
-          "dist_pct": 10.99,
+          "price": 1843.54,
+          "strength": 1.4,
+          "dist_pct": 4.49,
           "contrib": 0.0
         },
         {
-          "price": 1621.0,
-          "strength": 1.53,
-          "dist_pct": 8.43,
+          "price": 1885.52,
+          "strength": 1.28,
+          "dist_pct": 2.32,
           "contrib": 0.0
         }
       ],
       "gaps": [
         {
-          "price": 1671.98,
-          "dist_pct": 5.55,
+          "price": 1804.55,
+          "dist_pct": 6.51,
           "contrib": 0.0
         },
         {
-          "price": 1677.64,
-          "dist_pct": 5.23,
+          "price": 1807.55,
+          "dist_pct": 6.36,
+          "contrib": 0.0
+        },
+        {
+          "price": 1810.55,
+          "dist_pct": 6.2,
           "contrib": 0.0
         }
       ],
       "sr": [
         {
-          "price": 1763.5,
-          "strength": 117.0,
-          "touches": 139,
-          "bounces": 117,
-          "dist_pct": 0.38,
-          "contrib": 0.243
+          "price": 1923.4,
+          "strength": 99.0,
+          "touches": 150,
+          "bounces": 99,
+          "dist_pct": 0.35,
+          "contrib": 0.247
         },
         {
-          "price": 1759.91,
-          "strength": 98.0,
-          "touches": 127,
-          "bounces": 98,
-          "dist_pct": 0.59,
-          "contrib": 0.212
+          "price": 1919.46,
+          "strength": 129.0,
+          "touches": 143,
+          "bounces": 129,
+          "dist_pct": 0.56,
+          "contrib": 0.216
         },
         {
-          "price": 1756.33,
-          "strength": 90.0,
-          "touches": 105,
-          "bounces": 90,
-          "dist_pct": 0.79,
-          "contrib": 0.182
+          "price": 1915.51,
+          "strength": 112.0,
+          "touches": 117,
+          "bounces": 112,
+          "dist_pct": 0.76,
+          "contrib": 0.186
         },
         {
-          "price": 1752.74,
-          "strength": 82.0,
-          "touches": 87,
-          "bounces": 82,
-          "dist_pct": 0.99,
-          "contrib": 0.151
+          "price": 1911.57,
+          "strength": 70.0,
+          "touches": 72,
+          "bounces": 70,
+          "dist_pct": 0.97,
+          "contrib": 0.155
         }
       ],
-      "score": 1.0
+      "score": 0.804
     }
   },
   "sr_levels": [
     [
-      1763.5,
-      117.0,
+      1919.46,
+      129.0,
       "SUPPORT",
-      139,
-      117
+      143,
+      129
     ],
     [
-      1759.91,
-      98.0,
+      1915.51,
+      112.0,
       "SUPPORT",
-      127,
-      98
+      117,
+      112
     ],
     [
-      1767.08,
-      93.0,
+      1927.35,
+      110.0,
       "SUPPORT",
-      116,
-      93
+      132,
+      110
     ],
     [
-      1756.33,
-      90.0,
+      1923.4,
+      99.0,
       "SUPPORT",
-      105,
-      90
+      150,
+      99
     ],
     [
-      1770.67,
-      83.0,
-      "RESISTANCE",
-      105,
-      83
-    ],
-    [
-      1752.74,
-      82.0,
-      "SUPPORT",
-      87,
-      82
-    ],
-    [
-      1785.01,
-      81.0,
+      1931.3,
+      73.0,
       "RESISTANCE",
       81,
-      81
+      73
     ],
     [
-      1774.25,
-      77.0,
+      1911.57,
+      70.0,
+      "SUPPORT",
+      72,
+      70
+    ],
+    [
+      1935.24,
+      53.0,
       "RESISTANCE",
-      95,
-      77
+      60,
+      53
+    ],
+    [
+      1939.19,
+      27.0,
+      "RESISTANCE",
+      37,
+      27
     ]
   ],
   "derivatives": {
-    "oi": 2256729.0,
-    "oi_usd": 3993981668.0,
-    "oi_roc_1h": -0.008,
-    "ls_ratio": 1.8563,
-    "long_pct": 65.0,
-    "short_pct": 35.0,
-    "ls_zscore": 2.771,
-    "positioning": "CROWDED_LONG",
-    "top_ls_ratio": 1.9351,
+    "oi": 2359179.0,
+    "oi_usd": 4530974095.0,
+    "oi_roc_1h": -0.152,
+    "ls_ratio": 1.6925,
+    "long_pct": 62.9,
+    "short_pct": 37.1,
+    "ls_zscore": -0.944,
+    "positioning": "NEUTRAL",
+    "top_ls_ratio": 1.4004,
     "whale_signal": "NEUTRAL",
-    "whale_retail_gap": 0.0788,
-    "futures_taker_ratio": 0.7963,
-    "futures_flow": "SELLERS_DOMINANT",
-    "funding_rate": 3.3e-05,
+    "whale_retail_gap": -0.2921,
+    "futures_taker_ratio": 1.4339,
+    "futures_flow": "NEUTRAL",
+    "funding_rate": 1.4e-05,
     "oi_price_div": "NONE"
   },
   "cascade_risk": {
     "verdict": "FLUSH",
-    "score": 0.2,
-    "factors": [
-      "L/S z=2.77 (extreme positioning)"
-    ]
-  },
-  "m4b": {
-    "status": "SKIP",
-    "score": 0.5,
-    "divergence": "NONE",
-    "bars_ago": -1,
-    "cvd_slope": 12.48,
-    "details": {
-      "type": "NONE",
-      "bars_ago": -1
-    }
+    "score": 0.0,
+    "factors": []
   },
   "liquidity_levels": {
-    "current_price": 1770.28,
+    "current_price": 1930.24,
     "below": [
       {
-        "price": 1766.55,
-        "type": "BID_WALL",
-        "strength": 100,
-        "source": "Order book (329 ETH clustered)",
-        "cascade_risk": "LOW",
-        "dist_pct": -0.21,
-        "swept": false,
-        "swept_at": null,
-        "age_bars": null
-      },
-      {
-        "price": 1764.8332599999999,
+        "price": 1919.51328,
         "type": "LONG_STOP",
-        "source": "Swing L $1768",
-        "strength": 38.56143284301535,
+        "source": "Swing L $1923",
+        "strength": 35.247568523430516,
         "cluster_size": 5,
-        "dist_pct": -0.31,
+        "dist_pct": -0.56,
         "cascade_risk": "MED",
         "age_bars": null,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1754.05486,
+        "price": 1905.42,
         "type": "LONG_STOP",
-        "source": "Swing L $1758",
-        "strength": 30.427126405615653,
-        "cluster_size": 5,
-        "dist_pct": -0.92,
+        "source": "Swing L $1915 @ 2026-07-21T17:45",
+        "strength": 83.5,
+        "cluster_size": 3,
         "cascade_risk": "MED",
+        "formed_at": 920,
+        "fresh": true,
+        "dist_pct": -1.29,
+        "age_bars": 79,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1905.15,
+        "type": "LONG_LIQ",
+        "strength": 64.9,
+        "source": "OI+leverage est.",
+        "cascade_risk": "HIGH",
+        "dist_pct": -1.3,
         "age_bars": null,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1726.91,
+        "price": 1895.08,
         "type": "LONG_STOP",
-        "source": "Swing L $1736 @ 2026-07-06T12:00",
-        "strength": 53.1,
+        "source": "Swing L $1905 @ 2026-07-21T02:15",
+        "strength": 69.5,
         "cluster_size": 3,
         "cascade_risk": "MED",
-        "formed_at": 915,
+        "formed_at": 858,
         "fresh": true,
-        "dist_pct": -2.45,
-        "age_bars": 84,
+        "dist_pct": -1.82,
+        "age_bars": 141,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1720.31,
+        "price": 1885.94,
         "type": "LONG_STOP",
-        "source": "Swing L $1729 @ 2026-07-06T13:30",
-        "strength": 43.3,
+        "source": "Swing L $1895 @ 2026-07-20T16:45",
+        "strength": 57.1,
         "cluster_size": 3,
         "cascade_risk": "MED",
-        "formed_at": 921,
+        "formed_at": 820,
         "fresh": true,
-        "dist_pct": -2.82,
-        "age_bars": 78,
+        "dist_pct": -2.3,
+        "age_bars": 179,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1885.84,
+        "type": "LONG_LIQ",
+        "strength": 37.1,
+        "source": "OI+leverage est.",
+        "cascade_risk": "MED",
+        "dist_pct": -2.3,
+        "age_bars": null,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1878.33,
+        "type": "LONG_STOP",
+        "source": "Rejection L $1882 @ 2026-07-20T15:15",
+        "strength": 31.5,
+        "cluster_size": 2,
+        "cascade_risk": "MED",
+        "formed_at": 814,
+        "fresh": true,
+        "dist_pct": -2.69,
+        "age_bars": 185,
         "swept": false,
         "swept_at": null
       }
     ],
     "above": [
       {
-        "price": 1775.8406759493669,
-        "type": "SHORT_STOP",
-        "source": "S/R 139 $1763",
-        "strength": 93.60000000000001,
-        "cluster_size": 117,
-        "dist_pct": 0.31,
-        "cascade_risk": "HIGH",
-        "age_bars": null,
-        "swept": false,
-        "swept_at": null
-      },
-      {
-        "price": 1786.670387341772,
-        "type": "SHORT_STOP",
-        "source": "S/R 95 $1774",
-        "strength": 61.6,
-        "cluster_size": 77,
-        "dist_pct": 0.93,
-        "cascade_risk": "HIGH",
-        "age_bars": null,
-        "swept": false,
-        "swept_at": null
-      },
-      {
-        "price": 1797.500098734177,
-        "type": "SHORT_STOP",
-        "source": "S/R 81 $1785",
-        "strength": 64.8,
-        "cluster_size": 81,
-        "dist_pct": 1.54,
-        "cascade_risk": "HIGH",
-        "age_bars": null,
-        "swept": false,
-        "swept_at": null
-      },
-      {
-        "price": 1807.46,
+        "price": 1939.89,
         "type": "SHORT_LIQ",
-        "strength": 35.1,
+        "strength": 56.6,
         "source": "OI+leverage est.",
         "cascade_risk": "MED",
-        "dist_pct": 2.1,
+        "dist_pct": 0.5,
         "age_bars": null,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1823.32,
+        "price": 1940.8421124999998,
         "type": "SHORT_STOP",
-        "source": "Rejection H $1820 @ 2026-07-06T21:45",
-        "strength": 24.5,
-        "cluster_size": 2,
+        "source": "S/R 132 $1927",
+        "strength": 88.0,
+        "cluster_size": 110,
+        "dist_pct": 0.55,
+        "cascade_risk": "HIGH",
+        "age_bars": null,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1948.7894625,
+        "type": "SHORT_STOP",
+        "source": "S/R 60 $1935",
+        "strength": 42.400000000000006,
+        "cluster_size": 53,
+        "dist_pct": 0.96,
         "cascade_risk": "MED",
-        "formed_at": 954,
+        "age_bars": null,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1956.83,
+        "type": "SHORT_STOP",
+        "source": "Swing H $1947 @ 2026-07-21T10:00",
+        "strength": 81.3,
+        "cluster_size": 3,
+        "cascade_risk": "MED",
+        "formed_at": 889,
         "fresh": true,
-        "dist_pct": 3.0,
-        "age_bars": 45,
+        "dist_pct": 1.38,
+        "age_bars": 110,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1962.76,
+        "type": "SHORT_STOP",
+        "source": "Swing H $1953 @ 2026-07-21T08:15",
+        "strength": 73.3,
+        "cluster_size": 3,
+        "cascade_risk": "MED",
+        "formed_at": 882,
+        "fresh": true,
+        "dist_pct": 1.68,
+        "age_bars": 117,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1963.05,
+        "type": "SHORT_LIQ",
+        "strength": 48.3,
+        "source": "OI+leverage est.",
+        "cascade_risk": "MED",
+        "dist_pct": 1.7,
+        "age_bars": null,
         "swept": false,
         "swept_at": null
       }
     ],
     "all": [
       {
-        "price": 1726.91,
+        "price": 1905.42,
         "type": "LONG_STOP",
-        "source": "Swing L $1736 @ 2026-07-06T12:00",
-        "strength": 53.1,
+        "source": "Swing L $1915 @ 2026-07-21T17:45",
+        "strength": 83.5,
         "cluster_size": 3,
         "cascade_risk": "MED",
-        "formed_at": 915,
+        "formed_at": 920,
         "fresh": true,
-        "dist_pct": -2.45,
-        "age_bars": 84,
+        "dist_pct": -1.29,
+        "age_bars": 79,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1720.31,
-        "type": "LONG_STOP",
-        "source": "Swing L $1729 @ 2026-07-06T13:30",
-        "strength": 43.3,
-        "cluster_size": 3,
-        "cascade_risk": "MED",
-        "formed_at": 921,
-        "fresh": true,
-        "dist_pct": -2.82,
-        "age_bars": 78,
-        "swept": false,
-        "swept_at": null
-      },
-      {
-        "price": 1823.32,
+        "price": 1956.83,
         "type": "SHORT_STOP",
-        "source": "Rejection H $1820 @ 2026-07-06T21:45",
-        "strength": 24.5,
+        "source": "Swing H $1947 @ 2026-07-21T10:00",
+        "strength": 81.3,
+        "cluster_size": 3,
+        "cascade_risk": "MED",
+        "formed_at": 889,
+        "fresh": true,
+        "dist_pct": 1.38,
+        "age_bars": 110,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1962.76,
+        "type": "SHORT_STOP",
+        "source": "Swing H $1953 @ 2026-07-21T08:15",
+        "strength": 73.3,
+        "cluster_size": 3,
+        "cascade_risk": "MED",
+        "formed_at": 882,
+        "fresh": true,
+        "dist_pct": 1.68,
+        "age_bars": 117,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1895.08,
+        "type": "LONG_STOP",
+        "source": "Swing L $1905 @ 2026-07-21T02:15",
+        "strength": 69.5,
+        "cluster_size": 3,
+        "cascade_risk": "MED",
+        "formed_at": 858,
+        "fresh": true,
+        "dist_pct": -1.82,
+        "age_bars": 141,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1885.94,
+        "type": "LONG_STOP",
+        "source": "Swing L $1895 @ 2026-07-20T16:45",
+        "strength": 57.1,
+        "cluster_size": 3,
+        "cascade_risk": "MED",
+        "formed_at": 820,
+        "fresh": true,
+        "dist_pct": -2.3,
+        "age_bars": 179,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1878.33,
+        "type": "LONG_STOP",
+        "source": "Rejection L $1882 @ 2026-07-20T15:15",
+        "strength": 31.5,
         "cluster_size": 2,
         "cascade_risk": "MED",
-        "formed_at": 954,
+        "formed_at": 814,
         "fresh": true,
-        "dist_pct": 3.0,
-        "age_bars": 45,
+        "dist_pct": -2.69,
+        "age_bars": 185,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1766.55,
+        "price": 1930.24,
         "type": "BID_WALL",
         "strength": 100,
-        "source": "Order book (329 ETH clustered)",
-        "cascade_risk": "LOW",
-        "dist_pct": -0.21,
-        "swept": false,
-        "swept_at": null,
-        "age_bars": null
-      },
-      {
-        "price": 1766.55,
-        "type": "ASK_WALL",
-        "strength": 100,
-        "source": "Order book (329 ETH clustered)",
-        "cascade_risk": "LOW",
-        "dist_pct": -0.21,
-        "swept": false,
-        "swept_at": null,
-        "age_bars": null
-      },
-      {
-        "price": 1770.28,
-        "type": "BID_WALL",
-        "strength": 100,
-        "source": "Order book (1400 ETH clustered)",
+        "source": "Order book (1925 ETH clustered)",
         "cascade_risk": "LOW",
         "dist_pct": 0.0,
         "swept": false,
@@ -498,10 +539,10 @@
         "age_bars": null
       },
       {
-        "price": 1770.28,
+        "price": 1930.24,
         "type": "ASK_WALL",
         "strength": 100,
-        "source": "Order book (3926 ETH clustered)",
+        "source": "Order book (3694 ETH clustered)",
         "cascade_risk": "LOW",
         "dist_pct": 0.0,
         "swept": false,
@@ -509,380 +550,391 @@
         "age_bars": null
       },
       {
-        "price": 1775.8406759493669,
+        "price": 1940.8421124999998,
         "type": "SHORT_STOP",
-        "source": "S/R 139 $1763",
-        "strength": 93.60000000000001,
-        "cluster_size": 117,
-        "dist_pct": 0.31,
+        "source": "S/R 132 $1927",
+        "strength": 88.0,
+        "cluster_size": 110,
+        "dist_pct": 0.55,
         "cascade_risk": "HIGH",
         "age_bars": null,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1779.4505797468353,
-        "type": "SHORT_STOP",
-        "source": "S/R 116 $1767",
-        "strength": 74.4,
-        "cluster_size": 93,
-        "dist_pct": 0.52,
+        "price": 1905.15,
+        "type": "LONG_LIQ",
+        "strength": 64.9,
+        "source": "OI+leverage est.",
         "cascade_risk": "HIGH",
+        "dist_pct": -1.3,
         "age_bars": null,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1797.500098734177,
-        "type": "SHORT_STOP",
-        "source": "S/R 81 $1785",
-        "strength": 64.8,
-        "cluster_size": 81,
-        "dist_pct": 1.54,
-        "cascade_risk": "HIGH",
-        "age_bars": null,
-        "swept": false,
-        "swept_at": null
-      },
-      {
-        "price": 1786.670387341772,
-        "type": "SHORT_STOP",
-        "source": "S/R 95 $1774",
-        "strength": 61.6,
-        "cluster_size": 77,
-        "dist_pct": 0.93,
-        "cascade_risk": "HIGH",
-        "age_bars": null,
-        "swept": false,
-        "swept_at": null
-      },
-      {
-        "price": 1790.2802911392405,
-        "type": "SHORT_STOP",
-        "source": "S/R 77 $1778",
-        "strength": 56.800000000000004,
-        "cluster_size": 71,
-        "dist_pct": 1.13,
-        "cascade_risk": "HIGH",
-        "age_bars": null,
-        "swept": false,
-        "swept_at": null
-      },
-      {
-        "price": 1793.8901949367087,
-        "type": "SHORT_STOP",
-        "source": "S/R 78 $1781",
-        "strength": 52.800000000000004,
-        "cluster_size": 66,
-        "dist_pct": 1.33,
-        "cascade_risk": "HIGH",
-        "age_bars": null,
-        "swept": false,
-        "swept_at": null
-      },
-      {
-        "price": 1764.8332599999999,
-        "type": "LONG_STOP",
-        "source": "Swing L $1768",
-        "strength": 38.56143284301535,
-        "cluster_size": 5,
-        "dist_pct": -0.31,
-        "cascade_risk": "MED",
-        "age_bars": null,
-        "swept": false,
-        "swept_at": null
-      },
-      {
-        "price": 1807.46,
+        "price": 1939.89,
         "type": "SHORT_LIQ",
-        "strength": 35.1,
+        "strength": 56.6,
         "source": "OI+leverage est.",
         "cascade_risk": "MED",
-        "dist_pct": 2.1,
+        "dist_pct": 0.5,
         "age_bars": null,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1786.15518,
+        "price": 1963.05,
+        "type": "SHORT_LIQ",
+        "strength": 48.3,
+        "source": "OI+leverage est.",
+        "cascade_risk": "MED",
+        "dist_pct": 1.7,
+        "age_bars": null,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1937.89,
+        "type": "SHORT_LIQ",
+        "source": "HVN 2.3x avg vol",
+        "strength": 46.4,
+        "cluster_size": 2,
+        "cascade_risk": "MED",
+        "formed_at": null,
+        "fresh": true,
+        "dist_pct": 0.4,
+        "age_bars": null,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1948.7894625,
         "type": "SHORT_STOP",
-        "source": "Swing H $1783",
-        "strength": 30.72839701440831,
-        "cluster_size": 5,
-        "dist_pct": 0.9,
+        "source": "S/R 60 $1935",
+        "strength": 42.400000000000006,
+        "cluster_size": 53,
+        "dist_pct": 0.96,
         "cascade_risk": "MED",
         "age_bars": null,
         "swept": false,
         "swept_at": null
       },
       {
-        "price": 1754.05486,
-        "type": "LONG_STOP",
-        "source": "Swing L $1758",
-        "strength": 30.427126405615653,
+        "price": 1885.84,
+        "type": "LONG_LIQ",
+        "strength": 37.1,
+        "source": "OI+leverage est.",
+        "cascade_risk": "MED",
+        "dist_pct": -2.3,
+        "age_bars": null,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1939.2307199999998,
+        "type": "SHORT_STOP",
+        "source": "Swing H $1935",
+        "strength": 36.46330680813447,
         "cluster_size": 5,
-        "dist_pct": -0.92,
+        "dist_pct": 0.47,
+        "cascade_risk": "MED",
+        "age_bars": null,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1919.51328,
+        "type": "LONG_STOP",
+        "source": "Swing L $1923",
+        "strength": 35.247568523430516,
+        "cluster_size": 5,
+        "dist_pct": -0.56,
+        "cascade_risk": "MED",
+        "age_bars": null,
+        "swept": false,
+        "swept_at": null
+      },
+      {
+        "price": 1909.51332,
+        "type": "LONG_STOP",
+        "source": "Swing L $1913",
+        "strength": 28.32614942528729,
+        "cluster_size": 5,
+        "dist_pct": -1.07,
         "cascade_risk": "MED",
         "age_bars": null,
         "swept": false,
         "swept_at": null
       }
     ],
-    "bid_walls": 2,
-    "ask_walls": 2,
-    "high_cascade_zones": 6,
+    "bid_walls": 1,
+    "ask_walls": 1,
+    "high_cascade_zones": 2,
     "liq_source": "binance"
   },
-  "rsi": 43.106170944066804,
-  "vol_trend": 0.08250213768341919,
-  "atr": 5.12347157265361,
-  "range_width": 3.5666674198431947,
-  "vol_ratio": 0.15872319119905334,
-  "vol_ma20": 2126.21521,
-  "oi_proxy": 49.86494697307711,
-  "vwap_dist": -0.4256069867284893,
-  "bar_vol_spike": 0.08250213768341919,
-  "bar_range_expansion": 0.3376020203570715,
-  "bar_taker_extreme": false,
-  "squeeze_quality": 0.6239745571672459,
-  "raw_taker_ratio": 0.44500513917384427,
-  "raw_bar_range_pct": 0.11128183112276178,
+  "rsi": 57.64597694174698,
+  "vol_trend": 1.325131986876569,
+  "atr": 5.8067581821669165,
+  "range_width": 1.4878978779840863,
+  "vol_ratio": 0.14738747176898848,
+  "vol_ma20": 1927.2323250000002,
+  "oi_proxy": 60.65961819107616,
+  "vwap_dist": 0.19969255072354464,
+  "bar_vol_spike": 1.325131986876569,
+  "bar_range_expansion": 2.2659369080615495,
+  "bar_taker_extreme": true,
+  "squeeze_quality": 0.8383271501440556,
+  "raw_taker_ratio": 0.6651172596279826,
+  "raw_bar_range_pct": 0.5735038129973442,
   "taker_summary": {
-    "raw": 0.445,
-    "avg_4h": 0.5501,
-    "avg_12h": 0.4865,
-    "avg_24h": 0.4876,
-    "momentum": 0.0637,
-    "acceleration": 0.041,
-    "regime": "BUYING_SPIKE",
-    "regime_desc": "short-term buying (4h=0.550)",
-    "direction": "LONG",
-    "score": 0.296,
-    "reason": "4h taker 0.550 (+0.050 from neutral); momentum +0.064; accelerating; \u26a0\ufe0f 12h disagrees",
-    "percentile": 96.4,
+    "raw": 0.6651,
+    "avg_4h": 0.4798,
+    "avg_12h": 0.4941,
+    "avg_24h": 0.515,
+    "momentum": -0.0143,
+    "acceleration": 0.0061,
+    "regime": "NEUTRAL",
+    "regime_desc": "balanced (4h=0.480)",
+    "direction": "NEUTRAL",
+    "score": 0.144,
+    "reason": "4h taker 0.480 (-0.020 from neutral); momentum -0.014",
+    "percentile": 21.6,
     "recent_divergences": [
       [
-        "BULLISH",
-        2.1
+        "BEARISH",
+        6.4
       ],
       [
-        "BULLISH",
-        1.31
+        "BEARISH",
+        5.07
       ],
       [
-        "BULLISH",
-        2.15
+        "BEARISH",
+        3.33
       ]
     ]
   },
   "squeeze": {
-    "squeeze_type": "LONG_SQUEEZE",
+    "squeeze_type": "SHORT_SQUEEZE",
     "squeeze_status": "PENDING",
-    "squeeze_score": 0.13,
+    "squeeze_score": 0.329,
     "squeeze_strong": false,
-    "direction": "SHORT",
+    "direction": "LONG",
     "factors": [
-      "2h MACD coil: 12h",
-      "Max coil streak: 34h",
-      "Box: DESCENDING_TRIANGLE (directional bias)",
-      "\u26a0\ufe0f FAILED_BREAKOUT: failed_breakout_down 13bars ago (spike to $1768.57, close $1770.58)",
-      "Trigger: COIL_DIR \u2192 SHORT",
-      "CVD confirms: SHORT"
+      "15m deep compression: 48 bars",
+      "Max coil streak: 32h",
+      "DUAL PATH: 15m + 2h both compressed",
+      "Compression MATURE: 100%",
+      "Lifecycle: MATURE",
+      "\u26a0\ufe0f FAILED_BREAKOUT: failed_breakout_up 11bars ago (spike to $1933.62, close $1930.82)",
+      "Trigger: TAKER_SPIKE \u2192 LONG",
+      "CVD confirms: LONG"
     ],
-    "quality": 0.13,
-    "compression_bars": 0,
-    "dry_count": 0,
-    "doji_count": 0,
-    "trigger_type": "COIL_DIR",
+    "quality": 0.329,
+    "compression_bars": 48,
+    "dry_count": 7,
+    "doji_count": 12,
+    "trigger_type": "TAKER_SPIKE",
     "overrides_regime": true,
     "ics_boost": 0.05,
     "size_mult": 0.8,
-    "entry_price": 1768.07,
-    "entry_condition": "enter when 15m closes below $1768.07 (\u23f3 waiting)",
+    "entry_price": 1933.97,
+    "entry_condition": "enter when 15m closes above $1933.97 (\u23f3 waiting)",
     "entry_triggered": false,
-    "coil_high": 1774.79,
-    "coil_low": 1769.84,
-    "tp": 1755.26,
-    "sl": 1773.19,
-    "tp_pct": 0.724,
-    "sl_pct": 0.29,
+    "coil_high": 1932.04,
+    "coil_low": 1919.32,
+    "tp": 1948.49,
+    "sl": 1928.17,
+    "tp_pct": 0.751,
+    "sl_pct": 0.3,
     "tp1_source": "ATR",
     "tp_duration_mult": 1.0,
-    "coil_hours": 12,
-    "box_type": "DESCENDING_TRIANGLE",
-    "box_bias": "SHORT",
-    "box_high_slope": -0.000568,
-    "box_low_slope": -0.00105,
+    "coil_hours": 6,
+    "box_type": "SIDEWAYS",
+    "box_bias": "NEUTRAL",
+    "box_high_slope": -0.000174,
+    "box_low_slope": -0.000178,
     "box_convergence": 0.0,
-    "box_n_swings": "2H/2L",
-    "compression_maturity": 0.004,
-    "compression_range_ratio": 1.006,
-    "tested_high": 1774.79,
-    "tested_low": 1769.84,
+    "box_n_swings": "3H/3L",
+    "compression_maturity": 1.0,
+    "compression_range_ratio": 1.0,
+    "tested_high": 1932.04,
+    "tested_low": 1919.32,
     "breakout_quality_score": null,
     "breakout_quality_passed": false,
     "breakout_quality_factors": [],
     "retest_detected": false,
     "retest_quality": 0.0,
     "retest_detail": "no breakout found in window",
-    "lifecycle_stage": "FORMING",
-    "lifecycle_score": 0.2,
+    "lifecycle_stage": "MATURE",
+    "lifecycle_score": 0.9,
     "failed_breakout": true,
-    "failed_breakout_detail": "failed_breakout_down 13bars ago (spike to $1768.57, close $1770.58)",
+    "failed_breakout_detail": "failed_breakout_up 11bars ago (spike to $1933.62, close $1930.82)",
     "gates_all_pass": true,
     "gates_passed": [
-      "2h MACD coil: 12h",
-      "Max coil streak: 34h",
-      "Box: DESCENDING_TRIANGLE (directional bias)",
-      "\u26a0\ufe0f FAILED_BREAKOUT: failed_breakout_down 13bars ago (spike to $1768.57, close $1770.58)",
-      "Trigger: COIL_DIR \u2192 SHORT",
-      "CVD confirms: SHORT"
+      "15m deep compression: 48 bars",
+      "Max coil streak: 32h",
+      "DUAL PATH: 15m + 2h both compressed",
+      "Compression MATURE: 100%",
+      "Lifecycle: MATURE",
+      "\u26a0\ufe0f FAILED_BREAKOUT: failed_breakout_up 11bars ago (spike to $1933.62, close $1930.82)",
+      "Trigger: TAKER_SPIKE \u2192 LONG",
+      "CVD confirms: LONG"
     ],
     "gates_failed": [],
-    "short_score": 0,
-    "long_score": 0.13,
+    "short_score": 0.329,
+    "long_score": 0,
     "path_a": {
-      "fired": false,
-      "compressed": false,
-      "comp_bars": 0,
-      "dry": 0,
-      "doji": 0
+      "fired": true,
+      "compressed": true,
+      "comp_bars": 48,
+      "dry": 7,
+      "doji": 12
     },
     "path_b": {
       "fired": true,
       "coiled": true,
-      "coil_bars": 6,
-      "coil_hours": 12,
-      "max_streak_hours": 34,
+      "coil_bars": 3,
+      "coil_hours": 6,
+      "max_streak_hours": 32,
       "hist_flip": false,
-      "hist_value": -3.103,
-      "delta_pct": 0.1753,
-      "direction": "SHORT",
-      "dif": -0.328,
-      "dea": 2.775
+      "hist_value": -2.286,
+      "delta_pct": 0.1184,
+      "direction": "NEUTRAL",
+      "dif": 3.803,
+      "dea": 6.089
     },
     "_box_info": {
-      "box_type": "DESCENDING_TRIANGLE",
-      "high_slope": -0.000568,
-      "low_slope": -0.00105,
-      "high_r2": 1.0,
-      "low_r2": 1.0,
+      "box_type": "SIDEWAYS",
+      "high_slope": -0.000174,
+      "low_slope": -0.000178,
+      "high_r2": 0.415,
+      "low_r2": 0.596,
       "convergence": 0.0,
       "swing_highs": [
         [
           12,
-          1810.16
+          1939.4
         ],
         [
-          39,
-          1782.59
+          29,
+          1926.5
+        ],
+        [
+          36,
+          1933.62
         ]
       ],
       "swing_lows": [
         [
-          15,
-          1787.35
+          5,
+          1926.76
         ],
         [
-          31,
-          1757.57
+          24,
+          1910.68
+        ],
+        [
+          44,
+          1913.26
         ]
       ],
-      "bias": "SHORT",
-      "n_swings_h": 2,
-      "n_swings_l": 2
+      "bias": "NEUTRAL",
+      "n_swings_h": 3,
+      "n_swings_l": 3
     }
   },
   "exchange_activity": {
     "snapshots": {
       "binance": {
-        "funding_rate": 4.313e-05,
-        "oi": 2258414.0,
-        "ls_ratio": 1.6652,
-        "mark_price": 1769.27
+        "funding_rate": 2.647e-05,
+        "oi": 2361428.0,
+        "ls_ratio": 1.6983,
+        "mark_price": 1929.63834884
       },
       "okx": {
         "funding_rate": null,
-        "oi": 7264825.0,
-        "ls_ratio": 1.6306,
+        "oi": 7756651.0,
+        "ls_ratio": 1.1653,
         "mark_price": null
       },
       "bybit": {
-        "funding_rate": -2.321e-05,
-        "oi": 691841.0,
-        "ls_ratio": 2.269,
-        "mark_price": 1769.15
+        "funding_rate": 3.837e-05,
+        "oi": 830588.0,
+        "ls_ratio": 1.9533,
+        "mark_price": 1929.91
       },
       "htx": {
         "funding_rate": null,
-        "oi": 676436.0,
+        "oi": 677965.0,
         "ls_ratio": null,
         "mark_price": null
       },
       "phemex": {
-        "funding_rate": 4.872e-05,
-        "oi": 73778.0,
+        "funding_rate": 3.373e-05,
+        "oi": 82097.0,
         "ls_ratio": null,
-        "mark_price": 1769.28
+        "mark_price": 1929.96
       },
       "kraken": {
-        "funding_rate": -2.134e-05,
+        "funding_rate": 5.89e-06,
         "oi": null,
         "ls_ratio": null,
-        "mark_price": 1768.30303078932
+        "mark_price": 1929.38306358687
       },
       "coinbaseinternational": {
         "funding_rate": 1e-06,
         "oi": null,
         "ls_ratio": null,
-        "mark_price": 1769.06
+        "mark_price": 1915.65
       }
     },
     "signals": {
-      "funding_spread": 7.193e-05,
+      "funding_spread": 3.737e-05,
       "funding_spread_exchanges": [
-        "phemex",
-        "bybit"
+        "bybit",
+        "coinbaseinternational"
       ],
       "funding_by_exchange": {
+        "kraken": 5.89e-06,
         "coinbaseinternational": 1e-06,
-        "bybit": -2.321e-05,
-        "kraken": -2.134e-05,
-        "binance": 4.313e-05,
-        "phemex": 4.872e-05
+        "bybit": 3.837e-05,
+        "binance": 2.647e-05,
+        "phemex": 3.373e-05
       },
-      "funding_mean": 9.66e-06,
+      "funding_mean": 2.109e-05,
       "funding_outliers": {},
       "oi_shares": {
+        "bybit": 0.0709,
+        "binance": 0.2017,
         "okx": 0.6625,
-        "bybit": 0.0631,
-        "binance": 0.206,
-        "htx": 0.0617,
-        "phemex": 0.0067
+        "phemex": 0.007,
+        "htx": 0.0579
       },
-      "oi_total": 10965294.0,
+      "oi_total": 11708728.0,
       "oi_dominant_exchange": "okx",
-      "oi_concentration": 0.4892,
-      "ls_spread": 0.6385,
+      "oi_concentration": 0.488,
+      "ls_spread": 0.7881,
       "ls_by_exchange": {
-        "okx": 1.6306,
-        "bybit": 2.269,
-        "binance": 1.6652
+        "bybit": 1.9533,
+        "binance": 1.6983,
+        "okx": 1.1653
       },
       "ls_most_bullish": "bybit",
       "ls_most_bearish": "okx",
-      "funding_spread_trend": "STABLE",
-      "funding_spread_recent": 0.00010428,
-      "funding_spread_older": 0.00012208,
+      "funding_spread_trend": "CONVERGING",
+      "funding_spread_recent": 4.943e-05,
+      "funding_spread_older": 7.973e-05,
       "funding_trend_binance": "STABLE",
-      "funding_trend_bybit": "STABLE",
-      "funding_trend_htx": "RISING",
-      "funding_trend_kraken": "FALLING",
-      "funding_trend_okx": "STABLE",
-      "funding_trend_phemex": "STABLE",
-      "oi_roc_binance": -0.548,
-      "oi_roc_bybit": -1.681,
-      "oi_migration_spread": 1.133,
+      "funding_trend_bybit": "FALLING",
+      "funding_trend_htx": "FALLING",
+      "funding_trend_kraken": "RISING",
+      "funding_trend_okx": "FALLING",
+      "funding_trend_phemex": "RISING",
+      "oi_roc_binance": 0.014,
+      "oi_roc_bybit": 1.535,
+      "oi_migration_spread": 1.521,
       "oi_migration": "BALANCED"
     },
     "spot": {
@@ -894,152 +946,155 @@
         "buy_pct": null,
         "max_ask": null
       },
-      "okx": {
-        "price": 1770.4,
-        "vol_24h": 1194912.0,
-        "ob_ratio": 1.4482,
-        "trade_ratio": 1.2352,
-        "buy_pct": 55.3,
-        "max_ask": {
-          "price": 1770.57,
-          "size": 25.36
-        }
-      },
       "bybit": {
-        "price": 1770.38,
-        "vol_24h": 90040.0,
-        "ob_ratio": 1.0545,
-        "trade_ratio": 80.3071,
-        "buy_pct": 98.8,
+        "price": 1930.01,
+        "vol_24h": 69901.0,
+        "ob_ratio": 0.9104,
+        "trade_ratio": 1.2204,
+        "buy_pct": 55.0,
         "max_ask": {
-          "price": 1770.92,
-          "size": 3.51
+          "price": 1930.98,
+          "size": 4.18
         }
       },
       "binance": {
-        "price": 1770.56,
-        "vol_24h": 324778.0,
-        "ob_ratio": 4.4347,
-        "trade_ratio": 0.5778,
-        "buy_pct": 36.6,
+        "price": 1930.34,
+        "vol_24h": 243117.0,
+        "ob_ratio": 0.1793,
+        "trade_ratio": 0.5026,
+        "buy_pct": 33.5,
         "max_ask": {
-          "price": 1770.56,
-          "size": 14.31
+          "price": 1930.35,
+          "size": 24.41
+        }
+      },
+      "okx": {
+        "price": 1930.36,
+        "vol_24h": 75438.0,
+        "ob_ratio": 1.2662,
+        "trade_ratio": 3.4947,
+        "buy_pct": 77.8,
+        "max_ask": {
+          "price": 1930.26,
+          "size": 12.65
         }
       },
       "htx": {
-        "price": 1770.28,
-        "vol_24h": 40307.0,
-        "ob_ratio": 0.6241,
-        "trade_ratio": 2.0706,
-        "buy_pct": 67.4,
+        "price": 1929.91,
+        "vol_24h": 16994.0,
+        "ob_ratio": 0.9121,
+        "trade_ratio": 26.7201,
+        "buy_pct": 96.4,
         "max_ask": {
-          "price": 1771.16,
-          "size": 78.44
+          "price": 1930.99,
+          "size": 62.51
         }
       },
       "coinbase": {
-        "price": 1768.79,
+        "price": 1929.2,
         "vol_24h": null,
-        "ob_ratio": 1.9753,
-        "trade_ratio": 48.4331,
-        "buy_pct": 98.0,
+        "ob_ratio": 1.0592,
+        "trade_ratio": 3.1061,
+        "buy_pct": 75.6,
         "max_ask": {
-          "price": 1769.16,
-          "size": 5.79
+          "price": 1929.28,
+          "size": 7.25
         }
       }
     },
     "spot_signals": {
       "basis": {
-        "bybit": -0.0695,
-        "binance": -0.0729
+        "bybit": -0.0052,
+        "binance": -0.0363
       },
-      "basis_avg": -0.0712,
+      "basis_avg": -0.0207,
       "basis_state": "BACKWARDATION",
       "spot_vol_shares": {
-        "okx": 0.7242,
-        "bybit": 0.0546,
-        "binance": 0.1968,
-        "htx": 0.0244
+        "bybit": 0.1724,
+        "binance": 0.5996,
+        "okx": 0.1861,
+        "htx": 0.0419
       },
-      "spot_vol_total": 1650037.0,
-      "spot_vol_dominant": "okx",
+      "spot_vol_total": 405450.0,
+      "spot_vol_dominant": "binance",
       "spot_ob_ratios": {
-        "okx": 1.4482,
-        "bybit": 1.0545,
-        "binance": 4.4347,
-        "htx": 0.6241,
-        "coinbase": 1.9753
+        "bybit": 0.9104,
+        "binance": 0.1793,
+        "okx": 1.2662,
+        "htx": 0.9121,
+        "coinbase": 1.0592
       },
-      "spot_ob_avg": 1.9074,
-      "spot_sell_walls": [],
-      "spot_bid_support": [
-        "binance",
-        "coinbase"
+      "spot_ob_avg": 0.8654,
+      "spot_sell_walls": [
+        "binance"
       ],
+      "spot_bid_support": [],
       "spot_wall_htx": {
-        "price": 1771.16,
-        "size": 78.44,
+        "price": 1930.99,
+        "size": 62.51,
         "side": "ASK"
       },
       "spot_trade_ratios": {
-        "okx": 1.2352,
-        "bybit": 80.3071,
-        "binance": 0.5778,
-        "htx": 2.0706,
-        "coinbase": 48.4331
+        "bybit": 1.2204,
+        "binance": 0.5026,
+        "okx": 3.4947,
+        "htx": 26.7201,
+        "coinbase": 3.1061
       },
-      "spot_trade_avg": 26.5248,
+      "spot_trade_avg": 7.0088,
       "spot_flow": "BUYERS",
-      "spot_flow_bybit": "BUYERS",
       "spot_flow_binance": "SELLERS",
+      "spot_flow_okx": "BUYERS",
       "spot_flow_htx": "BUYERS",
       "spot_flow_coinbase": "BUYERS",
-      "spot_vol_okx": 1194912.0,
-      "spot_vol_bybit": 90040.0,
-      "spot_vol_binance": 324778.0,
-      "spot_vol_htx": 40307.0
+      "spot_vol_bybit": 69901.0,
+      "spot_vol_binance": 243117.0,
+      "spot_vol_okx": 75438.0,
+      "spot_vol_htx": 16994.0
     },
-    "score": 0.52,
+    "score": 0.56,
     "status": "PASS",
     "direction_details": {
-      "funding_spread": 7.193e-05,
-      "funding_mean": 9.66e-06,
+      "funding_spread": 3.737e-05,
+      "funding_mean": 2.109e-05,
       "funding_trends": {
         "binance": "STABLE",
-        "okx": "STABLE",
-        "bybit": "STABLE"
+        "okx": "FALLING",
+        "bybit": "FALLING"
       },
       "oi_migration": "BALANCED",
-      "ls_spread": 0.6385,
+      "ls_spread": 0.7881,
       "ls_by_exchange": {
-        "okx": 1.6306,
-        "bybit": 2.269,
-        "binance": 1.6652
+        "bybit": 1.9533,
+        "binance": 1.6983,
+        "okx": 1.1653
       },
       "funding_outliers": {},
-      "exchange_score": 0.52,
+      "exchange_score": 0.56,
       "factors": [
-        "kraken funding falling (bullish)",
-        "L/S divergence 0.64",
+        "okx funding falling (bullish)",
+        "bybit funding falling (bullish)",
+        "htx funding falling (bullish)",
+        "L/S divergence 0.79",
         "most bullish exchange: bybit"
       ]
     },
-    "spot_score": 0.55,
+    "spot_score": 0.5,
     "spot_status": "PASS",
     "spot_details": {
-      "basis_avg": -0.0712,
+      "basis_avg": -0.0207,
       "basis_state": "BACKWARDATION",
-      "spot_ob_avg": 1.9074,
-      "spot_sell_walls": [],
+      "spot_ob_avg": 0.8654,
+      "spot_sell_walls": [
+        "binance"
+      ],
       "spot_flow": "BUYERS",
-      "spot_trade_avg": 26.5248,
-      "spot_score": 0.55,
+      "spot_trade_avg": 7.0088,
+      "spot_score": 0.5,
       "factors": [
-        "futures discount -0.0712% (bearish sentiment)",
-        "spot bids dominate (ratio=1.907)",
-        "spot flow: buyers (26.52)"
+        "futures discount -0.0207% (bearish sentiment)",
+        "sell walls on: binance",
+        "spot flow: buyers (7.01)"
       ]
     }
   },
@@ -1052,37 +1107,37 @@
       {
         "name": "CVD Flip",
         "passed": true,
-        "detail": "CVD flipped: M4=NONE M4b=NONE taker=0.445"
+        "detail": "CVD flipped: M4=NONE M4b=NONE taker=0.665"
       },
       {
         "name": "BTC Confluence",
         "passed": true,
-        "detail": "BTC 7d ROC=+0.0% trend=0.50 (stable/bearish)"
+        "detail": "BTC 7d ROC=+0.0% trend=0.50 (stable/bullish)"
       },
       {
         "name": "Volume Surge",
         "passed": false,
-        "detail": "Volume 0.08x MA20 \u2014 need 1.5x for breakout"
+        "detail": "Volume 1.33x MA20 \u2014 need 1.5x for breakout"
       },
       {
         "name": "OI Expansion",
-        "passed": true,
-        "detail": "OI -0.008%/hr \u2014 weak conviction"
+        "passed": false,
+        "detail": "OI declining -0.152%/hr \u2014 may be short covering"
       },
       {
         "name": "Liquidity Hold",
-        "passed": false,
-        "detail": "Swept $1763: failed to hold for 3 bars"
+        "passed": true,
+        "detail": "no unswept magnets in direction (auto-pass)"
       },
       {
         "name": "Spot Flow",
         "passed": false,
-        "detail": "Spot flow: 18% weighted SHORT-aligned \u2014 sellers on binance"
+        "detail": "Spot flow: 27% weighted LONG-aligned \u2014 sellers on binance"
       },
       {
         "name": "Funding Stay",
         "passed": true,
-        "detail": "Funding +0.0033% (longs paying \u2014 fuels squeeze)"
+        "detail": "Funding +0.0014% (neutral \u2014 fuels squeeze)"
       }
     ],
     "reason": null
@@ -1090,111 +1145,44 @@
   "squeeze_ics_boost_half": true,
   "direction": "LONG",
   "direction_resolver": {
-    "direction": "SHORT",
-    "size_mult": 0.483,
+    "direction": "LONG",
+    "size_mult": 0.426,
     "action": "TRADEABLE",
-    "reason": "NEUTRAL + BULLISH structure \u2192 LONG \u2192 M21 flip to SHORT"
-  },
-  "conflict": {
-    "is_conflict": true,
-    "m1_direction": "BULLISH",
-    "daily_bias": "BEARISH",
-    "historical": {
-      "total_signals": 559,
-      "first_seen": "2025-04-02 15:00:00",
-      "last_seen": "2026-04-14 09:00:00",
-      "windows": {
-        "4h": {
-          "n": 559,
-          "avg_up": 1.09,
-          "avg_down": 1.01,
-          "avg_net": 0.04,
-          "median_net": -0.04,
-          "win_rate": 48.7,
-          "reversal_rate": 51.2,
-          "max_gain": 12.83,
-          "max_loss": 7.61
-        },
-        "12h": {
-          "n": 559,
-          "avg_up": 1.84,
-          "avg_down": 1.81,
-          "avg_net": -0.02,
-          "median_net": -0.15,
-          "win_rate": 46.0,
-          "reversal_rate": 51.9,
-          "max_gain": 13.88,
-          "max_loss": 10.61
-        },
-        "24h": {
-          "n": 559,
-          "avg_up": 2.51,
-          "avg_down": 2.68,
-          "avg_net": -0.2,
-          "median_net": -0.22,
-          "win_rate": 46.0,
-          "reversal_rate": 53.3,
-          "max_gain": 13.93,
-          "max_loss": 14.86
-        },
-        "48h": {
-          "n": 559,
-          "avg_up": 3.66,
-          "avg_down": 3.93,
-          "avg_net": -0.16,
-          "median_net": -0.14,
-          "win_rate": 49.0,
-          "reversal_rate": 52.6,
-          "max_gain": 35.13,
-          "max_loss": 23.3
-        },
-        "72h": {
-          "n": 559,
-          "avg_up": 4.48,
-          "avg_down": 4.97,
-          "avg_net": -0.52,
-          "median_net": -0.56,
-          "win_rate": 46.9,
-          "reversal_rate": 51.7,
-          "max_gain": 39.19,
-          "max_loss": 25.53
-        }
-      }
-    }
+    "reason": "NEUTRAL + BEARISH structure \u2192 LONG"
   },
   "m21": {
     "status": "PASS",
-    "score": 0.75,
-    "phase": "DISTRIBUTION",
+    "score": 0.55,
+    "phase": "MARKUP",
     "zone": "PREMIUM",
-    "kill_zone": "LONDON_OPEN",
+    "kill_zone": "NY_OPEN",
     "spring_upthrust": "NONE",
     "details": {
-      "phase": "DISTRIBUTION",
-      "phase_confidence": 0.6,
+      "phase": "MARKUP",
+      "phase_confidence": 0.7,
       "phase_details": {
-        "reason": "HH+HL but near range top + declining vol",
-        "position": 0.796,
+        "reason": "HH+HL, price above EQ",
+        "position": 0.922,
         "hh": "True",
         "hl": "True",
         "lh": "False",
         "ll": "False",
-        "vol_recent": 39037.0,
-        "vol_prior": 52127.0
+        "vol_recent": 45173.0,
+        "vol_prior": 31320.0
       },
       "premium_discount": {
         "zone": "PREMIUM",
-        "eq": 1691.8,
-        "range_hi": 1833.4,
-        "range_lo": 1550.2,
-        "position": 0.777,
+        "eq": 1878.03,
+        "range_hi": 1953.0,
+        "range_lo": 1803.05,
+        "position": 0.848,
         "long_allowed": false,
         "short_allowed": true
       },
       "kill_zone": {
         "in_kill_zone": true,
-        "session": "LONDON_OPEN",
-        "multiplier": 1.2
+        "session": "NY_OPEN",
+        "multiplier": 1.3
       },
       "spring_upthrust": {
         "type": "NONE",
@@ -1203,36 +1191,35 @@
       },
       "range_info": null,
       "reasons": [
-        "Distribution phase favors SHORT",
-        "Selling in premium zone \u2014 favorable",
-        "In kill zone: LONDON_OPEN"
+        "Markup phase favors LONG",
+        "Buying in premium zone",
+        "In kill zone: NY_OPEN"
       ]
     }
   },
-  "m21_direction_flip": "M21 flipped SHORT \u2192 SHORT",
   "m23": {
     "status": "PASS",
-    "score": 0.478,
+    "score": 0.566,
     "regime": "STAGFLATION_HOT",
-    "release_type": "NFP+CLAIMS",
-    "release_date": "2026-07-03",
+    "release_type": "CLAIMS",
+    "release_date": "2026-07-17",
     "us_direction": "RALLY",
     "us_magnitude": "SMALL",
     "fade_rate": 0.5,
-    "spike_accuracy": 0.8,
-    "type_strength": 1.1,
+    "spike_accuracy": 0.71,
+    "type_strength": 1.0,
     "regime_sensitivity": 1.1,
     "claims_context": {
       "claims": {
-        "current": 222,
-        "prev_month": 212,
-        "trend": "RISING",
-        "trend_pct": 4.7,
-        "trend_3m": 14,
+        "current": 212,
+        "prev_month": 222,
+        "trend": "STABLE",
+        "trend_pct": -4.5,
+        "trend_3m": 0,
         "classification": "NORMAL",
         "sahm_triggered": false,
         "unemployment": 4.2,
-        "latest_month": "2026-06"
+        "latest_month": "2026-07"
       },
       "combo": {
         "combo_key": [
@@ -1264,79 +1251,75 @@
       "claims_today": false,
       "cpi_yoy": 3.8,
       "ppi_yoy": 6.3,
-      "cpi_days_ago": -155,
-      "ppi_days_ago": -156,
-      "release_type": "NFP+CLAIMS"
+      "cpi_days_ago": -140,
+      "ppi_days_ago": -141,
+      "release_type": "CLAIMS"
     },
     "claims_today": true,
-    "nfp_seasonality": {
-      "avg_move": 0.79,
-      "avg_abs": 0.84,
-      "bias": "NEUTRAL"
-    },
+    "nfp_seasonality": null,
     "nfp_asia_fade_rate": null,
     "decay_mult": 0.4,
     "details": {
-      "release_date": "2026-07-03",
-      "release_type": "NFP+CLAIMS",
+      "release_date": "2026-07-17",
+      "release_type": "CLAIMS",
       "is_release_day": false,
       "is_post_release": true,
       "regime": "STAGFLATION_HOT",
       "fade_rate": 0.5,
-      "spike_accuracy": 0.8,
-      "type_strength": 1.1,
+      "spike_accuracy": 0.71,
+      "type_strength": 1.0,
       "regime_sensitivity": 1.1,
       "us_data": {
-        "us_move": 1.221,
-        "us_close": 1766.15,
-        "us_high": 1774.0,
-        "us_low": 1727.87,
-        "us_range": 2.644,
-        "us_max_up": 1.671,
-        "us_max_down": -0.973,
-        "pre_price": 1744.84
+        "us_move": 1.471,
+        "us_close": 1842.93,
+        "us_high": 1856.17,
+        "us_low": 1803.05,
+        "us_range": 2.925,
+        "us_max_up": 2.2,
+        "us_max_down": -0.725,
+        "pre_price": 1816.21
       },
       "spike_data": {
-        "spike_pct": -0.636,
-        "spike_dir": "DOWN",
-        "spike_range": 1.393,
-        "pre_price": 1744.84,
-        "spike_close": 1733.74
+        "spike_pct": 0.405,
+        "spike_dir": "UP",
+        "spike_range": 1.704,
+        "pre_price": 1816.21,
+        "spike_close": 1823.56
       },
       "asia_data": {
-        "asia_move": -0.451,
-        "asia_gap": -0.449,
-        "asia_open": 1758.22,
-        "asia_close": 1758.19,
-        "asia_high": 1764.61,
-        "asia_low": 1744.09,
-        "asia_range": 1.162,
-        "us_close_ref": 1766.15,
-        "gap_dir": "DOWN",
-        "sweep_depth_pct": 1.249,
-        "recovery_pct": 63.9,
+        "asia_move": 0.069,
+        "asia_gap": -0.054,
+        "asia_open": 1841.94,
+        "asia_close": 1844.2,
+        "asia_high": 1849.68,
+        "asia_low": 1839.38,
+        "asia_range": 0.559,
+        "us_close_ref": 1842.93,
+        "gap_dir": "FLAT",
+        "sweep_depth_pct": 0,
+        "recovery_pct": 0,
         "reclaimed_gap": false,
-        "is_sweep_reversal": true
+        "is_sweep_reversal": false
       },
       "uk_data": {
-        "uk_move_vs_asia": 1.871,
-        "uk_move_vs_us": 1.412,
-        "uk_open": 1754.78,
-        "uk_close": 1791.09,
-        "uk_high": 1799.92,
-        "uk_low": 1752.86,
-        "uk_range": 2.677,
-        "uk_gap": -0.194,
-        "uk_direction": "UP",
-        "uk_taker": 0.5482,
-        "uk_vol_ratio_vs_asia": 1.45,
-        "asia_close_ref": 1758.19,
-        "asia_direction": "DOWN",
-        "asia_move": -0.451,
+        "uk_move_vs_asia": -0.003,
+        "uk_move_vs_us": 0.066,
+        "uk_open": 1844.98,
+        "uk_close": 1844.15,
+        "uk_high": 1850.64,
+        "uk_low": 1837.58,
+        "uk_range": 0.708,
+        "uk_gap": 0.042,
+        "uk_direction": "FLAT",
+        "uk_taker": 0.5366,
+        "uk_vol_ratio_vs_asia": 1.11,
+        "asia_close_ref": 1844.2,
+        "asia_direction": "FLAT",
+        "asia_move": 0.069,
         "uk_continued_asia": false,
-        "uk_faded_asia": true,
+        "uk_faded_asia": false,
         "uk_swept_asia_high": true,
-        "uk_swept_asia_low": false,
+        "uk_swept_asia_low": true,
         "is_morning_sweep": false,
         "sweep_recovery_pct": 0.0
       },
@@ -1345,15 +1328,15 @@
       "us_magnitude": "SMALL",
       "claims_context": {
         "claims": {
-          "current": 222,
-          "prev_month": 212,
-          "trend": "RISING",
-          "trend_pct": 4.7,
-          "trend_3m": 14,
+          "current": 212,
+          "prev_month": 222,
+          "trend": "STABLE",
+          "trend_pct": -4.5,
+          "trend_3m": 0,
           "classification": "NORMAL",
           "sahm_triggered": false,
           "unemployment": 4.2,
-          "latest_month": "2026-06"
+          "latest_month": "2026-07"
         },
         "combo": {
           "combo_key": [
@@ -1385,25 +1368,25 @@
         "claims_today": false,
         "cpi_yoy": 3.8,
         "ppi_yoy": 6.3,
-        "cpi_days_ago": -155,
-        "ppi_days_ago": -156,
-        "release_type": "NFP+CLAIMS"
+        "cpi_days_ago": -140,
+        "ppi_days_ago": -141,
+        "release_type": "CLAIMS"
       },
       "claims_today": true,
       "decay_mult": 0.4,
-      "days_since_release": 4,
+      "days_since_release": 5,
       "asia_analysis": {
-        "asia_move": -0.451,
-        "asia_gap": -0.449,
-        "gap_direction": "DOWN",
-        "asia_direction": "DOWN",
+        "asia_move": 0.069,
+        "asia_gap": -0.054,
+        "gap_direction": "FLAT",
+        "asia_direction": "FLAT",
         "gap_held": true,
-        "asia_faded_us": true,
-        "pattern": "SWEEP_REVERSAL",
-        "sweep_depth_pct": 1.249,
-        "recovery_pct": 63.9,
+        "asia_faded_us": false,
+        "pattern": "FLAT",
+        "sweep_depth_pct": 0,
+        "recovery_pct": 0,
         "reclaimed_gap": false,
-        "is_sweep_reversal": true,
+        "is_sweep_reversal": false,
         "is_crash": false,
         "dump_size": "NOT_DUMP",
         "reversal_probability": 0.681,
@@ -1411,36 +1394,30 @@
         "reversal_factors": [
           "year 2026: 100% reversal rate",
           "dump NOT_DUMP: 50% reversal rate",
-          "regime INFLATION_RISING: 73% reversal rate",
-          "NFP Asia fade boost: +0.05 (60-64% fade rate)"
+          "regime INFLATION_RISING: 73% reversal rate"
         ]
       },
       "uk_analysis": {
-        "uk_move_vs_asia": 1.871,
-        "uk_move_vs_us": 1.412,
-        "uk_direction": "UP",
-        "uk_verdict": "FADED",
-        "uk_taker": 0.5482,
-        "uk_vol_ratio": 1.45,
-        "vol_confirm": true,
+        "uk_move_vs_asia": -0.003,
+        "uk_move_vs_us": 0.066,
+        "uk_direction": "FLAT",
+        "uk_verdict": "NEUTRAL",
+        "uk_taker": 0.5366,
+        "uk_vol_ratio": 1.11,
+        "vol_confirm": false,
         "uk_swept_asia": true,
-        "uk_confidence_boost": -0.05
+        "uk_confidence_boost": 0.0
       },
-      "nfp_seasonality": {
-        "avg_move": 0.79,
-        "avg_abs": 0.84,
-        "bias": "NEUTRAL"
-      },
-      "score_reason": "NFP+CLAIMS 2026-07-03: sweep_reversal (DOWN\u2192DOWN), US was RALLY +1.22%, sweep 1.2% reversed 64%, UK faded (UP +1.87%), NFP seasonality: NEUTRAL (avg +0.79%), decay=0.40x (4d)"
+      "score_reason": "CLAIMS 2026-07-17: flat (FLAT\u2192FLAT), US was RALLY +1.47%, UK neutral (FLAT -0.00%), decay=0.40x (5d)"
     }
   },
   "_m23_decay_mult": 0.4,
   "m72": {
     "status": "PASS",
-    "score": 0.62,
+    "score": 0.38,
     "details": {
       "classification": "BTC_DOMINANT",
-      "btc_dominance": 55.78
+      "btc_dominance": 56.64
     }
   },
   "m22": {
@@ -1454,8 +1431,8 @@
     "global_label": "NO_DATA",
     "size_mult": 0.85,
     "factors": [
-      "CPI 4.2% HOT (FRED 2026-05)",
-      "PPI 8.8% HOT (FRED 2026-05)",
+      "CPI 3.5% HOT (FRED 2026-06)",
+      "PPI 6.6% HOT (FRED 2026-06)",
       "Unemployment 4.2% normal (FRED)",
       "Fed HOLDING 3.60% (FRED)"
     ],
@@ -1474,14 +1451,14 @@
       "global_label": "NO_DATA",
       "session": {
         "regime": "STAGFLATION_HOT",
-        "release_type": "NFP+CLAIMS",
+        "release_type": "CLAIMS",
         "us_direction": "RALLY",
         "fade_rate": 0.5,
         "claims_today": true
       },
       "factors": [
-        "CPI 4.2% HOT (FRED 2026-05)",
-        "PPI 8.8% HOT (FRED 2026-05)",
+        "CPI 3.5% HOT (FRED 2026-06)",
+        "PPI 6.6% HOT (FRED 2026-06)",
         "Unemployment 4.2% normal (FRED)",
         "Fed HOLDING 3.60% (FRED)"
       ]
@@ -1489,35 +1466,35 @@
   },
   "_m22_size_mult": 0.85,
   "cascade": {
-    "combined_score": 0.5,
+    "combined_score": 0.5933,
     "combined_signal": "HOLD",
     "active_count": 2,
-    "total_weight": 0.35,
+    "total_weight": 0.45,
     "active_cascades": [
       {
-        "name": "US_LABOR",
-        "score": 0.5,
-        "weight": 0.25,
+        "name": "US_INFLATION",
+        "score": 0.62,
+        "weight": 0.35,
         "signal": "BUY",
-        "expected_move": 1.22,
-        "confidence": "LOW"
+        "expected_move": -0.24,
+        "confidence": "MEDIUM"
       },
       {
         "name": "CHINA_MACRO",
         "score": 0.5,
         "weight": 0.1,
-        "signal": "SELL",
-        "expected_move": -1.16,
+        "signal": "BUY",
+        "expected_move": 2.86,
         "confidence": "LOW"
       }
     ],
     "all_results": {
       "US_INFLATION": {
-        "status": "SKIP",
+        "status": "PASS",
         "score": 0.62
       },
       "US_LABOR": {
-        "status": "PASS",
+        "status": "SKIP",
         "score": 0.5
       },
       "US_ACTIVITY": {
@@ -1546,168 +1523,107 @@
       }
     },
     "details": {
-      "combined_score": 0.5,
+      "combined_score": 0.5933,
       "combined_signal": "HOLD",
       "active_cascades": [
         {
-          "name": "US_LABOR",
-          "score": 0.5,
-          "weight": 0.25,
-          "decay": 0.4,
+          "name": "US_INFLATION",
+          "score": 0.62,
+          "weight": 0.35,
+          "decay": 0.2,
           "signal": "BUY",
-          "expected_move": 1.22,
-          "confidence": "LOW",
+          "expected_move": -0.24,
+          "confidence": "MEDIUM",
           "details": {
-            "cascade": "US_LABOR",
-            "description": "US Labor Market Chain: JOLTS(demand) \u2192 ADP(preview) \u2192 NFP(primary) \u2192 Unemployment(confirm) \u2192 Claims(background)",
+            "cascade": "US_INFLATION",
+            "description": "US Inflation \u2192 Fed Chain: CPI(primary) \u2192 PPI(confirm) \u2192 PCE(fed_pref) \u2192 FOMC(policy) \u2192 Presser(followup) \u2192 Minutes(loopback)",
             "steps": [
               {
-                "release": "NFP",
+                "release": "CPI",
                 "role": "PRIMARY",
-                "date": "2026-07-03",
-                "days_since": 4,
-                "decay": 0.4,
-                "signal": "NEUTRAL",
+                "date": "2026-07-14",
+                "days_since": 8,
+                "decay": 0.2,
+                "signal": "HOT",
                 "surprise": 0.0,
-                "us_move": 1.221,
-                "us_dir": "RALLY",
-                "spike_pct": -0.636,
+                "us_move": -0.244,
+                "us_dir": "FLAT",
+                "spike_pct": -0.769,
                 "spike_dir": "DOWN",
                 "us_data": {
-                  "us_move": 1.221,
-                  "us_close": 1766.15,
-                  "us_high": 1774.0,
-                  "us_low": 1727.87,
-                  "us_range": 2.644,
-                  "us_max_up": 1.671,
-                  "us_max_down": -0.973,
-                  "pre_price": 1744.84
+                  "us_move": -0.244,
+                  "us_close": 1875.42,
+                  "us_high": 1888.8,
+                  "us_low": 1859.46,
+                  "us_range": 1.561,
+                  "us_max_up": 0.468,
+                  "us_max_down": -1.093,
+                  "pre_price": 1880.01
                 },
                 "spike_data": {
-                  "spike_pct": -0.636,
+                  "spike_pct": -0.769,
                   "spike_dir": "DOWN",
-                  "spike_range": 1.393,
-                  "pre_price": 1744.84,
-                  "spike_close": 1733.74
+                  "spike_range": 1.141,
+                  "pre_price": 1880.01,
+                  "spike_close": 1865.55
                 },
                 "asia_data": {
-                  "asia_move": -0.451,
-                  "asia_gap": -0.449,
-                  "asia_open": 1758.22,
-                  "asia_close": 1758.19,
-                  "asia_high": 1764.61,
-                  "asia_low": 1744.09,
-                  "asia_range": 1.162,
-                  "us_close_ref": 1766.15,
-                  "gap_dir": "DOWN",
-                  "sweep_depth_pct": 1.249,
-                  "recovery_pct": 63.9,
-                  "reclaimed_gap": false,
+                  "asia_move": -0.287,
+                  "asia_gap": 0.877,
+                  "asia_open": 1891.87,
+                  "asia_close": 1870.04,
+                  "asia_high": 1893.32,
+                  "asia_low": 1864.38,
+                  "asia_range": 1.543,
+                  "us_close_ref": 1875.42,
+                  "gap_dir": "UP",
+                  "sweep_depth_pct": 0.954,
+                  "recovery_pct": 130.1,
+                  "reclaimed_gap": true,
                   "is_sweep_reversal": true
                 },
                 "uk_data": {
-                  "uk_move_vs_asia": 1.871,
-                  "uk_move_vs_us": 1.412,
-                  "uk_open": 1754.78,
-                  "uk_close": 1791.09,
-                  "uk_high": 1799.92,
-                  "uk_low": 1752.86,
-                  "uk_range": 2.677,
+                  "uk_move_vs_asia": 3.311,
+                  "uk_move_vs_us": 3.014,
+                  "uk_open": 1875.87,
+                  "uk_close": 1931.95,
+                  "uk_high": 1946.52,
+                  "uk_low": 1864.7,
+                  "uk_range": 4.375,
                   "uk_direction": "UP",
-                  "uk_taker": 0.5482,
-                  "uk_vol_ratio_vs_asia": 1.45,
-                  "asia_close_ref": 1758.19,
-                  "asia_direction": "DOWN",
-                  "asia_move": -0.451,
+                  "uk_taker": 0.551,
+                  "uk_vol_ratio_vs_asia": 2.31,
+                  "asia_close_ref": 1870.04,
+                  "asia_direction": "FLAT",
+                  "asia_move": -0.287,
                   "uk_continued_asia": false,
-                  "uk_faded_asia": true
+                  "uk_faded_asia": false
                 }
               },
               {
-                "release": "UNEMPLOYMENT",
+                "release": "PPI",
                 "role": "CONFIRMATION",
-                "date": "2026-07-03",
-                "days_since": 4,
-                "decay": 0.4,
-                "signal": "NEUTRAL",
+                "date": "2026-07-10",
+                "days_since": 12,
+                "decay": 0.2,
+                "signal": "HOT",
                 "surprise": 0.0,
-                "us_move": 1.221,
-                "us_dir": "RALLY",
-                "spike_pct": -0.636,
-                "spike_dir": "DOWN",
-                "us_data": {
-                  "us_move": 1.221,
-                  "us_close": 1766.15,
-                  "us_high": 1774.0,
-                  "us_low": 1727.87,
-                  "us_range": 2.644,
-                  "us_max_up": 1.671,
-                  "us_max_down": -0.973,
-                  "pre_price": 1744.84
-                },
-                "spike_data": {
-                  "spike_pct": -0.636,
-                  "spike_dir": "DOWN",
-                  "spike_range": 1.393,
-                  "pre_price": 1744.84,
-                  "spike_close": 1733.74
-                },
-                "asia_data": {
-                  "asia_move": -0.451,
-                  "asia_gap": -0.449,
-                  "asia_open": 1758.22,
-                  "asia_close": 1758.19,
-                  "asia_high": 1764.61,
-                  "asia_low": 1744.09,
-                  "asia_range": 1.162,
-                  "us_close_ref": 1766.15,
-                  "gap_dir": "DOWN",
-                  "sweep_depth_pct": 1.249,
-                  "recovery_pct": 63.9,
-                  "reclaimed_gap": false,
-                  "is_sweep_reversal": true
-                },
-                "uk_data": {
-                  "uk_move_vs_asia": 1.871,
-                  "uk_move_vs_us": 1.412,
-                  "uk_open": 1754.78,
-                  "uk_close": 1791.09,
-                  "uk_high": 1799.92,
-                  "uk_low": 1752.86,
-                  "uk_range": 2.677,
-                  "uk_direction": "UP",
-                  "uk_taker": 0.5482,
-                  "uk_vol_ratio_vs_asia": 1.45,
-                  "asia_close_ref": 1758.19,
-                  "asia_direction": "DOWN",
-                  "asia_move": -0.451,
-                  "uk_continued_asia": false,
-                  "uk_faded_asia": true
-                }
+                "us_move": 0.0,
+                "us_dir": "FLAT",
+                "spike_pct": 0.0,
+                "spike_dir": "FLAT"
               }
             ],
             "result": {
-              "primary_signal": "NEUTRAL",
+              "primary_signal": "HOT",
               "confirmation_signal": "NEUTRAL",
-              "combined_signal": "BUY",
-              "expected_move": 1.22,
+              "combined_signal": "HOLD",
+              "expected_move": -0.24,
               "confidence": "LOW",
               "regime": "STAGFLATION_LITE",
               "regime_sensitivity": 0.8
             },
-            "claims_context": {
-              "current": 222,
-              "prev_month": 212,
-              "trend": "RISING",
-              "trend_pct": 4.7,
-              "trend_3m": 14,
-              "classification": "NORMAL",
-              "sahm_triggered": false,
-              "unemployment": 4.2,
-              "latest_month": "2026-06"
-            },
-            "claims_classification": "NORMAL",
-            "score_reason": "US_LABOR cascade: BUY, NFP=2026-07-03, decay=0.40"
+            "score_reason": "US_INFLATION cascade: HOLD, CPI=HOT, PPI=HOT, decay=0.20"
           }
         },
         {
@@ -1715,296 +1631,73 @@
           "score": 0.5,
           "weight": 0.1,
           "decay": 0.4,
-          "signal": "SELL",
-          "expected_move": -1.16,
+          "signal": "BUY",
+          "expected_move": 2.86,
           "confidence": "LOW",
           "details": {
             "cascade": "CHINA_MACRO",
             "description": "China Macro Chain: GDP(structural) \u2192 PMI(primary) \u2192 Caixin(confirm) \u2192 Activity(real economy) \u2192 CPI/PPI(inflation) \u2192 PBOC(policy)",
             "steps": [
               {
-                "release": "NBS_PMI",
-                "role": "PRIMARY",
-                "date": "2026-06-30",
+                "release": "CHINA_ACTIVITY",
+                "role": "CONFIRMATION",
+                "date": "2026-07-15",
                 "days_since": 7,
                 "decay": 0.4,
                 "signal": "NEUTRAL",
                 "surprise": 0.0,
-                "us_move": -1.155,
-                "us_dir": "DUMP",
-                "spike_pct": -0.031,
+                "us_move": 2.863,
+                "us_dir": "RALLY",
+                "spike_pct": -0.299,
                 "spike_dir": "FLAT",
                 "us_data": {
-                  "us_move": -1.155,
-                  "us_close": 1575.99,
-                  "us_high": 1599.83,
-                  "us_low": 1550.2,
-                  "us_range": 3.113,
-                  "us_max_up": 0.34,
-                  "us_max_down": -2.773,
-                  "pre_price": 1594.41
+                  "us_move": 2.863,
+                  "us_close": 1923.75,
+                  "us_high": 1946.52,
+                  "us_low": 1864.38,
+                  "us_range": 4.392,
+                  "us_max_up": 4.081,
+                  "us_max_down": -0.311,
+                  "pre_price": 1870.2
                 },
                 "spike_data": {
-                  "spike_pct": -0.031,
+                  "spike_pct": -0.299,
                   "spike_dir": "FLAT",
-                  "spike_range": 0.679,
-                  "pre_price": 1594.41,
-                  "spike_close": 1593.92
+                  "spike_range": 0.463,
+                  "pre_price": 1870.2,
+                  "spike_close": 1864.6
                 },
                 "asia_data": {
-                  "asia_move": 0.15,
-                  "asia_gap": -0.253,
-                  "asia_open": 1572.0,
-                  "asia_close": 1578.36,
-                  "asia_high": 1604.02,
-                  "asia_low": 1552.92,
-                  "asia_range": 3.242,
-                  "us_close_ref": 1575.99,
+                  "asia_move": -0.682,
+                  "asia_gap": -0.306,
+                  "asia_open": 1917.86,
+                  "asia_close": 1910.63,
+                  "asia_high": 1929.48,
+                  "asia_low": 1905.0,
+                  "asia_range": 1.273,
+                  "us_close_ref": 1923.75,
                   "gap_dir": "DOWN",
-                  "sweep_depth_pct": 1.464,
-                  "recovery_pct": 110.3,
+                  "sweep_depth_pct": 0.975,
+                  "recovery_pct": 30.0,
                   "reclaimed_gap": true,
-                  "is_sweep_reversal": true
+                  "is_sweep_reversal": false
                 },
                 "uk_data": {
-                  "uk_move_vs_asia": 2.644,
-                  "uk_move_vs_us": 2.798,
-                  "uk_open": 1575.99,
-                  "uk_close": 1620.09,
-                  "uk_high": 1631.0,
-                  "uk_low": 1565.26,
-                  "uk_range": 4.165,
-                  "uk_direction": "UP",
-                  "uk_taker": 0.4959,
-                  "uk_vol_ratio_vs_asia": 1.26,
-                  "asia_close_ref": 1578.36,
-                  "asia_direction": "FLAT",
-                  "asia_move": 0.15,
-                  "uk_continued_asia": false,
-                  "uk_faded_asia": false
-                }
-              },
-              {
-                "release": "CAIXIN_PMI",
-                "role": "CONFIRMATION",
-                "date": "2026-07-01",
-                "days_since": 6,
-                "decay": 0.4,
-                "signal": "NEUTRAL",
-                "surprise": 0.0,
-                "us_move": 3.451,
-                "us_dir": "RALLY",
-                "spike_pct": 0.971,
-                "spike_dir": "UP",
-                "us_data": {
-                  "us_move": 3.451,
-                  "us_close": 1617.68,
-                  "us_high": 1631.0,
-                  "us_low": 1559.6,
-                  "us_range": 4.566,
-                  "us_max_up": 4.303,
-                  "us_max_down": -0.263,
-                  "pre_price": 1563.72
-                },
-                "spike_data": {
-                  "spike_pct": 0.971,
-                  "spike_dir": "UP",
-                  "spike_range": 1.727,
-                  "pre_price": 1563.72,
-                  "spike_close": 1578.91
-                },
-                "asia_data": {
-                  "asia_move": -0.106,
-                  "asia_gap": -0.5,
-                  "asia_open": 1609.59,
-                  "asia_close": 1615.97,
-                  "asia_high": 1642.32,
-                  "asia_low": 1597.22,
-                  "asia_range": 2.788,
-                  "us_close_ref": 1617.68,
-                  "gap_dir": "DOWN",
-                  "sweep_depth_pct": 1.265,
-                  "recovery_pct": 91.6,
-                  "reclaimed_gap": true,
-                  "is_sweep_reversal": true
-                },
-                "uk_data": {
-                  "uk_move_vs_asia": 5.017,
-                  "uk_move_vs_us": 4.906,
-                  "uk_open": 1619.14,
-                  "uk_close": 1697.05,
-                  "uk_high": 1725.0,
-                  "uk_low": 1614.32,
-                  "uk_range": 6.849,
-                  "uk_direction": "UP",
-                  "uk_taker": 0.5549,
-                  "uk_vol_ratio_vs_asia": 2.54,
-                  "asia_close_ref": 1615.97,
-                  "asia_direction": "FLAT",
-                  "asia_move": -0.106,
-                  "uk_continued_asia": false,
-                  "uk_faded_asia": false
-                }
-              }
-            ],
-            "result": {
-              "primary_signal": "NEUTRAL",
-              "confirmation_signal": "NEUTRAL",
-              "combined_signal": "SELL",
-              "expected_move": -1.16,
-              "confidence": "LOW",
-              "regime": "STAGFLATION_LITE",
-              "regime_sensitivity": 0.8
-            },
-            "score_reason": "CHINA_MACRO cascade: SELL, decay=0.40"
-          }
-        }
-      ],
-      "all_results": {
-        "US_INFLATION": {
-          "status": "SKIP",
-          "score": 0.62,
-          "decay": 1.0,
-          "weight": 0.35,
-          "details": {
-            "cascade": "US_INFLATION",
-            "reason": "No active releases"
-          },
-          "fred_floor": true,
-          "signal": "BUY",
-          "confidence": "MEDIUM"
-        },
-        "US_LABOR": {
-          "status": "PASS",
-          "score": 0.5,
-          "decay": 0.4,
-          "weight": 0.25,
-          "details": {
-            "cascade": "US_LABOR",
-            "description": "US Labor Market Chain: JOLTS(demand) \u2192 ADP(preview) \u2192 NFP(primary) \u2192 Unemployment(confirm) \u2192 Claims(background)",
-            "steps": [
-              {
-                "release": "NFP",
-                "role": "PRIMARY",
-                "date": "2026-07-03",
-                "days_since": 4,
-                "decay": 0.4,
-                "signal": "NEUTRAL",
-                "surprise": 0.0,
-                "us_move": 1.221,
-                "us_dir": "RALLY",
-                "spike_pct": -0.636,
-                "spike_dir": "DOWN",
-                "us_data": {
-                  "us_move": 1.221,
-                  "us_close": 1766.15,
-                  "us_high": 1774.0,
-                  "us_low": 1727.87,
-                  "us_range": 2.644,
-                  "us_max_up": 1.671,
-                  "us_max_down": -0.973,
-                  "pre_price": 1744.84
-                },
-                "spike_data": {
-                  "spike_pct": -0.636,
-                  "spike_dir": "DOWN",
-                  "spike_range": 1.393,
-                  "pre_price": 1744.84,
-                  "spike_close": 1733.74
-                },
-                "asia_data": {
-                  "asia_move": -0.451,
-                  "asia_gap": -0.449,
-                  "asia_open": 1758.22,
-                  "asia_close": 1758.19,
-                  "asia_high": 1764.61,
-                  "asia_low": 1744.09,
-                  "asia_range": 1.162,
-                  "us_close_ref": 1766.15,
-                  "gap_dir": "DOWN",
-                  "sweep_depth_pct": 1.249,
-                  "recovery_pct": 63.9,
-                  "reclaimed_gap": false,
-                  "is_sweep_reversal": true
-                },
-                "uk_data": {
-                  "uk_move_vs_asia": 1.871,
-                  "uk_move_vs_us": 1.412,
-                  "uk_open": 1754.78,
-                  "uk_close": 1791.09,
-                  "uk_high": 1799.92,
-                  "uk_low": 1752.86,
-                  "uk_range": 2.677,
-                  "uk_direction": "UP",
-                  "uk_taker": 0.5482,
-                  "uk_vol_ratio_vs_asia": 1.45,
-                  "asia_close_ref": 1758.19,
+                  "uk_move_vs_asia": -1.505,
+                  "uk_move_vs_us": -2.176,
+                  "uk_open": 1922.54,
+                  "uk_close": 1881.88,
+                  "uk_high": 1922.54,
+                  "uk_low": 1867.68,
+                  "uk_range": 2.871,
+                  "uk_direction": "DOWN",
+                  "uk_taker": 0.4516,
+                  "uk_vol_ratio_vs_asia": 2.53,
+                  "asia_close_ref": 1910.63,
                   "asia_direction": "DOWN",
-                  "asia_move": -0.451,
-                  "uk_continued_asia": false,
-                  "uk_faded_asia": true
-                }
-              },
-              {
-                "release": "UNEMPLOYMENT",
-                "role": "CONFIRMATION",
-                "date": "2026-07-03",
-                "days_since": 4,
-                "decay": 0.4,
-                "signal": "NEUTRAL",
-                "surprise": 0.0,
-                "us_move": 1.221,
-                "us_dir": "RALLY",
-                "spike_pct": -0.636,
-                "spike_dir": "DOWN",
-                "us_data": {
-                  "us_move": 1.221,
-                  "us_close": 1766.15,
-                  "us_high": 1774.0,
-                  "us_low": 1727.87,
-                  "us_range": 2.644,
-                  "us_max_up": 1.671,
-                  "us_max_down": -0.973,
-                  "pre_price": 1744.84
-                },
-                "spike_data": {
-                  "spike_pct": -0.636,
-                  "spike_dir": "DOWN",
-                  "spike_range": 1.393,
-                  "pre_price": 1744.84,
-                  "spike_close": 1733.74
-                },
-                "asia_data": {
-                  "asia_move": -0.451,
-                  "asia_gap": -0.449,
-                  "asia_open": 1758.22,
-                  "asia_close": 1758.19,
-                  "asia_high": 1764.61,
-                  "asia_low": 1744.09,
-                  "asia_range": 1.162,
-                  "us_close_ref": 1766.15,
-                  "gap_dir": "DOWN",
-                  "sweep_depth_pct": 1.249,
-                  "recovery_pct": 63.9,
-                  "reclaimed_gap": false,
-                  "is_sweep_reversal": true
-                },
-                "uk_data": {
-                  "uk_move_vs_asia": 1.871,
-                  "uk_move_vs_us": 1.412,
-                  "uk_open": 1754.78,
-                  "uk_close": 1791.09,
-                  "uk_high": 1799.92,
-                  "uk_low": 1752.86,
-                  "uk_range": 2.677,
-                  "uk_direction": "UP",
-                  "uk_taker": 0.5482,
-                  "uk_vol_ratio_vs_asia": 1.45,
-                  "asia_close_ref": 1758.19,
-                  "asia_direction": "DOWN",
-                  "asia_move": -0.451,
-                  "uk_continued_asia": false,
-                  "uk_faded_asia": true
+                  "asia_move": -0.682,
+                  "uk_continued_asia": true,
+                  "uk_faded_asia": false
                 }
               }
             ],
@@ -2012,24 +1705,124 @@
               "primary_signal": "NEUTRAL",
               "confirmation_signal": "NEUTRAL",
               "combined_signal": "BUY",
-              "expected_move": 1.22,
+              "expected_move": 2.86,
               "confidence": "LOW",
               "regime": "STAGFLATION_LITE",
               "regime_sensitivity": 0.8
             },
-            "claims_context": {
-              "current": 222,
-              "prev_month": 212,
-              "trend": "RISING",
-              "trend_pct": 4.7,
-              "trend_3m": 14,
-              "classification": "NORMAL",
-              "sahm_triggered": false,
-              "unemployment": 4.2,
-              "latest_month": "2026-06"
+            "score_reason": "CHINA_MACRO cascade: BUY, decay=0.40"
+          }
+        }
+      ],
+      "all_results": {
+        "US_INFLATION": {
+          "status": "PASS",
+          "score": 0.62,
+          "decay": 0.2,
+          "weight": 0.35,
+          "details": {
+            "cascade": "US_INFLATION",
+            "description": "US Inflation \u2192 Fed Chain: CPI(primary) \u2192 PPI(confirm) \u2192 PCE(fed_pref) \u2192 FOMC(policy) \u2192 Presser(followup) \u2192 Minutes(loopback)",
+            "steps": [
+              {
+                "release": "CPI",
+                "role": "PRIMARY",
+                "date": "2026-07-14",
+                "days_since": 8,
+                "decay": 0.2,
+                "signal": "HOT",
+                "surprise": 0.0,
+                "us_move": -0.244,
+                "us_dir": "FLAT",
+                "spike_pct": -0.769,
+                "spike_dir": "DOWN",
+                "us_data": {
+                  "us_move": -0.244,
+                  "us_close": 1875.42,
+                  "us_high": 1888.8,
+                  "us_low": 1859.46,
+                  "us_range": 1.561,
+                  "us_max_up": 0.468,
+                  "us_max_down": -1.093,
+                  "pre_price": 1880.01
+                },
+                "spike_data": {
+                  "spike_pct": -0.769,
+                  "spike_dir": "DOWN",
+                  "spike_range": 1.141,
+                  "pre_price": 1880.01,
+                  "spike_close": 1865.55
+                },
+                "asia_data": {
+                  "asia_move": -0.287,
+                  "asia_gap": 0.877,
+                  "asia_open": 1891.87,
+                  "asia_close": 1870.04,
+                  "asia_high": 1893.32,
+                  "asia_low": 1864.38,
+                  "asia_range": 1.543,
+                  "us_close_ref": 1875.42,
+                  "gap_dir": "UP",
+                  "sweep_depth_pct": 0.954,
+                  "recovery_pct": 130.1,
+                  "reclaimed_gap": true,
+                  "is_sweep_reversal": true
+                },
+                "uk_data": {
+                  "uk_move_vs_asia": 3.311,
+                  "uk_move_vs_us": 3.014,
+                  "uk_open": 1875.87,
+                  "uk_close": 1931.95,
+                  "uk_high": 1946.52,
+                  "uk_low": 1864.7,
+                  "uk_range": 4.375,
+                  "uk_direction": "UP",
+                  "uk_taker": 0.551,
+                  "uk_vol_ratio_vs_asia": 2.31,
+                  "asia_close_ref": 1870.04,
+                  "asia_direction": "FLAT",
+                  "asia_move": -0.287,
+                  "uk_continued_asia": false,
+                  "uk_faded_asia": false
+                }
+              },
+              {
+                "release": "PPI",
+                "role": "CONFIRMATION",
+                "date": "2026-07-10",
+                "days_since": 12,
+                "decay": 0.2,
+                "signal": "HOT",
+                "surprise": 0.0,
+                "us_move": 0.0,
+                "us_dir": "FLAT",
+                "spike_pct": 0.0,
+                "spike_dir": "FLAT"
+              }
+            ],
+            "result": {
+              "primary_signal": "HOT",
+              "confirmation_signal": "NEUTRAL",
+              "combined_signal": "HOLD",
+              "expected_move": -0.24,
+              "confidence": "LOW",
+              "regime": "STAGFLATION_LITE",
+              "regime_sensitivity": 0.8
             },
-            "claims_classification": "NORMAL",
-            "score_reason": "US_LABOR cascade: BUY, NFP=2026-07-03, decay=0.40"
+            "score_reason": "US_INFLATION cascade: HOLD, CPI=HOT, PPI=HOT, decay=0.20"
+          },
+          "fred_floor": true,
+          "signal": "BUY",
+          "confidence": "MEDIUM"
+        },
+        "US_LABOR": {
+          "status": "SKIP",
+          "score": 0.5,
+          "decay": 1.0,
+          "weight": 0.25,
+          "details": {
+            "cascade": "US_LABOR",
+            "reason": "No active releases"
           }
         },
         "US_ACTIVITY": {
@@ -2052,126 +1845,64 @@
             "description": "China Macro Chain: GDP(structural) \u2192 PMI(primary) \u2192 Caixin(confirm) \u2192 Activity(real economy) \u2192 CPI/PPI(inflation) \u2192 PBOC(policy)",
             "steps": [
               {
-                "release": "NBS_PMI",
-                "role": "PRIMARY",
-                "date": "2026-06-30",
+                "release": "CHINA_ACTIVITY",
+                "role": "CONFIRMATION",
+                "date": "2026-07-15",
                 "days_since": 7,
                 "decay": 0.4,
                 "signal": "NEUTRAL",
                 "surprise": 0.0,
-                "us_move": -1.155,
-                "us_dir": "DUMP",
-                "spike_pct": -0.031,
+                "us_move": 2.863,
+                "us_dir": "RALLY",
+                "spike_pct": -0.299,
                 "spike_dir": "FLAT",
                 "us_data": {
-                  "us_move": -1.155,
-                  "us_close": 1575.99,
-                  "us_high": 1599.83,
-                  "us_low": 1550.2,
-                  "us_range": 3.113,
-                  "us_max_up": 0.34,
-                  "us_max_down": -2.773,
-                  "pre_price": 1594.41
+                  "us_move": 2.863,
+                  "us_close": 1923.75,
+                  "us_high": 1946.52,
+                  "us_low": 1864.38,
+                  "us_range": 4.392,
+                  "us_max_up": 4.081,
+                  "us_max_down": -0.311,
+                  "pre_price": 1870.2
                 },
                 "spike_data": {
-                  "spike_pct": -0.031,
+                  "spike_pct": -0.299,
                   "spike_dir": "FLAT",
-                  "spike_range": 0.679,
-                  "pre_price": 1594.41,
-                  "spike_close": 1593.92
+                  "spike_range": 0.463,
+                  "pre_price": 1870.2,
+                  "spike_close": 1864.6
                 },
                 "asia_data": {
-                  "asia_move": 0.15,
-                  "asia_gap": -0.253,
-                  "asia_open": 1572.0,
-                  "asia_close": 1578.36,
-                  "asia_high": 1604.02,
-                  "asia_low": 1552.92,
-                  "asia_range": 3.242,
-                  "us_close_ref": 1575.99,
+                  "asia_move": -0.682,
+                  "asia_gap": -0.306,
+                  "asia_open": 1917.86,
+                  "asia_close": 1910.63,
+                  "asia_high": 1929.48,
+                  "asia_low": 1905.0,
+                  "asia_range": 1.273,
+                  "us_close_ref": 1923.75,
                   "gap_dir": "DOWN",
-                  "sweep_depth_pct": 1.464,
-                  "recovery_pct": 110.3,
+                  "sweep_depth_pct": 0.975,
+                  "recovery_pct": 30.0,
                   "reclaimed_gap": true,
-                  "is_sweep_reversal": true
+                  "is_sweep_reversal": false
                 },
                 "uk_data": {
-                  "uk_move_vs_asia": 2.644,
-                  "uk_move_vs_us": 2.798,
-                  "uk_open": 1575.99,
-                  "uk_close": 1620.09,
-                  "uk_high": 1631.0,
-                  "uk_low": 1565.26,
-                  "uk_range": 4.165,
-                  "uk_direction": "UP",
-                  "uk_taker": 0.4959,
-                  "uk_vol_ratio_vs_asia": 1.26,
-                  "asia_close_ref": 1578.36,
-                  "asia_direction": "FLAT",
-                  "asia_move": 0.15,
-                  "uk_continued_asia": false,
-                  "uk_faded_asia": false
-                }
-              },
-              {
-                "release": "CAIXIN_PMI",
-                "role": "CONFIRMATION",
-                "date": "2026-07-01",
-                "days_since": 6,
-                "decay": 0.4,
-                "signal": "NEUTRAL",
-                "surprise": 0.0,
-                "us_move": 3.451,
-                "us_dir": "RALLY",
-                "spike_pct": 0.971,
-                "spike_dir": "UP",
-                "us_data": {
-                  "us_move": 3.451,
-                  "us_close": 1617.68,
-                  "us_high": 1631.0,
-                  "us_low": 1559.6,
-                  "us_range": 4.566,
-                  "us_max_up": 4.303,
-                  "us_max_down": -0.263,
-                  "pre_price": 1563.72
-                },
-                "spike_data": {
-                  "spike_pct": 0.971,
-                  "spike_dir": "UP",
-                  "spike_range": 1.727,
-                  "pre_price": 1563.72,
-                  "spike_close": 1578.91
-                },
-                "asia_data": {
-                  "asia_move": -0.106,
-                  "asia_gap": -0.5,
-                  "asia_open": 1609.59,
-                  "asia_close": 1615.97,
-                  "asia_high": 1642.32,
-                  "asia_low": 1597.22,
-                  "asia_range": 2.788,
-                  "us_close_ref": 1617.68,
-                  "gap_dir": "DOWN",
-                  "sweep_depth_pct": 1.265,
-                  "recovery_pct": 91.6,
-                  "reclaimed_gap": true,
-                  "is_sweep_reversal": true
-                },
-                "uk_data": {
-                  "uk_move_vs_asia": 5.017,
-                  "uk_move_vs_us": 4.906,
-                  "uk_open": 1619.14,
-                  "uk_close": 1697.05,
-                  "uk_high": 1725.0,
-                  "uk_low": 1614.32,
-                  "uk_range": 6.849,
-                  "uk_direction": "UP",
-                  "uk_taker": 0.5549,
-                  "uk_vol_ratio_vs_asia": 2.54,
-                  "asia_close_ref": 1615.97,
-                  "asia_direction": "FLAT",
-                  "asia_move": -0.106,
-                  "uk_continued_asia": false,
+                  "uk_move_vs_asia": -1.505,
+                  "uk_move_vs_us": -2.176,
+                  "uk_open": 1922.54,
+                  "uk_close": 1881.88,
+                  "uk_high": 1922.54,
+                  "uk_low": 1867.68,
+                  "uk_range": 2.871,
+                  "uk_direction": "DOWN",
+                  "uk_taker": 0.4516,
+                  "uk_vol_ratio_vs_asia": 2.53,
+                  "asia_close_ref": 1910.63,
+                  "asia_direction": "DOWN",
+                  "asia_move": -0.682,
+                  "uk_continued_asia": true,
                   "uk_faded_asia": false
                 }
               }
@@ -2179,13 +1910,13 @@
             "result": {
               "primary_signal": "NEUTRAL",
               "confirmation_signal": "NEUTRAL",
-              "combined_signal": "SELL",
-              "expected_move": -1.16,
+              "combined_signal": "BUY",
+              "expected_move": 2.86,
               "confidence": "LOW",
               "regime": "STAGFLATION_LITE",
               "regime_sensitivity": 0.8
             },
-            "score_reason": "CHINA_MACRO cascade: SELL, decay=0.40"
+            "score_reason": "CHINA_MACRO cascade: BUY, decay=0.40"
           }
         },
         "EU_MACRO": {
@@ -2230,135 +1961,164 @@
         }
       },
       "active_count": 2,
-      "total_weight": 0.35
+      "total_weight": 0.45
     }
   },
-  "cascade_us_labor": {
-    "cascade": "US_LABOR",
-    "description": "US Labor Market Chain: JOLTS(demand) \u2192 ADP(preview) \u2192 NFP(primary) \u2192 Unemployment(confirm) \u2192 Claims(background)",
+  "cascade_us_inflation": {
+    "cascade": "US_INFLATION",
+    "description": "US Inflation \u2192 Fed Chain: CPI(primary) \u2192 PPI(confirm) \u2192 PCE(fed_pref) \u2192 FOMC(policy) \u2192 Presser(followup) \u2192 Minutes(loopback)",
     "steps": [
       {
-        "release": "NFP",
+        "release": "CPI",
         "role": "PRIMARY",
-        "date": "2026-07-03",
-        "days_since": 4,
-        "decay": 0.4,
-        "signal": "NEUTRAL",
+        "date": "2026-07-14",
+        "days_since": 8,
+        "decay": 0.2,
+        "signal": "HOT",
         "surprise": 0.0,
-        "us_move": 1.221,
-        "us_dir": "RALLY",
-        "spike_pct": -0.636,
+        "us_move": -0.244,
+        "us_dir": "FLAT",
+        "spike_pct": -0.769,
         "spike_dir": "DOWN",
         "us_data": {
-          "us_move": 1.221,
-          "us_close": 1766.15,
-          "us_high": 1774.0,
-          "us_low": 1727.87,
-          "us_range": 2.644,
-          "us_max_up": 1.671,
-          "us_max_down": -0.973,
-          "pre_price": 1744.84
+          "us_move": -0.244,
+          "us_close": 1875.42,
+          "us_high": 1888.8,
+          "us_low": 1859.46,
+          "us_range": 1.561,
+          "us_max_up": 0.468,
+          "us_max_down": -1.093,
+          "pre_price": 1880.01
         },
         "spike_data": {
-          "spike_pct": -0.636,
+          "spike_pct": -0.769,
           "spike_dir": "DOWN",
-          "spike_range": 1.393,
-          "pre_price": 1744.84,
-          "spike_close": 1733.74
+          "spike_range": 1.141,
+          "pre_price": 1880.01,
+          "spike_close": 1865.55
         },
         "asia_data": {
-          "asia_move": -0.451,
-          "asia_gap": -0.449,
-          "asia_open": 1758.22,
-          "asia_close": 1758.19,
-          "asia_high": 1764.61,
-          "asia_low": 1744.09,
-          "asia_range": 1.162,
-          "us_close_ref": 1766.15,
-          "gap_dir": "DOWN",
-          "sweep_depth_pct": 1.249,
-          "recovery_pct": 63.9,
-          "reclaimed_gap": false,
+          "asia_move": -0.287,
+          "asia_gap": 0.877,
+          "asia_open": 1891.87,
+          "asia_close": 1870.04,
+          "asia_high": 1893.32,
+          "asia_low": 1864.38,
+          "asia_range": 1.543,
+          "us_close_ref": 1875.42,
+          "gap_dir": "UP",
+          "sweep_depth_pct": 0.954,
+          "recovery_pct": 130.1,
+          "reclaimed_gap": true,
           "is_sweep_reversal": true
         },
         "uk_data": {
-          "uk_move_vs_asia": 1.871,
-          "uk_move_vs_us": 1.412,
-          "uk_open": 1754.78,
-          "uk_close": 1791.09,
-          "uk_high": 1799.92,
-          "uk_low": 1752.86,
-          "uk_range": 2.677,
+          "uk_move_vs_asia": 3.311,
+          "uk_move_vs_us": 3.014,
+          "uk_open": 1875.87,
+          "uk_close": 1931.95,
+          "uk_high": 1946.52,
+          "uk_low": 1864.7,
+          "uk_range": 4.375,
           "uk_direction": "UP",
-          "uk_taker": 0.5482,
-          "uk_vol_ratio_vs_asia": 1.45,
-          "asia_close_ref": 1758.19,
-          "asia_direction": "DOWN",
-          "asia_move": -0.451,
+          "uk_taker": 0.551,
+          "uk_vol_ratio_vs_asia": 2.31,
+          "asia_close_ref": 1870.04,
+          "asia_direction": "FLAT",
+          "asia_move": -0.287,
           "uk_continued_asia": false,
-          "uk_faded_asia": true
+          "uk_faded_asia": false
         }
       },
       {
-        "release": "UNEMPLOYMENT",
+        "release": "PPI",
         "role": "CONFIRMATION",
-        "date": "2026-07-03",
-        "days_since": 4,
+        "date": "2026-07-10",
+        "days_since": 12,
+        "decay": 0.2,
+        "signal": "HOT",
+        "surprise": 0.0,
+        "us_move": 0.0,
+        "us_dir": "FLAT",
+        "spike_pct": 0.0,
+        "spike_dir": "FLAT"
+      }
+    ],
+    "result": {
+      "primary_signal": "HOT",
+      "confirmation_signal": "NEUTRAL",
+      "combined_signal": "HOLD",
+      "expected_move": -0.24,
+      "confidence": "LOW",
+      "regime": "STAGFLATION_LITE",
+      "regime_sensitivity": 0.8
+    },
+    "score_reason": "US_INFLATION cascade: HOLD, CPI=HOT, PPI=HOT, decay=0.20"
+  },
+  "cascade_china_macro": {
+    "cascade": "CHINA_MACRO",
+    "description": "China Macro Chain: GDP(structural) \u2192 PMI(primary) \u2192 Caixin(confirm) \u2192 Activity(real economy) \u2192 CPI/PPI(inflation) \u2192 PBOC(policy)",
+    "steps": [
+      {
+        "release": "CHINA_ACTIVITY",
+        "role": "CONFIRMATION",
+        "date": "2026-07-15",
+        "days_since": 7,
         "decay": 0.4,
         "signal": "NEUTRAL",
         "surprise": 0.0,
-        "us_move": 1.221,
+        "us_move": 2.863,
         "us_dir": "RALLY",
-        "spike_pct": -0.636,
-        "spike_dir": "DOWN",
+        "spike_pct": -0.299,
+        "spike_dir": "FLAT",
         "us_data": {
-          "us_move": 1.221,
-          "us_close": 1766.15,
-          "us_high": 1774.0,
-          "us_low": 1727.87,
-          "us_range": 2.644,
-          "us_max_up": 1.671,
-          "us_max_down": -0.973,
-          "pre_price": 1744.84
+          "us_move": 2.863,
+          "us_close": 1923.75,
+          "us_high": 1946.52,
+          "us_low": 1864.38,
+          "us_range": 4.392,
+          "us_max_up": 4.081,
+          "us_max_down": -0.311,
+          "pre_price": 1870.2
         },
         "spike_data": {
-          "spike_pct": -0.636,
-          "spike_dir": "DOWN",
-          "spike_range": 1.393,
-          "pre_price": 1744.84,
-          "spike_close": 1733.74
+          "spike_pct": -0.299,
+          "spike_dir": "FLAT",
+          "spike_range": 0.463,
+          "pre_price": 1870.2,
+          "spike_close": 1864.6
         },
         "asia_data": {
-          "asia_move": -0.451,
-          "asia_gap": -0.449,
-          "asia_open": 1758.22,
-          "asia_close": 1758.19,
-          "asia_high": 1764.61,
-          "asia_low": 1744.09,
-          "asia_range": 1.162,
-          "us_close_ref": 1766.15,
+          "asia_move": -0.682,
+          "asia_gap": -0.306,
+          "asia_open": 1917.86,
+          "asia_close": 1910.63,
+          "asia_high": 1929.48,
+          "asia_low": 1905.0,
+          "asia_range": 1.273,
+          "us_close_ref": 1923.75,
           "gap_dir": "DOWN",
-          "sweep_depth_pct": 1.249,
-          "recovery_pct": 63.9,
-          "reclaimed_gap": false,
-          "is_sweep_reversal": true
+          "sweep_depth_pct": 0.975,
+          "recovery_pct": 30.0,
+          "reclaimed_gap": true,
+          "is_sweep_reversal": false
         },
         "uk_data": {
-          "uk_move_vs_asia": 1.871,
-          "uk_move_vs_us": 1.412,
-          "uk_open": 1754.78,
-          "uk_close": 1791.09,
-          "uk_high": 1799.92,
-          "uk_low": 1752.86,
-          "uk_range": 2.677,
-          "uk_direction": "UP",
-          "uk_taker": 0.5482,
-          "uk_vol_ratio_vs_asia": 1.45,
-          "asia_close_ref": 1758.19,
+          "uk_move_vs_asia": -1.505,
+          "uk_move_vs_us": -2.176,
+          "uk_open": 1922.54,
+          "uk_close": 1881.88,
+          "uk_high": 1922.54,
+          "uk_low": 1867.68,
+          "uk_range": 2.871,
+          "uk_direction": "DOWN",
+          "uk_taker": 0.4516,
+          "uk_vol_ratio_vs_asia": 2.53,
+          "asia_close_ref": 1910.63,
           "asia_direction": "DOWN",
-          "asia_move": -0.451,
-          "uk_continued_asia": false,
-          "uk_faded_asia": true
+          "asia_move": -0.682,
+          "uk_continued_asia": true,
+          "uk_faded_asia": false
         }
       }
     ],
@@ -2366,181 +2126,29 @@
       "primary_signal": "NEUTRAL",
       "confirmation_signal": "NEUTRAL",
       "combined_signal": "BUY",
-      "expected_move": 1.22,
+      "expected_move": 2.86,
       "confidence": "LOW",
       "regime": "STAGFLATION_LITE",
       "regime_sensitivity": 0.8
     },
-    "claims_context": {
-      "current": 222,
-      "prev_month": 212,
-      "trend": "RISING",
-      "trend_pct": 4.7,
-      "trend_3m": 14,
-      "classification": "NORMAL",
-      "sahm_triggered": false,
-      "unemployment": 4.2,
-      "latest_month": "2026-06"
-    },
-    "claims_classification": "NORMAL",
-    "score_reason": "US_LABOR cascade: BUY, NFP=2026-07-03, decay=0.40"
-  },
-  "cascade_china_macro": {
-    "cascade": "CHINA_MACRO",
-    "description": "China Macro Chain: GDP(structural) \u2192 PMI(primary) \u2192 Caixin(confirm) \u2192 Activity(real economy) \u2192 CPI/PPI(inflation) \u2192 PBOC(policy)",
-    "steps": [
-      {
-        "release": "NBS_PMI",
-        "role": "PRIMARY",
-        "date": "2026-06-30",
-        "days_since": 7,
-        "decay": 0.4,
-        "signal": "NEUTRAL",
-        "surprise": 0.0,
-        "us_move": -1.155,
-        "us_dir": "DUMP",
-        "spike_pct": -0.031,
-        "spike_dir": "FLAT",
-        "us_data": {
-          "us_move": -1.155,
-          "us_close": 1575.99,
-          "us_high": 1599.83,
-          "us_low": 1550.2,
-          "us_range": 3.113,
-          "us_max_up": 0.34,
-          "us_max_down": -2.773,
-          "pre_price": 1594.41
-        },
-        "spike_data": {
-          "spike_pct": -0.031,
-          "spike_dir": "FLAT",
-          "spike_range": 0.679,
-          "pre_price": 1594.41,
-          "spike_close": 1593.92
-        },
-        "asia_data": {
-          "asia_move": 0.15,
-          "asia_gap": -0.253,
-          "asia_open": 1572.0,
-          "asia_close": 1578.36,
-          "asia_high": 1604.02,
-          "asia_low": 1552.92,
-          "asia_range": 3.242,
-          "us_close_ref": 1575.99,
-          "gap_dir": "DOWN",
-          "sweep_depth_pct": 1.464,
-          "recovery_pct": 110.3,
-          "reclaimed_gap": true,
-          "is_sweep_reversal": true
-        },
-        "uk_data": {
-          "uk_move_vs_asia": 2.644,
-          "uk_move_vs_us": 2.798,
-          "uk_open": 1575.99,
-          "uk_close": 1620.09,
-          "uk_high": 1631.0,
-          "uk_low": 1565.26,
-          "uk_range": 4.165,
-          "uk_direction": "UP",
-          "uk_taker": 0.4959,
-          "uk_vol_ratio_vs_asia": 1.26,
-          "asia_close_ref": 1578.36,
-          "asia_direction": "FLAT",
-          "asia_move": 0.15,
-          "uk_continued_asia": false,
-          "uk_faded_asia": false
-        }
-      },
-      {
-        "release": "CAIXIN_PMI",
-        "role": "CONFIRMATION",
-        "date": "2026-07-01",
-        "days_since": 6,
-        "decay": 0.4,
-        "signal": "NEUTRAL",
-        "surprise": 0.0,
-        "us_move": 3.451,
-        "us_dir": "RALLY",
-        "spike_pct": 0.971,
-        "spike_dir": "UP",
-        "us_data": {
-          "us_move": 3.451,
-          "us_close": 1617.68,
-          "us_high": 1631.0,
-          "us_low": 1559.6,
-          "us_range": 4.566,
-          "us_max_up": 4.303,
-          "us_max_down": -0.263,
-          "pre_price": 1563.72
-        },
-        "spike_data": {
-          "spike_pct": 0.971,
-          "spike_dir": "UP",
-          "spike_range": 1.727,
-          "pre_price": 1563.72,
-          "spike_close": 1578.91
-        },
-        "asia_data": {
-          "asia_move": -0.106,
-          "asia_gap": -0.5,
-          "asia_open": 1609.59,
-          "asia_close": 1615.97,
-          "asia_high": 1642.32,
-          "asia_low": 1597.22,
-          "asia_range": 2.788,
-          "us_close_ref": 1617.68,
-          "gap_dir": "DOWN",
-          "sweep_depth_pct": 1.265,
-          "recovery_pct": 91.6,
-          "reclaimed_gap": true,
-          "is_sweep_reversal": true
-        },
-        "uk_data": {
-          "uk_move_vs_asia": 5.017,
-          "uk_move_vs_us": 4.906,
-          "uk_open": 1619.14,
-          "uk_close": 1697.05,
-          "uk_high": 1725.0,
-          "uk_low": 1614.32,
-          "uk_range": 6.849,
-          "uk_direction": "UP",
-          "uk_taker": 0.5549,
-          "uk_vol_ratio_vs_asia": 2.54,
-          "asia_close_ref": 1615.97,
-          "asia_direction": "FLAT",
-          "asia_move": -0.106,
-          "uk_continued_asia": false,
-          "uk_faded_asia": false
-        }
-      }
-    ],
-    "result": {
-      "primary_signal": "NEUTRAL",
-      "confirmation_signal": "NEUTRAL",
-      "combined_signal": "SELL",
-      "expected_move": -1.16,
-      "confidence": "LOW",
-      "regime": "STAGFLATION_LITE",
-      "regime_sensitivity": 0.8
-    },
-    "score_reason": "CHINA_MACRO cascade: SELL, decay=0.40"
+    "score_reason": "CHINA_MACRO cascade: BUY, decay=0.40"
   },
   "macro_lifecycle": {
     "phase": "MULTI_DAY",
-    "release_type": "NFP+CLAIMS",
-    "release_date": "2026-07-03",
-    "hours_since": 91.5,
+    "release_type": "CLAIMS",
+    "release_date": "2026-07-17",
+    "hours_since": 120.1,
     "trade_action": "TRAIL_STOPS",
     "size_multiplier": 1.0,
     "session_data": {
       "regime": "STAGFLATION_HOT",
       "us_direction": "RALLY",
-      "asia_pattern": "SWEEP_REVERSAL"
+      "asia_pattern": "FLAT"
     }
   },
   "m1": {
     "direction": "NEUTRAL",
-    "score": 0.51
+    "score": 0.57
   },
   "m2": {
     "status": "PASS",
@@ -2548,25 +2156,25 @@
   },
   "m3": {
     "status": "PASS",
-    "score": 0.564
+    "score": 0.832
   },
   "m4": {
-    "status": "FAIL",
-    "score": 0.0,
+    "status": "PASS",
+    "score": 0.045,
     "div": {
-      "layer_a_div": "BULLISH",
-      "layer_a_score": -0.15,
-      "layer_b_cross": "CONFLICT_ABOVE",
+      "layer_a_div": "BEARISH",
+      "layer_a_score": 0.41,
+      "layer_b_cross": "ABOVE_STALE",
       "layer_b_zl_state": "ABOVE",
-      "layer_b_score": 0.2,
-      "layer_b_bars_since": "9",
-      "combined": 0.06,
-      "sigmoid_gate": 0.001,
-      "atr_mult": 0.809,
+      "layer_b_score": 0.5,
+      "layer_b_bars_since": "45",
+      "combined": 0.464,
+      "sigmoid_gate": 0.097,
+      "atr_mult": 1.0,
       "basing_detected": false,
       "atr_compressed_basing": false,
       "basing_atr_boost": 1.0,
-      "score": 0.0
+      "score": 0.045
     }
   },
   "squeeze_filters": {
@@ -2579,26 +2187,26 @@
   "squeeze_confirmed": true,
   "m5": {
     "status": "PASS",
-    "score": 0.889
+    "score": 0.824
   },
   "m8": {
     "status": "PASS",
     "score": 0.5,
-    "rate": 3.3e-05
+    "rate": 1.4e-05
   },
   "m10": {
     "status": "FAIL",
-    "score": 0.45,
+    "score": 0.38,
     "details": {
-      "btc_ema_diff": -0.0507,
-      "ethbtc_roc7": 0.0466,
-      "btc_roc7": 0.0767,
+      "btc_ema_diff": -0.0184,
+      "ethbtc_roc7": -0.0091,
+      "btc_roc7": 0.016,
       "macro_agreement": "1/3 agree",
-      "m10_score": 0.45,
+      "m10_score": 0.38,
       "m10_components": {
-        "btc_trend": 0.8,
-        "ethbtc_rel": 0.2,
-        "btc_momentum": 0.2,
+        "btc_trend": 0.224,
+        "ethbtc_rel": 0.409,
+        "btc_momentum": 0.596,
         "consensus": 0.4
       }
     }
@@ -2609,272 +2217,231 @@
   },
   "m12": {
     "status": "FAIL",
-    "score": 0.45,
+    "score": 0.3,
     "details": {
-      "bid_ask_ratio": 0.9367,
-      "bid_walls": 3,
+      "bid_ask_ratio": 0.1248,
+      "bid_walls": 2,
       "ask_walls": 1,
-      "largest_bid": 17.3896,
-      "largest_ask": 36.7676,
-      "ob_score": 0.45
+      "largest_bid": 8.016,
+      "largest_ask": 75.4151,
+      "ob_score": 0.3
     }
   },
   "m14": {
-    "status": "FAIL",
-    "score": 0.3
+    "status": "PASS",
+    "score": 0.55
   },
   "m17": {
-    "zone_price": 1767.08,
-    "direction": "SHORT",
-    "composite": 0.48,
+    "zone_price": 1931.3,
+    "direction": "LONG",
+    "composite": 0.5176,
     "verdict": "CONTESTED",
     "zone_volume": {
       "status": "THICK",
-      "zone_vol_ratio": 3.477,
-      "zone_lo": 1758.25,
-      "zone_hi": 1775.92
+      "zone_vol_ratio": 2.053,
+      "zone_lo": 1921.64,
+      "zone_hi": 1940.95
     },
     "rejection": {
-      "status": "MODERATE_DEFENDER",
-      "touches": 309,
-      "rejects": 24,
-      "accepts": 285,
-      "reject_rate": 0.078,
-      "vol_ratio_on_reject": 2.143,
-      "avg_wick_above": 2.21
+      "status": "ZONE_BREAKING",
+      "touches": 191,
+      "rejects": 28,
+      "accepts": 163,
+      "reject_rate": 0.147,
+      "vol_ratio_on_reject": 1.165,
+      "avg_wick_above": 2.27
     },
     "defender": {
-      "status": "CROWDED_BUT_STABLE",
-      "oi_roc_1h": -0.008,
-      "ls_zscore": 2.77,
-      "positioning": "CROWDED_LONG",
+      "status": "NEUTRAL",
+      "oi_roc_1h": -0.152,
+      "ls_zscore": -0.94,
+      "positioning": "NEUTRAL",
       "whale": "NEUTRAL",
-      "factors": [
-        "Crowded long (z=2.77) but OI stable"
-      ]
+      "factors": []
     },
     "readiness": {
-      "momentum": -0.09,
-      "vol_surge": 0.083,
+      "momentum": 0.464,
+      "vol_surge": 1.325,
       "avg_vol_surge": 1.0,
-      "dist_to_zone": -0.181,
+      "dist_to_zone": 0.055,
       "factors": [
-        "At zone but no momentum/volume"
+        "Momentum +0.46% with vol surge 1.33x"
       ]
     },
-    "confirmation": [],
+    "confirmation": [
+      "Rejections weakening (15% reject rate)"
+    ],
     "needed": [
-      "Need sustained volume to penetrate thick zone",
-      "Need vol > 1.2x on breakout candle"
+      "Need sustained volume to penetrate thick zone"
     ],
     "status": "PASS",
-    "score": 0.48
+    "score": 0.5176
   },
   "m20": {
     "status": "PASS",
-    "breakout_direction": "UPSIDE",
-    "contrarian_direction": "SHORT",
-    "level": 1797.9,
-    "breakout_quality": 0.65,
+    "breakout_direction": "DOWNSIDE",
+    "contrarian_direction": "LONG",
+    "level": 1919.41,
+    "breakout_quality": 0.6,
     "quality_signals": [
-      "strong_body=0.64",
-      "vol_spike=6.67x"
+      "strong_body=0.83"
     ],
     "failure": {
       "failed": true,
       "status": "FAILED",
-      "bars_since": 48,
-      "failure_bar": 963,
-      "return_distance": 0.022070193002947918,
-      "min_close": 1758.22
+      "bars_since": 29,
+      "failure_bar": 977,
+      "return_distance": 0.005981004579532261,
+      "max_close": 1930.89
     },
-    "reversal_score": 0.55,
+    "reversal_score": 0.6,
     "reversal_details": {
       "status": "SCORED",
-      "vol_mult": 0.59,
-      "avg_body_ratio": 0.38,
-      "bars_to_fail": 48,
+      "vol_mult": 0.64,
+      "avg_body_ratio": 0.57,
+      "bars_to_fail": 29,
       "details": [
-        "consecutive=6/9"
+        "body_conviction=0.57"
       ]
     },
-    "bars_since_breakout": 48,
-    "final_score": 0.985,
-    "score": 0.985
+    "bars_since_breakout": 29,
+    "final_score": 1.0,
+    "score": 1.0
   },
-  "ics": 0.5629,
+  "ics": 0.5224,
   "effective_floor": 0.48,
-  "taker_score": 0.648,
+  "taker_score": 0.5,
   "cross_asset": {
     "score": 0.5
   },
   "veto": "Soft vetoes: M10",
   "threshold": 0.5,
   "limit_entry": {
-    "entry_price": 1774.25,
-    "entry_source": "RESISTANCE",
-    "entry_level": 1774.25,
-    "entry_dist_pct": -0.2243,
-    "reason": "RESISTANCE @ $1774.25 (str=77, dist=-0.22%)"
+    "entry_price": 1927.35,
+    "entry_source": "SUPPORT",
+    "entry_level": 1927.35,
+    "entry_dist_pct": 0.1497,
+    "reason": "SUPPORT @ $1927.35 (str=110, dist=+0.15%)"
   },
   "what_if": {
-    "direction": "SHORT",
-    "entry": 1774.25,
-    "entry_source": "RESISTANCE",
-    "entry_reason": "RESISTANCE @ $1774.25 (str=77, dist=-0.22%)",
-    "market_entry": 1770.28,
-    "sl": 1806.1865,
-    "tp1": 1764.25,
-    "tp2": 1748.9100263425864,
-    "tp3": 1729.9050460995263,
-    "sl_pct": 1.8000000000000012,
-    "tp1_pct": 0.5636184303226716,
-    "sl_source": "LIQUIDITY_VOID",
-    "tp1_source": "ATR",
-    "tp2_source": "ATR",
-    "tp3_source": "ATR",
-    "rr1": 0.3131213501792618,
+    "direction": "LONG",
+    "entry": 1927.35,
+    "entry_source": "SUPPORT",
+    "entry_reason": "SUPPORT @ $1927.35 (str=110, dist=+0.15%)",
+    "market_entry": 1930.24,
+    "sl": 1897.35,
+    "tp1": 1939.5045,
+    "tp2": 1939.89,
+    "tp3": 1940.8421124999998,
+    "sl_pct": 1.5565413650867772,
+    "tp1_pct": 0.6306327340649129,
+    "sl_source": "ATR",
+    "tp1_source": "UNSWEPT_POOL",
+    "tp2_source": "UNSWEPT_POOL",
+    "tp3_source": "UNSWEPT_POOL",
+    "rr1": 0.4051500000000033,
     "nearest_support": 0,
     "nearest_resist": 0,
     "invalidation": [
-      "BULLISH CVD divergence active \u2014 momentum against you",
-      "Historical conflict: similar setups reverse 53% at 24h",
-      "Phase0=0.102 (death zone <0.2) \u2014 weak macro context"
+      "BEARISH CVD divergence active \u2014 momentum against you",
+      "Phase0=0.187 (death zone <0.2) \u2014 weak macro context"
     ]
   },
   "status": "M20_BLOCKED",
-  "reason": "M20 stale block: breakout failure is 48 bars old (very stale)",
+  "reason": "M20 contrarian block: signal matches M20 contrarian LONG (46.0% WR expected)",
   "macro_event_filter": {
     "blocked": true,
-    "reason": "Phase0=0.102 DEATH_ZONE (<0.2) \u2014 43% WR, avoid",
+    "reason": "Phase0=0.187 DEATH_ZONE (<0.2) \u2014 43% WR, avoid",
     "size_mult": 1.0,
     "active_events": [],
     "regime_notes": [
-      "Phase0 DEATH_ZONE: 0.102"
+      "Phase0 DEATH_ZONE: 0.187"
     ]
   },
   "timeframe": "15m",
   "dual_strategy": {
     "base": {
-      "timestamp": "2026-07-07 09:00:00",
-      "price": 1770.28,
+      "timestamp": "2026-07-22 13:30:00",
+      "price": 1930.24,
       "regime": "NEUTRAL",
       "direction": "SHORT",
       "swing_bias": "BEARISH",
       "trend_dir": "UP",
-      "m13_bias": "BULLISH"
+      "m13_bias": "BEARISH"
     },
     "strategy_a": {
       "status": "FILTERED",
-      "reason": "survival_no_momentum",
+      "reason": "bar_move_against",
       "mode": "scalp"
     },
     "strategy_b": {
       "status": "NO_SIGNAL",
-      "reason": "no momentum (taker 0.445)",
+      "reason": "no momentum (ignition 2.3x)",
       "mode": "momentum"
     }
   },
   "order_flow": {
-    "ob_imbalance": 1.67,
-    "ob_consensus": "NEUTRAL",
-    "trade_taker": 0.9089,
-    "trade_net_flow": 93651.30684399998,
+    "ob_imbalance": 1.4992,
+    "ob_consensus": "BULLISH",
+    "trade_taker": 0.8884,
+    "trade_net_flow": 14883.69742,
     "liq_imbalance": null,
-    "funding_avg": 1.8e-05
+    "funding_avg": 2.6e-05
   },
   "power_of_3": {
-    "phase": "MANIPULATION",
-    "confidence": 0.275,
-    "direction": "LONG",
-    "narrative": "Secondary LONG setup: price swept $1787 SHORT, hit target $1760 15 bars ago, then bounced +0.7% to $1770. Watching for continuation to sweep_retest $1787 (+0.9%). Invalidation below $1752.",
-    "signals_for": [
-      "Bounce +0.7% from reversal target $1760",
-      "Target: sweep_retest $1787 (sweep $1787 / target $1760)"
-    ],
+    "phase": "AMBIGUOUS",
+    "confidence": 0.15,
+    "direction": "NEUTRAL",
+    "narrative": "Phase ambiguous \u2014 insufficient signal alignment.",
+    "signals_for": [],
     "signals_against": [
-      "Secondary setup \u2014 reduced confidence (0.5x)",
-      "Original sweep was 30 bars ago"
+      "ACCUMULATION score=0.15",
+      "DISTRIBUTION score=0.05"
     ],
-    "key_level": 1786.670387341772,
-    "key_level_name": "secondary_from_judas_sweep_target",
-    "trade_bias": "WATCH",
-    "sweep_status": "SECONDARY",
-    "sweep_level": 1786.670387341772,
-    "reversal_target": 1786.670387341772,
-    "reversal_target_name": "midpoint_retest",
+    "key_level": null,
+    "key_level_name": "",
+    "trade_bias": "AVOID",
+    "sweep_status": "NONE",
+    "sweep_level": null,
+    "reversal_target": null,
+    "reversal_target_name": "",
     "timing_signal": "NONE",
-    "entry_zone_low": 1770.28,
-    "entry_zone_high": 1786.670387341772,
-    "invalidation": 1752.3870200000001,
+    "entry_zone_low": null,
+    "entry_zone_high": null,
+    "invalidation": null,
     "target_tiers": [],
     "sweep_completeness": null,
-    "zone_sweep": null,
-    "judas_sweep_stats": {
-      "estimated_sweep_pct": 0.925864119900361,
-      "depth_match": {
-        "depth_label": "extreme (0.5-1.0%)",
-        "depth_count": 19,
-        "depth_reversal_rate": 0.947,
-        "depth_avg_drop": 1.5,
-        "overall_reversal_rate": 0.825,
-        "overall_avg_drop": 1.68,
-        "overall_median_drop": 1.18,
-        "avg_extension": 2.45,
-        "median_time_bars": 6,
-        "mean_time_bars": 10,
-        "p75_time_bars": 15,
-        "recent_reversal_rate": 0.796,
-        "recent_avg_drop": 1.96
-      },
-      "historical": {
-        "count": 526,
-        "reversal_gt_03": 0.825,
-        "reversal_gt_05": 0.684,
-        "reversal_gt_10": 0.475,
-        "avg_drop": 1.68,
-        "median_drop": 1.18,
-        "avg_extension": 2.45
-      },
-      "time_to_reversal": {
-        "median_bars": 6,
-        "mean_bars": 10,
-        "p75_bars": 15,
-        "max_bars": 48
-      },
-      "recent": {
-        "count": 142,
-        "reversal_gt_03": 0.796,
-        "reversal_gt_05": 0.641,
-        "reversal_gt_10": 0.423,
-        "avg_drop": 1.96,
-        "median_drop": 1.15
-      }
-    }
+    "zone_sweep": null
   },
   "multi_strategy": {
     "total_strategies": 20,
-    "signals_fired": 4,
+    "signals_fired": 3,
     "best": {
       "strategy": "trade_flow",
       "source": "strategy:trade_flow",
       "type": "flow",
       "direction": "LONG",
-      "conviction": 0.7771,
-      "entry": 1770.28,
-      "sl": 1765.16,
-      "tp1": 1777.97,
-      "tp2": 1783.09,
-      "tp3": 1790.77,
-      "sl_pct": 0.289,
-      "tp1_pct": 0.434,
-      "rr1": 1.5,
+      "conviction": 0.9,
+      "entry": 1930.24,
+      "sl": 1923.27,
+      "tp1": 1938.95,
+      "tp2": 1944.76,
+      "tp3": 1953.47,
+      "sl_pct": 0.361,
+      "tp1_pct": 0.451,
+      "rr1": 1.25,
       "size_mult": 0.8,
-      "reason": "Trade flow -> LONG: taker=0.909 net=$94k",
+      "reason": "Trade flow v3 LONG: z=3.62 accel=3.98 net=$15k vol=0.15",
       "bypass_gates": true,
       "details": {
-        "taker_ratio": 0.9089,
-        "net_flow": 93651.30684399998
+        "taker_zscore": 3.6216879721555197,
+        "acceleration": 3.978686700636139,
+        "taker_ratio": 0.8884,
+        "net_flow": 14883.69742,
+        "large_buys": 0,
+        "large_sells": 0,
+        "vol_ratio": 0.14738747176898848,
+        "version": "v3"
       }
     },
     "all_signals": [
@@ -2883,69 +2450,54 @@
         "source": "strategy:trade_flow",
         "type": "flow",
         "direction": "LONG",
-        "conviction": 0.7771,
-        "entry": 1770.28,
-        "sl": 1765.16,
-        "tp1": 1777.97,
-        "tp2": 1783.09,
-        "tp3": 1790.77,
-        "sl_pct": 0.289,
-        "tp1_pct": 0.434,
-        "rr1": 1.5,
-        "size_mult": 0.8,
-        "reason": "Trade flow -> LONG: taker=0.909 net=$94k",
-        "bypass_gates": true,
-        "details": {
-          "taker_ratio": 0.9089,
-          "net_flow": 93651.30684399998
-        }
-      },
-      {
-        "strategy": "orderbook_imbalance",
-        "source": "strategy:orderbook_imbalance",
-        "type": "flow",
-        "direction": "LONG",
-        "conviction": 0.75,
-        "entry": 1770.28,
-        "sl": 1762.59,
-        "tp1": 1783.09,
-        "tp2": 1790.77,
-        "tp3": 1801.02,
-        "sl_pct": 0.434,
-        "tp1_pct": 0.724,
-        "rr1": 1.67,
-        "size_mult": 0.8,
-        "reason": "OB imbalance v2 -> LONG: ob_ratio=1.670 vol=0.16 dist_ema=3.46%",
-        "bypass_gates": false,
-        "details": {
-          "ob_ratio": 1.67,
-          "vol_ratio": 0.15872319119905334,
-          "dist_ema200": 3.4551716942902946,
-          "sl_type": "structure"
-        }
-      },
-      {
-        "strategy": "positioning_fade",
-        "source": "strategy:positioning_fade",
-        "type": "flow",
-        "direction": "LONG",
-        "conviction": 0.5768,
-        "entry": 1770.28,
-        "sl": 1764.13,
-        "tp1": 1777.97,
-        "tp2": 1783.09,
-        "tp3": 1790.77,
-        "sl_pct": 0.347,
-        "tp1_pct": 0.434,
+        "conviction": 0.9,
+        "entry": 1930.24,
+        "sl": 1923.27,
+        "tp1": 1938.95,
+        "tp2": 1944.76,
+        "tp3": 1953.47,
+        "sl_pct": 0.361,
+        "tp1_pct": 0.451,
         "rr1": 1.25,
-        "size_mult": 0.6,
-        "reason": "Positioning fade: L/S zscore=-0.98 \u2192 LONG (whale=NEUTRAL, positioning=CROWDED_LONG)",
+        "size_mult": 0.8,
+        "reason": "Trade flow v3 LONG: z=3.62 accel=3.98 net=$15k vol=0.15",
         "bypass_gates": true,
         "details": {
-          "ls_ratio": 1.8563,
-          "ls_zscore": -0.9789999999999995,
-          "positioning": "CROWDED_LONG",
-          "whale": "NEUTRAL"
+          "taker_zscore": 3.6216879721555197,
+          "acceleration": 3.978686700636139,
+          "taker_ratio": 0.8884,
+          "net_flow": 14883.69742,
+          "large_buys": 0,
+          "large_sells": 0,
+          "vol_ratio": 0.14738747176898848,
+          "version": "v3"
+        }
+      },
+      {
+        "strategy": "liquidation_cascade",
+        "source": "strategy:liquidation_cascade",
+        "type": "event",
+        "direction": "SHORT",
+        "conviction": 0.83,
+        "entry": 1930.24,
+        "sl": 1936.05,
+        "tp1": 1921.53,
+        "tp2": 1915.72,
+        "tp3": 1907.01,
+        "sl_pct": 0.301,
+        "tp1_pct": 0.451,
+        "rr1": 1.5,
+        "size_mult": 0.7,
+        "reason": "Liq cascade v4 (oi_premium) SHORT: OI ROC=-0.1520, LS=1.69, price=0.0034, vol=MID",
+        "bypass_gates": true,
+        "details": {
+          "version": "v4",
+          "source": "oi_premium",
+          "oi_roc": -0.152,
+          "ls_ratio": 1.6925,
+          "price_change": 0.003404914513253151,
+          "vol_regime": "MID",
+          "strength": 0.95
         }
       },
       {
@@ -2953,22 +2505,27 @@
         "source": "strategy:whale_watch",
         "type": "flow",
         "direction": "LONG",
-        "conviction": 0.5713,
-        "entry": 1770.28,
-        "sl": 1765.16,
-        "tp1": 1777.97,
-        "tp2": 1783.09,
-        "tp3": 1790.77,
-        "sl_pct": 0.289,
-        "tp1_pct": 0.434,
-        "rr1": 1.5,
+        "conviction": 0.6766,
+        "entry": 1930.24,
+        "sl": 1923.27,
+        "tp1": 1938.95,
+        "tp2": 1944.76,
+        "tp3": 1953.47,
+        "sl_pct": 0.361,
+        "tp1_pct": 0.451,
+        "rr1": 1.25,
         "size_mult": 0.7,
-        "reason": "Whale watch \u2192 LONG: whale=BULLISH positioning=CROWDED_LONG",
+        "reason": "Whale v2 LONG: net_flow=-32812ETH LS=1.69 z=0.44 dur=30m",
         "bypass_gates": false,
         "details": {
-          "whale_signal": "BULLISH",
-          "positioning": "CROWDED_LONG",
-          "ls_ratio": 1.8563
+          "net_exchange_flow_24h": -32811.88,
+          "whale_strength": 0.6562376,
+          "ls_ratio": 1.6925,
+          "ls_zscore": 0.4413611230804376,
+          "duration_min": 30,
+          "total_transfers": 27532,
+          "recent_signals": 0,
+          "version": "v2"
         }
       }
     ]
@@ -2976,7 +2533,7 @@
   "regime_router": {
     "regime": "UP",
     "blocked": [],
-    "allowed_count": 4,
+    "allowed_count": 3,
     "blocked_count": 0
   },
   "strategy_signal": {
@@ -2984,74 +2541,75 @@
     "source": "strategy:trade_flow",
     "type": "flow",
     "direction": "LONG",
-    "conviction": 0.7771,
-    "entry": 1770.28,
-    "sl": 1765.16,
-    "tp1": 1777.97,
-    "tp2": 1783.09,
-    "tp3": 1790.77,
-    "sl_pct": 0.289,
-    "tp1_pct": 0.434,
-    "rr1": 1.5,
+    "conviction": 0.9,
+    "entry": 1930.24,
+    "sl": 1923.27,
+    "tp1": 1938.95,
+    "tp2": 1944.76,
+    "tp3": 1953.47,
+    "sl_pct": 0.361,
+    "tp1_pct": 0.451,
+    "rr1": 1.25,
     "size_mult": 0.8,
-    "reason": "Trade flow -> LONG: taker=0.909 net=$94k",
+    "reason": "Trade flow v3 LONG: z=3.62 accel=3.98 net=$15k vol=0.15",
     "bypass_gates": true,
     "details": {
-      "taker_ratio": 0.9089,
-      "net_flow": 93651.30684399998
+      "taker_zscore": 3.6216879721555197,
+      "acceleration": 3.978686700636139,
+      "taker_ratio": 0.8884,
+      "net_flow": 14883.69742,
+      "large_buys": 0,
+      "large_sells": 0,
+      "vol_ratio": 0.14738747176898848,
+      "version": "v3"
     }
   },
   "source": "strategy:trade_flow",
-  "entry": 1770.28,
-  "sl": 1765.16,
-  "tp1": 1777.97,
-  "tp2": 1783.09,
-  "tp3": 1790.77,
-  "sl_pct": 0.289,
-  "tp1_pct": 0.434,
+  "entry": 1930.24,
+  "sl": 1923.27,
+  "tp1": 1938.95,
+  "tp2": 1944.76,
+  "tp3": 1953.47,
+  "sl_pct": 0.361,
+  "tp1_pct": 0.451,
   "m20_filter": {
     "blocked": true,
-    "reason": "M20 stale block: breakout failure is 48 bars old (very stale)",
-    "level": 1797.9,
-    "level_type": "resistance",
+    "reason": "M20 contrarian block: signal matches M20 contrarian LONG (46.0% WR expected)",
+    "level": 1919.41,
+    "level_type": "support",
     "staleness": "very_stale",
     "quality": "mid"
   },
   "ensemble": {
     "consensus": "LONG",
-    "agree_count": 4,
-    "total_fired": 4,
-    "weighted_score": 2.6922,
+    "agree_count": 2,
+    "total_fired": 3,
+    "weighted_score": 1.7566,
     "agreeing_strategies": [
       {
         "strategy": "trade_flow",
-        "conviction": 0.7771,
+        "conviction": 0.9,
         "weight": 1.2,
-        "weighted": 0.9325
-      },
-      {
-        "strategy": "orderbook_imbalance",
-        "conviction": 0.75,
-        "weight": 1.2,
-        "weighted": 0.9
-      },
-      {
-        "strategy": "positioning_fade",
-        "conviction": 0.5768,
-        "weight": 0.5,
-        "weighted": 0.2884
+        "weighted": 1.08
       },
       {
         "strategy": "whale_watch",
-        "conviction": 0.5713,
+        "conviction": 0.6766,
         "weight": 1.0,
-        "weighted": 0.5713
+        "weighted": 0.6766
       }
     ],
-    "disagreeing_strategies": [],
-    "ensemble_conviction": 0.6731,
+    "disagreeing_strategies": [
+      {
+        "strategy": "liquidation_cascade",
+        "conviction": 0.83,
+        "weight": 1.0,
+        "weighted": 0.83
+      }
+    ],
+    "ensemble_conviction": 0.8783,
     "passes": true,
-    "reason": "Ensemble: 4 strategies agree LONG (weighted=2.69)"
+    "reason": "Ensemble: 2 strategies agree LONG (weighted=1.76)"
   },
   "confirmation_status": {
     "confirmed": [],
@@ -3059,30 +2617,32 @@
     "pending_count": 0
   },
   "macro_calendar": {
-    "now": "2026-07-07T09:02:39.809618+00:00",
-    "phase": "NFP_WEEK",
-    "phase_desc": "NFP sets tone for the month",
-    "next_major": "China CPI + PPI (2d 16h)",
+    "now": "2026-07-22T13:36:44.044110+00:00",
+    "phase": "LATE_MONTH",
+    "phase_desc": "Tokyo CPI, Core PCE, PMI prep",
+    "next_major": "FOMC Rate Decision (8d 5h)",
     "events": [
       {
-        "id": "cn_trade",
-        "num": "\u2014",
-        "name": "China Trade Balance",
-        "country": "\ud83c\udde8\ud83c\uddf3 China",
+        "id": "de_ifo",
+        "num": "33",
+        "name": "Germany Ifo Business Climate",
+        "country": "\ud83c\udde9\ud83c\uddea Germany",
         "tier": 2,
         "impact": "LOW",
-        "countdown": "17h 57m",
-        "hours_until": 18.0,
-        "time_utc": "03:00",
+        "countdown": "18h 23m",
+        "hours_until": 18.4,
+        "time_utc": "08:00",
         "is_next_24h": true,
         "is_next_4h": false,
         "what_comes_next": [
-          "China CPI/PPI \u2014 released same week, demand + inflation together",
-          "PBoC LPR \u2014 weak trade = easing expectations"
+          "Germany Factory Orders \u2014 released 1-2 weeks later, confirms Ifo",
+          "ZEW Economic Sentiment \u2014 released same week, analyst vs business view",
+          "Eurozone GDP Flash \u2014 Ifo leads GDP by ~6 weeks"
         ],
         "what_to_watch": [
-          "Export growth",
-          "Import growth (domestic demand)"
+          "9,000 firm survey \u2014 best EU forward indicator",
+          "Expectations vs current conditions",
+          "Manufacturing vs services"
         ],
         "eth_by_regime": null,
         "session_itinerary": null
@@ -3094,10 +2654,10 @@
         "country": "\ud83c\uddfa\ud83c\uddf8 US",
         "tier": 2,
         "impact": "MEDIUM",
-        "countdown": "2d 4h",
-        "hours_until": 52.5,
+        "countdown": "23h 53m",
+        "hours_until": 23.9,
         "time_utc": "13:30",
-        "is_next_24h": false,
+        "is_next_24h": true,
         "is_next_4h": false,
         "what_comes_next": [
           "NFP (if Friday follows) \u2014 claims Thursday, NFP Friday, back to back",
@@ -3113,14 +2673,568 @@
         "session_itinerary": null
       },
       {
+        "id": "au_cpi",
+        "num": "38",
+        "name": "Australia CPI (Quarterly)",
+        "country": "\ud83c\udde6\ud83c\uddfa Australia",
+        "tier": 2,
+        "impact": "LOW",
+        "countdown": "2d 10h",
+        "hours_until": 58.9,
+        "time_utc": "00:30",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "RBA Rate Decision \u2014 CPI is primary RBA input, hot = hold, cool = cut",
+          "Australia Employment \u2014 released same quarter, dual mandate both sides",
+          "AUD/USD reaction \u2014 AUD is risk proxy, moves with ETH correlation"
+        ],
+        "what_to_watch": [
+          "Trimmed mean watched by RBA",
+          "Services inflation \u2014 sticky component",
+          "Housing costs"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "eu_gdp",
+        "num": "26",
+        "name": "Eurozone GDP Flash",
+        "country": "\ud83c\uddea\ud83c\uddfa Eurozone",
+        "tier": 1,
+        "impact": "MEDIUM",
+        "countdown": "2d 20h",
+        "hours_until": 68.4,
+        "time_utc": "10:00",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "Germany GDP \u2014 released same week, biggest component confirmed",
+          "ECB Rate Decision \u2014 negative EZ GDP = ECB cuts accelerate",
+          "US GDP Advance \u2014 EZ GDP drops first, US follows ~1 week later"
+        ],
+        "what_to_watch": [
+          "Recession threshold (2 consecutive negative quarters)",
+          "Germany drag",
+          "Quarterly momentum shift"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "us_durables",
+        "num": "37",
+        "name": "US Durable Goods Orders",
+        "country": "\ud83c\uddfa\ud83c\uddf8 US",
+        "tier": 2,
+        "impact": "LOW",
+        "countdown": "3d 23h",
+        "hours_until": 95.9,
+        "time_utc": "13:30",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "GDP Advance Estimate \u2014 capex feeds directly into GDP business investment",
+          "ISM Manufacturing PMI \u2014 orders lead production, confirms PMI direction",
+          "Factory Orders (full) \u2014 released 1 week later, broader manufacturing picture"
+        ],
+        "what_to_watch": [
+          "Ex-transports (volatile aircraft orders)",
+          "Core capital goods orders \u2014 capex proxy",
+          "Business investment signal"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "jp_cpi_tokyo",
+        "num": "08",
+        "name": "Japan CPI (Tokyo + National)",
+        "country": "\ud83c\uddef\ud83c\uddf5 Japan",
+        "tier": 1,
+        "impact": "MEDIUM",
+        "countdown": "4d 9h",
+        "hours_until": 105.9,
+        "time_utc": "23:30",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "BoJ Rate Decision \u2014 hot CPI accelerates hike timeline",
+          "USD/JPY level shift \u2014 inflation = yen strength expectation",
+          "Japan Tankan Survey \u2014 quarterly, business confidence follows inflation"
+        ],
+        "what_to_watch": [
+          "Ex-fresh-food (core) \u2014 BoJ target",
+          "Trend \u2014 rising = BOJ under pressure to hike",
+          "Services vs goods"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "us_pce",
+        "num": "24",
+        "name": "Core PCE Price Index",
+        "country": "\ud83c\uddfa\ud83c\uddf8 US",
+        "tier": 1,
+        "impact": "HIGH",
+        "countdown": "5d 23h",
+        "hours_until": 143.9,
+        "time_utc": "13:30",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "FOMC Rate Decision \u2014 PCE is the Fed's number, hot PCE = holds/hike",
+          "Personal Income + Spending \u2014 released same day, demand behind inflation",
+          "Michigan Consumer Sentiment \u2014 inflation expectations sub-index confirms"
+        ],
+        "what_to_watch": [
+          "THIS IS THE FED'S ACTUAL TARGET \u2014 not CPI!",
+          "Core PCE vs 2% target",
+          "MoM vs YoY \u2014 monthly momentum matters",
+          "Services ex-housing \u2014 \"supercore\" Fed metric"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "us_gdp",
+        "num": "25",
+        "name": "US GDP Advance Estimate",
+        "country": "\ud83c\uddfa\ud83c\uddf8 US",
+        "tier": 1,
+        "impact": "MEDIUM",
+        "countdown": "5d 23h",
+        "hours_until": 143.9,
+        "time_utc": "13:30",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "GDP Second Estimate \u2014 revised ~4 weeks later, usually smaller move",
+          "Corporate earnings season \u2014 GDP sets macro backdrop for earnings",
+          "Fed Rate Decision \u2014 negative GDP = recession = rate cuts = ETH up"
+        ],
+        "what_to_watch": [
+          "Recession threshold (2 consecutive negative quarters)",
+          "vs consensus",
+          "Consumer spending component (70% of GDP)"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "de_cpi",
+        "num": "10",
+        "name": "Germany CPI",
+        "country": "\ud83c\udde9\ud83c\uddea Germany",
+        "tier": 1,
+        "impact": "MEDIUM",
+        "countdown": "6d 10h",
+        "hours_until": 154.4,
+        "time_utc": "\u2014",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "Eurozone CPI Flash \u2014 released 1-2 days later, Germany leads the number",
+          "ECB Rate Decision \u2014 hot German CPI = ECB hawkish pressure",
+          "EUR/USD direction \u2014 strong CPI = ECB tightening = EUR up = DXY down"
+        ],
+        "what_to_watch": [
+          "Harmonized index (HICP) \u2014 what ECB uses",
+          "Core vs headline divergence",
+          "Services vs goods inflation"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "us_fomc",
+        "num": "22",
+        "name": "FOMC Rate Decision",
+        "country": "\ud83c\uddfa\ud83c\uddf8 US",
+        "tier": 1,
+        "impact": "HIGH",
+        "countdown": "8d 5h",
+        "hours_until": 197.4,
+        "time_utc": "19:00",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "Powell Press Conference \u2014 same day, tone matters more than rate itself",
+          "Fed Dot Plot (if SEP meeting) \u2014 quarterly, rate path repricing = major ETH move",
+          "FOMC Minutes (3 weeks later) \u2014 details behind the vote, nuance move"
+        ],
+        "what_to_watch": [
+          "Rate decision vs consensus",
+          "Dot plot \u2014 median rate projection",
+          "QT taper timing \u2014 liquidity signal",
+          "Statement language changes"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": "us_fomc"
+      },
+      {
+        "id": "us_powell",
+        "num": "23",
+        "name": "Powell Press Conference",
+        "country": "\ud83c\uddfa\ud83c\uddf8 US",
+        "tier": 1,
+        "impact": "HIGH",
+        "countdown": "8d 5h",
+        "hours_until": 197.9,
+        "time_utc": "19:30",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "Fed speeches (following days) \u2014 voting members clarify/walk back Powell tone",
+          "CME FedWatch repricing \u2014 immediate, futures re-price rate path live",
+          "10Y Treasury yield reaction \u2014 yields move \u2192 DXY moves \u2192 ETH follows"
+        ],
+        "what_to_watch": [
+          "Tone: hawkish/dovish shift vs last meeting",
+          "Q&A highlights \u2014 what reporters push on",
+          "Data dependency language"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "eu_hicp_flash",
+        "num": "11",
+        "name": "Eurozone CPI Flash",
+        "country": "\ud83c\uddea\ud83c\uddfa Eurozone",
+        "tier": 1,
+        "impact": "MEDIUM",
+        "countdown": "8d 20h",
+        "hours_until": 212.4,
+        "time_utc": "10:00",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "ECB Rate Decision \u2014 CPI is #1 input, hot = hold/hike, cool = cut",
+          "US CPI \u2014 released ~2 weeks later, global inflation comparison",
+          "Core PCE (US) \u2014 US PCE follows ~4 weeks later, confirms/diverges"
+        ],
+        "what_to_watch": [
+          "Core HICP (ex food/energy) \u2014 sticky inflation",
+          "vs ECB 2% target",
+          "Services inflation \u2014 persistent component"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "cn_nbs_pmi",
+        "num": "02",
+        "name": "NBS Manufacturing + Services PMI",
+        "country": "\ud83c\udde8\ud83c\uddf3 China",
+        "tier": 1,
+        "impact": "MEDIUM",
+        "countdown": "9d 11h",
+        "hours_until": 227.4,
+        "time_utc": "01:00",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "Caixin Services PMI \u2014 private services side, divergence from official",
+          "RBA Rate Decision \u2014 Australia reacts to China data (top trade partner)",
+          "Eurozone Flash PMI \u2014 Europe PMI drops same week, narrative chain"
+        ],
+        "what_to_watch": [
+          "Above/below 50",
+          "New orders vs inventories split",
+          "Employment sub-index"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": "cn_nbs_pmi"
+      },
+      {
+        "id": "cn_caixin_mfg_pmi",
+        "num": "01",
+        "name": "China Caixin Manufacturing PMI",
+        "country": "\ud83c\udde8\ud83c\uddf3 China",
+        "tier": 1,
+        "impact": "MEDIUM",
+        "countdown": "9d 12h",
+        "hours_until": 228.1,
+        "time_utc": "01:45",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "NBS Manufacturing PMI \u2014 official vs private divergence tells full picture",
+          "Eurozone PMI Flash \u2014 same-day or next-day, global factory comparison",
+          "US ISM Manufacturing PMI \u2014 completes global PMI picture ~2 days later"
+        ],
+        "what_to_watch": [
+          "Above/below 50 (expansion threshold)",
+          "New orders sub-index",
+          "Export orders \u2014 global demand proxy"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": "cn_caixin_mfg_pmi"
+      },
+      {
+        "id": "us_ism_mfg",
+        "num": "05",
+        "name": "US ISM Manufacturing PMI",
+        "country": "\ud83c\uddfa\ud83c\uddf8 US",
+        "tier": 2,
+        "impact": "MEDIUM",
+        "countdown": "12d 0h",
+        "hours_until": 288.4,
+        "time_utc": "14:00",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "US ISM Services PMI \u2014 released 2 days later, services = 80% of US GDP",
+          "ADP Employment \u2014 same week, labour market follows activity",
+          "Fed speeches \u2014 weak ISM prompts dovish commentary"
+        ],
+        "what_to_watch": [
+          "50 = expansion line",
+          "New orders sub-index \u2014 leading indicator",
+          "Employment sub-index",
+          "Prices paid \u2014 inflation pipeline"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "us_jolts",
+        "num": "19",
+        "name": "JOLTS Job Openings",
+        "country": "\ud83c\uddfa\ud83c\uddf8 US",
+        "tier": 2,
+        "impact": "LOW",
+        "countdown": "12d 0h",
+        "hours_until": 288.4,
+        "time_utc": "14:00",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "ADP Employment \u2014 released same week, demand + actual hiring",
+          "NFP \u2014 JOLTS openings lead to actual hires in NFP",
+          "Average Hourly Earnings \u2014 high openings = wage pressure builds"
+        ],
+        "what_to_watch": [
+          "Quits rate \u2014 Fed watches closely",
+          "Openings vs unemployed ratio",
+          "Layoffs trend"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "au_rba",
+        "num": "09",
+        "name": "RBA Rate Decision",
+        "country": "\ud83c\udde6\ud83c\uddfa Australia",
+        "tier": 2,
+        "impact": "LOW",
+        "countdown": "12d 13h",
+        "hours_until": 301.9,
+        "time_utc": "03:30",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "Australia CPI (quarterly) \u2014 drives next RBA meeting expectations",
+          "Australia Employment \u2014 released same week, dual mandate check",
+          "AUD/USD reaction \u2014 risk-on proxy, AUD up = ETH often follows"
+        ],
+        "what_to_watch": [
+          "Rate decision",
+          "Statement tone \u2014 hawkish/dovish shift",
+          "China data dependency \u2014 RBA watches China closely"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "us_adp",
+        "num": "16",
+        "name": "ADP Employment Report",
+        "country": "\ud83c\uddfa\ud83c\uddf8 US",
+        "tier": 2,
+        "impact": "LOW",
+        "countdown": "13d 22h",
+        "hours_until": 334.6,
+        "time_utc": "12:15",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "Jobless Claims \u2014 Thursday, one more data point before NFP Friday",
+          "NFP \u2014 ADP is the preview, but often diverges significantly",
+          "Average Hourly Earnings \u2014 released with NFP, wages matter as much as jobs"
+        ],
+        "what_to_watch": [
+          "Private payrolls only",
+          "vs NFP consensus \u2014 directional agreement",
+          "Prior month revision"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "us_ism_svc",
+        "num": "06",
+        "name": "US ISM Services PMI",
+        "country": "\ud83c\uddfa\ud83c\uddf8 US",
+        "tier": 2,
+        "impact": "MEDIUM",
+        "countdown": "14d 0h",
+        "hours_until": 336.4,
+        "time_utc": "14:00",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "ADP Employment Report \u2014 released same week, activity + jobs = full picture",
+          "Jobless Claims (weekly) \u2014 Thursday, continuous labour check",
+          "NFP \u2014 services employment is largest NFP component"
+        ],
+        "what_to_watch": [
+          "50 = expansion line",
+          "Services = 80% of US GDP",
+          "Business activity sub-index",
+          "New orders"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "jp_boj",
+        "num": "07",
+        "name": "BoJ Rate Decision",
+        "country": "\ud83c\uddef\ud83c\uddf5 Japan",
+        "tier": 1,
+        "impact": "HIGH",
+        "countdown": "14d 13h",
+        "hours_until": 349.4,
+        "time_utc": "~03:00",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "USD/JPY carry trade reaction \u2014 immediate, yen strengthens on hike, carry unwinds",
+          "Japan CPI (Tokyo) \u2014 released within days, validates BoJ rationale",
+          "Asia equity open \u2014 Nikkei reaction sets Asia session tone for ETH"
+        ],
+        "what_to_watch": [
+          "Rate decision \u2014 any hike = CRITICAL risk event",
+          "YCC (yield curve control) adjustments",
+          "USDJPY \u2014 yen strengthening = carry unwind risk",
+          "Forward guidance \u2014 signaling future hikes"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": "jp_boj"
+      },
+      {
+        "id": "uk_boe",
+        "num": "21",
+        "name": "BoE Rate Decision + MPC Vote",
+        "country": "\ud83c\uddec\ud83c\udde7 UK",
+        "tier": 1,
+        "impact": "MEDIUM",
+        "countdown": "14d 22h",
+        "hours_until": 358.4,
+        "time_utc": "12:00",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "UK CPI (next month) \u2014 MPC dissenters signal what data matters",
+          "UK GDP Monthly \u2014 released within 2 weeks, validates rate rationale",
+          "GBP/USD reaction \u2014 BoE dovish = GBP falls = DXY up = ETH pressure"
+        ],
+        "what_to_watch": [
+          "Split votes most watched",
+          "Dissenters direction",
+          "Bailey forward guidance"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
+        "id": "eu_ecb",
+        "num": "20",
+        "name": "ECB Rate Decision + Lagarde Presser",
+        "country": "\ud83c\uddea\ud83c\uddfa Eurozone",
+        "tier": 1,
+        "impact": "HIGH",
+        "countdown": "14d 23h",
+        "hours_until": 359.6,
+        "time_utc": "13:15",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "Eurozone PMI Flash \u2014 released same week, activity validates rate call",
+          "Eurozone GDP Flash \u2014 next quarter, growth trajectory post-decision",
+          "Fed Rate Decision \u2014 ECB moves first \u2192 reprices DXY \u2192 ETH reacts"
+        ],
+        "what_to_watch": [
+          "Rate decision vs consensus",
+          "Lagarde forward guidance \u2014 hawkish/dovish pivot",
+          "APP/PEPP taper updates \u2014 liquidity signal"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": "eu_ecb"
+      },
+      {
+        "id": "us_nfp",
+        "num": "18",
+        "name": "Non-Farm Payrolls (NFP)",
+        "country": "\ud83c\uddfa\ud83c\uddf8 US",
+        "tier": 1,
+        "impact": "HIGH",
+        "countdown": "15d 23h",
+        "hours_until": 383.9,
+        "time_utc": "13:30",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "Fed speeches (following week) \u2014 Fed officials respond to jobs data within days",
+          "Michigan Consumer Sentiment \u2014 released same day or next week, mood follows jobs",
+          "US CPI (2nd week) \u2014 jobs data feeds wage inflation \u2192 CPI narrative"
+        ],
+        "what_to_watch": [
+          "NFP surprise vs consensus \u2192 immediate ETH direction",
+          "Unemployment rate \u2192 recession signal (Sahm rule)",
+          "Wage growth (Average Hourly Earnings) \u2192 inflation pipeline \u2192 Fed reaction",
+          "Participation rate"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": "us_nfp"
+      },
+      {
+        "id": "cn_trade",
+        "num": "\u2014",
+        "name": "China Trade Balance",
+        "country": "\ud83c\udde8\ud83c\uddf3 China",
+        "tier": 2,
+        "impact": "LOW",
+        "countdown": "16d 13h",
+        "hours_until": 397.4,
+        "time_utc": "03:00",
+        "is_next_24h": false,
+        "is_next_4h": false,
+        "what_comes_next": [
+          "China CPI/PPI \u2014 released same week, demand + inflation together",
+          "PBoC LPR \u2014 weak trade = easing expectations"
+        ],
+        "what_to_watch": [
+          "Export growth",
+          "Import growth (domestic demand)"
+        ],
+        "eth_by_regime": null,
+        "session_itinerary": null
+      },
+      {
         "id": "cn_cpi",
         "num": "15",
         "name": "China CPI + PPI",
         "country": "\ud83c\udde8\ud83c\uddf3 China",
         "tier": 1,
         "impact": "MEDIUM",
-        "countdown": "2d 16h",
-        "hours_until": 64.5,
+        "countdown": "18d 11h",
+        "hours_until": 443.9,
         "time_utc": "01:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3144,8 +3258,8 @@
         "country": "\ud83c\udde8\ud83c\uddf3 China",
         "tier": 1,
         "impact": "MEDIUM",
-        "countdown": "4d 14h",
-        "hours_until": 111.0,
+        "countdown": "20d 10h",
+        "hours_until": 490.4,
         "time_utc": "\u2014",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3168,8 +3282,8 @@
         "country": "\ud83c\uddfa\ud83c\uddf8 US",
         "tier": 1,
         "impact": "HIGHEST",
-        "countdown": "5d 4h",
-        "hours_until": 124.5,
+        "countdown": "20d 23h",
+        "hours_until": 503.9,
         "time_utc": "13:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3220,8 +3334,8 @@
         "country": "\ud83c\uddec\ud83c\udde7 UK",
         "tier": 2,
         "impact": "LOW",
-        "countdown": "5d 20h",
-        "hours_until": 141.0,
+        "countdown": "21d 16h",
+        "hours_until": 520.4,
         "time_utc": "06:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3245,8 +3359,8 @@
         "country": "\ud83c\uddfa\ud83c\uddf8 US",
         "tier": 2,
         "impact": "MEDIUM",
-        "countdown": "6d 4h",
-        "hours_until": 148.5,
+        "countdown": "21d 23h",
+        "hours_until": 527.9,
         "time_utc": "13:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3270,8 +3384,8 @@
         "country": "\ud83c\uddfa\ud83c\uddf8 US",
         "tier": 2,
         "impact": "LOW",
-        "countdown": "7d 4h",
-        "hours_until": 173.0,
+        "countdown": "23d 0h",
+        "hours_until": 552.4,
         "time_utc": "14:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3295,8 +3409,8 @@
         "country": "\ud83c\uddfa\ud83c\uddf8 US",
         "tier": 2,
         "impact": "MEDIUM",
-        "countdown": "8d 4h",
-        "hours_until": 196.5,
+        "countdown": "23d 23h",
+        "hours_until": 575.9,
         "time_utc": "13:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3320,8 +3434,8 @@
         "country": "\ud83c\uddfa\ud83c\uddf8 US",
         "tier": 2,
         "impact": "LOW",
-        "countdown": "10d 4h",
-        "hours_until": 244.5,
+        "countdown": "25d 23h",
+        "hours_until": 623.9,
         "time_utc": "13:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3339,39 +3453,14 @@
         "session_itinerary": null
       },
       {
-        "id": "cn_gdp",
-        "num": "30",
-        "name": "China GDP (Quarterly)",
-        "country": "\ud83c\udde8\ud83c\uddf3 China",
-        "tier": 1,
-        "impact": "MEDIUM",
-        "countdown": "10d 17h",
-        "hours_until": 258.0,
-        "time_utc": "03:00",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "China Retail Sales \u2014 released same day, growth quality check",
-          "China Industrial Output \u2014 released same day, supply side of GDP",
-          "PBoC LPR Decision \u2014 miss = stimulus expectations spike"
-        ],
-        "what_to_watch": [
-          "vs target (5%)",
-          "Quarterly acceleration/deceleration",
-          "Property sector drag"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
         "id": "uk_cpi",
         "num": "12",
         "name": "UK CPI",
         "country": "\ud83c\uddec\ud83c\udde7 UK",
         "tier": 1,
         "impact": "MEDIUM",
-        "countdown": "10d 20h",
-        "hours_until": 261.0,
+        "countdown": "26d 16h",
+        "hours_until": 640.4,
         "time_utc": "06:00",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3395,8 +3484,8 @@
         "country": "\ud83c\udde8\ud83c\uddf3 China",
         "tier": 1,
         "impact": "HIGH",
-        "countdown": "12d 16h",
-        "hours_until": 304.5,
+        "countdown": "28d 11h",
+        "hours_until": 683.9,
         "time_utc": "01:30",
         "is_next_24h": false,
         "is_next_4h": false,
@@ -3414,533 +3503,29 @@
         "session_itinerary": "cn_pboc_lpr"
       },
       {
-        "id": "eu_pmi_flash",
-        "num": "03",
-        "name": "Eurozone Flash PMI (Composite)",
-        "country": "\ud83c\uddea\ud83c\uddfa Eurozone",
-        "tier": 1,
-        "impact": "MEDIUM",
-        "countdown": "14d 22h",
-        "hours_until": 359.0,
-        "time_utc": "08:00",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "UK Flash PMI \u2014 released same day, compare EU vs UK health",
-          "Germany Ifo Business Climate \u2014 follows within days, confirms PMI",
-          "ECB Rate Decision \u2014 PMI weakness = ECB cut expectations build"
-        ],
-        "what_to_watch": [
-          "Composite above/below 50",
-          "Manufacturing vs services split",
-          "Input prices sub-index \u2014 inflation preview"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "uk_pmi",
-        "num": "04",
-        "name": "UK Flash PMI",
-        "country": "\ud83c\uddec\ud83c\udde7 UK",
-        "tier": 2,
-        "impact": "LOW",
-        "countdown": "14d 23h",
-        "hours_until": 359.5,
-        "time_utc": "08:30",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "UK CPI \u2014 PMI cost pressures preview inflation print",
-          "BoE Rate Decision \u2014 weak PMI adds to easing case",
-          "UK GDP Monthly \u2014 PMI is leading, GDP confirms with 3-4 week lag"
-        ],
-        "what_to_watch": [
-          "Composite above/below 50",
-          "Input cost pressures \u2014 inflation preview"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "de_ifo",
-        "num": "33",
-        "name": "Germany Ifo Business Climate",
-        "country": "\ud83c\udde9\ud83c\uddea Germany",
-        "tier": 2,
-        "impact": "LOW",
-        "countdown": "15d 22h",
-        "hours_until": 383.0,
-        "time_utc": "08:00",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "Germany Factory Orders \u2014 released 1-2 weeks later, confirms Ifo",
-          "ZEW Economic Sentiment \u2014 released same week, analyst vs business view",
-          "Eurozone GDP Flash \u2014 Ifo leads GDP by ~6 weeks"
-        ],
-        "what_to_watch": [
-          "9,000 firm survey \u2014 best EU forward indicator",
-          "Expectations vs current conditions",
-          "Manufacturing vs services"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "au_cpi",
-        "num": "38",
-        "name": "Australia CPI (Quarterly)",
-        "country": "\ud83c\udde6\ud83c\uddfa Australia",
-        "tier": 2,
-        "impact": "LOW",
-        "countdown": "17d 15h",
-        "hours_until": 423.5,
-        "time_utc": "00:30",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "RBA Rate Decision \u2014 CPI is primary RBA input, hot = hold, cool = cut",
-          "Australia Employment \u2014 released same quarter, dual mandate both sides",
-          "AUD/USD reaction \u2014 AUD is risk proxy, moves with ETH correlation"
-        ],
-        "what_to_watch": [
-          "Trimmed mean watched by RBA",
-          "Services inflation \u2014 sticky component",
-          "Housing costs"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "eu_gdp",
-        "num": "26",
-        "name": "Eurozone GDP Flash",
-        "country": "\ud83c\uddea\ud83c\uddfa Eurozone",
-        "tier": 1,
-        "impact": "MEDIUM",
-        "countdown": "18d 0h",
-        "hours_until": 433.0,
-        "time_utc": "10:00",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "Germany GDP \u2014 released same week, biggest component confirmed",
-          "ECB Rate Decision \u2014 negative EZ GDP = ECB cuts accelerate",
-          "US GDP Advance \u2014 EZ GDP drops first, US follows ~1 week later"
-        ],
-        "what_to_watch": [
-          "Recession threshold (2 consecutive negative quarters)",
-          "Germany drag",
-          "Quarterly momentum shift"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "us_durables",
-        "num": "37",
-        "name": "US Durable Goods Orders",
+        "id": "us_fomc_minutes",
+        "num": "34",
+        "name": "FOMC Meeting Minutes",
         "country": "\ud83c\uddfa\ud83c\uddf8 US",
         "tier": 2,
         "impact": "LOW",
-        "countdown": "19d 4h",
-        "hours_until": 460.5,
-        "time_utc": "13:30",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "GDP Advance Estimate \u2014 capex feeds directly into GDP business investment",
-          "ISM Manufacturing PMI \u2014 orders lead production, confirms PMI direction",
-          "Factory Orders (full) \u2014 released 1 week later, broader manufacturing picture"
-        ],
-        "what_to_watch": [
-          "Ex-transports (volatile aircraft orders)",
-          "Core capital goods orders \u2014 capex proxy",
-          "Business investment signal"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "jp_cpi_tokyo",
-        "num": "08",
-        "name": "Japan CPI (Tokyo + National)",
-        "country": "\ud83c\uddef\ud83c\uddf5 Japan",
-        "tier": 1,
-        "impact": "MEDIUM",
-        "countdown": "19d 14h",
-        "hours_until": 470.5,
-        "time_utc": "23:30",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "BoJ Rate Decision \u2014 hot CPI accelerates hike timeline",
-          "USD/JPY level shift \u2014 inflation = yen strength expectation",
-          "Japan Tankan Survey \u2014 quarterly, business confidence follows inflation"
-        ],
-        "what_to_watch": [
-          "Ex-fresh-food (core) \u2014 BoJ target",
-          "Trend \u2014 rising = BOJ under pressure to hike",
-          "Services vs goods"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "us_pce",
-        "num": "24",
-        "name": "Core PCE Price Index",
-        "country": "\ud83c\uddfa\ud83c\uddf8 US",
-        "tier": 1,
-        "impact": "HIGH",
-        "countdown": "21d 4h",
-        "hours_until": 508.5,
-        "time_utc": "13:30",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "FOMC Rate Decision \u2014 PCE is the Fed's number, hot PCE = holds/hike",
-          "Personal Income + Spending \u2014 released same day, demand behind inflation",
-          "Michigan Consumer Sentiment \u2014 inflation expectations sub-index confirms"
-        ],
-        "what_to_watch": [
-          "THIS IS THE FED'S ACTUAL TARGET \u2014 not CPI!",
-          "Core PCE vs 2% target",
-          "MoM vs YoY \u2014 monthly momentum matters",
-          "Services ex-housing \u2014 \"supercore\" Fed metric"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "us_gdp",
-        "num": "25",
-        "name": "US GDP Advance Estimate",
-        "country": "\ud83c\uddfa\ud83c\uddf8 US",
-        "tier": 1,
-        "impact": "MEDIUM",
-        "countdown": "21d 4h",
-        "hours_until": 508.5,
-        "time_utc": "13:30",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "GDP Second Estimate \u2014 revised ~4 weeks later, usually smaller move",
-          "Corporate earnings season \u2014 GDP sets macro backdrop for earnings",
-          "Fed Rate Decision \u2014 negative GDP = recession = rate cuts = ETH up"
-        ],
-        "what_to_watch": [
-          "Recession threshold (2 consecutive negative quarters)",
-          "vs consensus",
-          "Consumer spending component (70% of GDP)"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "de_cpi",
-        "num": "10",
-        "name": "Germany CPI",
-        "country": "\ud83c\udde9\ud83c\uddea Germany",
-        "tier": 1,
-        "impact": "MEDIUM",
-        "countdown": "21d 14h",
-        "hours_until": 519.0,
-        "time_utc": "\u2014",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "Eurozone CPI Flash \u2014 released 1-2 days later, Germany leads the number",
-          "ECB Rate Decision \u2014 hot German CPI = ECB hawkish pressure",
-          "EUR/USD direction \u2014 strong CPI = ECB tightening = EUR up = DXY down"
-        ],
-        "what_to_watch": [
-          "Harmonized index (HICP) \u2014 what ECB uses",
-          "Core vs headline divergence",
-          "Services vs goods inflation"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "us_fomc",
-        "num": "22",
-        "name": "FOMC Rate Decision",
-        "country": "\ud83c\uddfa\ud83c\uddf8 US",
-        "tier": 1,
-        "impact": "HIGH",
-        "countdown": "23d 9h",
-        "hours_until": 562.0,
+        "countdown": "29d 5h",
+        "hours_until": 701.4,
         "time_utc": "19:00",
         "is_next_24h": false,
         "is_next_4h": false,
         "what_comes_next": [
-          "Powell Press Conference \u2014 same day, tone matters more than rate itself",
-          "Fed Dot Plot (if SEP meeting) \u2014 quarterly, rate path repricing = major ETH move",
-          "FOMC Minutes (3 weeks later) \u2014 details behind the vote, nuance move"
+          "Fed speeches \u2014 members respond to minutes coverage",
+          "Next FOMC meeting \u2014 minutes reveal what data they're watching",
+          "CME FedWatch repricing \u2014 subtle = futures drift, not spike"
         ],
         "what_to_watch": [
-          "Rate decision vs consensus",
-          "Dot plot \u2014 median rate projection",
-          "QT taper timing \u2014 liquidity signal",
-          "Statement language changes"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": "us_fomc"
-      },
-      {
-        "id": "us_powell",
-        "num": "23",
-        "name": "Powell Press Conference",
-        "country": "\ud83c\uddfa\ud83c\uddf8 US",
-        "tier": 1,
-        "impact": "HIGH",
-        "countdown": "23d 10h",
-        "hours_until": 562.5,
-        "time_utc": "19:30",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "Fed speeches (following days) \u2014 voting members clarify/walk back Powell tone",
-          "CME FedWatch repricing \u2014 immediate, futures re-price rate path live",
-          "10Y Treasury yield reaction \u2014 yields move \u2192 DXY moves \u2192 ETH follows"
-        ],
-        "what_to_watch": [
-          "Tone: hawkish/dovish shift vs last meeting",
-          "Q&A highlights \u2014 what reporters push on",
-          "Data dependency language"
+          "Voting nuance and internal debate",
+          "Dissent direction",
+          "What data they're watching"
         ],
         "eth_by_regime": null,
         "session_itinerary": null
-      },
-      {
-        "id": "eu_hicp_flash",
-        "num": "11",
-        "name": "Eurozone CPI Flash",
-        "country": "\ud83c\uddea\ud83c\uddfa Eurozone",
-        "tier": 1,
-        "impact": "MEDIUM",
-        "countdown": "24d 0h",
-        "hours_until": 577.0,
-        "time_utc": "10:00",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "ECB Rate Decision \u2014 CPI is #1 input, hot = hold/hike, cool = cut",
-          "US CPI \u2014 released ~2 weeks later, global inflation comparison",
-          "Core PCE (US) \u2014 US PCE follows ~4 weeks later, confirms/diverges"
-        ],
-        "what_to_watch": [
-          "Core HICP (ex food/energy) \u2014 sticky inflation",
-          "vs ECB 2% target",
-          "Services inflation \u2014 persistent component"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "cn_nbs_pmi",
-        "num": "02",
-        "name": "NBS Manufacturing + Services PMI",
-        "country": "\ud83c\udde8\ud83c\uddf3 China",
-        "tier": 1,
-        "impact": "MEDIUM",
-        "countdown": "24d 15h",
-        "hours_until": 592.0,
-        "time_utc": "01:00",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "Caixin Services PMI \u2014 private services side, divergence from official",
-          "RBA Rate Decision \u2014 Australia reacts to China data (top trade partner)",
-          "Eurozone Flash PMI \u2014 Europe PMI drops same week, narrative chain"
-        ],
-        "what_to_watch": [
-          "Above/below 50",
-          "New orders vs inventories split",
-          "Employment sub-index"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": "cn_nbs_pmi"
-      },
-      {
-        "id": "cn_caixin_mfg_pmi",
-        "num": "01",
-        "name": "China Caixin Manufacturing PMI",
-        "country": "\ud83c\udde8\ud83c\uddf3 China",
-        "tier": 1,
-        "impact": "MEDIUM",
-        "countdown": "24d 16h",
-        "hours_until": 592.7,
-        "time_utc": "01:45",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "NBS Manufacturing PMI \u2014 official vs private divergence tells full picture",
-          "Eurozone PMI Flash \u2014 same-day or next-day, global factory comparison",
-          "US ISM Manufacturing PMI \u2014 completes global PMI picture ~2 days later"
-        ],
-        "what_to_watch": [
-          "Above/below 50 (expansion threshold)",
-          "New orders sub-index",
-          "Export orders \u2014 global demand proxy"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": "cn_caixin_mfg_pmi"
-      },
-      {
-        "id": "us_ism_mfg",
-        "num": "05",
-        "name": "US ISM Manufacturing PMI",
-        "country": "\ud83c\uddfa\ud83c\uddf8 US",
-        "tier": 2,
-        "impact": "MEDIUM",
-        "countdown": "27d 4h",
-        "hours_until": 653.0,
-        "time_utc": "14:00",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "US ISM Services PMI \u2014 released 2 days later, services = 80% of US GDP",
-          "ADP Employment \u2014 same week, labour market follows activity",
-          "Fed speeches \u2014 weak ISM prompts dovish commentary"
-        ],
-        "what_to_watch": [
-          "50 = expansion line",
-          "New orders sub-index \u2014 leading indicator",
-          "Employment sub-index",
-          "Prices paid \u2014 inflation pipeline"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "us_jolts",
-        "num": "19",
-        "name": "JOLTS Job Openings",
-        "country": "\ud83c\uddfa\ud83c\uddf8 US",
-        "tier": 2,
-        "impact": "LOW",
-        "countdown": "27d 4h",
-        "hours_until": 653.0,
-        "time_utc": "14:00",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "ADP Employment \u2014 released same week, demand + actual hiring",
-          "NFP \u2014 JOLTS openings lead to actual hires in NFP",
-          "Average Hourly Earnings \u2014 high openings = wage pressure builds"
-        ],
-        "what_to_watch": [
-          "Quits rate \u2014 Fed watches closely",
-          "Openings vs unemployed ratio",
-          "Layoffs trend"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "au_rba",
-        "num": "09",
-        "name": "RBA Rate Decision",
-        "country": "\ud83c\udde6\ud83c\uddfa Australia",
-        "tier": 2,
-        "impact": "LOW",
-        "countdown": "27d 18h",
-        "hours_until": 666.5,
-        "time_utc": "03:30",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "Australia CPI (quarterly) \u2014 drives next RBA meeting expectations",
-          "Australia Employment \u2014 released same week, dual mandate check",
-          "AUD/USD reaction \u2014 risk-on proxy, AUD up = ETH often follows"
-        ],
-        "what_to_watch": [
-          "Rate decision",
-          "Statement tone \u2014 hawkish/dovish shift",
-          "China data dependency \u2014 RBA watches China closely"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "us_adp",
-        "num": "16",
-        "name": "ADP Employment Report",
-        "country": "\ud83c\uddfa\ud83c\uddf8 US",
-        "tier": 2,
-        "impact": "LOW",
-        "countdown": "29d 3h",
-        "hours_until": 699.2,
-        "time_utc": "12:15",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "Jobless Claims \u2014 Thursday, one more data point before NFP Friday",
-          "NFP \u2014 ADP is the preview, but often diverges significantly",
-          "Average Hourly Earnings \u2014 released with NFP, wages matter as much as jobs"
-        ],
-        "what_to_watch": [
-          "Private payrolls only",
-          "vs NFP consensus \u2014 directional agreement",
-          "Prior month revision"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "us_ism_svc",
-        "num": "06",
-        "name": "US ISM Services PMI",
-        "country": "\ud83c\uddfa\ud83c\uddf8 US",
-        "tier": 2,
-        "impact": "MEDIUM",
-        "countdown": "29d 4h",
-        "hours_until": 701.0,
-        "time_utc": "14:00",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "ADP Employment Report \u2014 released same week, activity + jobs = full picture",
-          "Jobless Claims (weekly) \u2014 Thursday, continuous labour check",
-          "NFP \u2014 services employment is largest NFP component"
-        ],
-        "what_to_watch": [
-          "50 = expansion line",
-          "Services = 80% of US GDP",
-          "Business activity sub-index",
-          "New orders"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": null
-      },
-      {
-        "id": "jp_boj",
-        "num": "07",
-        "name": "BoJ Rate Decision",
-        "country": "\ud83c\uddef\ud83c\uddf5 Japan",
-        "tier": 1,
-        "impact": "HIGH",
-        "countdown": "29d 17h",
-        "hours_until": 714.0,
-        "time_utc": "~03:00",
-        "is_next_24h": false,
-        "is_next_4h": false,
-        "what_comes_next": [
-          "USD/JPY carry trade reaction \u2014 immediate, yen strengthens on hike, carry unwinds",
-          "Japan CPI (Tokyo) \u2014 released within days, validates BoJ rationale",
-          "Asia equity open \u2014 Nikkei reaction sets Asia session tone for ETH"
-        ],
-        "what_to_watch": [
-          "Rate decision \u2014 any hike = CRITICAL risk event",
-          "YCC (yield curve control) adjustments",
-          "USDJPY \u2014 yen strengthening = carry unwind risk",
-          "Forward guidance \u2014 signaling future hikes"
-        ],
-        "eth_by_regime": null,
-        "session_itinerary": "jp_boj"
       }
     ],
     "narrative_chains": {
@@ -4254,43 +3839,31 @@
       }
     },
     "current_week": {
-      "label": "WEEK 1 (1st\u20137th)",
-      "theme": "PMI + NFP \u2014 tone-setting week",
+      "label": "WEEK 4 (22nd\u201331st)",
+      "theme": "End-of-month \u2014 PCE, PMI prep, cycle reset",
       "events": [
         {
-          "id": "cn_caixin_mfg_pmi",
-          "day": "1st"
+          "id": "de_cpi",
+          "day": "~28th\u201330th"
         },
         {
-          "id": "cn_nbs_pmi",
-          "day": "1st"
+          "id": "eu_hicp_flash",
+          "day": "last day"
         },
         {
-          "id": "eu_pmi_flash",
-          "day": "~1st\u20132nd"
+          "id": "us_durables",
+          "day": "~26th"
         },
         {
-          "id": "uk_pmi",
-          "day": "~1st\u20132nd"
+          "id": "us_pce",
+          "day": "~last Friday"
         },
         {
-          "id": "us_ism_mfg",
-          "day": "1st business day"
-        },
-        {
-          "id": "us_ism_svc",
-          "day": "3rd business day"
-        },
-        {
-          "id": "us_jolts",
-          "day": "~1st week"
-        },
-        {
-          "id": "us_nfp",
-          "day": "1st Friday"
+          "id": "jp_cpi_tokyo",
+          "day": "~last Friday"
         }
       ],
-      "trading_note": "NFP sets the tone. Wait for CPI confirmation before large positions."
+      "trading_note": "Core PCE (Fed target!) + Tokyo CPI \u2192 BOJ risk. Germany CPI previews EU CPI."
     },
     "trading_logic": {
       "regime_hierarchy": [
@@ -4640,14 +4213,14 @@
       "actual": 51.7,
       "previous": 51.8,
       "source": "hardcoded_releases",
-      "timestamp": "2026-07-03T04:10:50.228254+00:00",
+      "timestamp": "2026-07-17T04:16:12.542721+00:00",
       "surprise": "INLINE"
     },
     "nbs_mfg_pmi": {
       "actual": 50.3,
       "previous": null,
       "source": "hardcoded_releases",
-      "timestamp": "2026-07-03T04:10:47.878198+00:00",
+      "timestamp": "2026-07-17T04:16:09.708998+00:00",
       "release_date": "2026-06-30",
       "surprise": "UNKNOWN"
     },
