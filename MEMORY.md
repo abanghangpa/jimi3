@@ -193,3 +193,76 @@ The scanner optimization on 2026-07-05 broke strategy TP/SL multipliers. All str
 - Pipeline dependencies cause silent failures (always have fallback)
 - Session timing is a filter, not a strategy
 - Squeeze detection works when using ATR/BB compression (not module-dependent)
+
+
+### Strategy Rework Session (2026-07-22)
+
+**18 commits in one session.** Major strategy upgrades + new gate system.
+
+**Strategy reworks (research-backed):**
+- S19 orderbook_imbalance v5: trade-based OBI (Nittur Anantha 2025), concave conviction (Bieganowski 2026), VWAP deviation, spread filter, asymmetric entry
+- S20 liquidation_cascade v5: bidirectional (added LONG cascade), regime-adaptive thresholds, 30min cooldown
+- S06 liquidity_grab v6: killed v5 "ride the flow" (12.5% WR), replaced with volume spike + S/R break + momentum confirmation
+
+**New systems deployed:**
+- **RegimeClassifierV4**: daily timeframe regime detection, multi-signal (derivatives + vol + macro + taker + cascade)
+- **Conditional Directional Gate**: blocks LONG+BEAR and SHORT+BULL (PF: LONG+BEAR=0.31, SHORT+BULL=0.29 — catastrophic)
+- **DirectionalConsensusGate**: 5-metric veto (EMA200 distance, slope, regime, momentum, swing bias). BLOCK at 2.0+ weight, FLIP at 3.0+
+- **Execution quality tracking**: daily_execution_report.py + execution_tracker.py
+- **Quant analysis suite**: stress tests, regime experiments, conditional directional model
+
+**Key data points:**
+- Event-driven backtest: 392 trades replayed through real strategy logic
+- LONG+BEAR = 0.31 PF, SHORT+BULL = 0.29 PF (both portfolio killers)
+- LONG+BULL = 3.51 PF, SHORT+BEAR = 3.31 PF (both profitable)
+
+**Lessons:**
+- Research papers provide better signal than pure backtesting (trade-based OBI > quote-based OBI)
+- Bidirectional strategies need regime awareness (LONG cascade works in bull, SHORT in bear)
+- "Ride the flow" concept was wrong — volume spike + S/R break is more reliable
+
+
+### Executor Bugs Found & Fixed (2026-07-23)
+
+**Found 9 critical bugs in scanner_executor.py during code review:**
+
+1. **Double Orchestrator call** — `orchestrator.evaluate_signal()` called twice per signal, second result overwrote first. Doubled compute, potential disagreements.
+2. **Duplicate config dicts** — `REGIME_STRATEGY_GATE`, `REGIME_TPSL_SCALE`, constants defined twice. Second silently overwrote first with different values.
+3. **Duplicate cooldown tracking** — `close_position()` had copy-pasted cooldown block twice.
+4. **Duplicate regime re-classification** — regime classified twice per loop iteration.
+5. **`klines` undefined** — referenced variable that was never loaded. Price history always `[]`.
+6. **Consensus gate used `now` not signal timestamp** — EMA/slope lookups mismatched for delayed signals.
+7. **`direction` variable stale after FLIP** — fallback TP/SL used old direction after consensus gate flipped.
+8. **Duplicate `Orchestrator` import** — imported from two different paths.
+9. **No atomic state writes** — `save_state()` could corrupt on crash mid-write.
+
+**Also found:** `/root/jimi3/` was a redundant copy of workspace `jimi_audit/`. 200+ identical files, 6 diverged. Consolidated to workspace only, removed jimi3.
+
+**File reduced:** 1927 → 1832 lines (95 lines dead/duplicate code removed).
+
+**Dry-run after fixes:** Clean startup, regime BEAR correctly blocking incompatible strategies.
+
+
+### Regime Gate Analysis (2026-07-23)
+
+**Problem:** After new regime classifier, most strategies not reviewed for gate compatibility.
+
+**Effective strategies per regime:**
+- BULL: 5 active (7 blocked — SHORT-only blocked by cond gate)
+- BEAR: 9 active (3 blocked — failed_breakout, positioning_fade, structural_break)
+- RANGING: 11 active (1 blocked — forced_movement)
+- STRESS: 6 active (6 blocked — liquidation_cascade, funding_squeeze blocked!)
+- MILDLY_BEARISH: 9 active (3 blocked)
+
+**Issues identified:**
+- `positioning_fade` effectively dead — gate allows CHOP_MILD/CHOP_BEAR/NEUTRAL/CRISIS but classifier never produces these
+- `liquidation_cascade` + `funding_squeeze` blocked in STRESS — these are crisis strategies, should be active
+- 3 conflicts: SHORT-only strategies allowed in BULL by regime gate but blocked by cond gate
+
+**Pending fixes:**
+- positioning_fade: add BEAR, MILDLY_BEARISH, STRESS
+- liquidation_cascade: add STRESS
+- funding_squeeze: add STRESS
+- structural_break: add BEAR
+
+**Capital:** $192.37 | 22 trades (10W/10L) | 3 open positions
