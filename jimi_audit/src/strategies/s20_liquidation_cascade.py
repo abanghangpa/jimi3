@@ -1,15 +1,14 @@
-"""S20: Liquidation Cascade v5 — Bidirectional + regime-adaptive.
+"""S20: Liquidation Cascade v6 — LONG-only + whale_watch confirmation.
 
-v4 → v5 CHANGES:
-1. BIDIRECTIONAL: Added LONG cascade detection (OI surge + short-crowded)
-2. REGIME-ADAPTIVE: Different thresholds per regime
-3. CONFIRMATION: Price momentum must align with cascade direction
-4. TIERED CONVICTION: 3 tiers (primary/high/premium) kept from v4
-5. REGIME TP/SL: Tighter in RANGING, wider in STRESS
-6. COOLDOWN: 30min between cascade signals (prevent spam)
+v5 → v6 CHANGES:
+1. LONG-ONLY: Removed SHORT cascade detection entirely
+2. WHALE_WATCH CONFIRMATION: Requires whale_watch to fire LONG at same timestamp
+3. Rationale: v5 backtest showed SHORT signals lose money (44.2% WR against whale LONG)
+   Same-direction (LONG+LONG) = 59.5% WR on 52 trades
+4. Kept: regime-adaptive thresholds, vol regime, momentum confirmation, cooldown
 
-v4 stats: SHORT only, 83% WR in RANGING, +$174
-v5 target: Add LONG cascade edge, maintain SHORT quality.
+v5 stats: 1109 signals, 23.1% WR, PF 0.06 (catastrophic)
+v6 target: ~52 signals, 59.5% WR (based on revalidation with whale_watch filter)
 """
 from .base import BaseStrategy, SignalResult
 import json, os, time
@@ -22,18 +21,32 @@ _last_cascade_ts = 0
 CASCADE_COOLDOWN = 1800  # 30 min
 
 
-def _check_cascade(data, df_15m, idx, regime):
+def _check_whale_watch_confirms(data):
     """
-    Detect OI cascade — bidirectional.
+    Check if whale_watch strategy fired LONG at the same timestamp.
+    Returns True if whale_watch confirms LONG direction.
+    """
+    # Check in strategy_signals from the current scan
+    strategy_signals = data.get('strategy_signals', {})
+    whale = strategy_signals.get('whale_watch', {})
+    if whale.get('direction') == 'LONG' and whale.get('fired', False):
+        return True
 
-    SHORT cascade (crowded longs liquidated):
-    - OI dropping fast (longs closing)
-    - LS > 1.5 (long-crowded)
-    - Price dropping (confirming)
+    # Also check in multi_strategy output
+    multi = data.get('multi_strategy', {})
+    all_signals = multi.get('all_signals', [])
+    for sig in all_signals:
+        if sig.get('strategy') == 'whale_watch' and sig.get('direction') == 'LONG':
+            return True
 
-    LONG cascade (crowded shorts squeezed):
+    return False
+
+
+def _check_long_cascade(data, df_15m, idx, regime):
+    """
+    Detect LONG cascade (crowded shorts squeezed).
     - OI surging (new longs + shorts covering)
-    - LS < 0.7 (short-crowded, i.e. LS inverted or very low)
+    - LS < 0.7 (short-crowded)
     - Price rising (confirming)
     """
     deriv = data.get('derivatives', {})
@@ -47,82 +60,36 @@ def _check_cascade(data, df_15m, idx, regime):
 
     # ── REGIME-ADAPTIVE THRESHOLDS ──
     if regime in ("STRESS", "BEAR"):
-        # More sensitive in stress/bear (cascades happen faster)
-        oi_threshold = -0.008  # Was -0.01
-        ls_threshold = 1.3     # Was 1.5
-    elif regime == "RANGING":
-        # Standard thresholds
-        oi_threshold = -0.01
-        ls_threshold = 1.5
-    else:  # BULL, MILDLY_BEARISH
-        # Higher bar in bull (cascades are rarer)
-        oi_threshold = -0.012
-        ls_threshold = 1.6
-
-    vol_regime = _check_vol_regime(df_15m, idx)
-
-    # ── SHORT CASCADE (OI dropping + crowded longs) ──
-    if oi_roc < oi_threshold and ls_ratio > ls_threshold:
-        # Confirm: price must be dropping
-        if price_change > 0.005:
-            return None  # Price rising = not a cascade
-
-        if oi_roc < oi_threshold * 1.5:
-            # HIGH CONVICTION
-            strength = min(abs(oi_roc) * 15, 0.9)
-            source = 'cascade_short_hi'
-        else:
-            strength = min(abs(oi_roc) * 10, 0.7)
-            source = 'cascade_short_primary'
-
-        # PREMIUM: MID vol + deep OI drop
-        if vol_regime == 'MID' and oi_roc < oi_threshold * 1.5:
-            strength = min(strength + 0.1, 0.95)
-            source = 'cascade_short_premium'
-
-        return {
-            "direction": "SHORT",
-            "strength": strength,
-            "oi_roc": oi_roc,
-            "ls_ratio": ls_ratio,
-            "price_change": price_change,
-            "vol_regime": vol_regime,
-            "source": source,
-            "detail": f"SHORT cascade: OI ROC={oi_roc:.4f}, LS={ls_ratio:.2f}, price={price_change:.4f}, vol={vol_regime}"
-        }
-
-    # ── LONG CASCADE (OI surging + crowded shorts) ──
-    # Inverted logic: OI rising fast + LS < threshold = shorts getting squeezed
-    oi_surge_threshold = 0.015  # OI must surge by 1.5%+
-    ls_short_threshold = 0.7    # LS below 0.7 = short-crowded
-
-    if regime in ("STRESS", "BEAR"):
-        oi_surge_threshold = 0.012  # More sensitive
+        oi_surge_threshold = 0.012
         ls_short_threshold = 0.8
     elif regime == "BULL":
-        oi_surge_threshold = 0.020  # Higher bar
+        oi_surge_threshold = 0.020
         ls_short_threshold = 0.6
+    else:  # RANGING, MILDLY_BEARISH
+        oi_surge_threshold = 0.015
+        ls_short_threshold = 0.7
 
-    if oi_roc > oi_surge_threshold and ls_ratio < ls_short_threshold:
-        # Confirm: price must be rising
-        if price_change < -0.005:
-            return None  # Price dropping = not a squeeze
+    if oi_roc <= oi_surge_threshold or ls_ratio >= ls_short_threshold:
+        return None
 
-        strength = min(abs(oi_roc) * 8, 0.8)
-        source = 'cascade_long'
+    # Confirm: price must be rising
+    if price_change < -0.005:
+        return None
 
-        return {
-            "direction": "LONG",
-            "strength": strength,
-            "oi_roc": oi_roc,
-            "ls_ratio": ls_ratio,
-            "price_change": price_change,
-            "vol_regime": vol_regime,
-            "source": source,
-            "detail": f"LONG cascade: OI ROC={oi_roc:.4f}, LS={ls_ratio:.2f}, price={price_change:.4f}, vol={vol_regime}"
-        }
+    vol_regime = _check_vol_regime(df_15m, idx)
+    strength = min(abs(oi_roc) * 8, 0.8)
+    source = 'cascade_long'
 
-    return None
+    return {
+        "direction": "LONG",
+        "strength": strength,
+        "oi_roc": oi_roc,
+        "ls_ratio": ls_ratio,
+        "price_change": price_change,
+        "vol_regime": vol_regime,
+        "source": source,
+        "detail": f"LONG cascade: OI ROC={oi_roc:.4f}, LS={ls_ratio:.2f}, price={price_change:.4f}, vol={vol_regime}"
+    }
 
 
 def _check_vol_regime(df_15m, idx):
@@ -151,7 +118,7 @@ def _check_vol_regime(df_15m, idx):
 class LiquidationCascadeStrategy(BaseStrategy):
     name = 'liquidation_cascade'
     strategy_type = 'event'
-    description = 'v5: bidirectional + regime-adaptive. SHORT+LONG cascades.'
+    description = 'v6: LONG-only + whale_watch confirmation. No SHORT signals.'
 
     def check(self, data, df_15m=None, idx=None, **kwargs):
         global _last_cascade_ts
@@ -167,32 +134,32 @@ class LiquidationCascadeStrategy(BaseStrategy):
         if now - _last_cascade_ts < CASCADE_COOLDOWN:
             return None
 
-        # ── CASCADE DETECTION ──
-        cascade = _check_cascade(data, df_15m, idx, regime)
+        # ── WHALE_WATCH CONFIRMATION (REQUIRED) ──
+        if not _check_whale_watch_confirms(data):
+            return None
+
+        # ── LONG CASCADE DETECTION ONLY ──
+        cascade = _check_long_cascade(data, df_15m, idx, regime)
         if not cascade:
             return None
 
-        direction = cascade['direction']
+        direction = cascade['direction']  # Always LONG
         strength = cascade['strength']
         source = cascade['source']
 
-        # ── MOMENTUM CONFIRMATION (NEW) ──
+        # ── MOMENTUM CONFIRMATION ──
         closes = df_15m['Close'].values.astype(float)
         if idx >= 3:
             mom_3 = (closes[idx] - closes[idx-3]) / closes[idx-3]
-            if direction == "LONG" and mom_3 < -0.003:
+            if mom_3 < -0.003:
                 return None  # Need positive momentum for LONG cascade
-            if direction == "SHORT" and mom_3 > 0.003:
-                return None  # Need negative momentum for SHORT cascade
 
         # ── CONVICTION ──
         conviction = min(0.45 + strength * 0.40, 0.90)
         if conviction < 0.45:
             return None
 
-        # ── TP/SL (v5: regime-adaptive) ──
-        # Base: TP=2.0%, SL=1.0% (2:1 R:R)
-        # Regime adjustments
+        # ── TP/SL (regime-adaptive) ──
         tp_mult_base = {"BULL": 2.0, "BEAR": 1.8, "RANGING": 2.0, "STRESS": 1.5, "MILDLY_BEARISH": 1.8}.get(regime, 2.0)
         sl_mult_base = {"BULL": 1.0, "BEAR": 1.2, "RANGING": 1.0, "STRESS": 0.8, "MILDLY_BEARISH": 1.0}.get(regime, 1.0)
 
@@ -208,10 +175,10 @@ class LiquidationCascadeStrategy(BaseStrategy):
             entry=price, sl=sl, tp1=tp1, tp2=tp2, tp3=tp3,
             sl_pct=sl_pct, tp1_pct=tp1_pct,
             size_mult=0.7,
-            reason=f"Liq cascade v5 ({source}) {direction}: {cascade['detail']}",
+            reason=f"Liq cascade v6 ({source}) LONG: {cascade['detail']} | whale_watch confirms",
             bypass_gates=True,
             details={
-                'version': 'v5',
+                'version': 'v6',
                 'source': source,
                 'oi_roc': cascade.get('oi_roc', 0),
                 'ls_ratio': cascade.get('ls_ratio', 0),
@@ -219,5 +186,6 @@ class LiquidationCascadeStrategy(BaseStrategy):
                 'vol_regime': cascade.get('vol_regime', 'UNKNOWN'),
                 'strength': strength,
                 'regime': regime,
+                'whale_confirmed': True,
             },
         )
