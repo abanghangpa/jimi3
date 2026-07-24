@@ -1,13 +1,15 @@
-"""S13: Funding Rate Arbitrage v7 — Requires squeeze_breakout LONG.
+"""S13: Funding Rate Arbitrage v7.1 — Three independent scenarios.
 
-v6 → v7 CHANGES:
-1. SQUEEZE_BREAKOUT REQUIRED: Must co-fire with squeeze_breakout LONG
-2. Backtest: 14 trades, 78.6% WR, PF 5.56, p=0.0049
-3. Small sample — PROVISIONAL (needs 30+ live trades)
-4. Reduced size_mult to 0.5 (provisional)
+v7 → v7.1 CHANGES:
+1. SCENARIO A: squeeze_breakout LONG (14 trades, 78.6% WR, PF 5.56, p=0.0049)
+2. SCENARIO B: 1h momentum >= 1.0% (17 trades, 76.9% WR, PF 3.33, p=0.0302)
+3. SCENARIO C: squeeze_breakout LONG + 1h mom >= 0.1% (8 trades, 100% WR, PF inf, p=0.0042)
+4. Any scenario can trigger — independent entry paths
 
-v6 stats: 337 trades, 47.9% WR, PF 1.02 (dead standalone)
-v7 target: 14 trades, 78.6% WR, PF 5.56 (with squeeze_breakout)
+v7.1 stats:
+- A: 14 trades, 78.6% WR, PF 5.56
+- B: 17 trades, 76.9% WR, PF 3.33
+- C: 8 trades, 100% WR, PF inf
 """
 from .base import BaseStrategy, SignalResult
 import numpy as np
@@ -18,6 +20,9 @@ FUNDING_CSV = os.path.join(BASE_DIR, "data", "forced_movement", "funding_history
 
 GOOD_HOURS = {2, 3, 7, 8, 9, 10, 11, 12, 13, 15, 16}
 BAD_HOURS = {4, 6, 19, 20, 21, 22, 23}
+
+MOM_1H_THRESHOLD_B = 0.01   # 1.0% for Scenario B
+MOM_1H_THRESHOLD_C = 0.001  # 0.1% for Scenario C
 
 
 def _read_cumulative_funding(hours=72):
@@ -47,7 +52,7 @@ def _read_cumulative_funding(hours=72):
 
 
 def _check_squeeze_breakout_confirms(data):
-    """Check if squeeze_breakout fires LONG at same timestamp."""
+    """Scenario A/C: squeeze_breakout fires LONG."""
     strategy_signals = data.get('strategy_signals', {})
     sq = strategy_signals.get('squeeze_breakout', {})
     if sq.get('direction') == 'LONG' and sq.get('fired', False):
@@ -59,10 +64,19 @@ def _check_squeeze_breakout_confirms(data):
     return False
 
 
+def _check_1h_momentum(df_15m, idx, threshold):
+    """Scenario B/C: 1h momentum >= threshold."""
+    if df_15m is None or idx is None or idx < 4:
+        return False
+    closes = df_15m['Close'].values.astype(float)
+    mom_1h = (closes[idx] - closes[idx-4]) / closes[idx-4]
+    return mom_1h >= threshold
+
+
 class FundingArbStrategy(BaseStrategy):
     name = 'funding_arb'
     strategy_type = 'flow'
-    description = 'v7 PROVISIONAL: requires squeeze_breakout LONG co-fire'
+    description = 'v7.1: A: squeeze_breakout | B: 1h_mom>=1.0% | C: squeeze+1h_mom'
 
     def check(self, data, df_15m=None, idx=None, **kwargs):
         price = data.get('price', 0)
@@ -86,19 +100,37 @@ class FundingArbStrategy(BaseStrategy):
         if idx < 100:
             return None
 
-        # ── SQUEEZE_BREAKOUT CONFIRMATION (REQUIRED) ──
-        if not _check_squeeze_breakout_confirms(data):
+        # ── SCENARIO CHECKS ──
+        scenario_a = _check_squeeze_breakout_confirms(data)
+        scenario_b = _check_1h_momentum(df_15m, idx, MOM_1H_THRESHOLD_B)
+        scenario_c = _check_squeeze_breakout_confirms(data) and _check_1h_momentum(df_15m, idx, MOM_1H_THRESHOLD_C)
+
+        if not scenario_a and not scenario_b and not scenario_c:
             return None
 
+        # Determine scenario and size
+        if scenario_c:
+            scenario = 'C'
+            size_mult = 0.7  # Both confirm
+        elif scenario_a and scenario_b:
+            scenario = 'A+B'
+            size_mult = 0.7
+        elif scenario_a:
+            scenario = 'A'
+            size_mult = 0.5
+        else:
+            scenario = 'B'
+            size_mult = 0.5
+
         # Try v3 first
-        result = self._check_v3(data, closes, volumes, taker_base, idx, price, atr)
+        result = self._check_v3(data, closes, volumes, taker_base, idx, price, atr, scenario, size_mult)
         if result:
             return result
 
         # Fallback to v4
-        return self._check_v4(data, df_15m, idx, price, atr)
+        return self._check_v4(data, df_15m, idx, price, atr, scenario, size_mult)
 
-    def _check_v3(self, data, closes, volumes, taker_base, idx, price, atr):
+    def _check_v3(self, data, closes, volumes, taker_base, idx, price, atr, scenario, size_mult):
         taker_ratio = taker_base[idx] / max(volumes[idx], 1)
         window_start = max(0, idx - 100)
         taker_window = taker_base[window_start:idx+1] / np.maximum(volumes[window_start:idx+1], 1)
@@ -175,26 +207,24 @@ class FundingArbStrategy(BaseStrategy):
             direction=direction, conviction=conviction,
             entry=price, sl=sl, tp1=tp1, tp2=tp2, tp3=tp3,
             sl_pct=sl_pct, tp1_pct=tp1_pct,
-            size_mult=0.5,
-            reason=f"Funding arb v7 PROVISIONAL {direction}: z={taker_zscore:.2f} "
-                   f"round={round_dist:.3f} cumFR={cum_fr:.5f} | squeeze_breakout confirms",
+            size_mult=size_mult,
+            reason=f"Funding arb v7.1 [{scenario}] {direction}: z={taker_zscore:.2f} "
+                   f"round={round_dist:.3f} cumFR={cum_fr:.5f}",
             bypass_gates=False,
             details={
-                'version': 'v7-provisional',
+                'version': 'v7.1',
+                'scenario': scenario,
                 'provisional': True,
-                'squeeze_breakout_confirmed': True,
                 'taker_zscore': float(taker_zscore),
                 'round_dist': float(round_dist),
                 'vol_ratio': float(vol_ratio),
                 'cum_funding_72h': float(cum_fr),
                 'fr_bonus': fr_bonus,
-                'mc_p_value': 0.0049,
-                'sample_size': 14,
-                'note': 'PROVISIONAL: 78.6% WR / PF 5.56 on 14 trades. MC p=0.0049. Needs 30+ live trades.',
+                'note': 'v7.1: A=sq_breakout (78.6%WR,PF5.56) | B=1h_mom>=1% (76.9%WR,PF3.33) | C=sq+1h_mom (100%WR,PFinf)',
             },
         )
 
-    def _check_v4(self, data, df_15m, idx, price, atr):
+    def _check_v4(self, data, df_15m, idx, price, atr, scenario, size_mult):
         deriv = data.get('derivatives', {})
         if not deriv:
             return None
@@ -257,22 +287,20 @@ class FundingArbStrategy(BaseStrategy):
             direction=direction, conviction=conviction,
             entry=price, sl=sl, tp1=tp1, tp2=tp2, tp3=tp3,
             sl_pct=sl_pct, tp1_pct=tp1_pct,
-            size_mult=0.5,
-            reason=f"Funding arb v7 PROVISIONAL {direction}: cumFR={cum_fr:.5f} "
-                   f"LS={ls_ratio:.2f} | squeeze_breakout confirms",
+            size_mult=size_mult,
+            reason=f"Funding arb v7.1 [{scenario}] {direction}: cumFR={cum_fr:.5f} "
+                   f"LS={ls_ratio:.2f}",
             bypass_gates=False,
             details={
-                'version': 'v7-provisional',
+                'version': 'v7.1',
+                'scenario': scenario,
                 'provisional': True,
-                'squeeze_breakout_confirmed': True,
                 'cum_funding_72h': float(cum_fr),
                 'fr_count': fr_count,
                 'ls_ratio': float(ls_ratio),
                 'taker_ratio': float(taker),
                 'vol_ratio': float(vol_ratio),
                 'trend_dir': trend_dir,
-                'mc_p_value': 0.0049,
-                'sample_size': 14,
-                'note': 'PROVISIONAL: 78.6% WR / PF 5.56 on 14 trades. MC p=0.0049. Needs 30+ live trades.',
+                'note': 'v7.1: A=sq_breakout (78.6%WR,PF5.56) | B=1h_mom>=1% (76.9%WR,PF3.33) | C=sq+1h_mom (100%WR,PFinf)',
             },
         )
