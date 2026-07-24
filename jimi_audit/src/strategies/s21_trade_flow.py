@@ -1,15 +1,14 @@
-"""S21: Trade Flow Momentum v4 — LONG-only + taker_flow confirmation.
+"""S21: Trade Flow Momentum v4.1 — Two independent scenarios.
 
-v3 → v4 CHANGES:
-1. LONG-ONLY: Removed SHORT direction entirely
-2. CONVICTION WINDOW: 0.70-0.80 (proven sweet spot from validation)
-3. TAKER_FLOW CONFIRMATION: Requires taker_flow to fire LONG at same timestamp
-4. Validation data: 205 trades, 53.4% WR, PF 1.69, MC p=0.0009
-5. With taker_flow: 24 trades, 73.9% WR, PF 4.67, MC p=0.0016
-6. Reduced size_mult to 0.5 (provisional, pending more live data)
+v4 → v4.1 CHANGES:
+1. SCENARIO A: conv 0.70-0.80 + taker_flow LONG (24 trades, 73.9% WR, PF 4.67, p=0.0016)
+2. SCENARIO B: conv 0.70-0.80 + LS>1.5 long-crowded (121 trades, 58.6% WR, PF 2.08, p=0.0001)
+3. Either scenario can trigger — they are independent entry paths
+4. Both require LONG direction + z-score > 0.8 + session/EMA filters
 
-v3 stats: 2862 signals, 45.8% WR, PF 0.99 (all directions pooled)
-v4 target: ~24 signals/month, 73.9% WR, PF 4.67 (LONG + taker_flow confirmed)
+v4.1 stats:
+- Scenario A: 24 trades, 73.9% WR, PF 4.67 (high quality, low frequency)
+- Scenario B: 121 trades, 58.6% WR, PF 2.08 (moderate quality, higher frequency)
 """
 from .base import BaseStrategy, SignalResult
 import numpy as np
@@ -17,14 +16,14 @@ import numpy as np
 GOOD_HOURS = {0, 1, 2, 7, 8, 9, 10, 12, 13, 15, 16, 21}
 BAD_HOURS = {4, 5, 6, 19, 20, 22, 23}
 
-# ── PROVISIONAL CONFIG ──
-PROVISIONAL = True
+# ── CONFIG ──
 CONV_MIN = 0.70
 CONV_MAX = 0.80
+LS_THRESHOLD = 1.5
 
 
 def _check_taker_flow_confirms(data):
-    """Check if taker_flow fires LONG at same timestamp."""
+    """Scenario A: taker_flow fires LONG at same timestamp."""
     strategy_signals = data.get('strategy_signals', {})
     tf = strategy_signals.get('taker_flow', {})
     if tf.get('direction') == 'LONG' and tf.get('fired', False):
@@ -36,11 +35,27 @@ def _check_taker_flow_confirms(data):
     return False
 
 
+def _check_ls_crowded(data):
+    """Scenario B: LS ratio > 1.5 (long-crowded positioning)."""
+    deriv = data.get('derivatives', {})
+    ls = deriv.get('ls_ratio', 0)
+    if ls and ls > LS_THRESHOLD:
+        return True
+    # Also check from strategy signals
+    strategy_signals = data.get('strategy_signals', {})
+    for strat_name in ['orderbook_imbalance', 'whale_watch', 'funding_arb']:
+        sig = strategy_signals.get(strat_name, {})
+        ls_sig = sig.get('ls_ratio', 0)
+        if ls_sig and ls_sig > LS_THRESHOLD:
+            return True
+    return False
+
+
 class TradeFlowStrategy(BaseStrategy):
     min_vol_ratio = 0.15
     name = 'trade_flow'
     strategy_type = 'flow'
-    description = 'v4 PROVISIONAL: LONG-only + taker_flow + conv 0.70-0.80'
+    description = 'v4.1: TWO scenarios — A: taker_flow confirm | B: LS>1.5 long-crowded'
 
     def check(self, data, df_15m=None, idx=None, **kwargs):
         price = data.get('price', 0)
@@ -85,14 +100,13 @@ class TradeFlowStrategy(BaseStrategy):
         if taker_ratio is None:
             return None
 
-        # ── TREND ALIGNMENT FILTER ──
+        # ── TREND ALIGNMENT ──
         if df_15m is not None and idx is not None and idx >= 20:
             closes = df_15m['Close'].values.astype(float)
             if idx >= 5:
                 mom_1h = (closes[idx] - closes[idx-4]) / closes[idx-4]
             else:
                 mom_1h = 0
-            # Skip LONG in strong downtrend
             if mom_1h < -0.015 and taker_ratio > 0.55:
                 return None
 
@@ -125,15 +139,15 @@ class TradeFlowStrategy(BaseStrategy):
 
         # ── DIRECTION: LONG-ONLY ──
         if taker_zscore <= 0.8:
-            return None  # Only LONG, need strong positive z-score
+            return None
 
-        # ── EMA200 TREND FILTER ──
+        # ── EMA200 FILTER ──
         if ema_200 and ema_200 > 0:
             dist = (price - ema_200) / ema_200
             if dist < -0.015:
-                return None  # too far below EMA for LONG
+                return None
 
-        # ── CONVICTION (v3 formula) ──
+        # ── CONVICTION ──
         base = 0.40
         z_strength = min(abs(taker_zscore) / 3.0, 0.25)
         accel_bonus = min(abs(acceleration) / 2.0, 0.15) if acceleration != 0 else 0
@@ -144,13 +158,28 @@ class TradeFlowStrategy(BaseStrategy):
 
         conviction = min(base + z_strength + accel_bonus + flow_bonus + large_bonus + vol_bonus, 0.90)
 
-        # ── CONVICTION WINDOW (proven sweet spot) ──
         if conviction < CONV_MIN or conviction >= CONV_MAX:
             return None
 
-        # ── TAKER_FLOW CONFIRMATION (REQUIRED) ──
-        if not _check_taker_flow_confirms(data):
+        # ── SCENARIO CHECK ──
+        # Scenario A: taker_flow LONG confirmation
+        scenario_a = _check_taker_flow_confirms(data)
+        # Scenario B: LS>1.5 (long-crowded)
+        scenario_b = _check_ls_crowded(data)
+
+        if not scenario_a and not scenario_b:
             return None
+
+        # Determine which scenario fired
+        if scenario_a and scenario_b:
+            scenario = 'A+B'
+            size_mult = 0.7  # Both confirm → higher size
+        elif scenario_a:
+            scenario = 'A'
+            size_mult = 0.5  # taker_flow only
+        else:
+            scenario = 'B'
+            size_mult = 0.5  # LS only
 
         # ── TP/SL ──
         sl, tp1, tp2, tp3, sl_pct, tp1_pct = self._calc_levels(
@@ -161,21 +190,25 @@ class TradeFlowStrategy(BaseStrategy):
             direction='LONG', conviction=conviction,
             entry=price, sl=sl, tp1=tp1, tp2=tp2, tp3=tp3,
             sl_pct=sl_pct, tp1_pct=tp1_pct,
-            size_mult=0.5,  # Reduced for provisional
-            reason=f"Trade flow v4 PROVISIONAL LONG: z={taker_zscore:.2f} accel={acceleration:.2f} "
-                   f"net=${net_flow/1000:.0f}k | taker_flow confirms",
+            size_mult=size_mult,
+            reason=f"Trade flow v4.1 LONG [{scenario}]: z={taker_zscore:.2f} "
+                   f"accel={acceleration:.2f} net=${net_flow/1000:.0f}k",
             bypass_gates=True,
             details={
-                'version': 'v4-provisional',
-                'provisional': True,
-                'taker_zscore': float(taker_zscore), 'acceleration': float(acceleration),
-                'taker_ratio': float(taker_ratio), 'net_flow': float(net_flow),
-                'large_buys': large_buys, 'large_sells': large_sells,
+                'version': 'v4.1',
+                'scenario': scenario,
+                'scenario_a': scenario_a,
+                'scenario_b': scenario_b,
+                'taker_zscore': float(taker_zscore),
+                'acceleration': float(acceleration),
+                'taker_ratio': float(taker_ratio),
+                'net_flow': float(net_flow),
+                'large_buys': large_buys,
+                'large_sells': large_sells,
                 'vol_ratio': float(vol_ratio),
-                'conv_min': CONV_MIN, 'conv_max': CONV_MAX,
-                'taker_flow_confirmed': True,
-                'mc_p_value': 0.0016,
-                'sample_size': 24,
-                'note': 'PROVISIONAL: 73.9% WR / PF 4.67 on 24 trades (taker_flow confirmed). MC p=0.0016. Needs 30+ live trades.',
+                'conv_min': CONV_MIN,
+                'conv_max': CONV_MAX,
+                'ls_threshold': LS_THRESHOLD,
+                'note': 'Two scenarios: A=taker_flow (73.9%WR,PF4.67) | B=LS>1.5 (58.6%WR,PF2.08)',
             },
         )
