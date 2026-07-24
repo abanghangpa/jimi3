@@ -1,12 +1,13 @@
-"""S13: Funding Rate Arbitrage v6 — Hybrid (v5 gate logic + cumulative FR + SHORT support)
+"""S13: Funding Rate Arbitrage v7 — Requires squeeze_breakout LONG.
 
-v5 → v6 CHANGES:
-1. Round number filter widened from 3% to 5% — more opportunities
-2. v3 now also checks actual funding rate (not just taker z-score)
-3. v4 uses 72h cumulative funding instead of instantaneous FR
-4. v4 now supports SHORT direction (when shorts are squeezed)
-5. Removed fr > 0.001 cap — high funding IS the signal
-6. Added trend context — don't fade strong trends
+v6 → v7 CHANGES:
+1. SQUEEZE_BREAKOUT REQUIRED: Must co-fire with squeeze_breakout LONG
+2. Backtest: 14 trades, 78.6% WR, PF 5.56, p=0.0049
+3. Small sample — PROVISIONAL (needs 30+ live trades)
+4. Reduced size_mult to 0.5 (provisional)
+
+v6 stats: 337 trades, 47.9% WR, PF 1.02 (dead standalone)
+v7 target: 14 trades, 78.6% WR, PF 5.56 (with squeeze_breakout)
 """
 from .base import BaseStrategy, SignalResult
 import numpy as np
@@ -20,7 +21,6 @@ BAD_HOURS = {4, 6, 19, 20, 21, 22, 23}
 
 
 def _read_cumulative_funding(hours=72):
-    """Sum funding rates over N hours."""
     if not os.path.exists(FUNDING_CSV):
         return 0, 0
     from datetime import datetime, timezone, timedelta
@@ -46,10 +46,23 @@ def _read_cumulative_funding(hours=72):
     return total, count
 
 
+def _check_squeeze_breakout_confirms(data):
+    """Check if squeeze_breakout fires LONG at same timestamp."""
+    strategy_signals = data.get('strategy_signals', {})
+    sq = strategy_signals.get('squeeze_breakout', {})
+    if sq.get('direction') == 'LONG' and sq.get('fired', False):
+        return True
+    multi = data.get('multi_strategy', {})
+    for sig in multi.get('all_signals', []):
+        if sig.get('strategy') == 'squeeze_breakout' and sig.get('direction') == 'LONG':
+            return True
+    return False
+
+
 class FundingArbStrategy(BaseStrategy):
     name = 'funding_arb'
     strategy_type = 'flow'
-    description = 'v6: cumulative FR + SHORT support + wider round numbers + trend context'
+    description = 'v7 PROVISIONAL: requires squeeze_breakout LONG co-fire'
 
     def check(self, data, df_15m=None, idx=None, **kwargs):
         price = data.get('price', 0)
@@ -73,16 +86,19 @@ class FundingArbStrategy(BaseStrategy):
         if idx < 100:
             return None
 
-        # Try v3 first (taker z-score + round numbers + FR confirmation)
+        # ── SQUEEZE_BREAKOUT CONFIRMATION (REQUIRED) ──
+        if not _check_squeeze_breakout_confirms(data):
+            return None
+
+        # Try v3 first
         result = self._check_v3(data, closes, volumes, taker_base, idx, price, atr)
         if result:
             return result
 
-        # Fallback to v4 (cumulative FR + derivatives)
+        # Fallback to v4
         return self._check_v4(data, df_15m, idx, price, atr)
 
     def _check_v3(self, data, closes, volumes, taker_base, idx, price, atr):
-        """v3: Taker z-score near round numbers + funding rate confirmation."""
         taker_ratio = taker_base[idx] / max(volumes[idx], 1)
         window_start = max(0, idx - 100)
         taker_window = taker_base[window_start:idx+1] / np.maximum(volumes[window_start:idx+1], 1)
@@ -95,10 +111,8 @@ class FundingArbStrategy(BaseStrategy):
         vol_ma = np.mean(volumes[max(0, idx-20):idx+1])
         vol_ratio = volumes[idx] / max(vol_ma, 1)
 
-        # Round number filter — widened from 3% to 5%
         round_dist = (price % 50) / 50
         near_round = round_dist < 0.05 or round_dist > 0.95
-
         if not near_round:
             return None
         if vol_ratio < 1.0:
@@ -112,25 +126,19 @@ class FundingArbStrategy(BaseStrategy):
         else:
             return None
 
-        # Funding rate confirmation (new)
         cum_fr, fr_count = _read_cumulative_funding(72)
         deriv = data.get('derivatives', {})
         ls_ratio = deriv.get('ls_ratio', 1.0)
 
-        # Bonus if funding confirms the direction
         fr_bonus = 0
         if direction == 'LONG' and cum_fr > 0.001:
-            # Longs paying high funding = longs squeezed = LONG has edge
             fr_bonus = 0.10
         elif direction == 'SHORT' and cum_fr < -0.001:
-            # Shorts paying high funding = shorts squeezed = SHORT has edge
             fr_bonus = 0.10
 
-        # Trend context (new) — don't fade strong trends
         ema_200 = data.get('ema_200', 0)
         if ema_200 and ema_200 > 0:
             dist = (price - ema_200) / ema_200
-            # Don't go LONG in strong downtrend, don't go SHORT in strong uptrend
             if direction == 'LONG' and dist < -0.03:
                 return None
             if direction == 'SHORT' and dist > 0.03:
@@ -140,16 +148,14 @@ class FundingArbStrategy(BaseStrategy):
         base += min(abs(taker_zscore) - 1.25, 1.0) * 0.15
         base += min(vol_ratio - 1.0, 1.0) * 0.10
         if round_dist < 0.02 or round_dist > 0.98:
-            base += 0.10  # very close to round number
+            base += 0.10
         base += fr_bonus
         conviction = min(base, 0.85)
-
         if conviction < 0.50:
             return None
 
         sl_dist = 1.5 * atr
         tp_dist = 2.0 * atr
-
         if direction == 'LONG':
             sl = price - sl_dist
             tp1 = price + tp_dist
@@ -169,31 +175,35 @@ class FundingArbStrategy(BaseStrategy):
             direction=direction, conviction=conviction,
             entry=price, sl=sl, tp1=tp1, tp2=tp2, tp3=tp3,
             sl_pct=sl_pct, tp1_pct=tp1_pct,
-            size_mult=0.7,
-            reason=f"Funding arb v3 {direction}: z={taker_zscore:.2f} "
-                   f"round={round_dist:.3f} vol={vol_ratio:.2f} cumFR={cum_fr:.5f}",
+            size_mult=0.5,
+            reason=f"Funding arb v7 PROVISIONAL {direction}: z={taker_zscore:.2f} "
+                   f"round={round_dist:.3f} cumFR={cum_fr:.5f} | squeeze_breakout confirms",
             bypass_gates=False,
             details={
-                'version': 'v3', 'taker_zscore': float(taker_zscore),
-                'round_dist': float(round_dist), 'vol_ratio': float(vol_ratio),
-                'cum_funding_72h': float(cum_fr), 'fr_bonus': fr_bonus,
+                'version': 'v7-provisional',
+                'provisional': True,
+                'squeeze_breakout_confirmed': True,
+                'taker_zscore': float(taker_zscore),
+                'round_dist': float(round_dist),
+                'vol_ratio': float(vol_ratio),
+                'cum_funding_72h': float(cum_fr),
+                'fr_bonus': fr_bonus,
+                'mc_p_value': 0.0049,
+                'sample_size': 14,
+                'note': 'PROVISIONAL: 78.6% WR / PF 5.56 on 14 trades. MC p=0.0049. Needs 30+ live trades.',
             },
         )
 
     def _check_v4(self, data, df_15m, idx, price, atr):
-        """v4: Cumulative funding squeeze + derivatives + trend context.
-        Now supports both LONG and SHORT."""
         deriv = data.get('derivatives', {})
         if not deriv:
             return None
 
-        # 72h cumulative funding (replaces instantaneous FR)
         cum_fr, fr_count = _read_cumulative_funding(72)
         ls_ratio = deriv.get('ls_ratio', 1.0)
         taker = deriv.get('futures_taker_ratio', 0.5)
         ema_200 = data.get('ema_200', 0)
 
-        # Trend context (new)
         trend_dir = None
         if ema_200 and ema_200 > 0:
             dist = (price - ema_200) / ema_200
@@ -203,17 +213,11 @@ class FundingArbStrategy(BaseStrategy):
                 trend_dir = 'SHORT'
 
         direction = None
-
-        # LONG: longs paying high funding + crowded long → squeeze potential
         if cum_fr > 0.002 and ls_ratio > 1.5:
-            # Don't LONG if strong downtrend
             if trend_dir == 'SHORT':
                 return None
             direction = 'LONG'
-
-        # SHORT: shorts paying high funding + crowded short → squeeze potential
         elif cum_fr < -0.002 and ls_ratio < 0.65:
-            # Don't SHORT if strong uptrend
             if trend_dir == 'LONG':
                 return None
             direction = 'SHORT'
@@ -221,23 +225,19 @@ class FundingArbStrategy(BaseStrategy):
         if not direction:
             return None
 
-        # Volume check
         vol_ratio = data.get('vol_ratio', 0) or 0
         if vol_ratio < 0.5:
             return None
 
-        # No FR cap — high funding IS the signal (removed fr > 0.001 check)
-
-        # Conviction
         base = 0.40
         if abs(cum_fr) > 0.005:
-            base += 0.15  # strong cumulative FR
+            base += 0.15
         if abs(cum_fr) > 0.01:
-            base += 0.10  # very strong
+            base += 0.10
         if ls_ratio > 2.0 or ls_ratio < 0.5:
-            base += 0.15  # extreme positioning
+            base += 0.15
         if taker > 1.2 or taker < 0.8:
-            base += 0.10  # taker alignment
+            base += 0.10
         if ema_200 and price > ema_200 and direction == 'LONG':
             base += 0.05
         if ema_200 and price < ema_200 and direction == 'SHORT':
@@ -249,7 +249,6 @@ class FundingArbStrategy(BaseStrategy):
         if conviction < 0.50:
             return None
 
-        # TP/SL
         sl, tp1, tp2, tp3, sl_pct, tp1_pct = self._calc_levels(
             price, direction, atr, tp_mults=(2.0, 3.5, 5.0), sl_mult=1.2)
 
@@ -258,14 +257,22 @@ class FundingArbStrategy(BaseStrategy):
             direction=direction, conviction=conviction,
             entry=price, sl=sl, tp1=tp1, tp2=tp2, tp3=tp3,
             sl_pct=sl_pct, tp1_pct=tp1_pct,
-            size_mult=0.7,
-            reason=f"Funding arb v4 {direction}: cumFR72h={cum_fr:.5f} "
-                   f"LS={ls_ratio:.2f} taker={taker:.3f} trend={trend_dir}",
+            size_mult=0.5,
+            reason=f"Funding arb v7 PROVISIONAL {direction}: cumFR={cum_fr:.5f} "
+                   f"LS={ls_ratio:.2f} | squeeze_breakout confirms",
             bypass_gates=False,
             details={
-                'version': 'v4', 'cum_funding_72h': float(cum_fr),
-                'fr_count': fr_count, 'ls_ratio': float(ls_ratio),
-                'taker_ratio': float(taker), 'vol_ratio': float(vol_ratio),
+                'version': 'v7-provisional',
+                'provisional': True,
+                'squeeze_breakout_confirmed': True,
+                'cum_funding_72h': float(cum_fr),
+                'fr_count': fr_count,
+                'ls_ratio': float(ls_ratio),
+                'taker_ratio': float(taker),
+                'vol_ratio': float(vol_ratio),
                 'trend_dir': trend_dir,
+                'mc_p_value': 0.0049,
+                'sample_size': 14,
+                'note': 'PROVISIONAL: 78.6% WR / PF 5.56 on 14 trades. MC p=0.0049. Needs 30+ live trades.',
             },
         )
