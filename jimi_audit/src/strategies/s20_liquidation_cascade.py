@@ -1,14 +1,14 @@
-"""S20: Liquidation Cascade v6 — LONG-only + whale_watch confirmation.
+"""S20: Liquidation Cascade v6.1 — Provisional deployment.
 
-v5 → v6 CHANGES:
-1. LONG-ONLY: Removed SHORT cascade detection entirely
-2. WHALE_WATCH CONFIRMATION: Requires whale_watch to fire LONG at same timestamp
-3. Rationale: v5 backtest showed SHORT signals lose money (44.2% WR against whale LONG)
-   Same-direction (LONG+LONG) = 59.5% WR on 52 trades
-4. Kept: regime-adaptive thresholds, vol regime, momentum confirmation, cooldown
+v6 → v6.1 CHANGES:
+1. PROVISIONAL CONFIG: TP=1.5xATR, SL=1.5xATR (equal multipliers)
+2. CONVICTION THRESHOLD: 0.70 (up from 0.45)
+3. Based on optimization: 18 trades, 70% WR, PF 2.05
+4. NOT STATISTICALLY SIGNIFICANT (MC p=0.14, CI includes zero)
+5. Provisional flag: will be validated with 30+ live trades
 
-v5 stats: 1109 signals, 23.1% WR, PF 0.06 (catastrophic)
-v6 target: ~52 signals, 59.5% WR (based on revalidation with whale_watch filter)
+v6.1 stats (backtest): 13 trades (conv>=0.70), 70% WR, PF 2.05, MC p=0.14
+Status: PROVISIONAL — needs 30+ trades for statistical confirmation
 """
 from .base import BaseStrategy, SignalResult
 import json, os, time
@@ -20,35 +20,29 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 _last_cascade_ts = 0
 CASCADE_COOLDOWN = 1800  # 30 min
 
+# ── PROVISIONAL CONFIG ──
+PROVISIONAL = True
+PROVISIONAL_TP_MULT = 1.5   # x ATR
+PROVISIONAL_SL_MULT = 1.5   # x ATR
+PROVISIONAL_CONV_THRESHOLD = 0.70
+PROVISIONAL_MIN_TRADES_FOR_CONFIRM = 30
+
 
 def _check_whale_watch_confirms(data):
-    """
-    Check if whale_watch strategy fired LONG at the same timestamp.
-    Returns True if whale_watch confirms LONG direction.
-    """
-    # Check in strategy_signals from the current scan
+    """Check if whale_watch fired LONG."""
     strategy_signals = data.get('strategy_signals', {})
     whale = strategy_signals.get('whale_watch', {})
     if whale.get('direction') == 'LONG' and whale.get('fired', False):
         return True
-
-    # Also check in multi_strategy output
     multi = data.get('multi_strategy', {})
-    all_signals = multi.get('all_signals', [])
-    for sig in all_signals:
+    for sig in multi.get('all_signals', []):
         if sig.get('strategy') == 'whale_watch' and sig.get('direction') == 'LONG':
             return True
-
     return False
 
 
 def _check_long_cascade(data, df_15m, idx, regime):
-    """
-    Detect LONG cascade (crowded shorts squeezed).
-    - OI surging (new longs + shorts covering)
-    - LS < 0.7 (short-crowded)
-    - Price rising (confirming)
-    """
+    """Detect LONG cascade (crowded shorts squeezed)."""
     deriv = data.get('derivatives', {})
     oi_roc = deriv.get('oi_roc_1h', 0)
     ls_ratio = deriv.get('ls_ratio', 1.0)
@@ -58,21 +52,19 @@ def _check_long_cascade(data, df_15m, idx, regime):
         return None
     price_change = (closes[idx] - closes[idx-5]) / closes[idx-5]
 
-    # ── REGIME-ADAPTIVE THRESHOLDS ──
     if regime in ("STRESS", "BEAR"):
         oi_surge_threshold = 0.012
         ls_short_threshold = 0.8
     elif regime == "BULL":
         oi_surge_threshold = 0.020
         ls_short_threshold = 0.6
-    else:  # RANGING, MILDLY_BEARISH
+    else:
         oi_surge_threshold = 0.015
         ls_short_threshold = 0.7
 
     if oi_roc <= oi_surge_threshold or ls_ratio >= ls_short_threshold:
         return None
 
-    # Confirm: price must be rising
     if price_change < -0.005:
         return None
 
@@ -118,7 +110,7 @@ def _check_vol_regime(df_15m, idx):
 class LiquidationCascadeStrategy(BaseStrategy):
     name = 'liquidation_cascade'
     strategy_type = 'event'
-    description = 'v6: LONG-only + whale_watch confirmation. No SHORT signals.'
+    description = 'v6.1 PROVISIONAL: LONG-only + whale_watch + TP=SL=1.5xATR, conv>=0.70'
 
     def check(self, data, df_15m=None, idx=None, **kwargs):
         global _last_cascade_ts
@@ -152,19 +144,18 @@ class LiquidationCascadeStrategy(BaseStrategy):
         if idx >= 3:
             mom_3 = (closes[idx] - closes[idx-3]) / closes[idx-3]
             if mom_3 < -0.003:
-                return None  # Need positive momentum for LONG cascade
+                return None
 
-        # ── CONVICTION ──
+        # ── CONVICTION (provisional: 0.70 threshold) ──
         conviction = min(0.45 + strength * 0.40, 0.90)
-        if conviction < 0.45:
+        if conviction < PROVISIONAL_CONV_THRESHOLD:
             return None
 
-        # ── TP/SL (regime-adaptive) ──
-        tp_mult_base = {"BULL": 2.0, "BEAR": 1.8, "RANGING": 2.0, "STRESS": 1.5, "MILDLY_BEARISH": 1.8}.get(regime, 2.0)
-        sl_mult_base = {"BULL": 1.0, "BEAR": 1.2, "RANGING": 1.0, "STRESS": 0.8, "MILDLY_BEARISH": 1.0}.get(regime, 1.0)
-
+        # ── TP/SL (provisional: fixed 1.5x ATR both sides) ──
         sl, tp1, tp2, tp3, sl_pct, tp1_pct = self._calc_levels(
-            price, direction, atr, tp_mults=(tp_mult_base, tp_mult_base * 1.5, tp_mult_base * 2.5), sl_mult=sl_mult_base)
+            price, direction, atr,
+            tp_mults=(PROVISIONAL_TP_MULT, PROVISIONAL_TP_MULT * 1.5, PROVISIONAL_TP_MULT * 2.5),
+            sl_mult=PROVISIONAL_SL_MULT)
 
         # Update cooldown
         _last_cascade_ts = now
@@ -174,11 +165,12 @@ class LiquidationCascadeStrategy(BaseStrategy):
             direction=direction, conviction=conviction,
             entry=price, sl=sl, tp1=tp1, tp2=tp2, tp3=tp3,
             sl_pct=sl_pct, tp1_pct=tp1_pct,
-            size_mult=0.7,
-            reason=f"Liq cascade v6 ({source}) LONG: {cascade['detail']} | whale_watch confirms",
+            size_mult=0.5,  # Reduced size for provisional
+            reason=f"Liq cascade v6.1 PROVISIONAL ({source}) LONG: {cascade['detail']} | whale confirms | TP=SL=1.5xATR",
             bypass_gates=True,
             details={
-                'version': 'v6',
+                'version': 'v6.1-provisional',
+                'provisional': True,
                 'source': source,
                 'oi_roc': cascade.get('oi_roc', 0),
                 'ls_ratio': cascade.get('ls_ratio', 0),
@@ -187,5 +179,12 @@ class LiquidationCascadeStrategy(BaseStrategy):
                 'strength': strength,
                 'regime': regime,
                 'whale_confirmed': True,
+                'tp_mult': PROVISIONAL_TP_MULT,
+                'sl_mult': PROVISIONAL_SL_MULT,
+                'conv_threshold': PROVISIONAL_CONV_THRESHOLD,
+                'mc_p_value': 0.14,
+                'sample_size': 18,
+                'confirmation_threshold': PROVISIONAL_MIN_TRADES_FOR_CONFIRM,
+                'note': 'PROVISIONAL: 70% WR / PF 2.05 on 18 trades. MC not significant (p=0.14). Needs 30+ live trades to confirm.',
             },
         )
