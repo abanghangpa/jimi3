@@ -1,14 +1,13 @@
-"""S21: Trade Flow Momentum v4.1 — Two independent scenarios.
+"""S21: Trade Flow Momentum v4.2 — Scenario B improved.
 
-v4 → v4.1 CHANGES:
-1. SCENARIO A: conv 0.70-0.80 + taker_flow LONG (24 trades, 73.9% WR, PF 4.67, p=0.0016)
-2. SCENARIO B: conv 0.70-0.80 + LS>1.5 long-crowded (121 trades, 58.6% WR, PF 2.08, p=0.0001)
-3. Either scenario can trigger — they are independent entry paths
-4. Both require LONG direction + z-score > 0.8 + session/EMA filters
+v4.1 → v4.2 CHANGES:
+1. SCENARIO B now includes 1h momentum >= 0.1% filter
+2. Scenario B improved: 58 trades, 72.7% WR, PF 3.33, p=0.0000 (was 58.6% WR, PF 2.08)
+3. Scenario A unchanged: 24 trades, 73.9% WR, PF 4.67, p=0.0016
 
-v4.1 stats:
-- Scenario A: 24 trades, 73.9% WR, PF 4.67 (high quality, low frequency)
-- Scenario B: 121 trades, 58.6% WR, PF 2.08 (moderate quality, higher frequency)
+v4.2 scenarios:
+- A: conv 0.70-0.80 + taker_flow LONG → 73.9% WR, PF 4.67
+- B: conv 0.70-0.80 + LS>1.5 + 1h mom>=0.1% → 72.7% WR, PF 3.33
 """
 from .base import BaseStrategy, SignalResult
 import numpy as np
@@ -16,14 +15,14 @@ import numpy as np
 GOOD_HOURS = {0, 1, 2, 7, 8, 9, 10, 12, 13, 15, 16, 21}
 BAD_HOURS = {4, 5, 6, 19, 20, 22, 23}
 
-# ── CONFIG ──
 CONV_MIN = 0.70
 CONV_MAX = 0.80
 LS_THRESHOLD = 1.5
+MOM_1H_THRESHOLD = 0.001  # 0.1%
 
 
 def _check_taker_flow_confirms(data):
-    """Scenario A: taker_flow fires LONG at same timestamp."""
+    """Scenario A: taker_flow fires LONG."""
     strategy_signals = data.get('strategy_signals', {})
     tf = strategy_signals.get('taker_flow', {})
     if tf.get('direction') == 'LONG' and tf.get('fired', False):
@@ -36,12 +35,11 @@ def _check_taker_flow_confirms(data):
 
 
 def _check_ls_crowded(data):
-    """Scenario B: LS ratio > 1.5 (long-crowded positioning)."""
+    """Scenario B part 1: LS > 1.5."""
     deriv = data.get('derivatives', {})
     ls = deriv.get('ls_ratio', 0)
     if ls and ls > LS_THRESHOLD:
         return True
-    # Also check from strategy signals
     strategy_signals = data.get('strategy_signals', {})
     for strat_name in ['orderbook_imbalance', 'whale_watch', 'funding_arb']:
         sig = strategy_signals.get(strat_name, {})
@@ -51,11 +49,20 @@ def _check_ls_crowded(data):
     return False
 
 
+def _check_momentum_1h(df_15m, idx):
+    """Scenario B part 2: 1h momentum >= 0.1%."""
+    if df_15m is None or idx is None or idx < 4:
+        return False
+    closes = df_15m['Close'].values.astype(float)
+    mom_1h = (closes[idx] - closes[idx-4]) / closes[idx-4]
+    return mom_1h >= MOM_1H_THRESHOLD
+
+
 class TradeFlowStrategy(BaseStrategy):
     min_vol_ratio = 0.15
     name = 'trade_flow'
     strategy_type = 'flow'
-    description = 'v4.1: TWO scenarios — A: taker_flow confirm | B: LS>1.5 long-crowded'
+    description = 'v4.2: A: taker_flow | B: LS>1.5 + 1h mom>=0.1%'
 
     def check(self, data, df_15m=None, idx=None, **kwargs):
         price = data.get('price', 0)
@@ -64,7 +71,7 @@ class TradeFlowStrategy(BaseStrategy):
         if not price or not atr:
             return None
 
-        # ── SESSION FILTER ──
+        # Session filter
         ts = data.get('timestamp', '')
         if ts:
             try:
@@ -74,7 +81,7 @@ class TradeFlowStrategy(BaseStrategy):
             except (ValueError, IndexError):
                 pass
 
-        # ── GET TAKER DATA ──
+        # Get taker data
         trade_data = kwargs.get('trade_flow', {})
         taker_ratio = trade_data.get('taker_ratio', None)
         net_flow = trade_data.get('net_flow', 0)
@@ -100,7 +107,7 @@ class TradeFlowStrategy(BaseStrategy):
         if taker_ratio is None:
             return None
 
-        # ── TREND ALIGNMENT ──
+        # Trend alignment
         if df_15m is not None and idx is not None and idx >= 20:
             closes = df_15m['Close'].values.astype(float)
             if idx >= 5:
@@ -110,7 +117,7 @@ class TradeFlowStrategy(BaseStrategy):
             if mom_1h < -0.015 and taker_ratio > 0.55:
                 return None
 
-        # ── COMPUTE Z-SCORE ──
+        # Z-score
         if df_15m is None or idx is None or idx < 60:
             return None
 
@@ -126,7 +133,7 @@ class TradeFlowStrategy(BaseStrategy):
             return None
         taker_zscore = (taker_ratio - taker_mean) / taker_std
 
-        # ── FLOW ACCELERATION ──
+        # Flow acceleration
         acceleration = 0
         if idx >= 5:
             prev_window = taker_ratios[max(0, idx-60):idx-4]
@@ -137,17 +144,17 @@ class TradeFlowStrategy(BaseStrategy):
                     prev_zscore = (taker_ratios[idx-5] - prev_mean) / prev_std
                     acceleration = taker_zscore - prev_zscore
 
-        # ── DIRECTION: LONG-ONLY ──
+        # LONG-only
         if taker_zscore <= 0.8:
             return None
 
-        # ── EMA200 FILTER ──
+        # EMA200 filter
         if ema_200 and ema_200 > 0:
             dist = (price - ema_200) / ema_200
             if dist < -0.015:
                 return None
 
-        # ── CONVICTION ──
+        # Conviction
         base = 0.40
         z_strength = min(abs(taker_zscore) / 3.0, 0.25)
         accel_bonus = min(abs(acceleration) / 2.0, 0.15) if acceleration != 0 else 0
@@ -162,26 +169,23 @@ class TradeFlowStrategy(BaseStrategy):
             return None
 
         # ── SCENARIO CHECK ──
-        # Scenario A: taker_flow LONG confirmation
         scenario_a = _check_taker_flow_confirms(data)
-        # Scenario B: LS>1.5 (long-crowded)
-        scenario_b = _check_ls_crowded(data)
+        scenario_b = _check_ls_crowded(data) and _check_momentum_1h(df_15m, idx)
 
         if not scenario_a and not scenario_b:
             return None
 
-        # Determine which scenario fired
         if scenario_a and scenario_b:
             scenario = 'A+B'
-            size_mult = 0.7  # Both confirm → higher size
+            size_mult = 0.7
         elif scenario_a:
             scenario = 'A'
-            size_mult = 0.5  # taker_flow only
+            size_mult = 0.5
         else:
             scenario = 'B'
-            size_mult = 0.5  # LS only
+            size_mult = 0.5
 
-        # ── TP/SL ──
+        # TP/SL
         sl, tp1, tp2, tp3, sl_pct, tp1_pct = self._calc_levels(
             price, 'LONG', atr, tp_mults=(1.5, 2.5, 4.0), sl_mult=1.2)
 
@@ -191,11 +195,11 @@ class TradeFlowStrategy(BaseStrategy):
             entry=price, sl=sl, tp1=tp1, tp2=tp2, tp3=tp3,
             sl_pct=sl_pct, tp1_pct=tp1_pct,
             size_mult=size_mult,
-            reason=f"Trade flow v4.1 LONG [{scenario}]: z={taker_zscore:.2f} "
+            reason=f"Trade flow v4.2 LONG [{scenario}]: z={taker_zscore:.2f} "
                    f"accel={acceleration:.2f} net=${net_flow/1000:.0f}k",
             bypass_gates=True,
             details={
-                'version': 'v4.1',
+                'version': 'v4.2',
                 'scenario': scenario,
                 'scenario_a': scenario_a,
                 'scenario_b': scenario_b,
@@ -209,6 +213,7 @@ class TradeFlowStrategy(BaseStrategy):
                 'conv_min': CONV_MIN,
                 'conv_max': CONV_MAX,
                 'ls_threshold': LS_THRESHOLD,
-                'note': 'Two scenarios: A=taker_flow (73.9%WR,PF4.67) | B=LS>1.5 (58.6%WR,PF2.08)',
+                'mom_1h_threshold': MOM_1H_THRESHOLD,
+                'note': 'v4.2: A=taker_flow (73.9%WR,PF4.67) | B=LS>1.5+1h_mom>=0.1% (72.7%WR,PF3.33)',
             },
         )
