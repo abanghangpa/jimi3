@@ -6,6 +6,7 @@ OPTIMIZED configs from 2026-07-05 optimization (PF >= 2.0 strategies only).
 + Live-vs-backtest monitor: pauses strategies when WR/PF degrades
 """
 import json, os, sys, time, math, argparse
+import atexit
 from datetime import datetime, timezone, timedelta
 from collections import defaultdict
 
@@ -24,10 +25,6 @@ from agents.validation_agent import ValidationAgent
 
 # === MULTI-AGENT SYSTEM ===
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
-from src.agents.orchestrator import Orchestrator
-
-
-
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # === LOCKFILE: Prevent duplicate processes ===
@@ -68,7 +65,6 @@ def release_lock():
                 os.remove(LOCK_FILE)
     except: pass
 
-import atexit
 atexit.register(release_lock)
 
 sys.path.insert(0, BASE)
@@ -85,7 +81,6 @@ OB_LIQUIDITY_FILE = os.path.join(BASE, "data", "ob_history", "ob_snapshots.jsonl
 
 SYMBOL = "ETH/USDT:USDT"
 INITIAL_CAPITAL = 200.0
-
 
 # === ISOLATION GATE GUARDIAN ===
 class IsolationGateGuardian:
@@ -149,7 +144,6 @@ class IsolationGateGuardian:
     def get_details(self, strategy_name):
         """Get gate result details for a strategy."""
         return self.results.get(strategy_name, {})
-
 
 # === LIVE PERFORMANCE MONITOR ===
 class LivePerformanceMonitor:
@@ -312,8 +306,6 @@ class LivePerformanceMonitor:
             })
         return report
 
-
-
 # === CONFLUENCE CHECKER ===
 # Detects extreme positioning from derivatives data.
 # Used by confluence signals (bb_mom6 + extreme positioning).
@@ -408,10 +400,6 @@ class ConfluenceChecker:
                     return True, evt["direction"], evt["conviction"]
         return False, None, 0
 
-
-
-
-
 # === OB-BASED TP TARGETING ===
 def get_liquidity_tp(direction, entry_price, sl_price, min_rr=1.0):
     """
@@ -424,7 +412,6 @@ def get_liquidity_tp(direction, entry_price, sl_price, min_rr=1.0):
 
     Returns: tp_price or None if no valid target found.
     """
-    import json as _json
 
     # Strategy 1: Use scan liquidity_levels (richer data with strength + cluster)
     scan_dir = os.path.join(BASE, "data", "scans")
@@ -481,7 +468,7 @@ def get_liquidity_tp(direction, entry_price, sl_price, min_rr=1.0):
             with open(OB_LIQUIDITY_FILE) as f:
                 lines = f.readlines()
             if lines:
-                latest = _json.loads(lines[-1])
+                latest = json.loads(lines[-1])
                 sl_dist = abs(entry_price - sl_price)
 
                 if direction == "LONG":
@@ -507,8 +494,14 @@ def get_liquidity_tp(direction, entry_price, sl_price, min_rr=1.0):
 
     return None
 
-
 # === ENHANCED REAL-TIME REGIME CLASSIFIER ===
+# === V5 REGIME CLASSIFIER (imported from regime_classifier_v5.py) ===
+try:
+    from regime_classifier_v5 import RegimeClassifierV5, REGIME_SIZING as V5_REGIME_SIZING
+    V5_AVAILABLE = True
+except ImportError:
+    V5_AVAILABLE = False
+
 class RegimeClassifier:
     """
     Multi-signal regime classifier using:
@@ -736,7 +729,6 @@ class RegimeClassifier:
         regime, conf, _ = self.classify()
         return regime in ("RANGING", "BEAR", "STRESS", "MILDLY_BEARISH")
 
-
 # === OPTIMIZED STRATEGY CONFIGS (from 2026-07-05 optimization, PF >= 2.0) ===
 
 # === DIRECTIONAL CONSENSUS GATE ===
@@ -903,7 +895,6 @@ def build_gate_metrics(ohlcv_data):
     
     return ema_by_ts, slope_by_ts, mom_by_ts
 
-
 STRATEGY_CONFIGS = {
     # === PROVEN STRATEGIES (PF >= 2.0, WR >= 70%) ===
     "whale_watch": {
@@ -1037,27 +1028,28 @@ PRICE_DEDUP_PCT = 0.002
 DYNAMIC_INTERVAL_ACTIVE = 60
 DYNAMIC_INTERVAL_IDLE = 300
 MAX_DIRECTIONAL_EXPOSURE = 0.06
+MIN_CONVICTION = 0.5
+ORDER_TYPE = "limit"
+LIMIT_OFFSET_PCT = 0.02
 
 # === REGIME-STRATEGY GATE (data-driven from regime_strategy_matrix.json) ===
 # RANGING/UP: ALL strategies active. DOWN/STRONG_DOWN: block contrarian only.
 REGIME_STRATEGY_GATE = {
-    "failed_breakout":      {"allowed": ["RANGING", "BULL"]},
-    "positioning_fade":     {"allowed": ["RANGING", "CHOP_MILD", "CHOP_BEAR", "NEUTRAL", "CRISIS"]},
+    "failed_breakout":      {"allowed": ["RANGING", "BULL", "BEAR", "MILDLY_BEARISH"]},
+    "positioning_fade":     {"allowed": ["RANGING", "BEAR", "MILDLY_BEARISH", "STRESS"]},
     "liquidity_grab":       {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
-    "liquidation_cascade":  {"allowed": ["RANGING", "BULL", "BEAR", "MILDLY_BEARISH"]},
-    "funding_squeeze":      {"allowed": ["RANGING", "BULL", "BEAR", "MILDLY_BEARISH"]},
+    "liquidation_cascade":  {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
+    "funding_squeeze":      {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
     "orderbook_imbalance":  {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
     "taker_flow":           {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
-    "trade_flow":           {"allowed": ["RANGING", "BULL", "BEAR", "STRESS"]},
-    "judas_sweep":          {"allowed": ["BULL", "BEAR", "STRESS", "RANGING", "MILDLY_BEARISH"]},
-    "forced_movement":      {"allowed": ["STRESS", "BEAR", "MILDLY_BEARISH"]},
+    "trade_flow":           {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
+    "judas_sweep":          {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
+    "forced_movement":      {"allowed": ["RANGING", "STRESS", "BEAR", "MILDLY_BEARISH"]},
     "squeeze_breakout":     {"allowed": ["RANGING", "BULL", "BEAR", "MILDLY_BEARISH"]},
-    "whale_watch":          {"allowed": ["RANGING", "BEAR", "STRESS", "MILDLY_BEARISH"]},
-    "structural_break":     {"allowed": ["RANGING", "MILDLY_BEARISH"]},
+    "whale_watch":          {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
+    "structural_break":     {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
     "funding_arb":          {"allowed": ["RANGING", "BULL", "BEAR", "STRESS", "MILDLY_BEARISH"]},
 }
-
-
 
 REGIME_TPSL_SCALE = {
     "BULL":           {"tp_scale": 1.0, "sl_scale": 1.0},
@@ -1066,16 +1058,6 @@ REGIME_TPSL_SCALE = {
     "STRESS":         {"tp_scale": 1.2, "sl_scale": 1.3},
     "MILDLY_BEARISH": {"tp_scale": 1.0, "sl_scale": 1.05},
 }
-REENTRY_COOLDOWN_SEC = 300        # 5 min cooldown after close before re-entering same strategy+direction
-CONSECUTIVE_LOSS_COOLDOWN = 1800   # 30 min cooldown after 2 consecutive losses (same strategy+direction)
-MAX_CONSECUTIVE_LOSSES = 3         # Pause strategy+direction after 3 consecutive losses
-PRICE_DEDUP_PCT = 0.002            # Skip signal if entry within 0.2% of last closed trade (same strategy)
-DYNAMIC_INTERVAL_ACTIVE = 60       # Check every 60s when positions are open
-DYNAMIC_INTERVAL_IDLE = 300        # Check every 5min when flat (no positions)
-MAX_DIRECTIONAL_EXPOSURE = 0.06    # Max 6% of capital at risk in same direction across all positions
-
-# === REGIME-STRATEGY GATE: Which strategies can fire in which regimes ===
-# Format: {strategy: {"allowed": [list of regimes], "blocked": [list of regimes]}}
 
 # === CONDITIONAL DIRECTIONAL GATE (backtested 2026-07-22) ===
 # Based on regime x direction matrix: LONG+BEAR and SHORT+BULL are portfolio killers
@@ -1093,16 +1075,6 @@ MIN_HOLD_BARS = 6  # No TP/exit before bar 6 (noise filter)
 
 # === REGIME TP/SL SCALING: Multiply TP/SL based on regime ===
 # Multiplier applied to TP and SL distances
-REGIME_TPSL_SCALE = {
-    "BULL":           {"tp_scale": 1.0, "sl_scale": 1.0},     # Normal
-    "BEAR":           {"tp_scale": 1.0, "sl_scale": 1.1},     # Slightly wider SL in bear
-    "RANGING":        {"tp_scale": 0.9, "sl_scale": 0.9},     # Tighter in ranging
-    "STRESS":         {"tp_scale": 1.2, "sl_scale": 1.3},     # Wider both in stress
-    "MILDLY_BEARISH": {"tp_scale": 1.0, "sl_scale": 1.05},    # Slightly wider SL
-}
-MIN_CONVICTION = 0.5
-ORDER_TYPE = "limit"
-LIMIT_OFFSET_PCT = 0.02
 
 def log(msg, level="INFO"):
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
@@ -1123,14 +1095,14 @@ def load_state():
         "trades_count": 0, "wins": 0, "losses": 0, "timeouts": 0,
         "last_signal_ts": None, "dd_cooldown_until": None,
         "cooldown_tracker": {},
-        "cooldown_tracker": {},  # {strat_dir: {"closed_at": iso, "entry_price": float, "consec_losses": int}}
     }
 
 def save_state(state):
     os.makedirs(os.path.dirname(STATE_FILE), exist_ok=True)
-    with open(STATE_FILE, "w") as f:
+    tmp_path = STATE_FILE + '.tmp'
+    with open(tmp_path, 'w') as f:
         json.dump(state, f, indent=2, default=str)
-
+    os.replace(tmp_path, STATE_FILE)
 def log_trade(trade):
     os.makedirs(os.path.dirname(TRADE_LOG), exist_ok=True)
     trades = []
@@ -1259,8 +1231,18 @@ def get_latest_signals(gate, monitor):
         if cfg["direction"] and direction != cfg["direction"]:
             rejected["direction"].append(f"{strat_name}({direction}!={cfg['direction']})")
 
-        # === CONDITIONAL DIRECTIONAL GATE ===
-        if CONDITIONAL_GATE_ENABLED:
+        # === REGIME-CONDITIONAL SIZING (replaces binary COND_GATE) ===
+        # V5: Instead of blocking directions, scale position size
+        regime_size_mult = 1.0
+        if hasattr(rc, "get_sizing"):
+            sizing_info = rc.get_sizing(direction)
+            regime_size_mult = sizing_info.get("effective_size_mult", 1.0)
+            # Only block if size_mult is essentially zero (< 0.1)
+            if regime_size_mult < 0.1:
+                rejected["other"].append(f"{strat_name}(regime_size={regime_size_mult:.2f} too small for {direction} in {rc.regime})")
+                continue
+        elif CONDITIONAL_GATE_ENABLED:
+            # Legacy V3 fallback: binary gate
             cdg = CONDITIONAL_DIRECTION_GATE.get(rc.regime, {})
             cdg_allowed = cdg.get("allowed", ["LONG", "SHORT"])
             if direction not in cdg_allowed:
@@ -1337,6 +1319,7 @@ def get_latest_signals(gate, monitor):
             "scan_status": status,
             "group_boost": group_boost,
             "confirmed_by": confirmed_by,
+            "regime_size_mult": regime_size_mult,
         })
 
     # Log rejections for transparency
@@ -1415,21 +1398,6 @@ def close_position(state, pos, exit_price, outcome, monitor=None):
     }
     save_state(state)
 
-    # === COOLDOWN TRACKING ===
-    strat = pos.get("strategy", "unknown")
-    direction = pos.get("direction", "LONG")
-    cooldown_key = f"{strat}_{direction}"
-    if "cooldown_tracker" not in state:
-        state["cooldown_tracker"] = {}
-    tracker = state["cooldown_tracker"].get(cooldown_key, {})
-    consec = (tracker.get("consec_losses", 0) + 1) if outcome in ("LOSS", "TIMEOUT") else 0
-    state["cooldown_tracker"][cooldown_key] = {
-        "closed_at": datetime.now(timezone.utc).isoformat(),
-        "entry_price": entry,
-        "consec_losses": consec,
-    }
-    save_state(state)
-
     if monitor:
         monitor.record_trade(pos.get("strategy", "unknown"), outcome)
         monitor.record_pnl(pos.get("strategy", "unknown"), pnl)
@@ -1488,7 +1456,13 @@ def main():
 
     # === ORCHESTRATOR ALREADY INITIALIZED ABOVE (V2 if available, else V1) ===
     gate.confluence = confluence  # attach for use in signal filtering
-    regime_classifier = RegimeClassifier(confluence)
+    # Use V5 if available, fall back to V3
+    if V5_AVAILABLE:
+        regime_classifier = RegimeClassifierV5(confluence)
+        log("REGIME CLASSIFIER V5: Daily timeframe + contradiction detection + hysteresis + sizing")
+    else:
+        regime_classifier = RegimeClassifier(confluence)
+        log("REGIME CLASSIFIER V3: Fallback (V5 not available)")
 
     # === DIRECTIONAL CONSENSUS GATE INIT ===
     ohlcv_csv = os.path.join(BASE, "data", "eth_15m_extended.csv")
@@ -1569,14 +1543,6 @@ def main():
                 time.sleep(args.interval); continue
 
             # === RE-CLASSIFY REGIME EVERY LOOP ===
-            try:
-                _scan_files = sorted([f for f in os.listdir(SCAN_DIR) if f.startswith("scan_") and f.endswith(".json")], reverse=True)
-                if _scan_files:
-                    with open(os.path.join(SCAN_DIR, _scan_files[0])) as f:
-                        _scan_data = json.load(f)
-                regime, conf, regime_signals = regime_classifier.classify(_scan_data)
-            except: pass
-
             try:
                 _scan_files = sorted([f for f in os.listdir(SCAN_DIR) if f.startswith("scan_") and f.endswith(".json")], reverse=True)
                 if _scan_files:
@@ -1687,7 +1653,7 @@ def main():
                 # V2: Build price_history for momentum regime + trend filter
                 _price_history = []
                 try:
-                    _price_history = [float(c[4]) for c in klines[-50:]] if 'klines' in dir() else []
+                    _price_history = [bar['close'] for bar in ohlcv_data[-50:]] if ohlcv_data else []
                 except: pass
 
                 decision = orchestrator.evaluate_signal(
@@ -1717,7 +1683,7 @@ def main():
 
                 # === DIRECTIONAL CONSENSUS GATE CHECK ===
                 gate_action, gate_new_dir, gate_details = consensus_gate.evaluate(
-                    ts=now.strftime("%Y-%m-%d %H:%M:%S"),
+                    ts=sig.get("timestamp", now.strftime("%Y-%m-%d %H:%M:%S")),
                     direction=sig.get('direction', '?'),
                     price=entry,
                     swing_bias=getattr(regime_classifier, '_last_swing_bias', '?')
@@ -1740,6 +1706,8 @@ def main():
                         tp1 = entry * (1 - cfg['tp_pct'] / 100.0)
                     # Update position
                     pos['direction'] = gate_new_dir
+                    # Sync local variables after flip
+                    entry = pos.get('fill_price', entry)
                     pos['sl'] = sl
                     pos['tp'] = tp1
 
@@ -1759,39 +1727,13 @@ def main():
                                 tp1 = entry * (1 - fb_tp_pct / 100.0)
                             log(f"FALLBACK TP: {strat_name} using {fb_tp_pct}% -> TP=${tp1:.2f}")
                         if not sl and fb_sl_pct > 0:
-                            if direction == "LONG":
+                            if sig["direction"] == "LONG":
                                 sl = entry * (1 - fb_sl_pct / 100.0)
                             else:
                                 sl = entry * (1 + fb_sl_pct / 100.0)
                             log(f"FALLBACK SL: {strat_name} using {fb_sl_pct}% -> SL=${sl:.2f}")
                     if not entry or not sl or not tp1:
                         continue
-
-                # === ORCHESTRATOR EVALUATION ===
-                _scan_for_orch = None
-                _deriv_for_orch = None
-                try:
-                    _scan_files = sorted([f for f in os.listdir(SCAN_DIR) if f.startswith("scan_") and f.endswith(".json")], reverse=True)
-                    if _scan_files:
-                        with open(os.path.join(SCAN_DIR, _scan_files[0])) as f:
-                            _scan_for_orch = json.load(f)
-                    _deriv_for_orch = confluence.deriv_by_ts if hasattr(confluence, 'deriv_by_ts') else None
-                except: pass
-
-                decision = orchestrator.evaluate_signal(
-                    signal=sig, state=state, gate=gate, monitor=monitor,
-                    regime=getattr(regime_classifier, 'regime', 'RANGING'),
-                    regime_confidence=getattr(regime_classifier, 'confidence', 0.5),
-                    exchange=exchange, scan_data=_scan_for_orch,
-                    deriv_data=_deriv_for_orch, symbol=SYMBOL,
-                )
-                if not decision["approved"]:
-                    log(f"ORCHESTRATOR REJECT: {sig['strategy']} {sig['direction']} \u2014 {decision['reason']}")
-                    continue
-
-                pos = decision["position"]
-                pos["order_id"] = f"dry_{int(now.timestamp())}" if dry_run else None
-                entry = pos["fill_price"]; sl = pos["sl"]; tp1 = pos["tp"]
                 fill_price = entry
                 cfg = sig["cfg"]
 
@@ -1811,7 +1753,11 @@ def main():
                 # === REGIME-AWARE TP/SL SCALING ===
                 if gate._regime_classifier:
                     rc = gate._regime_classifier
-                    regime_scale = REGIME_TPSL_SCALE.get(rc.regime, {})
+                    # V5: use sizing from regime classifier directly
+                    if hasattr(rc, "sizing"):
+                        regime_scale = rc.sizing
+                    else:
+                        regime_scale = REGIME_TPSL_SCALE.get(rc.regime, {})
                     tp_mult = regime_scale.get("tp_scale", 1.0)
                     sl_mult = regime_scale.get("sl_scale", 1.0)
                     if tp_mult != 1.0 or sl_mult != 1.0:
@@ -1848,6 +1794,8 @@ def main():
                         continue
 
                 group_boost = sig.get("group_boost", 1.0)
+                # V5: Apply regime-conditional size multiplier
+                regime_size_mult = sig.get("regime_size_mult", 1.0)
                 committed = calc_committed_margin(state["open_positions"])
                 available = state["capital"] - committed
                 if available <= 0:
@@ -1862,7 +1810,7 @@ def main():
                 max_dir_risk = state["capital"] * MAX_DIRECTIONAL_EXPOSURE
                 remaining_dir_risk = max(0, max_dir_risk - same_dir_risk)
 
-                size = (available * RISK_PCT * group_boost) / (sl_pct * LEVERAGE)
+                size = (available * RISK_PCT * group_boost * regime_size_mult) / (sl_pct * LEVERAGE)
                 if size < 0.001: continue
                 # Cap size so total directional risk doesn't exceed limit
                 new_sl_dist = abs(fill_price - sl)

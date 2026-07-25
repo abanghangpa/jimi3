@@ -38,13 +38,40 @@
       "scenario_c": ["squeeze_breakout"]
     },
     "self_contained_scenarios": ["B"],
-    "dependent_scained_scenarios": ["A", "C"],
+    "dependent_scenarios": ["A", "C"],
     "last_validated": "2026-07-24",
     "revalidate_trigger": "squeeze_breakout version change",
     "backtest": {
       "scenario_a": {"trades": 14, "wr": 78.6, "pf": 5.56, "p_value": 0.0049},
       "scenario_b": {"trades": 17, "wr": 76.9, "pf": 3.33, "p_value": 0.0302},
       "scenario_c": {"trades": 8, "wr": 100.0, "pf": null, "p_value": 0.0042}
+    }
+  },
+  "orderbook_imbalance_v6": {
+    "version": "v6",
+    "dependencies": {
+      "scenario_a": ["cross_asset"],
+      "scenario_b": ["whale_watch"],
+      "scenario_c": ["cross_asset", "momentum_v3"]
+    },
+    "self_contained_scenarios": [],
+    "dependent_scenarios": ["A", "B", "C"],
+    "last_validated": "2026-07-24",
+    "revalidate_trigger": "cross_asset or whale_watch or momentum_v3 version change",
+    "backtest": {
+      "scenario_a": {"trades": 125, "wr": 68.0, "pf": 2.12, "p_value": 0.0000, "notes": "OBI SHORT + cross_asset co-filter"},
+      "scenario_b": {"trades": 178, "wr": 68.5, "pf": 2.18, "p_value": 0.0000, "notes": "OBI SHORT + whale_watch co-filter"},
+      "scenario_c": {"trades": 99, "wr": 72.7, "pf": 2.67, "p_value": 0.0000, "notes": "OBI + cross_asset + momentum_v3 multi-cofilter"},
+      "baseline_v5": {"trades": 2112, "wr": 45.3, "pf": 0.83, "p_value": null, "notes": "v5-like baseline (forward-simulated)"},
+      "direction_gate": {
+        "short_only": {"trades": 385, "wr": 57.4, "pf": 1.35, "notes": "SHORT direction has edge"},
+        "long_only": {"trades": 1727, "wr": 42.6, "pf": 0.74, "notes": "LONG direction is catastrophic"}
+      },
+      "session_filter": {
+        "best_hours": [3, 4, 16, 2, 15, 0, 12],
+        "worst_hours": [21, 20, 5, 19, 8, 23],
+        "bad_hours_expanded": [5, 8, 19, 20, 21, 23]
+      }
     }
   }
 }

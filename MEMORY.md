@@ -266,3 +266,41 @@ The scanner optimization on 2026-07-05 broke strategy TP/SL multipliers. All str
 - structural_break: add BEAR
 
 **Capital:** $192.37 | 22 trades (10W/10L) | 3 open positions
+
+
+### Gate Fix & Backtest (2026-07-23)
+
+**Changes applied to REGIME_STRATEGY_GATE:**
+- positioning_fade: replaced dead regimes (CHOP_MILD/CHOP_BEAR/NEUTRAL/CRISIS) → RANGING/BEAR/MILDLY_BEARISH/STRESS
+- liquidation_cascade: +STRESS
+- funding_squeeze: +STRESS
+- trade_flow: +MILDLY_BEARISH
+- whale_watch: +BULL
+- structural_break: +BULL/BEAR/STRESS (now ALL)
+- liquidity_grab: +BULL/BEAR/STRESS (now ALL)
+- failed_breakout: +BEAR/MILDLY_BEARISH
+- forced_movement: +RANGING
+
+**Backtest results (395 trades, Jan-Jul 2026):**
+- Without direction gate: 395 trades, 40.8% WR, +16.06% PnL
+- With direction gate: 338 trades, 44.4% WR, +31.25% PnL
+- Direction gate removes 57 trades (14.4%), nearly doubles PnL
+- LONG+BEAR: 40 trades, 17.5% WR, -13.13% PnL (catastrophic)
+- SHORT+BULL: 17 trades, 23.5% WR, -2.06% PnL
+
+**By regime:** MILDLY_BEARISH best (51.4% WR), RANGING most active (249 trades), STRESS = 0 trades (classifier never produced it)
+
+**Research backing:** Bieganowski 2026 (OBI as #1 SHAP feature), Nguyen 2026 (regime-conditional trend-following), SSRN Funding Rate Mechanism
+
+**Key lesson:** Direction gating is both the safest AND most robust approach. Adaptive params per regime are NOT robust unless classifier is 90%+ accurate. Fixed mechanism + direction gate = best risk-adjusted approach.
+
+**Executor:** PID 411565, dry-run, $192.37 capital, 22 trades (10W/10L), 3 open positions
+
+## Regime Classifier V5 (deployed 2026-07-24)
+- V3 classifier was fundamentally broken: used 15m data with 5-hour window for macro regime detection
+- V3 was stuck on BEAR when V4 daily data showed BULL — COND_GATE was blocking all LONG trades
+- V5 uses V4 daily timeframe (Binance 1D + 1W candles) + contradiction detection + hysteresis
+- Hysteresis: 3 consecutive daily signals + 5-day cooldown before regime transition
+- Regime-conditional sizing replaces binary COND_GATE (BULL 1.0x, BEAR 0.7x, RANGING 1.0x, STRESS 0.5x, MB 0.85x)
+- Key research: Hamilton (1989), Ang & Timmermann (2012), Shu et al. (2024 Princeton), Bieganowski (2026)
+- Files: regime_classifier_v5.py, scanner_executor.py (backup: .bak_v5_pre_regime)

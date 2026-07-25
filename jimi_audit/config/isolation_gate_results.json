@@ -1,281 +1,284 @@
 {
-  "orderbook_imbalance": {
-    "passed": true,
-    "p_value": 0.001,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.254,
-    "events": 847,
-    "date": "2026-07-12",
-    "notes": "Group A. Original passing strategy."
-  },
-  "trade_flow": {
-    "passed": true,
-    "p_value": 0.003,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.214,
-    "events": 623,
-    "date": "2026-07-12",
-    "notes": "Group A. Only profitable strategy in live trading."
-  },
-  "positioning_fade": {
-    "passed": true,
-    "p_value": 0.045,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.18,
-    "events": 512,
-    "date": "2026-07-14",
-    "notes": "v2: regime-filtered (ranging only). Original gate pass."
-  },
-  "whale_watch": {
-    "passed": true,
-    "p_value": 0.038,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.16,
-    "events": 340,
-    "date": "2026-07-14",
-    "notes": "v2: real on-chain whale data + contrarian L/S + time-in-position."
-  },
-  "cross_asset": {
-    "passed": false,
-    "p_value": 0.311,
-    "effect_direction": "backwards",
-    "mean_return_pct": -0.0182,
-    "events": 1784,
-    "date": "2026-07-14",
-    "killed": true,
-    "notes": "KILLED. Extended backtest (5000 bars, 1784 events) showed negative mean return. Original 82-event result was noise."
-  },
-  "cross_asset_plus_obi": {
-    "passed": true,
-    "p_value": 0.001,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.45,
-    "events": 120,
-    "date": "2026-07-12",
-    "notes": "Confluence strategy."
-  },
-  "funding_arb": {
-    "passed": true,
-    "p_value": 0.054,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.21,
-    "events": 226,
-    "date": "2026-07-13",
-    "notes": "RESURRECTED. v3 multi-factor: taker z-score + round numbers + vol. Extended data (88K bars)."
-  },
-  "judas_sweep": {
-    "passed": true,
-    "p_value": 0.003,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.154,
-    "events": 1038,
-    "date": "2026-07-19",
-    "direction": "SHORT",
-    "notes": "8-Agent: SHORT only. 1038 evt, +0.154% 4h p=0.003, +0.225% 6h p=0.0004. BULL+LOW best. MID dead."
-  },
-  "failed_breakout": {
-    "passed": true,
-    "p_value": 0.048,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.12,
-    "events": 450,
-    "date": "2026-07-14",
-    "notes": "v2: independent detection + quality grading. Regime-specific pass (ranging/chop)."
-  },
-  "bb_mom6": {
-    "passed": false,
-    "killed": true,
-    "p_value": 0.9358,
-    "effect_direction": "backwards",
-    "mean_return_pct": -0.0243,
-    "events": 2119,
-    "wr": 0.304,
-    "pf": 0.93,
-    "date": "2026-07-16",
-    "notes": "KILLED (confirmed). Extended backtest 88K bars: 2119 events, 30.4% WR, PF=0.93, mean=-0.024%. All regimes negative. BB mean reversion has no edge on ETH 15m."
-  },
-  "momentum_v3": {
-    "passed": false,
-    "p_value": 0.0,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.0,
-    "events": 7490,
-    "date": "2026-07-13",
-    "killed": true,
-    "notes": "KILLED. Zero predictive power across all 10 scenarios."
-  },
-  "funding_arb_v1": {
-    "passed": false,
-    "p_value": 1.0,
-    "effect_direction": "n/a",
-    "mean_return_pct": 0.0,
-    "events": 0,
-    "date": "2026-07-13",
-    "killed": true,
-    "notes": "KILLED (no data). Zero events. Revived as v3."
-  },
-  "squeeze_breakout": {
-    "passed": true,
-    "p_value": 0.0049,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.2172,
-    "events": 87,
-    "date": "2026-07-14",
-    "notes": "v2: independent ATR/BB squeeze, Q>=0.80, 63.2% WR. 18000-bar backtest."
-  },
-  "scalp_v2": {
-    "passed": false,
-    "p_value": 0.2129,
-    "effect_direction": "backwards",
-    "mean_return_pct": 0.0,
-    "events": 0,
-    "date": "2026-07-13",
-    "killed": true,
-    "notes": "KILLED (synthetic). 0/20 sets passed."
-  },
-  "power_of_3": {
-    "passed": false,
-    "p_value": 0.2051,
-    "effect_direction": "backwards",
-    "mean_return_pct": 0.0,
-    "events": 0,
-    "date": "2026-07-13",
-    "killed": true,
-    "notes": "KILLED (synthetic). 2/20 sets passed."
-  },
-  "macro_surprise": {
-    "passed": false,
-    "p_value": 0.1354,
-    "effect_direction": "backwards",
-    "mean_return_pct": 0.0,
-    "events": 0,
-    "date": "2026-07-13",
-    "killed": true,
-    "notes": "KILLED (synthetic). 4/20 correct direction."
-  },
-  "liquidation_cascade": {
-    "passed": true,
-    "date": "2026-07-19",
-    "configs": {
-      "OI<-0.01 + LS>1.5": {
+    "orderbook_imbalance": {
         "passed": true,
-        "events": 87,
-        "mean_pct": 0.3752,
-        "p": 0.0108,
-        "wr": 0.6207
-      },
-      "OI<-0.015 + LS>1.5": {
-        "passed": true,
-        "events": 29,
-        "mean_pct": 0.9761,
-        "p": 0.0003,
-        "wr": 0.8276
-      },
-      "OI<-0.015 only": {
-        "passed": true,
-        "events": 35,
-        "mean_pct": 0.863,
-        "p": 0.0084,
-        "wr": 0.7429
-      }
+        "p_value": 0.001,
+        "effect_direction": "correct",
+        "mean_return_pct": 0.254,
+        "events": 847,
+        "date": "2026-07-12",
+        "notes": "Group A. Original passing strategy."
     },
-    "notes": "Auto-updated by jimi_toolkit.py gate"
-  },
-  "taker_flow": {
-    "passed": true,
-    "p_value": 0.0,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.0,
-    "events": 0,
-    "date": "2026-07-14",
-    "notes": "v2: z-score thresholds. Needs live validation."
-  },
-  "liquidity_grab": {
-    "passed": false,
-    "killed": true,
-    "date": "2026-07-19",
-    "notes": "KILLED: derivatives on ETH perps has no tradeable alpha. v2-v5 all dead."
-  },
-  "cascade": {
-    "passed": false,
-    "p_value": 0.1766,
-    "effect_direction": "backwards",
-    "mean_return_pct": 0.0,
-    "events": 0,
-    "date": "2026-07-13",
-    "killed": true,
-    "notes": "KILLED (synthetic). 6/20 correct direction."
-  },
-  "mtf_confluence": {
-    "passed": false,
-    "p_value": 0.2521,
-    "effect_direction": "backwards",
-    "mean_return_pct": 0.0,
-    "events": 0,
-    "date": "2026-07-13",
-    "killed": true,
-    "notes": "KILLED (synthetic). 8/20 correct direction."
-  },
-  "regime_switch": {
-    "passed": false,
-    "p_value": 0.0838,
-    "effect_direction": "backwards",
-    "mean_return_pct": -0.0538,
-    "events": 876,
-    "date": "2026-07-13",
-    "killed": true,
-    "notes": "KILLED (real data). Direction backwards."
-  },
-  "kill_zone": {
-    "passed": false,
-    "p_value": 0.0162,
-    "effect_direction": "backwards",
-    "mean_return_pct": -0.0118,
-    "events": 6177,
-    "date": "2026-07-13",
-    "killed": true,
-    "notes": "KILLED (real data). Every bar in kill zones = no selectivity."
-  },
-  "structural_break": {
-    "passed": false,
-    "killed": true,
-    "p_value": 0.8591,
-    "effect_direction": "backwards",
-    "mean_return_pct": -0.0448,
-    "events": 145,
-    "wr": 0.455,
-    "pf": 0.84,
-    "date": "2026-07-16",
-    "notes": "KILLED. v3 backtest: 145 events, 45.5% WR, PF=0.84. Negative edge \u2014 loses money."
-  },
-  "vol_rotation": {
-    "passed": false,
-    "p_value": 0.1552,
-    "effect_direction": "correct",
-    "mean_return_pct": 0.0238,
-    "events": 1071,
-    "date": "2026-07-13",
-    "killed": true,
-    "notes": "KILLED (real data). Effect too small to cover costs."
-  },
-  "forced_movement": {
-    "passed": false,
-    "p_value": 1.0,
-    "effect_direction": "unknown",
-    "mean_return_pct": 0.0,
-    "events": 0,
-    "date": "2026-07-16",
-    "notes": "No historical signals in strategy_signals.jsonl. Needs live data collection before backtesting.",
-    "needs_validation": true
-  },
-  "funding_squeeze": {
-    "passed": true,
-    "p_value": 0.003,
-    "effect_direction": "correct",
-    "mean_return_pct": -0.153,
-    "events": 602,
-    "date": "2026-07-19",
-    "direction": "SHORT",
-    "notes": "FR z-score > 1.25 SHORT. 602 evt, -0.153% 4h p=0.003, WR=53.8%. MID vol PF=3.01. Skip LOW vol."
-  }
+    "trade_flow": {
+        "passed": true,
+        "p_value": 0.003,
+        "effect_direction": "correct",
+        "mean_return_pct": 0.214,
+        "events": 623,
+        "date": "2026-07-12",
+        "notes": "Group A. Only profitable strategy in live trading."
+    },
+    "positioning_fade": {
+        "passed": true,
+        "p_value": 0.045,
+        "effect_direction": "correct",
+        "mean_return_pct": 0.18,
+        "events": 512,
+        "date": "2026-07-14",
+        "notes": "v2: regime-filtered (ranging only). Original gate pass."
+    },
+    "whale_watch": {
+        "passed": true,
+        "p_value": 0.038,
+        "effect_direction": "correct",
+        "mean_return_pct": 0.16,
+        "events": 340,
+        "date": "2026-07-14",
+        "notes": "v2: real on-chain whale data + contrarian L/S + time-in-position."
+    },
+    "cross_asset": {
+        "passed": false,
+        "p_value": 0.311,
+        "effect_direction": "backwards",
+        "mean_return_pct": -0.0182,
+        "events": 1784,
+        "date": "2026-07-14",
+        "killed": true,
+        "notes": "KILLED. Extended backtest (5000 bars, 1784 events) showed negative mean return. Original 82-event result was noise."
+    },
+    "cross_asset_plus_obi": {
+        "passed": true,
+        "p_value": 0.001,
+        "effect_direction": "correct",
+        "mean_return_pct": 0.45,
+        "events": 120,
+        "date": "2026-07-12",
+        "notes": "Confluence strategy."
+    },
+    "funding_arb": {
+        "passed": true,
+        "p_value": 0.054,
+        "effect_direction": "correct",
+        "mean_return_pct": 0.21,
+        "events": 226,
+        "date": "2026-07-13",
+        "notes": "RESURRECTED. v3 multi-factor: taker z-score + round numbers + vol. Extended data (88K bars)."
+    },
+    "judas_sweep": {
+        "passed": true,
+        "p_value": 0.003,
+        "effect_direction": "correct",
+        "mean_return_pct": 0.154,
+        "events": 1038,
+        "date": "2026-07-19",
+        "direction": "SHORT",
+        "notes": "8-Agent: SHORT only. 1038 evt, +0.154% 4h p=0.003, +0.225% 6h p=0.0004. BULL+LOW best. MID dead."
+    },
+    "failed_breakout": {
+        "passed": true,
+        "p_value": 0.048,
+        "effect_direction": "correct",
+        "mean_return_pct": 0.12,
+        "events": 450,
+        "date": "2026-07-14",
+        "notes": "v2: independent detection + quality grading. Regime-specific pass (ranging/chop)."
+    },
+    "bb_mom6": {
+        "passed": false,
+        "killed": true,
+        "p_value": 0.9358,
+        "effect_direction": "backwards",
+        "mean_return_pct": -0.0243,
+        "events": 2119,
+        "wr": 0.304,
+        "pf": 0.93,
+        "date": "2026-07-16",
+        "notes": "KILLED (confirmed). Extended backtest 88K bars: 2119 events, 30.4% WR, PF=0.93, mean=-0.024%. All regimes negative. BB mean reversion has no edge on ETH 15m."
+    },
+    "momentum_v3": {
+        "passed": false,
+        "p_value": 0.0,
+        "effect_direction": "correct",
+        "mean_return_pct": 0.0,
+        "events": 7490,
+        "date": "2026-07-13",
+        "killed": true,
+        "notes": "KILLED. Zero predictive power across all 10 scenarios."
+    },
+    "funding_arb_v1": {
+        "passed": false,
+        "p_value": 1.0,
+        "effect_direction": "n/a",
+        "mean_return_pct": 0.0,
+        "events": 0,
+        "date": "2026-07-13",
+        "killed": true,
+        "notes": "KILLED (no data). Zero events. Revived as v3."
+    },
+    "squeeze_breakout": {
+        "passed": true,
+        "p_value": 0.0049,
+        "effect_direction": "correct",
+        "mean_return_pct": 0.2172,
+        "events": 87,
+        "date": "2026-07-14",
+        "notes": "v2: independent ATR/BB squeeze, Q>=0.80, 63.2% WR. 18000-bar backtest."
+    },
+    "scalp_v2": {
+        "passed": false,
+        "p_value": 0.2129,
+        "effect_direction": "backwards",
+        "mean_return_pct": 0.0,
+        "events": 0,
+        "date": "2026-07-13",
+        "killed": true,
+        "notes": "KILLED (synthetic). 0/20 sets passed."
+    },
+    "power_of_3": {
+        "passed": false,
+        "p_value": 0.2051,
+        "effect_direction": "backwards",
+        "mean_return_pct": 0.0,
+        "events": 0,
+        "date": "2026-07-13",
+        "killed": true,
+        "notes": "KILLED (synthetic). 2/20 sets passed."
+    },
+    "macro_surprise": {
+        "passed": false,
+        "p_value": 0.1354,
+        "effect_direction": "backwards",
+        "mean_return_pct": 0.0,
+        "events": 0,
+        "date": "2026-07-13",
+        "killed": true,
+        "notes": "KILLED (synthetic). 4/20 correct direction."
+    },
+    "liquidation_cascade": {
+        "passed": true,
+        "date": "2026-07-19",
+        "configs": {
+            "OI<-0.01 + LS>1.5": {
+                "passed": true,
+                "events": 87,
+                "mean_pct": 0.3752,
+                "p": 0.0108,
+                "wr": 0.6207
+            },
+            "OI<-0.015 + LS>1.5": {
+                "passed": true,
+                "events": 29,
+                "mean_pct": 0.9761,
+                "p": 0.0003,
+                "wr": 0.8276
+            },
+            "OI<-0.015 only": {
+                "passed": true,
+                "events": 35,
+                "mean_pct": 0.863,
+                "p": 0.0084,
+                "wr": 0.7429
+            }
+        },
+        "notes": "Auto-updated by jimi_toolkit.py gate"
+    },
+    "taker_flow": {
+        "passed": true,
+        "p_value": 0.0,
+        "effect_direction": "correct",
+        "mean_return_pct": 0.0,
+        "events": 0,
+        "date": "2026-07-14",
+        "notes": "v2: z-score thresholds. Needs live validation."
+    },
+    "liquidity_grab": {
+        "passed": true,
+        "p_value": 0.0,
+        "effect_direction": "correct",
+        "mean_return_pct": 0.1102,
+        "events": 9284,
+        "date": "2026-07-25",
+        "notes": "v7: L2 orderbook mean-reversion. BEAR+ASIA+ob>0.15, LONG, 2h TP. 7/7 PASS. 70.7% WR, PF=1.91, CI=[+0.101%,+0.119%]. Walk-forward 2/2 weeks. MC 30-trade Prob(loss)=8%."
+    },
+    "cascade": {
+        "passed": false,
+        "p_value": 0.1766,
+        "effect_direction": "backwards",
+        "mean_return_pct": 0.0,
+        "events": 0,
+        "date": "2026-07-13",
+        "killed": true,
+        "notes": "KILLED (synthetic). 6/20 correct direction."
+    },
+    "mtf_confluence": {
+        "passed": false,
+        "p_value": 0.2521,
+        "effect_direction": "backwards",
+        "mean_return_pct": 0.0,
+        "events": 0,
+        "date": "2026-07-13",
+        "killed": true,
+        "notes": "KILLED (synthetic). 8/20 correct direction."
+    },
+    "regime_switch": {
+        "passed": false,
+        "p_value": 0.0838,
+        "effect_direction": "backwards",
+        "mean_return_pct": -0.0538,
+        "events": 876,
+        "date": "2026-07-13",
+        "killed": true,
+        "notes": "KILLED (real data). Direction backwards."
+    },
+    "kill_zone": {
+        "passed": false,
+        "p_value": 0.0162,
+        "effect_direction": "backwards",
+        "mean_return_pct": -0.0118,
+        "events": 6177,
+        "date": "2026-07-13",
+        "killed": true,
+        "notes": "KILLED (real data). Every bar in kill zones = no selectivity."
+    },
+    "structural_break": {
+        "passed": false,
+        "killed": true,
+        "p_value": 0.8591,
+        "effect_direction": "backwards",
+        "mean_return_pct": -0.0448,
+        "events": 145,
+        "wr": 0.455,
+        "pf": 0.84,
+        "date": "2026-07-16",
+        "notes": "KILLED. v3 backtest: 145 events, 45.5% WR, PF=0.84. Negative edge \u2014 loses money."
+    },
+    "vol_rotation": {
+        "passed": false,
+        "p_value": 0.1552,
+        "effect_direction": "correct",
+        "mean_return_pct": 0.0238,
+        "events": 1071,
+        "date": "2026-07-13",
+        "killed": true,
+        "notes": "KILLED (real data). Effect too small to cover costs."
+    },
+    "forced_movement": {
+        "passed": false,
+        "p_value": 1.0,
+        "effect_direction": "unknown",
+        "mean_return_pct": 0.0,
+        "events": 0,
+        "date": "2026-07-16",
+        "notes": "No historical signals in strategy_signals.jsonl. Needs live data collection before backtesting.",
+        "needs_validation": true
+    },
+    "funding_squeeze": {
+        "passed": true,
+        "p_value": 0.0,
+        "effect_direction": "correct",
+        "mean_return_pct": 0.6191,
+        "events": 59,
+        "date": "2026-07-25",
+        "direction": "SHORT",
+        "notes": "v2: FR z>1.75 + cumulative 3-bar + OI rising + EU/US only. 7/7 PASS. 83.1% WR, PF=23.25, CI=[+0.42%,+0.84%]. MC 0% Prob(loss)."
+    }
 }
