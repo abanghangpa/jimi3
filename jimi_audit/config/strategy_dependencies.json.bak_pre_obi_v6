@@ -1,0 +1,50 @@
+{
+  "trade_flow_v4.2": {
+    "version": "v4.2",
+    "commit": "4b6eef8",
+    "dependencies": {
+      "scenario_a": ["taker_flow"],
+      "scenario_b": []
+    },
+    "self_contained_scenarios": ["B"],
+    "dependent_scenarios": ["A"],
+    "last_validated": "2026-07-24",
+    "revalidate_trigger": "taker_flow version change",
+    "backtest": {
+      "scenario_a": {"trades": 24, "wr": 73.9, "pf": 4.67, "p_value": 0.0016},
+      "scenario_b": {"trades": 58, "wr": 72.7, "pf": 3.33, "p_value": 0.0000}
+    }
+  },
+  "s20_v6.1": {
+    "version": "v6.1",
+    "commit": "1ee2c67",
+    "dependencies": {
+      "default": ["whale_watch"]
+    },
+    "self_contained_scenarios": [],
+    "dependent_scenarios": ["default"],
+    "last_validated": "2026-07-24",
+    "revalidate_trigger": "whale_watch version change",
+    "backtest": {
+      "default": {"trades": 13, "wr": 70.0, "pf": 2.05, "p_value": 0.1399}
+    }
+  },
+  "funding_arb_v7.1": {
+    "version": "v7.1",
+    "commit": "81e98a9",
+    "dependencies": {
+      "scenario_a": ["squeeze_breakout"],
+      "scenario_b": [],
+      "scenario_c": ["squeeze_breakout"]
+    },
+    "self_contained_scenarios": ["B"],
+    "dependent_scained_scenarios": ["A", "C"],
+    "last_validated": "2026-07-24",
+    "revalidate_trigger": "squeeze_breakout version change",
+    "backtest": {
+      "scenario_a": {"trades": 14, "wr": 78.6, "pf": 5.56, "p_value": 0.0049},
+      "scenario_b": {"trades": 17, "wr": 76.9, "pf": 3.33, "p_value": 0.0302},
+      "scenario_c": {"trades": 8, "wr": 100.0, "pf": null, "p_value": 0.0042}
+    }
+  }
+}

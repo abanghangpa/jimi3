@@ -1,82 +1,209 @@
 #!/usr/bin/env python3
 """
-Outcome Tracker CLI — runs the outcome tracking pipeline.
+JIMI Outcome Tracker — CLI Entry Point
+=======================================
+
+Matches fired signals against actual OHLCV price data to determine
+real trade outcomes (TP hit, SL hit, timeout).
+
 Usage:
-  python3 run_outcome_tracker.py              # Full pipeline
-  python3 run_outcome_tracker.py --import     # Import only
-  python3 run_outcome_tracker.py --evaluate   # Evaluate only
-  python3 run_outcome_tracker.py --stats      # Show stats
+    python run_outcome_tracker.py [options]
+
+Examples:
+    python run_outcome_tracker.py
+    python run_outcome_tracker.py --strategy trade_flow
+    python run_outcome_tracker.py --ohlcv data/eth_15m_extended.csv --max-bars 192
+    python run_outcome_tracker.py --dry-run
 """
+
+import argparse
+import logging
 import sys
-import os
-import json
+from pathlib import Path
 
-# Add parent directory to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from src.outcome import OutcomeTracker, OutcomeDB
+from src.outcome_resolver import (
+    OutcomeResolver,
+    load_ohlcv,
+    load_signals_jsonl,
+    save_outcomes,
+    save_summary,
+)
+
+DEFAULT_SIGNALS = "/root/.openclaw/workspace/jimi_audit/data/strategy_signals.jsonl"
+DEFAULT_OHLCV = "/root/.openclaw/workspace/jimi_audit/data/eth_15m_merged.csv"
+DEFAULT_OUTPUT_DIR = "/root/.openclaw/workspace/jimi_audit/data"
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="JIMI Outcome Tracker — Resolve signal outcomes from OHLCV data",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+
+    parser.add_argument(
+        "--signals", "-s",
+        default=DEFAULT_SIGNALS,
+        help=f"Path to signals JSONL (default: {DEFAULT_SIGNALS})",
+    )
+    parser.add_argument(
+        "--ohlcv", "-o",
+        default=DEFAULT_OHLCV,
+        help=f"Path to OHLCV CSV (default: {DEFAULT_OHLCV})",
+    )
+    parser.add_argument(
+        "--output-dir", "-d",
+        default=DEFAULT_OUTPUT_DIR,
+        help=f"Output directory (default: {DEFAULT_OUTPUT_DIR})",
+    )
+    parser.add_argument(
+        "--strategy",
+        help="Filter to specific strategy (e.g., trade_flow)",
+    )
+    parser.add_argument(
+        "--max-bars",
+        type=int,
+        default=96,
+        help="Max bars to hold a trade before timeout (default: 96 = 24h for 15m)",
+    )
+    parser.add_argument(
+        "--output-name",
+        help="Output filename (default: resolved_outcomes_<strategy>.jsonl)",
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Generate synthetic signals and OHLCV for testing",
+    )
+    parser.add_argument(
+        "-v", "--verbose",
+        action="store_true",
+        help="Enable debug logging",
+    )
+
+    return parser.parse_args()
+
+
+def generate_synthetic_data(n_signals=50, n_candles=500):
+    """Generate synthetic OHLCV + signals for dry-run testing."""
+    import random
+    from src.outcome_resolver import Candle, Signal
+
+    rng = random.Random(42)
+    base_ts = 1700000000.0
+    bar_secs = 900
+
+    # Generate OHLCV
+    candles = []
+    price = 3000.0
+    for i in range(n_candles):
+        ts = base_ts + i * bar_secs
+        change = rng.gauss(0, 10)
+        o = price
+        h = o + abs(rng.gauss(0, 8))
+        l = o - abs(rng.gauss(0, 8))
+        c = o + change
+        candles.append(Candle(timestamp=ts, open=o, high=h, low=l, close=c, volume=rng.uniform(100, 1000)))
+        price = c
+
+    # Generate signals
+    signals = []
+    for i in range(n_signals):
+        candle_idx = rng.randint(10, n_candles - 100)
+        c = candles[candle_idx]
+        direction = rng.choice(["LONG", "SHORT"])
+        entry = c.close
+        risk = rng.uniform(5, 20)
+
+        if direction == "LONG":
+            sl = entry - risk
+            tp = entry + risk * rng.uniform(1.0, 2.5)
+        else:
+            sl = entry + risk
+            tp = entry - risk * rng.uniform(1.0, 2.5)
+
+        rr = abs(tp - entry) / risk
+
+        from datetime import datetime
+        ts_dt = datetime.fromtimestamp(c.timestamp)
+
+        signals.append(Signal(
+            line_idx=i,
+            timestamp=ts_dt.strftime("%Y-%m-%d %H:%M:%S"),
+            entry_time=c.timestamp,
+            strategy="dry_run_test",
+            direction=direction,
+            entry=round(entry, 2),
+            sl=round(sl, 2),
+            tp=round(tp, 2),
+            rr=round(rr, 2),
+            conviction=round(rng.uniform(0.3, 0.95), 2),
+            price=round(c.close, 2),
+        ))
+
+    return candles, signals
 
 
 def main():
-    db = OutcomeDB()
-    tracker = OutcomeTracker(db)
+    args = parse_args()
 
-    if '--stats' in sys.argv:
-        # Show current stats
-        total = db.get_signal_count()
-        pending = db.get_signal_count('PENDING')
-        evaluated = db.get_signal_count('EVALUATED')
+    logging.basicConfig(
+        level=logging.DEBUG if args.verbose else logging.INFO,
+        format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+    logger = logging.getLogger("jimi.outcome.cli")
 
-        print(f"=== Outcome DB Stats ===")
-        print(f"Total signals: {total}")
-        print(f"Pending: {pending}")
-        print(f"Evaluated: {evaluated}")
-        print()
+    if args.dry_run:
+        logger.info("DRY RUN: Generating synthetic data ...")
+        candles, signals = generate_synthetic_data()
+        strategy_name = "dry_run_test"
+    else:
+        # Load OHLCV
+        ohlcv_path = Path(args.ohlcv)
+        if not ohlcv_path.exists():
+            logger.error("OHLCV file not found: %s", ohlcv_path)
+            logger.info("Available ETH data: eth_15m_merged.csv, eth_15m_extended.csv")
+            sys.exit(1)
+        candles = load_ohlcv(ohlcv_path)
 
-        # Show strategy performance
-        perf = db.get_all_strategy_performance(days=30)
-        if perf:
-            print(f"=== Strategy Performance (30d) ===")
-            print(f"{'Strategy':<25} {'Regime':<15} {'Dir':<8} {'WR%':<8} {'Total':<8} {'Avg PnL':<10}")
-            print("-" * 80)
-            for p in perf:
-                print(f"{p['strategy']:<25} {p['regime']:<15} {p['direction']:<8} "
-                      f"{p['win_rate']:<8.1f} {p['total_signals']:<8} {p['avg_pnl']:<10.4f}")
-        else:
-            print("No strategy performance data yet. Run the pipeline first.")
+        # Load signals
+        signals_path = Path(args.signals)
+        if not signals_path.exists():
+            logger.error("Signals file not found: %s", signals_path)
+            sys.exit(1)
+        signals = load_signals_jsonl(signals_path, strategy_filter=args.strategy)
+        strategy_name = args.strategy or "all"
 
-        return
+    if not signals:
+        logger.error("No signals found")
+        sys.exit(1)
 
-    if '--import' in sys.argv:
-        print("Importing signals...")
-        imported_pending = tracker.import_from_pending_json()
-        print(f"  Imported from pending_signals.json: {imported_pending}")
-        imported_scans = tracker.import_from_scans(limit=500)
-        print(f"  Imported from scan files: {imported_scans}")
-        return
+    logger.info("Loaded %d candles, %d signals", len(candles), len(signals))
 
-    if '--evaluate' in sys.argv:
-        print("Evaluating pending signals...")
-        result = tracker.evaluate_pending()
-        print(f"  Evaluated: {result['evaluated']}")
-        print(f"  Wins: {result['wins']}")
-        print(f"  Losses: {result['losses']}")
-        print(f"  Neutral: {result['neutral']}")
-        print(f"  Errors: {result['errors']}")
-        return
+    # Resolve
+    resolver = OutcomeResolver(candles, max_bars=args.max_bars)
+    outcomes = resolver.resolve_all(signals)
 
-    # Full pipeline
-    print("Running full outcome tracking pipeline...")
-    result = tracker.run_full_pipeline()
-    print(f"\n=== Results ===")
-    print(f"Imported (pending): {result['imported_pending']}")
-    print(f"Imported (scans): {result['imported_scans']}")
-    print(f"Evaluated: {result['evaluated'].get('evaluated', 0)}")
-    print(f"  Wins: {result['evaluated'].get('wins', 0)}")
-    print(f"  Losses: {result['evaluated'].get('losses', 0)}")
-    print(f"  Neutral: {result['evaluated'].get('neutral', 0)}")
-    print(f"Performance updated: {result['performance_updated']} strategies")
+    # Save
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    if args.output_name:
+        out_name = args.output_name
+    else:
+        out_name = f"resolved_outcomes_{strategy_name}.jsonl"
+
+    outcomes_path = save_outcomes(outcomes, output_dir / out_name)
+    summary_path = save_summary(outcomes, output_dir / f"outcome_summary_{strategy_name}.txt")
+
+    # Print summary
+    with open(summary_path) as f:
+        print(f.read())
+
+    logger.info("Done. Outcomes: %s | Summary: %s", outcomes_path, summary_path)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

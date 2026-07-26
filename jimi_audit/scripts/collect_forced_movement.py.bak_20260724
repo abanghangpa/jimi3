@@ -57,7 +57,7 @@ def _binance_get(path, params=None):
 def fetch_binance_funding(symbol="ETHUSDT", limit=100):
     """Get recent funding rate history from Binance (free, no key)."""
     try:
-        r = requests.get(f"{BINANCE_FAPI}/fapi/v1/fundingRate",
+        r = requests.get(f"{BINANCE_FAPI}/futures/data/fundingRate",
                         params={"symbol": symbol, "limit": limit}, timeout=10)
         r.raise_for_status()
         return [{"exchange": "binance", "rate": float(d["fundingRate"]),
@@ -84,7 +84,7 @@ def fetch_bybit_funding(symbol="ETHUSDT", limit=200):
 def fetch_okx_funding(symbol="ETH-USDT-SWAP", limit=100):
     """Get recent funding rate history from OKX (free, no key)."""
     try:
-        r = requests.get(f"{OKX_REST}/api/v5/public/funding-rate-history",
+        r = requests.get(f"{OKX_REST}/api/v5/public/funding-history",
                         params={"instId": symbol, "limit": str(limit)}, timeout=10)
         r.raise_for_status()
         data = r.json().get("data", [])

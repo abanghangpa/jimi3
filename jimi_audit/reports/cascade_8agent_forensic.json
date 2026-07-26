@@ -1,0 +1,389 @@
+{
+  "agent_1_forensics": {
+    "oi_coverage": "3403/88735 (3.8%)",
+    "fr_coverage": "3388/88735 (3.8%)",
+    "ls_coverage": "3403/88735 (3.8%)",
+    "oi_roc_mean": -6.60576688272044e-05,
+    "oi_roc_std": 0.005001934717650099,
+    "oi_roc_gt_0.005": 245,
+    "oi_roc_gt_0.01": 73,
+    "oi_roc_gt_0.015": 28,
+    "oi_roc_gt_0.02": 12,
+    "oi_roc_gt_0.03": 5,
+    "price_disp_mean": 0.005114174318830684,
+    "price_disp_gt_0.003": 47616,
+    "price_disp_gt_0.005": 30463,
+    "price_disp_gt_0.01": 11378,
+    "price_disp_gt_0.015": 5075,
+    "price_disp_gt_0.02": 2531,
+    "july_2026_bars": 1183,
+    "july_2026_oi_coverage": 520
+  },
+  "agent_2_non_indicator": {
+    "OI_surge_1pct_price_0.5pct_15m": {
+      "n": 43,
+      "mean": -0.0009651509647022108,
+      "p": 0.08670268461646344,
+      "wr": 0.37209302325581395,
+      "dir": "S",
+      "gate": "FAIL"
+    },
+    "OI_surge_1pct_price_0.5pct_1h": {
+      "n": 43,
+      "mean": 8.013313474771201e-05,
+      "p": 0.9180783279238635,
+      "wr": 0.46511627906976744,
+      "dir": "L",
+      "gate": "FAIL"
+    },
+    "OI_surge_1pct_price_0.5pct_4h": {
+      "n": 43,
+      "mean": 0.0030400498820019077,
+      "p": 0.16028501430942946,
+      "wr": 0.5348837209302325,
+      "dir": "L",
+      "gate": "FAIL"
+    },
+    "OI_surge_1.5pct_price_0.5pct_15m": {
+      "n": 20,
+      "mean": -0.0005301402397264399,
+      "p": 0.40890699003236963,
+      "wr": 0.35,
+      "dir": "S",
+      "gate": "FAIL"
+    },
+    "OI_surge_1.5pct_price_0.5pct_1h": {
+      "n": 20,
+      "mean": 0.0015365426007616033,
+      "p": 0.11387276384623732,
+      "wr": 0.5,
+      "dir": "L",
+      "gate": "FAIL"
+    },
+    "OI_surge_1.5pct_price_0.5pct_4h": {
+      "n": 20,
+      "mean": 0.004846526962794801,
+      "p": 0.11440331953160258,
+      "wr": 0.55,
+      "dir": "L",
+      "gate": "FAIL"
+    },
+    "OI_surge_2pct_price_1pct_15m": {
+      "n": 6,
+      "mean": 0.00015372667302293586,
+      "p": 0.8951267143135822,
+      "wr": 0.5,
+      "dir": "L",
+      "gate": "FAIL"
+    },
+    "OI_surge_2pct_price_1pct_1h": {
+      "n": 6,
+      "mean": 0.0029534594966973415,
+      "p": 0.1881228692697036,
+      "wr": 0.6666666666666666,
+      "dir": "L",
+      "gate": "FAIL"
+    },
+    "OI_surge_2pct_price_1pct_4h": {
+      "n": 6,
+      "mean": 0.009356961333137662,
+      "p": 0.12434697976829158,
+      "wr": 0.6666666666666666,
+      "dir": "L",
+      "gate": "FAIL"
+    },
+    "OI_surge_1pct_price_1pct_15m": {
+      "n": 24,
+      "mean": -0.0006649197928897121,
+      "p": 0.3762821560855434,
+      "wr": 0.4166666666666667,
+      "dir": "S",
+      "gate": "FAIL"
+    },
+    "OI_surge_1pct_price_1pct_1h": {
+      "n": 24,
+      "mean": 0.0007920410512387843,
+      "p": 0.5352234639081803,
+      "wr": 0.5416666666666666,
+      "dir": "L",
+      "gate": "FAIL"
+    },
+    "OI_surge_1pct_price_1pct_4h": {
+      "n": 24,
+      "mean": 0.006064496603278814,
+      "p": 0.054868119138026736,
+      "wr": 0.5833333333333334,
+      "dir": "L",
+      "gate": "PASS"
+    },
+    "OI_surge_0.5pct_price_0.3pct_15m": {
+      "n": 151,
+      "mean": -0.00028832003725545675,
+      "p": 0.352143814003229,
+      "wr": 0.4503311258278146,
+      "dir": "S",
+      "gate": "FAIL"
+    },
+    "OI_surge_0.5pct_price_0.3pct_1h": {
+      "n": 151,
+      "mean": -6.786988668828021e-05,
+      "p": 0.9037105212407033,
+      "wr": 0.423841059602649,
+      "dir": "S",
+      "gate": "FAIL"
+    },
+    "OI_surge_0.5pct_price_0.3pct_4h": {
+      "n": 151,
+      "mean": 0.0008301187205806735,
+      "p": 0.45166748280804747,
+      "wr": 0.4966887417218543,
+      "dir": "L",
+      "gate": "FAIL"
+    },
+    "OI_drop_1pct_price_0.5pct_15m": {
+      "n": 65,
+      "mean": 0.0004196043682310524,
+      "p": 0.22013815991262625,
+      "wr": 0.4461538461538462,
+      "dir": "L",
+      "gate": "FAIL"
+    },
+    "OI_drop_1pct_price_0.5pct_1h": {
+      "n": 65,
+      "mean": 0.0007708109117899738,
+      "p": 0.31751029705735884,
+      "wr": 0.5846153846153846,
+      "dir": "L",
+      "gate": "FAIL"
+    },
+    "OI_drop_1pct_price_0.5pct_4h": {
+      "n": 65,
+      "mean": 0.004586194414138572,
+      "p": 0.03499746312279738,
+      "wr": 0.5692307692307692,
+      "dir": "L",
+      "gate": "PASS"
+    },
+    "surge_1h": {
+      "n": 73,
+      "mean": 0.00041595577295100515,
+      "p": 0.5485178316581553,
+      "gate": "FAIL"
+    },
+    "surge_4h": {
+      "n": 73,
+      "mean": 0.002266399977760355,
+      "p": 0.14020511417217255,
+      "gate": "FAIL"
+    },
+    "drop_1h": {
+      "n": 96,
+      "mean": 0.0008952573404119533,
+      "p": 0.15523908382812165,
+      "gate": "FAIL"
+    },
+    "drop_4h": {
+      "n": 96,
+      "mean": 0.003242850718761585,
+      "p": 0.042450915011738144,
+      "gate": "PASS"
+    }
+  },
+  "agent_3_indicator": {
+    "total_cascade_signals": 70675,
+    "s20_trigger_15m": {
+      "n": 70674,
+      "mean": -1.6225696442213893e-07,
+      "p": 0.9893118391896207,
+      "wr": 0.4942977615530464,
+      "gate": "FAIL"
+    },
+    "s20_trigger_1h": {
+      "n": 70671,
+      "mean": 7.966034478068212e-06,
+      "p": 0.7490013066457598,
+      "wr": 0.5005730780659676,
+      "gate": "FAIL"
+    },
+    "s20_trigger_4h": {
+      "n": 70662,
+      "mean": 6.721911435215576e-05,
+      "p": 0.185015855239569,
+      "wr": 0.5023067561065353,
+      "gate": "FAIL"
+    },
+    "july_2026_signals": 577,
+    "condition_failures": {
+      "oi_too_low": 3359,
+      "ls_wrong": 44,
+      "price_crashing": 14657,
+      "all_pass": 70675
+    }
+  },
+  "agent_4_regime": {
+    "vol_regime_HIGH_1h": {
+      "n": 20716,
+      "mean": 6.442611931519331e-05,
+      "p": 0.2938481466099298,
+      "gate": "FAIL"
+    },
+    "vol_regime_HIGH_4h": {
+      "n": 20707,
+      "mean": 0.0003937098141125038,
+      "p": 0.001021897332602371,
+      "gate": "FAIL"
+    },
+    "vol_regime_LOW_1h": {
+      "n": 25905,
+      "mean": -1.5345993978702073e-06,
+      "p": 0.9562725670618921,
+      "gate": "FAIL"
+    },
+    "vol_regime_LOW_4h": {
+      "n": 25905,
+      "mean": -0.00018611081323948364,
+      "p": 0.00288373938257012,
+      "gate": "FAIL"
+    },
+    "vol_regime_MID_1h": {
+      "n": 24050,
+      "mean": -3.04336826499858e-05,
+      "p": 0.4535809540699426,
+      "gate": "FAIL"
+    },
+    "vol_regime_MID_4h": {
+      "n": 24050,
+      "mean": 5.898081307664173e-05,
+      "p": 0.48151384297704813,
+      "gate": "FAIL"
+    },
+    "trend_BEAR_1h": {
+      "n": 32495,
+      "mean": -5.2490826168500874e-05,
+      "p": 0.1687523636042894,
+      "gate": "FAIL"
+    },
+    "trend_BEAR_4h": {
+      "n": 32486,
+      "mean": 1.6436581337906765e-05,
+      "p": 0.8329531139396686,
+      "gate": "FAIL"
+    },
+    "trend_BULL_1h": {
+      "n": 38176,
+      "mean": 5.9426263069598545e-05,
+      "p": 0.0692885091292319,
+      "gate": "FAIL"
+    },
+    "trend_BULL_4h": {
+      "n": 38176,
+      "mean": 0.0001104326874740357,
+      "p": 0.09646570429334114,
+      "gate": "FAIL"
+    },
+    "era_2024_H1_1h": {
+      "n": 14895,
+      "mean": 8.353851387346517e-05,
+      "p": 0.09703406158610069,
+      "gate": "FAIL"
+    },
+    "era_2024_H1_4h": {
+      "n": 14895,
+      "mean": 0.00038425615827180574,
+      "p": 0.00020326674972205014,
+      "gate": "FAIL"
+    },
+    "era_2024_H2_1h": {
+      "n": 14695,
+      "mean": -2.797483222286564e-05,
+      "p": 0.5903961115484214,
+      "gate": "FAIL"
+    },
+    "era_2024_H2_4h": {
+      "n": 14695,
+      "mean": -1.0273005121281925e-05,
+      "p": 0.9234377321575484,
+      "gate": "FAIL"
+    },
+    "era_2025_H1_1h": {
+      "n": 13943,
+      "mean": 4.558601138932522e-05,
+      "p": 0.4802278001973346,
+      "gate": "FAIL"
+    },
+    "era_2025_H1_4h": {
+      "n": 13943,
+      "mean": 0.0001523929052320614,
+      "p": 0.24867266958936593,
+      "gate": "FAIL"
+    },
+    "era_2025_H2_1h": {
+      "n": 14565,
+      "mean": 9.309085569829357e-05,
+      "p": 0.08657998825614606,
+      "gate": "FAIL"
+    },
+    "era_2025_H2_4h": {
+      "n": 14565,
+      "mean": 0.0003508444581073788,
+      "p": 0.0017008895281176222,
+      "gate": "FAIL"
+    },
+    "era_2026_1h": {
+      "n": 12573,
+      "mean": -0.00017988725459935594,
+      "p": 0.001599919124425798,
+      "gate": "FAIL"
+    },
+    "era_2026_4h": {
+      "n": 12564,
+      "mean": -0.0006413212686114203,
+      "p": 8.09383062614405e-09,
+      "gate": "FAIL"
+    }
+  },
+  "agent_5_gate": {
+    "cascade_ema200_dist_mean": 0.01651810495389074,
+    "cascade_ema200_dist_median": 0.011446512873458579,
+    "cascade_near_ema200": 50097,
+    "cascade_near_ema200_pct": 0.7088362221436152,
+    "raw_cascade_events": 70675,
+    "strategy_sees": "unknown (whale_watch data not available)"
+  },
+  "agent_6_cooccurrence": {
+    "cascade_funding_mean": 1.6284000000000002e-05,
+    "cascade_funding_median": 1.371e-05,
+    "cascade_vol_ratio_mean": 0.9526597236625769
+  },
+  "agent_7_sensitivity": {},
+  "agent_8_monte_carlo": {
+    "n_events": 70662,
+    "actual_mean": 6.721911435215576e-05,
+    "actual_wr": 0.5023067561065353,
+    "mc_p_mean": 0.3243,
+    "mc_p_wr": 1.0,
+    "bootstrap_ci_mean": [
+      -3.2354634405469335e-05,
+      0.00016810988724149525
+    ],
+    "bootstrap_ci_wr": [
+      0.498683875350259,
+      0.5059720924966743
+    ],
+    "significant": "False"
+  },
+  "verdict": {
+    "strategy": "S20 Liquidation Cascade",
+    "version": "v6.1 PROVISIONAL",
+    "total_cascade_signals": 70675,
+    "july_2026_signals": 577,
+    "mc_significant": "False",
+    "research_papers": [
+      "Anatomy of a Crypto Cascade: Minute-Level Evidence (SSRN 6579278, 2026)",
+      "Explainable Patterns in Crypto Microstructure (arXiv 2602.00776, 2026)",
+      "Anatomy of Oct 2025 Liquidation Cascade (ResearchGate, 2025)"
+    ],
+    "diagnosis": "NOT SIGNIFICANT: Cascade signal exists but edge is not statistically confirmed",
+    "recommendation": "Lower thresholds, extend data window, or KILL"
+  }
+}

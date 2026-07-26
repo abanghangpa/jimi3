@@ -1,0 +1,128 @@
+{
+  "strategy_name": "trade_flow",
+  "timestamp": "2026-07-24T08:59:25.328799+00:00",
+  "n_trades": 2882,
+  "wf_result": {
+    "n_folds": 0,
+    "total_test_trades": 0,
+    "overall_win_rate": 0,
+    "overall_profit_factor": 0,
+    "overall_sharpe": 0,
+    "folds": [],
+    "bootstrap_ci_wr": [
+      0.0,
+      0.0
+    ],
+    "bootstrap_ci_pf": [
+      0.0,
+      0.0
+    ],
+    "regime_breakdown": {},
+    "pass_gate": false
+  },
+  "dsr_result": {
+    "observed_sharpe": 6.1864,
+    "sharpe_std_error": 0.0836,
+    "n_trials": 20,
+    "dsr": 51.2724,
+    "dsr_pvalue": 1.0,
+    "is_significant_95": "True",
+    "is_significant_99": "True"
+  },
+  "mc_result": {
+    "real_metric": 2.1955,
+    "n_permutations": 10000,
+    "null_mean": 1.001,
+    "null_std": 0.0383,
+    "null_distribution": [],
+    "p_value": 0.0,
+    "percentile_rank": 100.0
+  },
+  "cpcv_result": {
+    "n_groups": 10,
+    "n_test_groups": 2,
+    "n_combinations": 45,
+    "mean_oos_pnl": 255.112,
+    "oos_win_rate": 1.0,
+    "cpcv_score": 1.0,
+    "pnl_distribution": [
+      285.41,
+      204.15,
+      406.5,
+      329.0,
+      353.5,
+      273.25,
+      336.25,
+      291.25,
+      352.25,
+      100.56,
+      302.91,
+      225.41,
+      249.91,
+      169.66,
+      232.66,
+      187.66,
+      248.66,
+      221.65,
+      144.15,
+      168.65,
+      88.4,
+      151.4,
+      106.4,
+      167.4,
+      346.5,
+      371.0,
+      290.75,
+      353.75,
+      308.75,
+      369.75,
+      293.5,
+      213.25,
+      276.25,
+      231.25,
+      292.25,
+      237.75,
+      300.75,
+      255.75,
+      316.75,
+      220.5,
+      175.5,
+      236.5,
+      238.5,
+      299.5,
+      254.5
+    ]
+  },
+  "bootstrap_ci_wr": [
+    0.612422,
+    0.647467
+  ],
+  "bootstrap_ci_pf": [
+    2.033669,
+    2.367823
+  ],
+  "regime_breakdown": {
+    "unknown": {
+      "n_trades": 2882,
+      "win_rate": 0.6298,
+      "profit_factor": 2.1955,
+      "total_pnl": 1275.56,
+      "avg_pnl": 0.4426
+    }
+  },
+  "pass_gate": false,
+  "gate_failures": [
+    "WF WR 0.00% < min 50%",
+    "WF test trades 0 < min 30"
+  ],
+  "scores": {
+    "wf_wr": 0,
+    "wf_pf": 0,
+    "wf_sharpe": 0,
+    "dsr": 51.2724,
+    "observed_sharpe": 6.1864,
+    "mc_pvalue": 0.0,
+    "mc_percentile": 100.0,
+    "cpcv_score": 1.0
+  }
+}

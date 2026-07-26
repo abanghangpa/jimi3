@@ -33,11 +33,11 @@
   },
   "live_stats": {
     "trade_flow": {
-      "trades": 3,
+      "trades": 5,
       "wins": 2,
-      "losses": 1,
-      "timeouts": 0,
-      "pnl": -183.73666076221144,
+      "losses": 2,
+      "timeouts": 1,
+      "pnl": -225.07908690141153,
       "trade_log": [
         {
           "outcome": "LOSS",
@@ -50,6 +50,14 @@
         {
           "outcome": "WIN",
           "ts": "2026-07-15T12:49:59.142827+00:00"
+        },
+        {
+          "outcome": "TIMEOUT",
+          "ts": "2026-07-23T01:05:37.152528+00:00"
+        },
+        {
+          "outcome": "LOSS",
+          "ts": "2026-07-23T15:13:39.540266+00:00"
         }
       ]
     },
@@ -79,11 +87,11 @@
       "trade_log": []
     },
     "orderbook_imbalance": {
-      "trades": 2,
-      "wins": 1,
+      "trades": 3,
+      "wins": 2,
       "losses": 1,
       "timeouts": 0,
-      "pnl": 3.865856789279672,
+      "pnl": 31.23148061495962,
       "trade_log": [
         {
           "outcome": "LOSS",
@@ -92,23 +100,61 @@
         {
           "outcome": "WIN",
           "ts": "2026-07-15T12:49:59.285830+00:00"
+        },
+        {
+          "outcome": "WIN",
+          "ts": "2026-07-23T12:38:17.519918+00:00"
         }
       ]
     },
     "liquidation_cascade": {
-      "trades": 1,
+      "trades": 2,
       "wins": 0,
       "losses": 1,
-      "timeouts": 0,
-      "pnl": -22.656094989000067,
+      "timeouts": 1,
+      "pnl": -22.844101540580066,
       "trade_log": [
         {
           "outcome": "LOSS",
           "ts": "2026-07-22T13:45:10.594386+00:00"
+        },
+        {
+          "outcome": "TIMEOUT",
+          "ts": "2026-07-23T17:33:28.203231+00:00"
+        }
+      ]
+    },
+    "judas_sweep": {
+      "trades": 1,
+      "wins": 1,
+      "losses": 0,
+      "timeouts": 0,
+      "pnl": 33.3948657499599,
+      "trade_log": [
+        {
+          "outcome": "WIN",
+          "ts": "2026-07-23T12:38:17.195276+00:00"
+        }
+      ]
+    },
+    "failed_breakout": {
+      "trades": 2,
+      "wins": 1,
+      "losses": 1,
+      "timeouts": 0,
+      "pnl": 18.468691302600078,
+      "trade_log": [
+        {
+          "outcome": "LOSS",
+          "ts": "2026-07-23T12:46:20.685382+00:00"
+        },
+        {
+          "outcome": "WIN",
+          "ts": "2026-07-24T13:40:10.475433+00:00"
         }
       ]
     }
   },
   "paused": {},
-  "last_updated": "2026-07-22T13:45:10.598005+00:00"
+  "last_updated": "2026-07-24T13:40:10.477566+00:00"
 }

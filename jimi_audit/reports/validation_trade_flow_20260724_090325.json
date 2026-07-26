@@ -1,0 +1,139 @@
+{
+  "strategy_name": "trade_flow",
+  "timestamp": "2026-07-24T09:03:22.906077+00:00",
+  "n_trades": 2882,
+  "wf_result": {
+    "n_folds": 1,
+    "total_test_trades": 651,
+    "overall_win_rate": 0.6620583717357911,
+    "overall_profit_factor": 2.448863636363636,
+    "overall_sharpe": 11.738380798592386,
+    "folds": [
+      {
+        "fold_idx": 0,
+        "train_start": 1782562500.0,
+        "train_end": 1784237194.0,
+        "test_start": 1784243892.0,
+        "test_end": 1784645818.0,
+        "train_trades": 1945,
+        "test_trades": 651,
+        "test_win_rate": 0.6620583717357911,
+        "test_profit_factor": 2.4488636363636362,
+        "test_pnl": 318.75,
+        "test_sharpe": 11.738380798592386
+      }
+    ],
+    "bootstrap_ci_wr": [
+      0.6620583717357911,
+      0.6620583717357911
+    ],
+    "bootstrap_ci_pf": [
+      2.4488636363636362,
+      2.4488636363636362
+    ],
+    "regime_breakdown": {},
+    "pass_gate": false
+  },
+  "dsr_result": {
+    "observed_sharpe": 6.1576,
+    "sharpe_std_error": 0.0832,
+    "n_trials": 20,
+    "dsr": 51.1543,
+    "dsr_pvalue": 1.0,
+    "is_significant_95": "True",
+    "is_significant_99": "True"
+  },
+  "mc_result": {
+    "real_metric": 2.1835,
+    "n_permutations": 10000,
+    "null_mean": 0.9998,
+    "null_std": 0.0383,
+    "null_distribution": [],
+    "p_value": 0.0,
+    "percentile_rank": 100.0
+  },
+  "cpcv_result": {
+    "n_groups": 10,
+    "n_test_groups": 2,
+    "n_combinations": 45,
+    "mean_oos_pnl": 254.682,
+    "oos_win_rate": 1.0,
+    "cpcv_score": 1.0,
+    "pnl_distribution": [
+      308.14,
+      88.27,
+      289.0,
+      289.0,
+      271.25,
+      266.5,
+      255.25,
+      282.25,
+      239.75,
+      142.41,
+      343.14,
+      343.14,
+      325.39,
+      320.64,
+      309.39,
+      336.39,
+      293.89,
+      123.27,
+      123.27,
+      105.52,
+      100.77,
+      89.52,
+      116.52,
+      74.02,
+      324.0,
+      306.25,
+      301.5,
+      290.25,
+      317.25,
+      274.75,
+      306.25,
+      301.5,
+      290.25,
+      317.25,
+      274.75,
+      283.75,
+      272.5,
+      299.5,
+      257.0,
+      267.75,
+      294.75,
+      252.25,
+      283.5,
+      241.0,
+      268.0
+    ]
+  },
+  "bootstrap_ci_wr": [
+    0.609646,
+    0.644344
+  ],
+  "bootstrap_ci_pf": [
+    2.02254,
+    2.353175
+  ],
+  "regime_breakdown": {
+    "unknown": {
+      "n_trades": 2882,
+      "win_rate": 0.6266,
+      "profit_factor": 2.1835,
+      "total_pnl": 1273.41,
+      "avg_pnl": 0.4418
+    }
+  },
+  "pass_gate": true,
+  "gate_failures": [],
+  "scores": {
+    "wf_wr": 0.6620583717357911,
+    "wf_pf": 2.448863636363636,
+    "wf_sharpe": 11.738380798592386,
+    "dsr": 51.1543,
+    "observed_sharpe": 6.1576,
+    "mc_pvalue": 0.0,
+    "mc_percentile": 100.0,
+    "cpcv_score": 1.0
+  }
+}

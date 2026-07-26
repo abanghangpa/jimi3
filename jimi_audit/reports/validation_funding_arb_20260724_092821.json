@@ -1,0 +1,143 @@
+{
+  "strategy_name": "funding_arb",
+  "timestamp": "2026-07-24T09:28:21.185651+00:00",
+  "n_trades": 502,
+  "wf_result": {
+    "n_folds": 1,
+    "total_test_trades": 100,
+    "overall_win_rate": 0.77,
+    "overall_profit_factor": 1.1339130434782612,
+    "overall_sharpe": 0.5464762037483686,
+    "folds": [
+      {
+        "fold_idx": 0,
+        "train_start": 1782562500.0,
+        "train_end": 1783040400.0,
+        "test_start": 1783026900.0,
+        "test_end": 1783271700.0,
+        "train_trades": 351,
+        "test_trades": 100,
+        "test_win_rate": 0.77,
+        "test_profit_factor": 1.133913043478261,
+        "test_pnl": 3.080000000000001,
+        "test_sharpe": 0.5464762037483686
+      }
+    ],
+    "bootstrap_ci_wr": [
+      0.77,
+      0.77
+    ],
+    "bootstrap_ci_pf": [
+      1.133913043478261,
+      1.133913043478261
+    ],
+    "regime_breakdown": {},
+    "pass_gate": false
+  },
+  "dsr_result": {
+    "observed_sharpe": -0.9817,
+    "sharpe_std_error": 0.0543,
+    "n_trials": 20,
+    "dsr": -53.0521,
+    "dsr_pvalue": 0.0,
+    "is_significant_95": "False",
+    "is_significant_99": "False"
+  },
+  "mc_result": {
+    "real_metric": 0.8745,
+    "n_permutations": 10000,
+    "null_mean": 1.0042,
+    "null_std": 0.0968,
+    "null_distribution": [],
+    "p_value": 0.9176,
+    "percentile_rank": 8.24
+  },
+  "cpcv_result": {
+    "n_groups": 10,
+    "n_test_groups": 2,
+    "n_combinations": 45,
+    "mean_oos_pnl": -6.526,
+    "oos_win_rate": 0.4444,
+    "cpcv_score": 0.4,
+    "pnl_distribution": [
+      -40.0,
+      17.5,
+      -50.0,
+      -20.0,
+      -22.5,
+      8.84,
+      4.39,
+      -26.31,
+      -4.55,
+      2.5,
+      -65.0,
+      -35.0,
+      -37.5,
+      -6.16,
+      -10.61,
+      -41.31,
+      -19.55,
+      -7.5,
+      22.5,
+      20.0,
+      51.34,
+      46.89,
+      16.19,
+      37.95,
+      -45.0,
+      -47.5,
+      -16.16,
+      -20.61,
+      -51.31,
+      -29.55,
+      -17.5,
+      13.84,
+      9.39,
+      -21.31,
+      0.45,
+      11.34,
+      6.89,
+      -23.81,
+      -2.05,
+      38.23,
+      7.53,
+      29.29,
+      3.08,
+      24.84,
+      -5.86
+    ]
+  },
+  "bootstrap_ci_wr": [
+    0.440239,
+    0.525896
+  ],
+  "bootstrap_ci_pf": [
+    0.718289,
+    1.058982
+  ],
+  "regime_breakdown": {
+    "unknown": {
+      "n_trades": 502,
+      "win_rate": 0.4821,
+      "profit_factor": 0.8745,
+      "total_pnl": -32.63,
+      "avg_pnl": -0.065
+    }
+  },
+  "pass_gate": false,
+  "gate_failures": [
+    "DSR -53.05 < min 1.0",
+    "MC p-value 0.9176 > max 0.05",
+    "CPCV score 0.4000 < min 0.55"
+  ],
+  "scores": {
+    "wf_wr": 0.77,
+    "wf_pf": 1.1339130434782612,
+    "wf_sharpe": 0.5464762037483686,
+    "dsr": -53.0521,
+    "observed_sharpe": -0.9817,
+    "mc_pvalue": 0.9176,
+    "mc_percentile": 8.24,
+    "cpcv_score": 0.4
+  }
+}

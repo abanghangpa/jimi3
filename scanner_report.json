@@ -1,0 +1,89 @@
+{
+  "signal_filters": {
+    "signal_status": "NO_SIGNAL",
+    "sweep_filter": null,
+    "m20_filter": null,
+    "m20_entry_level": null,
+    "sweep_blocked": true,
+    "m20_blocked": true,
+    "ensemble_passes": false,
+    "ics": 0.234
+  },
+  "ensemble": {
+    "consensus": "NO_CONSENSUS",
+    "passes": false,
+    "agree_count": 1,
+    "ensemble_conviction": 0.12,
+    "regime": {"regime": "NEUTRAL"}
+  },
+  "confirmation": {
+    "status": "PENDING",
+    "bars_to_confirm": 3,
+    "hold_window_hours": 8
+  },
+  "derivatives": {
+    "price": 1858.93,
+    "ema_200": 1845.67,
+    "oi": 4324000000,
+    "oi_roc_1h": 0.0012,
+    "ls_ratio": 2.3875,
+    "long_pct": 70.5,
+    "top_ls_ratio": 2.38,
+    "whale_signal": "LONG",
+    "whale_retail_gap": 0.15,
+    "funding_rate": 0.000017,
+    "futures_taker_ratio": 0.4895,
+    "futures_flow": "NEUTRAL",
+    "oi_price_div": "NONE"
+  },
+  "exchange_activity": {
+    "spot_details": {
+      "basis_avg": 0.0003,
+      "basis_state": "CONTANGO"
+    },
+    "signals": {
+      "funding_spread": 0.0001,
+      "funding_spread_exchanges": ["bybit", "binance"]
+    },
+    "score": 0.45,
+    "spot_score": 0.42
+  },
+  "macro": {
+    "regime": "NEUTRAL",
+    "phase": "LATE_MONTH"
+  },
+  "conflict_resolution": {
+    "has_conflict": true,
+    "conflict_type": "MODULE_DISAGREEMENT",
+    "severity": "MEDIUM",
+    "forward_test": {
+      "key_level_low": 1856.1,
+      "key_level_high": 1859.29,
+      "level_name": "unswept_liquidity_below_LONG_LIQ"
+    }
+  },
+  "signals": {
+    "signals_fired": 1,
+    "total_strategies": 20,
+    "best_strategy": {
+      "name": "M13",
+      "type": "structure",
+      "direction": "SHORT",
+      "conviction": 65,
+      "entry": 1858.93,
+      "sl": 1865.5,
+      "tp1": 1845.0,
+      "rr1": 2.14
+    }
+  },
+  "order_flow": {
+    "ob_imbalance": -0.15,
+    "ob_consensus": "SELL",
+    "taker": "SELL",
+    "net_flow": -1250000
+  },
+  "directional_bias": "SHORT",
+  "bias_reason": "3 signals against vs 4 supporting",
+  "primary_blocker": "ICS score (0.23) below 0.50 threshold and sweep/M20 filters blocked",
+  "macro_regime": "NEUTRAL (LATE_MONTH phase - Core PCE, Tokyo CPI, PMI prep)"
+}
