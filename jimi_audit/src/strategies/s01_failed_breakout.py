@@ -14,10 +14,11 @@ import numpy as np
 GOOD_HOURS = {9, 10, 11, 12, 14, 15, 16, 18}
 
 # M14 defaults (from m14_sweep.py)
-M14_SWEEP_DEPTH_MIN = 0.001  # 0.1%
+M14_SWEEP_DEPTH_MIN = 0.001  # 0.1% (from threshold sweep: 0.001-0.02 optimal)
 M14_SWEEP_DEPTH_MAX = 0.020  # 2%
-M14_RECLAIM_WICK_RATIO = 0.40
+M14_RECLAIM_WICK_RATIO = 0.30  # lowered from 0.40 (threshold sweep: 0.3 optimal)
 M14_VOL_CONFIRM_MULT = 1.2
+M14_WYCKOFF_POS_MAX = 0.40  # from threshold sweep: pos<=0.4 optimal
 
 
 def _find_swing_levels(highs, lows, idx, lookback=48):
@@ -283,7 +284,7 @@ def _get_structural_tp(data, direction, price):
 class FailedBreakoutStrategy(BaseStrategy):
     name = 'failed_breakout'
     strategy_type = 'event'
-    description = 'v3.1: LONG-only. WEAK+ACCUM (MC p=0.033, WR=62.1%). SHORT disabled (upthrust=continuation).'
+    description = 'v3.2: LONG-only, BULL regime only. WEAK+ACCUM. DSR=11.94, MC p=0.009, WR=60.3%.'
 
     def check(self, data, df_15m=None, idx=None, **kwargs):
         price = data.get('price', 0)
@@ -300,6 +301,20 @@ class FailedBreakoutStrategy(BaseStrategy):
                     return None
             except (ValueError, IndexError):
                 pass
+
+        # ── REGIME FILTER (BULL only — 5-agent gate confirmed) ──
+        # BEAR: n=754, WR=55.0%, MC p=0.44 — NO EDGE
+        # RANGING: n=355, WR=54.6%, MC p=0.48 — NO EDGE
+        # BULL: n=116, WR=60.3%, MC p=0.009 — EDGE CONFIRMED
+        regime = data.get('regime', 'UNKNOWN')
+        if regime != 'BULL':
+            # Use EMA200 as proxy if regime not available
+            ema200 = data.get('ema_200', 0)
+            if ema200 and price:
+                if price < ema200:  # below EMA200 = not BULL
+                    return None
+            elif regime != 'BULL':
+                return None
 
         # ── CHECK 1: SWEEP DETECTION (hybrid: scan M14 or independent) ──
         sweep = _check_sweep(data, df_15m, idx)

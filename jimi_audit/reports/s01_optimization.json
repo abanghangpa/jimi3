@@ -1,0 +1,125 @@
+{
+  "walk_forward": {
+    "windows": 10,
+    "avg_wr": 0.575,
+    "min_wr": 0.0,
+    "max_wr": 1.0,
+    "avg_mean": 0.0028992009204330373,
+    "details": [
+      {
+        "window": 0,
+        "train_n": 7,
+        "test_n": 4,
+        "test_wr": 0.5,
+        "test_mean": 0.006041034538449674
+      },
+      {
+        "window": 1,
+        "train_n": 7,
+        "test_n": 4,
+        "test_wr": 0.5,
+        "test_mean": 0.0009587844994729533
+      },
+      {
+        "window": 2,
+        "train_n": 7,
+        "test_n": 4,
+        "test_wr": 0.25,
+        "test_mean": -0.001765299097816947
+      },
+      {
+        "window": 3,
+        "train_n": 7,
+        "test_n": 4,
+        "test_wr": 0.75,
+        "test_mean": 0.009444083477922582
+      },
+      {
+        "window": 4,
+        "train_n": 7,
+        "test_n": 4,
+        "test_wr": 1.0,
+        "test_mean": 0.004656230055204991
+      },
+      {
+        "window": 5,
+        "train_n": 7,
+        "test_n": 4,
+        "test_wr": 0.0,
+        "test_mean": -0.012447156978299068
+      },
+      {
+        "window": 6,
+        "train_n": 7,
+        "test_n": 4,
+        "test_wr": 0.75,
+        "test_mean": 0.0016993290803310745
+      },
+      {
+        "window": 7,
+        "train_n": 7,
+        "test_n": 4,
+        "test_wr": 0.5,
+        "test_mean": 0.0028580896268927125
+      },
+      {
+        "window": 8,
+        "train_n": 7,
+        "test_n": 4,
+        "test_wr": 1.0,
+        "test_mean": 0.0157165183929463
+      },
+      {
+        "window": 9,
+        "train_n": 7,
+        "test_n": 4,
+        "test_wr": 0.5,
+        "test_mean": 0.0018303956092260987
+      }
+    ]
+  },
+  "deflated_sharpe": {
+    "observed_sharpe": 2.7537592292684123,
+    "n_trials": 20,
+    "n_trades": 116,
+    "skew": 0.6316350938459486,
+    "kurtosis": 1.9079198080535686,
+    "expected_max_sharpe": 1.6448536269514722,
+    "deflated_sharpe": 11.943278848062953,
+    "significant": "True"
+  },
+  "monte_carlo": {
+    "n": 116,
+    "mean": 0.0032538046233662006,
+    "wr": 0.603448275862069,
+    "mc_p": 0.0088,
+    "ci": [
+      0.000951988865995384,
+      0.005592017823229314
+    ],
+    "significant": true
+  },
+  "threshold_optimization": {
+    "depth_min": 0.001,
+    "depth_max": 0.02,
+    "wick_min": 0.3,
+    "wyckoff_pos_max": 0.4,
+    "n": 39,
+    "wr": 0.6666666666666666,
+    "mean": 0.0047684684430694,
+    "score": 0.019852717254929552
+  },
+  "selector": {
+    "criteria": {
+      "mc_significant": true,
+      "dsr_significant": "True",
+      "wf_avg_wr_above_50": true,
+      "n_above_30": true,
+      "bull_regime_confirmed": true
+    },
+    "passed": "5",
+    "total": 5,
+    "decision": "DEPLOY",
+    "recommended_size": "0.5x"
+  }
+}

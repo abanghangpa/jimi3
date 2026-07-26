@@ -1,0 +1,56 @@
+{
+  "agent_1_structure": {
+    "total_signals": 1225,
+    "filtered_signals": 116
+  },
+  "agent_2_regime": {
+    "BEAR": 754,
+    "BULL": 116,
+    "RANGING": 355
+  },
+  "agent_3_validation": {
+    "BULL": {
+      "n": 116,
+      "wr": 0.603448275862069,
+      "mean": 0.0032538046233662006,
+      "mc_p": 0.0092,
+      "pass": "True"
+    },
+    "BEAR": {
+      "n": 754,
+      "wr": 0.5503978779840849,
+      "mean": 0.00011536169851292885,
+      "mc_p": 0.4438,
+      "pass": "False"
+    },
+    "RANGING": {
+      "n": 355,
+      "wr": 0.5464788732394367,
+      "mean": 7.711848494898016e-05,
+      "mc_p": 0.478,
+      "pass": "False"
+    }
+  },
+  "agent_4_risk": {
+    "initial_capital": 10000,
+    "final_capital": 17947.101644889928,
+    "max_dd": 0.19825563678265823,
+    "total_pnl": 7947.101644889928
+  },
+  "agent_5_execution": {
+    "total_trades": 116,
+    "wins": 52,
+    "losses": 64,
+    "win_rate": 0.4482758620689655,
+    "avg_win": 351.1209236932295,
+    "avg_loss": -161.11228729934393,
+    "profit_factor": 1.7707262138901474,
+    "expectancy": 68.50949693870623,
+    "sharpe": 0.2292592639488132,
+    "max_drawdown": 0.19825563678265823,
+    "max_consecutive_losses": 9,
+    "total_pnl": 7947.101644889928,
+    "total_return_pct": 79.47101644889928,
+    "final_capital": 17947.101644889928
+  }
+}
