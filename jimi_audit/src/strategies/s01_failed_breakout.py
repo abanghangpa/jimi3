@@ -283,7 +283,7 @@ def _get_structural_tp(data, direction, price):
 class FailedBreakoutStrategy(BaseStrategy):
     name = 'failed_breakout'
     strategy_type = 'event'
-    description = 'v3.1: WEAK+ACCUM+LONG (MC p=0.033, WR=62.1%). Hybrid M14 detection.'
+    description = 'v3.1: LONG-only. WEAK+ACCUM (MC p=0.033, WR=62.1%). SHORT disabled (upthrust=continuation).'
 
     def check(self, data, df_15m=None, idx=None, **kwargs):
         price = data.get('price', 0)
@@ -343,13 +343,10 @@ class FailedBreakoutStrategy(BaseStrategy):
                 return None  # not the validated signal
         
         elif direction == 'SHORT':
-            # Upthrust in DISTRIBUTION is the SHORT signal
-            if wyckoff_phase == 'DISTRIBUTION' and wyckoff.get('upthrust'):
-                wyckoff_bonus = 0.20
-            elif wyckoff_phase == 'DISTRIBUTION' and reclaim_type == 'WEAK':
-                wyckoff_bonus = 0.15
-            else:
-                return None  # not the validated signal
+            # UPthrust finding (2026-07-26): upthrusts are CONTINUATION signals
+            # n=3,031, mean=-0.066%, p=0.0003 — NOT reversal entries
+            # Do NOT use upthrust as SHORT entry. Reject all SHORT signals.
+            return None  # SHORT path disabled — upthrust is continuation, not reversal
 
         # ── POSITIONING ──
         positioning = _check_positioning(data)
