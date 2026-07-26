@@ -1,56 +1,56 @@
 {
   "gpt-4o": {
     "ok": true,
-    "latency_ms": 1346,
+    "latency_ms": 1505,
     "provider": "Ok \u2705",
     "error": null,
-    "last_check": "2026-07-26 03:38:25 UTC",
-    "last_ok": 1785037105.180106,
+    "last_check": "2026-07-26 03:43:28 UTC",
+    "last_ok": 1785037408.8545454,
     "last_fail": 1784860630.1404846
   },
   "gpt-4o-mini": {
     "ok": false,
-    "latency_ms": 618,
+    "latency_ms": 641,
     "provider": null,
-    "error": "{\"error\": {\"message\": \"RetryProviderError: RetryProvider failed:\\nApiAirforce: MissingAuthError: Add",
-    "last_check": "2026-07-26 03:38:25 UTC",
+    "error": "{\"error\": {\"message\": \"RetryProviderError: RetryProvider failed:\\nOpenaiChat: NoValidHarFileError: N",
+    "last_check": "2026-07-26 03:43:29 UTC",
     "last_ok": 1785029503.8089623,
-    "last_fail": 1785037105.7986708
+    "last_fail": 1785037409.4957404
   },
   "deepseek-v3": {
     "ok": false,
-    "latency_ms": 24,
+    "latency_ms": 22,
     "provider": null,
     "error": "{\"error\": {\"message\": \"MissingAuthError: Add a \\\"api_key\\\"\"}, \"model\": \"deepseek-v3\"}",
-    "last_check": "2026-07-26 03:38:25 UTC",
+    "last_check": "2026-07-26 03:43:29 UTC",
     "last_ok": null,
-    "last_fail": 1785037105.8237567
+    "last_fail": 1785037409.5185058
   },
   "llama-3.3-70b": {
     "ok": false,
-    "latency_ms": 1421,
+    "latency_ms": 1106,
     "provider": null,
     "error": "{\"error\": {\"message\": \"RetryProviderError: RetryProvider failed:\\nHuggingFace: MissingAuthError: Add",
-    "last_check": "2026-07-26 03:38:27 UTC",
+    "last_check": "2026-07-26 03:43:30 UTC",
     "last_ok": null,
-    "last_fail": 1785037107.2451062
+    "last_fail": 1785037410.625169
   },
   "gemini-2.0-flash": {
     "ok": false,
-    "latency_ms": 73,
+    "latency_ms": 69,
     "provider": null,
-    "error": "{\"error\": {\"message\": \"RetryProviderError: RetryProvider failed:\\nGeminiPro: ResponseError: Error 40",
-    "last_check": "2026-07-26 03:38:27 UTC",
+    "error": "{\"error\": {\"message\": \"RetryProviderError: RetryProvider failed:\\nGemini: MissingAuthError: Missing ",
+    "last_check": "2026-07-26 03:43:30 UTC",
     "last_ok": null,
-    "last_fail": 1785037107.3192525
+    "last_fail": 1785037410.6947262
   },
   "mistral-small-24b": {
     "ok": false,
-    "latency_ms": 27,
+    "latency_ms": 20,
     "provider": null,
     "error": "{\"error\": {\"message\": \"MissingAuthError: Add a \\\"api_key\\\"\"}, \"model\": \"mistral-small-24b\"}",
-    "last_check": "2026-07-26 03:38:27 UTC",
+    "last_check": "2026-07-26 03:43:30 UTC",
     "last_ok": null,
-    "last_fail": 1785037107.3468475
+    "last_fail": 1785037410.7153454
   }
 }
