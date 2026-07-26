@@ -1,0 +1,118 @@
+{
+  "agent_1": {
+    "oi_drop_gt_1pct": 96,
+    "oi_drop_gt_1pct_fresh": 1,
+    "july_oi_drop": 6,
+    "oi_drop_gt_0.005": 298,
+    "oi_drop_gt_0.01": 96,
+    "oi_drop_gt_0.015": 35,
+    "oi_drop_gt_0.02": 15,
+    "oi_drop_gt_0.03": 6
+  },
+  "agent_2": {
+    "OI_drop_1pct_1h": {
+      "n": 96,
+      "mean": 0.0008952573404119533,
+      "p": 0.15523908382812165,
+      "wr": 0.5520833333333334,
+      "gate": "FAIL"
+    },
+    "OI_drop_1pct_4h": {
+      "n": 96,
+      "mean": 0.003242850718761585,
+      "p": 0.042450915011738144,
+      "wr": 0.5833333333333334,
+      "gate": "PASS"
+    },
+    "OI_drop_1pct_vol_2x_1h": {
+      "n": 11,
+      "mean": 0.0015515030873086597,
+      "p": 0.12463502284378104,
+      "wr": 0.7272727272727273,
+      "gate": "FAIL"
+    },
+    "OI_drop_1pct_vol_2x_4h": {
+      "n": 11,
+      "mean": 0.0021509522808326894,
+      "p": 0.5593066407674345,
+      "wr": 0.45454545454545453,
+      "gate": "FAIL"
+    },
+    "OI_drop_1pct_vol_1.5x_1h": {
+      "n": 18,
+      "mean": 0.0017489727868514758,
+      "p": 0.04156284559231579,
+      "wr": 0.7777777777777778,
+      "gate": "PASS"
+    },
+    "OI_drop_1pct_vol_1.5x_4h": {
+      "n": 18,
+      "mean": 0.0036860465835730958,
+      "p": 0.28550907285964605,
+      "wr": 0.5,
+      "gate": "FAIL"
+    },
+    "OI_drop_1.5pct_1h": {
+      "n": 35,
+      "mean": 0.0029193713920539917,
+      "p": 0.02767049016116259,
+      "wr": 0.6857142857142857,
+      "gate": "PASS"
+    },
+    "OI_drop_1.5pct_4h": {
+      "n": 35,
+      "mean": 0.008629695637970168,
+      "p": 0.008373766696505861,
+      "wr": 0.7428571428571429,
+      "gate": "PASS"
+    },
+    "OI_drop_2pct_1h": {
+      "n": 15,
+      "mean": 0.0018312361298115235,
+      "p": 0.4664542298146742,
+      "wr": 0.6,
+      "gate": "FAIL"
+    },
+    "OI_drop_2pct_4h": {
+      "n": 15,
+      "mean": 0.0012968233459490941,
+      "p": 0.7249961881566584,
+      "wr": 0.7333333333333333,
+      "gate": "FAIL"
+    }
+  },
+  "agent_3": {
+    "v8_signals": 0,
+    "relax_none": {
+      "n": 88718,
+      "mean": 5.708002468256819e-05,
+      "p": 0.23449519735436622,
+      "gate": "FAIL"
+    }
+  },
+  "agent_4": {},
+  "agent_5": {
+    "total_signals": 0,
+    "signals_per_month": 0.0,
+    "oi_coverage_fresh": 85339,
+    "oi_coverage_fresh_pct": 0.9617287428861216
+  },
+  "agent_6": {},
+  "agent_7": {},
+  "agent_8": {
+    "n_events": 0,
+    "significant": false,
+    "note": "Too few events (0)"
+  },
+  "verdict": {
+    "strategy": "S20 Liquidation Mean Reversion",
+    "version": "v8",
+    "v8_signals": 0,
+    "v8_4h_mean": null,
+    "v8_4h_p": null,
+    "v8_4h_wr": null,
+    "mc_significant": false,
+    "gate": "INSUFFICIENT_DATA",
+    "recommendation": "Deploy provisionally with OI collector upgrade pending"
+  }
+}
