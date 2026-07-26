@@ -926,7 +926,7 @@ STRATEGY_CONFIGS = {
         "structural_tpsl": True,
         "fallback_tp_pct": 2.5,
         "fallback_sl_pct": 1.5,
-        "notes": "v3.1: WEAK+ACCUM+LONG (MC p=0.033, WR=62.1%). Hybrid M14 detection. 95 events."
+        "notes": "v3.2: LONG-only, BULL regime only. WEAK+ACCUM. DSR=11.94, MC p=0.009, WR=60.3%, n=116. Threshold sweep: wick>=0.3, pos<=0.4."
     },
     "positioning_fade": {
         "tp_pct": 2.0, "sl_pct": 1.5, "hold_hours": 16,
