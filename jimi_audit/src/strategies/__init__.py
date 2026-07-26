@@ -20,7 +20,7 @@ from .s16_mtf_confluence import MTFConfluenceStrategy
 from .s17_scalp_v2 import ScalpV2Strategy
 from .s18_momentum_v3 import MomentumV3Strategy
 from .s19_orderbook_imbalance import OrderBookImbalanceStrategy
-from .s20_liquidation_cascade import LiquidationCascadeStrategy
+from .s20_liquidation_cascade import LiquidationMeanReversionStrategy as LiquidationCascadeStrategy
 from .s21_trade_flow import TradeFlowStrategy
 from .s22_judas_sweep import JudasSweepStrategy
 from .s24_forced_movement import ForcedMovementStrategy
