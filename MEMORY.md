@@ -296,6 +296,28 @@ The scanner optimization on 2026-07-05 broke strategy TP/SL multipliers. All str
 
 **Executor:** PID 411565, dry-run, $192.37 capital, 22 trades (10W/10L), 3 open positions
 
+## S20 Liquidation Cascade — Forensic & Rework (2026-07-26)
+- 8-agent forensic: trigger fires on 79.6% of bars, WR 50.2%, MC p=0.32
+- Root cause: S20 looks for OI *surge* but cascades are OI *drops* (direction wrong)
+- OI data coverage only 3.8% — 96% of bars use stale/interpolated OI
+- Research (SSRN 6579278): cascades = OI drop >5% in minutes, post-cascade = mean reversion
+- 2026 regime shift: -0.064% mean return (p<0.0001) — whatever edge existed is dead
+- v6.1 was curve-fitted: 18 trades, 70% WR backtest = noise (MC p=0.14)
+- Decision: Rework based on findings (user chose not to kill)
+- Report: reports/s20_cascade_forensic.md
+
+## S20 v8b — Liquidation Mean Reversion (2026-07-26)
+- Flipped signal direction: OI *drop* >1.5% (not surge) → LONG mean reversion
+- Flipped trade logic: mean reversion after liquidation exhaust (not continuation)
+- Removed whale_watch dependency (added zero filtering value)
+- Simplified trigger: only OI ROC < -0.015 (no volume/FR/bounce filters — they killed the signal)
+- Gate: 33 signals, +0.642% at 4h, p=0.030, WR=72.7%, MC p=0.0067
+- Best regime: BEAR (+1.166%, p=0.0004), MID vol (+1.511%, p=0.026)
+- Signal frequency: 1.1/month (rare but strong)
+- All signals in 2026 (OI data only available from 2026)
+- Deployed: 0.5x size, needs 30+ live trades to confirm
+- Committed: e3a66ac
+
 ## Regime Classifier V5 (deployed 2026-07-24)
 - V3 classifier was fundamentally broken: used 15m data with 5-hour window for macro regime detection
 - V3 was stuck on BEAR when V4 daily data showed BULL — COND_GATE was blocking all LONG trades
