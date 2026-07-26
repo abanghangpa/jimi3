@@ -1,0 +1,52 @@
+{
+  "component": "whale_watch",
+  "timestamp": "2026-07-26T03:18:50.825557",
+  "overall_status": "PASS",
+  "dependents": {
+    "s21_trade_flow": {
+      "baseline": {
+        "last_validated": "2026-07-24",
+        "gate_result": {
+          "wr": 0.739,
+          "pf": 4.67,
+          "signal": "Scenario_A_taker"
+        },
+        "version": "v4.2",
+        "risk": "HIGH"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    },
+    "s19_orderbook_imbalance": {
+      "baseline": {
+        "last_validated": "2026-07-22",
+        "gate_result": {
+          "wr": 0.685,
+          "pf": 2.18,
+          "signal": "SHORT+whale_watch"
+        },
+        "version": "v6",
+        "risk": "HIGH"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    },
+    "s04_positioning_fade": {
+      "baseline": {
+        "last_validated": "2026-07-14",
+        "gate_result": {
+          "wr": 0.778,
+          "pf": 2.02,
+          "n": 9
+        },
+        "version": "v4",
+        "risk": "HIGH"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "component": "regime_classifier",
+  "timestamp": "2026-07-26T03:19:06.324725",
+  "overall_status": "PASS",
+  "dependents": {
+    "ALL": {
+      "baseline": {
+        "last_validated": null,
+        "gate_result": null,
+        "version": null,
+        "risk": "UNKNOWN"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    }
+  }
+}

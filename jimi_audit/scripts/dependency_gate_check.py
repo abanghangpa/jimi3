@@ -19,7 +19,7 @@ Examples:
 """
 
 import json, os, sys, subprocess
-from datetime import datetime
+from datetime import datetime, timezone
 
 BASE = '/root/.openclaw/workspace/jimi_audit'
 DEPS_FILE = os.path.join(BASE, 'config', 'strategy_dependencies.json')
@@ -35,7 +35,13 @@ def find_dependents(deps, component):
     
     # Check if it's a module
     if component in deps.get('modules', {}):
-        dependents = deps['modules'][component].get('used_by', [])
+        used_by = deps['modules'][component].get('used_by', [])
+        for item in used_by:
+            if item == 'ALL':
+                # Expand to all strategies
+                dependents.extend(deps.get('strategies', {}).keys())
+            else:
+                dependents.append(item)
     
     # Check if it's a strategy used as booster
     for strat_name, strat_info in deps.get('strategies', {}).items():
@@ -44,7 +50,6 @@ def find_dependents(deps, component):
     
     # Also check direct strategy name
     if component in deps.get('strategies', {}):
-        # This strategy itself was modified — check who uses it
         for strat_name, strat_info in deps.get('strategies', {}).items():
             if component in strat_info.get('dependencies', []):
                 if strat_name not in dependents:
@@ -214,7 +219,7 @@ def print_report(component, dependents, results):
     print("="*70)
     print(f"Modified: {component}")
     print(f"Dependents: {len(dependents)}")
-    print(f"Timestamp: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}")
+    print(f"Timestamp: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}")
     print()
     
     overall_status = 'PASS'
@@ -309,12 +314,12 @@ def main():
     overall = print_report(component, dependents, results)
     
     # Save report
-    report_file = os.path.join(REPORTS_DIR, f'dependency_check_{component}_{datetime.utcnow().strftime("%Y%m%d_%H%M%S")}.json')
+    report_file = os.path.join(REPORTS_DIR, f'dependency_check_{component}_{datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")}.json')
     os.makedirs(os.path.dirname(report_file), exist_ok=True)
     with open(report_file, 'w') as f:
         json.dump({
             'component': component,
-            'timestamp': datetime.utcnow().isoformat(),
+            'timestamp': datetime.now(timezone.utc).isoformat(),
             'overall_status': overall,
             'dependents': {k: {
                 'baseline': v['baseline'],
