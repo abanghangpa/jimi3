@@ -1,0 +1,38 @@
+{
+  "walk_forward": {
+    "windows": 5,
+    "avg_wr": 0.72
+  },
+  "deflated_sharpe": {
+    "dsr": 9.608297062497362,
+    "sig": "True"
+  },
+  "monte_carlo": {
+    "n": 29,
+    "mean": 0.018617056584818346,
+    "wr": 0.7241379310344828,
+    "mc_p": 0.0,
+    "ci": [
+      0.006753596788601831,
+      0.030215116045548454
+    ],
+    "sig": true
+  },
+  "threshold_opt": {
+    "dev_min": 0.02,
+    "ma": 20,
+    "n": 622,
+    "wr": 0.639871382636656,
+    "mean": 0.008762728919058244
+  },
+  "selector": {
+    "criteria": {
+      "mc_sig": true,
+      "dsr_sig": "True",
+      "wf_wr_above_50": true,
+      "n_above_20": true
+    },
+    "passed": "4",
+    "decision": "DEPLOY"
+  }
+}
