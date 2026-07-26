@@ -306,6 +306,17 @@ The scanner optimization on 2026-07-05 broke strategy TP/SL multipliers. All str
 - Decision: Rework based on findings (user chose not to kill)
 - Report: reports/s20_cascade_forensic.md
 
+## S01 Failed Breakout — Forensic & Rework (2026-07-26)
+- v2: 2,548 events, 0.1% threshold = noise, no edge in any regime (MC p=0.159)
+- Bug: swing levels included breakout bar → detection broken. Fixed in v3.
+- v3: 0.3% penetration threshold, uses M14/M21/M5/derivatives/taker
+- Deep sweeps (≥1%): +0.855%, p=0.058, WR=57.6% (n=33, marginal)
+- Low volume sweeps (vol≤1.0): +0.706%, p=0.132, WR=65.0% (n=20)
+- M14 module: too sparse for backtesting (138/3853 scans)
+- Scan data: only 13 days — can't backtest M14/M21 across full history
+- Decision: PROVISIONAL deploy with 0.3x size, use M14 live signal
+- Report: reports/s01_v3_forensic.md
+
 ## S20 v8b — Liquidation Mean Reversion (2026-07-26)
 - Flipped signal direction: OI *drop* >1.5% (not surge) → LONG mean reversion
 - Flipped trade logic: mean reversion after liquidation exhaust (not continuation)
