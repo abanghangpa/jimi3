@@ -926,7 +926,7 @@ STRATEGY_CONFIGS = {
         "structural_tpsl": True,
         "fallback_tp_pct": 2.5,
         "fallback_sl_pct": 1.5,
-        "notes": "v9 merged config. Structural TP/SL with fallback. RANGING regime only."
+        "notes": "v3.1: WEAK+ACCUM+LONG (MC p=0.033, WR=62.1%). Hybrid M14 detection. 95 events."
     },
     "positioning_fade": {
         "tp_pct": 2.0, "sl_pct": 1.5, "hold_hours": 16,
@@ -962,7 +962,7 @@ STRATEGY_CONFIGS = {
     "scalp_v2": {"tp_pct": 0.5, "sl_pct": 1.0, "hold_hours": 8, "direction": None, "enabled": False, "group": "A"},
     "power_of_3": {"tp_pct": 0.5, "sl_pct": 1.0, "hold_hours": 8, "direction": None, "enabled": False, "group": "A"},
     "macro_surprise": {"tp_pct": 0.5, "sl_pct": 1.0, "hold_hours": 8, "direction": None, "enabled": False, "group": "A"},
-    "liquidation_cascade": {"tp_pct": 2.0, "sl_pct": 1.0, "hold_hours": 4, "direction": "SHORT", "enabled": True, "group": "A", "min_conviction": 0.45, "notes": "v4: 8-Agent validated. PRIMARY: OI<-0.01+LS>1.5 (87evt, +0.375%, p=0.011). HIGH: OI<-0.015+LS>1.5 (29evt, +0.976%, p=0.0003). PREMIUM: OI<-0.015+MID (12evt, +2.22%, p=0.002)."},
+    "liquidation_cascade": {"tp_pct": 2.0, "sl_pct": 1.0, "hold_hours": 4, "direction": None, "enabled": True, "group": "A", "min_conviction": 0.50, "notes": "v8b: OI drop >1.5pct mean reversion. Gate: 33 events, +0.642% 4h, p=0.030, WR=72.7%, MC p=0.007. LONG only."},
     "funding_squeeze": {"tp_pct": 2.0, "sl_pct": 1.0, "hold_hours": 4, "direction": "SHORT", "enabled": True, "group": "A", "min_conviction": 0.50, "notes": "v1: FR z-score > 1.25 SHORT. 602 evt, -0.153% 4h p=0.003, WR=53.8%. MID vol PF=3.01. Skip LOW vol."},
     "taker_flow": {"tp_pct": 2.0, "sl_pct": 1.5, "hold_hours": 8, "direction": None, "enabled": False, "group": "A", "min_conviction": 0.50, "notes": "v2: z-score thresholds + session filter + flow acceleration. Needs gate validation."},
     "vol_rotation": {"tp_pct": 0.5, "sl_pct": 1.0, "hold_hours": 8, "direction": None, "enabled": False, "group": "B"},
