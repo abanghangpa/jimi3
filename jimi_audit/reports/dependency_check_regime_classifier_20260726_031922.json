@@ -1,0 +1,160 @@
+{
+  "component": "regime_classifier",
+  "timestamp": "2026-07-26T03:19:22.812658+00:00",
+  "overall_status": "PASS",
+  "dependents": {
+    "s04_positioning_fade": {
+      "baseline": {
+        "last_validated": "2026-07-14",
+        "gate_result": {
+          "wr": 0.778,
+          "pf": 2.02,
+          "n": 9
+        },
+        "version": "v4",
+        "risk": "HIGH"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    },
+    "s13_funding_arb": {
+      "baseline": {
+        "last_validated": "2026-07-22",
+        "gate_result": {
+          "wr": 0.65,
+          "pf": 2.1,
+          "n": 226
+        },
+        "version": "v7",
+        "risk": "LOW"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    },
+    "s21_trade_flow": {
+      "baseline": {
+        "last_validated": "2026-07-24",
+        "gate_result": {
+          "wr": 0.739,
+          "pf": 4.67,
+          "signal": "Scenario_A_taker"
+        },
+        "version": "v4.2",
+        "risk": "HIGH"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    },
+    "s19_orderbook_imbalance": {
+      "baseline": {
+        "last_validated": "2026-07-22",
+        "gate_result": {
+          "wr": 0.685,
+          "pf": 2.18,
+          "signal": "SHORT+whale_watch"
+        },
+        "version": "v6",
+        "risk": "HIGH"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    },
+    "s14_whale_watch": {
+      "baseline": {
+        "last_validated": "2026-07-22",
+        "gate_result": {
+          "wr": 0.68,
+          "n": 340
+        },
+        "version": "v2",
+        "risk": "HIGH"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    },
+    "s05_kill_zone": {
+      "baseline": {
+        "last_validated": "2026-06-27",
+        "gate_result": null,
+        "version": "v2",
+        "risk": "MEDIUM"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    },
+    "s06_liquidity_grab": {
+      "baseline": {
+        "last_validated": "2026-07-24",
+        "gate_result": null,
+        "version": "v7",
+        "risk": "MEDIUM"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    },
+    "s22_judas_sweep": {
+      "baseline": {
+        "last_validated": "2026-07-14",
+        "gate_result": {
+          "wr": 0.802,
+          "pf": 10.3
+        },
+        "version": "v3",
+        "risk": "LOW"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    },
+    "s01_failed_breakout": {
+      "baseline": {
+        "last_validated": "2026-07-26",
+        "gate_result": {
+          "mc_p": 0.033,
+          "wr": 0.621,
+          "n": 95,
+          "signal": "WEAK+ACCUM+LONG"
+        },
+        "version": "v3",
+        "risk": "HIGH"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    },
+    "s20_liquidation_cascade": {
+      "baseline": {
+        "last_validated": "2026-07-26",
+        "gate_result": {
+          "mc_p": 0.007,
+          "wr": 0.727,
+          "n": 33,
+          "signal": "OI_drop_LONG"
+        },
+        "version": "v8b",
+        "risk": "HIGH"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    },
+    "s08_regime_switch": {
+      "baseline": {
+        "last_validated": null,
+        "gate_result": null,
+        "version": "v1",
+        "risk": "LOW"
+      },
+      "current": null,
+      "status": "UNKNOWN",
+      "issues": "No baseline or current metrics to compare"
+    }
+  }
+}
