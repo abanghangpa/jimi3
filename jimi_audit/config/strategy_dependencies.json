@@ -1,77 +1,115 @@
 {
-  "trade_flow_v4.2": {
-    "version": "v4.2",
-    "commit": "4b6eef8",
-    "dependencies": {
-      "scenario_a": ["taker_flow"],
-      "scenario_b": []
+  "version": "1.0",
+  "created": "2026-07-26",
+  "strategies": {
+    "s01_failed_breakout": {
+      "version": "v3",
+      "dependencies": ["m14_sweep", "m21_wyckoff", "m5_structural", "derivatives", "taker_summary", "regime"],
+      "last_validated": "2026-07-26",
+      "gate_result": {"mc_p": 0.033, "wr": 0.621, "n": 95, "signal": "WEAK+ACCUM+LONG"},
+      "risk_if_modified": "HIGH"
     },
-    "self_contained_scenarios": ["B"],
-    "dependent_scenarios": ["A"],
-    "last_validated": "2026-07-24",
-    "revalidate_trigger": "taker_flow version change",
-    "backtest": {
-      "scenario_a": {"trades": 24, "wr": 73.9, "pf": 4.67, "p_value": 0.0016},
-      "scenario_b": {"trades": 58, "wr": 72.7, "pf": 3.33, "p_value": 0.0000}
+    "s04_positioning_fade": {
+      "version": "v4",
+      "dependencies": ["m9_vol_regime", "derivatives", "whale_watch"],
+      "last_validated": "2026-07-14",
+      "gate_result": {"wr": 0.778, "pf": 2.02, "n": 9},
+      "risk_if_modified": "HIGH"
+    },
+    "s05_kill_zone": {
+      "version": "v2",
+      "dependencies": ["m21_wyckoff"],
+      "last_validated": "2026-06-27",
+      "gate_result": null,
+      "risk_if_modified": "MEDIUM"
+    },
+    "s06_liquidity_grab": {
+      "version": "v7",
+      "dependencies": ["regime", "m5_structural"],
+      "last_validated": "2026-07-24",
+      "gate_result": null,
+      "risk_if_modified": "MEDIUM"
+    },
+    "s08_regime_switch": {
+      "version": "v1",
+      "dependencies": ["m9_vol_regime", "m22_inflation", "m23_macro", "cascade_risk"],
+      "last_validated": null,
+      "gate_result": null,
+      "risk_if_modified": "LOW"
+    },
+    "s19_orderbook_imbalance": {
+      "version": "v6",
+      "dependencies": ["cross_asset", "whale_watch", "momentum_v3", "regime"],
+      "last_validated": "2026-07-22",
+      "gate_result": {"wr": 0.685, "pf": 2.18, "signal": "SHORT+whale_watch"},
+      "risk_if_modified": "HIGH"
+    },
+    "s20_liquidation_cascade": {
+      "version": "v8b",
+      "dependencies": ["derivatives", "regime"],
+      "last_validated": "2026-07-26",
+      "gate_result": {"mc_p": 0.007, "wr": 0.727, "n": 33, "signal": "OI_drop_LONG"},
+      "risk_if_modified": "HIGH"
+    },
+    "s21_trade_flow": {
+      "version": "v4.2",
+      "dependencies": ["taker_flow", "orderbook_imbalance", "whale_watch", "funding_arb"],
+      "last_validated": "2026-07-24",
+      "gate_result": {"wr": 0.739, "pf": 4.67, "signal": "Scenario_A_taker"},
+      "risk_if_modified": "HIGH"
+    },
+    "s22_judas_sweep": {
+      "version": "v3",
+      "dependencies": [],
+      "last_validated": "2026-07-14",
+      "gate_result": {"wr": 0.802, "pf": 10.3},
+      "risk_if_modified": "LOW"
+    },
+    "s13_funding_arb": {
+      "version": "v7",
+      "dependencies": ["derivatives"],
+      "last_validated": "2026-07-22",
+      "gate_result": {"wr": 0.65, "pf": 2.1, "n": 226},
+      "risk_if_modified": "LOW"
+    },
+    "s14_whale_watch": {
+      "version": "v2",
+      "dependencies": ["derivatives"],
+      "last_validated": "2026-07-22",
+      "gate_result": {"wr": 0.68, "n": 340},
+      "risk_if_modified": "HIGH"
     }
   },
-  "s20_v6.1": {
-    "version": "v6.1",
-    "commit": "1ee2c67",
-    "dependencies": {
-      "default": ["whale_watch"]
-    },
-    "self_contained_scenarios": [],
-    "dependent_scenarios": ["default"],
-    "last_validated": "2026-07-24",
-    "revalidate_trigger": "whale_watch version change",
-    "backtest": {
-      "default": {"trades": 13, "wr": 70.0, "pf": 2.05, "p_value": 0.1399}
-    }
+  "modules": {
+    "m14_sweep": {"used_by": ["s01_failed_breakout", "s16_mtf_confluence"], "risk": "HIGH"},
+    "m21_wyckoff": {"used_by": ["s01_failed_breakout", "s05_kill_zone"], "risk": "HIGH"},
+    "m5_structural": {"used_by": ["s01_failed_breakout", "s16_mtf_confluence"], "risk": "MEDIUM"},
+    "m9_vol_regime": {"used_by": ["s04_positioning_fade", "s08_regime_switch", "s10_structural_break"], "risk": "HIGH"},
+    "regime_classifier": {"used_by": ["ALL"], "risk": "CRITICAL"},
+    "derivatives": {"used_by": ["s01", "s04", "s13", "s14", "s19", "s20", "s21", "s25"], "risk": "CRITICAL"},
+    "taker_summary": {"used_by": ["s01_failed_breakout", "s07_taker_flow", "s21_trade_flow"], "risk": "MEDIUM"},
+    "cross_asset": {"used_by": ["s19_orderbook_imbalance"], "risk": "MEDIUM"},
+    "whale_watch": {"used_by": ["s04_positioning_fade", "s19_orderbook_imbalance", "s21_trade_flow"], "risk": "HIGH"},
+    "taker_flow": {"used_by": ["s21_trade_flow"], "risk": "MEDIUM"},
+    "funding_arb": {"used_by": ["s21_trade_flow"], "risk": "LOW"},
+    "orderbook_imbalance": {"used_by": ["s21_trade_flow"], "risk": "LOW"},
+    "momentum_v3": {"used_by": ["s19_orderbook_imbalance"], "risk": "LOW"}
   },
-  "funding_arb_v7.1": {
-    "version": "v7.1",
-    "commit": "81e98a9",
-    "dependencies": {
-      "scenario_a": ["squeeze_breakout"],
-      "scenario_b": [],
-      "scenario_c": ["squeeze_breakout"]
-    },
-    "self_contained_scenarios": ["B"],
-    "dependent_scenarios": ["A", "C"],
-    "last_validated": "2026-07-24",
-    "revalidate_trigger": "squeeze_breakout version change",
-    "backtest": {
-      "scenario_a": {"trades": 14, "wr": 78.6, "pf": 5.56, "p_value": 0.0049},
-      "scenario_b": {"trades": 17, "wr": 76.9, "pf": 3.33, "p_value": 0.0302},
-      "scenario_c": {"trades": 8, "wr": 100.0, "pf": null, "p_value": 0.0042}
-    }
-  },
-  "orderbook_imbalance_v6": {
-    "version": "v6",
-    "dependencies": {
-      "scenario_a": ["cross_asset"],
-      "scenario_b": ["whale_watch"],
-      "scenario_c": ["cross_asset", "momentum_v3"]
-    },
-    "self_contained_scenarios": [],
-    "dependent_scenarios": ["A", "B", "C"],
-    "last_validated": "2026-07-24",
-    "revalidate_trigger": "cross_asset or whale_watch or momentum_v3 version change",
-    "backtest": {
-      "scenario_a": {"trades": 125, "wr": 68.0, "pf": 2.12, "p_value": 0.0000, "notes": "OBI SHORT + cross_asset co-filter"},
-      "scenario_b": {"trades": 178, "wr": 68.5, "pf": 2.18, "p_value": 0.0000, "notes": "OBI SHORT + whale_watch co-filter"},
-      "scenario_c": {"trades": 99, "wr": 72.7, "pf": 2.67, "p_value": 0.0000, "notes": "OBI + cross_asset + momentum_v3 multi-cofilter"},
-      "baseline_v5": {"trades": 2112, "wr": 45.3, "pf": 0.83, "p_value": null, "notes": "v5-like baseline (forward-simulated)"},
-      "direction_gate": {
-        "short_only": {"trades": 385, "wr": 57.4, "pf": 1.35, "notes": "SHORT direction has edge"},
-        "long_only": {"trades": 1727, "wr": 42.6, "pf": 0.74, "notes": "LONG direction is catastrophic"}
-      },
-      "session_filter": {
-        "best_hours": [3, 4, 16, 2, 15, 0, 12],
-        "worst_hours": [21, 20, 5, 19, 8, 23],
-        "bad_hours_expanded": [5, 8, 19, 20, 21, 23]
-      }
-    }
+  "modification_protocol": {
+    "before_modifying": [
+      "1. Check this file for dependents",
+      "2. Run dependent gates to get baseline",
+      "3. Save baseline results"
+    ],
+    "after_modifying": [
+      "1. Re-run dependent gates",
+      "2. If metrics degrade >5% → investigate",
+      "3. Commit booster + dependent updates together"
+    ],
+    "emergency_revert": [
+      "1. Revert booster to .bak file",
+      "2. Re-run dependent gate to confirm fix",
+      "3. Investigate root cause"
+    ]
   }
 }
