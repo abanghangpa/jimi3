@@ -41,6 +41,7 @@ ALL_STRATEGIES = [
     FundingArbStrategy, WhaleWatchStrategy, VolRotationStrategy,
     MomentumV3Strategy, LiquidationCascadeStrategy,
     FailedBreakoutStrategy, JudasSweepStrategy,
+    FundingSqueezeStrategy, ForcedMovementStrategy,
 ]
 
 def create_runner(config=None) -> StrategyRunner:
