@@ -1265,24 +1265,25 @@ def get_latest_signals(gate, monitor):
         # === EXTREME LS BOOST (trade_flow + funding_arb) ===
         # Research: extreme L/S ratio + high conviction = +0.105% mean, 61% WR
         # Applied as conviction multiplier, NOT standalone signal
-        LS_BOOST_STRATEGIES = {"trade_flow", "funding_arb"}
-        LS_EXTREME_LOW = 1.5
-        LS_EXTREME_HIGH = 2.5
-        if strat_name in LS_BOOST_STRATEGIES and hasattr(gate, 'confluence') and gate.confluence:
+        LS_BOOST_CONFIG = {
+            "trade_flow":   {"low": 1.5, "high": 2.5, "boost": 1.25},
+            "funding_arb":  {"low": 1.6, "high": 2.2, "boost": 1.25},
+        }
+        if strat_name in LS_BOOST_CONFIG and hasattr(gate, 'confluence') and gate.confluence:
             try:
-                # Get LS ratio for this signal timestamp
+                ls_cfg = LS_BOOST_CONFIG[strat_name]
                 ts_15m = ts[:16].replace("T", " ").replace("-", "-")[:16]
                 ts_15m = ts_15m[:14] + str(int(ts_15m[14:16]) // 15 * 15).zfill(2) + ":00"
                 deriv_point = gate.confluence.deriv_by_ts.get(ts_15m)
                 if deriv_point:
                     ls_val = deriv_point.get("ls", 0)
-                    if ls_val > 0 and (ls_val < LS_EXTREME_LOW or ls_val > LS_EXTREME_HIGH):
-                        ls_boost = 1.5
-                        group_boost = min(group_boost * ls_boost, 2.5)  # cap total boost
+                    if ls_val > 0 and (ls_val < ls_cfg["low"] or ls_val > ls_cfg["high"]):
+                        ls_boost = ls_cfg["boost"]
+                        group_boost = min(group_boost * ls_boost, 2.5)
                         confirmed_by = list(set(confirmed_by + [f"extreme_ls({ls_val:.2f})"]))
-                        log(f"LS BOOST: {strat_name} LS={ls_val:.3f} -> {ls_boost:.1f}x (total={group_boost:.1f}x)")
+                        log(f"LS BOOST: {strat_name} LS={ls_val:.3f} -> {ls_boost:.2f}x (total={group_boost:.2f}x)")
             except Exception as e:
-                pass  # Don't let LS boost break signal processing
+                pass
 
         # Confluence check for bb_mom6 (requires extreme positioning)
         if strat_name == "bb_mom6" and hasattr(gate, 'confluence'):
