@@ -1262,6 +1262,28 @@ def get_latest_signals(gate, monitor):
                     group_boost = 1.75  # Both detectors fired — higher conviction
                     break
 
+        # === EXTREME LS BOOST (trade_flow + funding_arb) ===
+        # Research: extreme L/S ratio + high conviction = +0.105% mean, 61% WR
+        # Applied as conviction multiplier, NOT standalone signal
+        LS_BOOST_STRATEGIES = {"trade_flow", "funding_arb"}
+        LS_EXTREME_LOW = 1.5
+        LS_EXTREME_HIGH = 2.5
+        if strat_name in LS_BOOST_STRATEGIES and hasattr(gate, 'confluence') and gate.confluence:
+            try:
+                # Get LS ratio for this signal timestamp
+                ts_15m = ts[:16].replace("T", " ").replace("-", "-")[:16]
+                ts_15m = ts_15m[:14] + str(int(ts_15m[14:16]) // 15 * 15).zfill(2) + ":00"
+                deriv_point = gate.confluence.deriv_by_ts.get(ts_15m)
+                if deriv_point:
+                    ls_val = deriv_point.get("ls", 0)
+                    if ls_val > 0 and (ls_val < LS_EXTREME_LOW or ls_val > LS_EXTREME_HIGH):
+                        ls_boost = 1.5
+                        group_boost = min(group_boost * ls_boost, 2.5)  # cap total boost
+                        confirmed_by = list(set(confirmed_by + [f"extreme_ls({ls_val:.2f})"]))
+                        log(f"LS BOOST: {strat_name} LS={ls_val:.3f} -> {ls_boost:.1f}x (total={group_boost:.1f}x)")
+            except Exception as e:
+                pass  # Don't let LS boost break signal processing
+
         # Confluence check for bb_mom6 (requires extreme positioning)
         if strat_name == "bb_mom6" and hasattr(gate, 'confluence'):
             has_conf, conf_dir, conf_conv = gate.confluence.has_extreme_confluence(ts, window=4, min_conviction=0.5)
