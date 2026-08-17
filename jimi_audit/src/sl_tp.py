@@ -40,10 +40,12 @@ _SL_TP_DEFAULTS = {
 }
 
 
-def _cfg(config, key):
+def _cfg(config, key, default=None):
     if config and key in config:
         return config[key]
-    return _SL_TP_DEFAULTS.get(key)
+    if key in _SL_TP_DEFAULTS:
+        return _SL_TP_DEFAULTS.get(key)
+    return default
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -333,12 +335,10 @@ def find_strongest_liquidity(entry_price, direction, liq_levels, sr_levels=None,
     # Take top N by strength
     filtered = filtered[:max_targets]
 
-    # Sort by price: ascending for SHORT (TP1 > TP2 > TP3 in price),
-    # descending for LONG (TP1 < TP2 < TP3 in price)
-    if direction == 'SHORT':
-        filtered.sort(key=lambda x: x['price'], reverse=True)
-    else:
-        filtered.sort(key=lambda x: x['price'])
+    # Sort by STRENGTH (strongest = TP1, furthest = TP3)
+    # TP1 = strongest pool (most likely to attract price)
+    # TP3 = weakest pool (furthest target)
+    filtered.sort(key=lambda x: x['strength'], reverse=True)
 
     return filtered
 
@@ -405,7 +405,7 @@ def calc_trade_levels(entry_price, direction, atr_1h, vol_ratio,
             sl_source = 'LIQUIDITY_SWEEP_BUFFER'
     else:
         # ATR fallback
-        sl_atr_std = _cfg(cfg, 'SL_ATR_STD') * atr
+        sl_atr_std = _cfg(cfg, 'SL_ATR_STD')
         sl_min_dollar = _cfg(cfg, 'SL_MIN_DOLLAR')
         if sl_min_dollar and sl_atr_std < sl_min_dollar:
             sl_atr_std = sl_min_dollar
