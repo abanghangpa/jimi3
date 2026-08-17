@@ -362,23 +362,31 @@ def calc_trade_levels(entry_price, direction, atr_1h, vol_ratio,
     cfg = cfg or {}
     atr = float(atr_1h) if not np.isnan(atr_1h) else entry_price * 0.01
 
-    # ── SL: Try liquidity void first ──
-    void_sl = find_liquidity_void(
-        entry_price, direction, magnets, sr_levels, liq_levels, atr, cfg)
+    # ── SL: Strongest invalidation level (not nearest) ──
+    # Pick the STRONGEST liquidity level in opposite direction as SL.
+    # Nearest level is often noise; strongest represents real invalidation.
+    sl_candidates = []
 
-    if void_sl is not None:
-        sl = void_sl
-        sl_source = 'LIQUIDITY_VOID'
-        # Enforce minimum distance even for liquidity voids
-        sl_min_dollar = _cfg(cfg, 'SL_MIN_DOLLAR')
-        if sl_min_dollar:
-            sl_dist_actual = abs(sl - entry_price)
-            if sl_dist_actual < sl_min_dollar:
-                if direction == 'LONG':
-                    sl = entry_price - sl_min_dollar
-                else:
-                    sl = entry_price + sl_min_dollar
-                sl_source = 'ATR'  # overrode liquidity void
+    if liq_levels and isinstance(liq_levels, dict):
+        side = 'above' if direction == 'SHORT' else 'below'
+        for lvl in liq_levels.get(side, []):
+            p = lvl.get('price', 0)
+            swept = lvl.get('swept', False)
+            if p <= 0 or swept:
+                continue
+            dist_pct = abs(p - entry_price) / entry_price
+            # Skip too-close levels (< 0.1%) — those are noise
+            if dist_pct < 0.001:
+                continue
+            strength = lvl.get('strength', 1)
+            sl_candidates.append({'price': p, 'strength': strength, 'dist_pct': dist_pct})
+
+    if sl_candidates:
+        # Sort by strength (strongest = real invalidation)
+        sl_candidates.sort(key=lambda x: x['strength'], reverse=True)
+        best = sl_candidates[0]
+        sl = best['price']
+        sl_source = 'LIQUIDITY_STRENGTH'
     else:
         # ATR fallback
         sl_atr_std = _cfg(cfg, 'SL_ATR_STD') * atr
