@@ -66,6 +66,15 @@ def calc_phase0(df_1d):
     return (rsi_score * 0.6 + vol_score * 0.4).clip(0, 1)
 
 
+def calc_phase0_1h(df_1h):
+    rsi = calc_rsi(df_1h['Close'], 14)
+    vol_ma20 = df_1h['Volume'].rolling(20).mean()
+    vol_ratio = df_1h['Volume'] / vol_ma20.replace(0, np.nan)
+    rsi_score = (rsi - 50).abs() / 50
+    vol_score = vol_ratio.clip(0, 3) / 3
+    return (rsi_score * 0.6 + vol_score * 0.4).clip(0, 1)
+
+
 def calc_trend_state(df_1d):
     """Compute daily trend state using multiple confirmations."""
     close = df_1d['Close']

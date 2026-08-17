@@ -22,7 +22,7 @@ from src.config import CONFIG
 from src.utils.data_handler import load_data, resample_ohlcv
 from src.utils.indicators import (
     calc_ema, calc_macd, calc_rsi, calc_atr, calc_vwap, calc_vol_ratio,
-    calc_swing_bias, calc_phase0, calc_trend_state,
+    calc_swing_bias, calc_phase0, calc_phase0_1h, calc_trend_state,
 )
 from src.modules.m1_macd_v2 import score_m1_v2 as score_m1
 from src.modules.m2_ema import score_m2
@@ -79,7 +79,7 @@ def compute_all_indicators(df_15m, cfg):
     df_2h['cvd_zl_state'], df_2h['cvd_zl_cross_bar'], df_2h['cvd_zl_cross_dir'] = detect_cvd_zero_cross(df_2h)
 
     df_1d['swing_bias'] = calc_swing_bias(df_1d)
-    df_1d['phase0'] = calc_phase0(df_1d)
+    df_1h['phase0'] = calc_phase0_1h(df_1h)
     df_1d['trend'], df_1d['trend_score'] = calc_trend_state(df_1d)
 
     df_4h['macd_line'], df_4h['macd_signal'], df_4h['macd_hist'] = calc_macd(
@@ -94,7 +94,7 @@ def scan_bar(df_15m, df_1h, df_2h, df_4h, df_1d, idx, idx_1h, idx_2h, idx_4h, id
 
     atr_1h = df_1h['atr'].iloc[idx_1h] if idx_1h >= 0 else np.nan
     swing_bias = df_1d['swing_bias'].iloc[idx_1d] if idx_1d >= 0 else None
-    phase0_val = df_1d['phase0'].iloc[idx_1d] if idx_1d >= 0 else None
+    phase0_val = df_1h['phase0'].iloc[idx_1h] if idx_1h >= 0 else None
     trend_dir = df_1d['trend'].iloc[idx_1d] if idx_1d >= 0 else 'NEUTRAL'
 
     # M9
