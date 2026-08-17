@@ -477,6 +477,47 @@ def calc_trade_levels(entry_price, direction, atr_1h, vol_ratio,
     }
 
 
+
+
+def calc_tp1_confirmation(entry_price, tp1, tp2, tp3, sl, direction, cfg=None):
+    """TP1-as-confirmation: TP1 is a gate, not an exit.
+
+    Logic:
+    - If price breaks TP1 → momentum confirmed → hold for TP2/TP3
+    - If price rejects at TP1 → trade weak → exit at TP1
+    - SL moves to breakeven after TP1 break
+
+    Returns dict with:
+    - 'mode': 'CONFIRMATION' (TP1 is gate) or 'STANDARD' (TP1 is exit)
+    - 'tp1': confirmation level (not an exit)
+    - 'tp2': first real target
+    - 'tp3': second real target
+    - 'sl_after_confirm': SL after TP1 breaks (breakeven)
+    - 'exit_on_reject': price to exit if TP1 rejects
+    """
+    cfg = cfg or {}
+
+    # TP1 confirmation mode
+    if direction == 'SHORT':
+        # For SHORT: TP1 is below entry. Break = price goes below TP1
+        sl_after_confirm = entry_price  # breakeven
+        exit_on_reject = tp1  # exit at TP1 if rejected
+    else:
+        # For LONG: TP1 is above entry. Break = price goes above TP1
+        sl_after_confirm = entry_price  # breakeven
+        exit_on_reject = tp1  # exit at TP1 if rejected
+
+    return {
+        'mode': 'CONFIRMATION',
+        'tp1': tp1,           # confirmation level (not exit)
+        'tp2': tp2,           # first real target
+        'tp3': tp3,           # second real target
+        'sl': sl,             # initial SL
+        'sl_after_confirm': sl_after_confirm,  # SL after TP1 breaks
+        'exit_on_reject': exit_on_reject,       # exit if TP1 rejects
+        'direction': direction,
+    }
+
 def check_sweep_gate(m14_status, m14_score, cfg=None):
     """Check if M14 sweep gate is enabled and passed.
 

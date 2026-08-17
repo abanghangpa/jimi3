@@ -110,7 +110,7 @@ from src.modules.cascade_us_activity import format_us_activity_cascade
 from src.modules.macro_lifecycle import evaluate_macro_lifecycle, format_lifecycle
 from src.modules.macro_calendar import get_macro_calendar, format_macro_calendar, format_macro_calendar_compact, calendar_to_dict
 from src.modules.macro_event_filter import MacroEventFilter, get_phase0_from_df, get_trend_30d
-from src.sl_tp import calc_trade_levels, check_sweep_gate, calc_limit_entry
+from src.sl_tp import calc_trade_levels, calc_tp1_confirmation, check_sweep_gate, calc_limit_entry
 from src.signal_eval import evaluate_signal, format_signal_eval
 from src.modules.conflict_resolver import detect_conflict, format_conflict, conflict_to_dict
 from src.modules.power_of_3 import detect_phase, format_phase, phase_to_dict
@@ -3404,6 +3404,14 @@ def scan_signal(df_15m, df_1h, df_2h, df_4h, df_1d, config=None,
             levels['sl_pct'] = range_sl['sl_pct']
             levels['sl_source'] = range_sl['sl_source']
             result['range_sl_override'] = True
+
+    # ── TP1 Confirmation Mode ──
+    # TP1 is a gate: break = momentum confirmed, hold for TP2/TP3
+    # If TP1 rejects, exit early
+    tp1_confirm = calc_tp1_confirmation(
+        effective_entry, levels['tp1'], levels['tp2'], levels['tp3'],
+        levels['sl'], direction, cfg=cfg)
+    result['tp1_confirmation'] = tp1_confirm
 
     # ── Build invalidation conditions ──
     invalidation = []
