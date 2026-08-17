@@ -382,11 +382,27 @@ def calc_trade_levels(entry_price, direction, atr_1h, vol_ratio,
             sl_candidates.append({'price': p, 'strength': strength, 'dist_pct': dist_pct})
 
     if sl_candidates:
-        # Sort by strength (strongest = real invalidation)
+        # Sort by strength to find the strongest cluster
         sl_candidates.sort(key=lambda x: x['strength'], reverse=True)
-        best = sl_candidates[0]
-        sl = best['price']
-        sl_source = 'LIQUIDITY_STRENGTH'
+        strongest = sl_candidates[0]
+
+        # SL = weak level AFTER the strongest (survives the sweep)
+        # Price will sweep the strongest cluster (triggering stops),
+        # then reverse. SL beyond that cluster avoids the sweep.
+        beyond = [c for c in sl_candidates if c['dist_pct'] > strongest['dist_pct']]
+        if beyond:
+            # Pick the weakest level beyond the strongest cluster
+            beyond.sort(key=lambda x: x['strength'])
+            sl = beyond[0]['price']
+            sl_source = 'LIQUIDITY_BEYOND_SWEEP'
+        else:
+            # No level beyond strongest — add buffer above strongest
+            buffer_pct = 0.003  # 0.3% buffer
+            if direction == 'SHORT':
+                sl = strongest['price'] * (1 + buffer_pct)
+            else:
+                sl = strongest['price'] * (1 - buffer_pct)
+            sl_source = 'LIQUIDITY_SWEEP_BUFFER'
     else:
         # ATR fallback
         sl_atr_std = _cfg(cfg, 'SL_ATR_STD') * atr
