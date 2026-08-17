@@ -208,8 +208,8 @@ class MacroEventFilter:
     def __init__(self, config=None):
         cfg = config or {}
         self.enabled = cfg.get('MACRO_EVENT_FILTER_ENABLED', True)
-        self.phase0_block_threshold = cfg.get('PHASE0_MIN_BLOCK', 0.15)
-        self.phase0_caution_threshold = cfg.get('PHASE0_CAUTION', 0.30)
+        self.phase0_block_threshold = cfg.get('PHASE0_MAX_BLOCK', 0.30)  # 1h Phase0 > 0.5 = 59.4% WR
+        self.phase0_caution_threshold = cfg.get('PHASE0_CAUTION', 0.15)  # Match block threshold
         self.cascade_size_mult = cfg.get('MACRO_CASCADE_SIZE_MULT', 0.70)
         self.lookback_hours = cfg.get('MACRO_LOOKBACK_HOURS', 4)
         self.lookahead_hours = cfg.get('MACRO_LOOKAHEAD_HOURS', 2)
@@ -241,14 +241,14 @@ class MacroEventFilter:
 
         # ── 1. Phase0 filter (backtested: DEATH_ZONE = 43% WR) ──
         if phase0 is not None:
-            if phase0 < self.phase0_block_threshold:
+            if phase0 > self.phase0_block_threshold:
                 result['blocked'] = True
-                result['reason'] = f'Phase0={phase0:.3f} DEATH_ZONE (<{self.phase0_block_threshold}) — 43% WR, avoid'
-                result['regime_notes'].append(f'Phase0 DEATH_ZONE: {phase0:.3f}')
+                result['reason'] = f'Phase0_1h={phase0:.3f} CROWDED (>{self.phase0_block_threshold}) — high positioning noise, reduced edge'
+                result['regime_notes'].append(f'Phase0 CROWDED_ZONE: {phase0:.3f}')
                 return result
-            elif phase0 < self.phase0_caution_threshold:
+            elif phase0 > self.phase0_caution_threshold:
                 result['size_mult'] *= 0.70
-                result['regime_notes'].append(f'Phase0 LOW: {phase0:.3f} — reduced size')
+                result['regime_notes'].append(f'Phase0 ACTIVE: {phase0:.3f} — reduced size')
 
         # ── 2. 30-day trend filter (backtested: SLIGHT_DOWN = best, STRONG_DOWN = avoid) ──
         if trend_30d is not None:

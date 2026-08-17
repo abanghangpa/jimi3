@@ -75,6 +75,75 @@ def calc_phase0_1h(df_1h):
     return (rsi_score * 0.6 + vol_score * 0.4).clip(0, 1)
 
 
+
+def calc_phase0_crypto(signals):
+    """Crypto-native Phase0: derivatives positioning conviction score (INVERTED).
+
+    LOW Phase0 = clean market (trade freely).
+    HIGH Phase0 = crowded/noisy market (reduce size or skip).
+
+    Args:
+        signals: dict with derivatives data (oi_roc_1h, funding_rate, ls_ratio,
+                 positioning, whale_signal, futures_flow, oi_price_div)
+
+    Returns:
+        float 0-1. LOWER = better trade environment.
+    """
+    if not signals or (isinstance(signals, dict) and 'error' in signals):
+        return 0.0
+
+    score = 0.0
+    active = 0
+
+    # 1. OI momentum (25%) - new money entering = more crowded
+    oi_roc = abs(signals.get('oi_roc_1h', 0) or 0)
+    if oi_roc > 0:
+        score += min(oi_roc / 3.0, 1.0) * 0.25
+        active += 1
+
+    # 2. Leverage / funding (20%) - high leverage = fragile
+    fr = abs(signals.get('funding_rate', 0) or 0)
+    if fr > 0:
+        score += min(fr / 0.001, 1.0) * 0.20
+        active += 1
+
+    # 3. Crowding / L/S ratio (20%)
+    positioning = signals.get('positioning', 'NEUTRAL')
+    if positioning in ('CROWDED_LONG', 'CROWDED_SHORT'):
+        score += 0.20
+        active += 1
+    else:
+        ls_z = abs(signals.get('ls_zscore', 0) or 0)
+        if ls_z > 1.0:
+            score += min(ls_z / 2.0, 1.0) * 0.10
+            active += 1
+
+    # 4. Smart money alignment (15%) - whale activity = crowded
+    whale = signals.get('whale_signal', 'NEUTRAL')
+    if whale in ('WHALE_BULLISH', 'WHALE_BEARISH'):
+        score += 0.15
+        active += 1
+
+    # 5. Aggressive flow / taker (10%)
+    flow = signals.get('futures_flow', 'NEUTRAL')
+    if flow in ('BUYERS_DOMINANT', 'SELLERS_DOMINANT'):
+        score += 0.10
+        active += 1
+
+    # 6. OI-price divergence (10%) - unusual positioning
+    oi_div = signals.get('oi_price_div', 'NONE')
+    if oi_div in ('BULLISH', 'BEARISH'):
+        score += 0.10
+        active += 1
+
+    # Bonus: multiple signals = compounding crowding
+    if active >= 4:
+        score *= 1.15
+    elif active >= 3:
+        score *= 1.08
+
+    return min(score, 1.0)
+
 def calc_trend_state(df_1d):
     """Compute daily trend state using multiple confirmations."""
     close = df_1d['Close']

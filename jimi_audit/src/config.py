@@ -686,7 +686,7 @@ _DEFAULTS = {
     "M14_ENTRY_GATE": False,
     "SWEEP_PROXIMITY_PCT": 0.001,   # 0.1% near-miss tolerance for swept detection
     # Forensic recommendations (P0-P2)
-    "PHASE0_MIN_BLOCK": 0.20,
+    "PHASE0_MAX_BLOCK": 0.30,
     "M5_REGIME_GATE_ENABLED": True,
     # M18 Squeeze Detector v5
     "M18_ENABLED": True,

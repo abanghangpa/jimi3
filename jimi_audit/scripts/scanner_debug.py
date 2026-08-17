@@ -26,7 +26,7 @@ from src.config import CONFIG
 from src.utils.data_handler import fetch_recent, fetch_btc_15m, load_daily_from_csv
 from src.utils.indicators import (
     calc_ema, calc_macd, calc_rsi, calc_atr, calc_vwap, calc_vol_ratio,
-    calc_swing_bias, calc_phase0, calc_phase0_1h, calc_trend_state, compute_btc_correlation,
+    calc_swing_bias, calc_phase0, calc_phase0_1h, calc_phase0_crypto, calc_trend_state, compute_btc_correlation,
 )
 from src.modules.m1_macd_v2 import score_m1_v2 as score_m1
 from src.modules.m2_ema import score_m2
@@ -3439,9 +3439,9 @@ def scan_signal(df_15m, df_1h, df_2h, df_4h, df_1d, config=None,
         invalidation.append(f'Historical conflict: similar setups reverse {conflict["historical"]["windows"].get("24h", {}).get("reversal_rate", 0):.0f}% at 24h')
 
     # Phase0 death zone
-    phase0_min = cfg.get('PHASE0_MIN_BLOCK', 0.10)
-    if phase0_val is not None and phase0_val < phase0_min:
-        invalidation.append(f'Phase0={phase0_val:.3f} (death zone <{phase0_min}) — weak macro context')
+    phase0_max = cfg.get('PHASE0_MAX_BLOCK', 0.30)
+    if phase0_val is not None and phase0_val > phase0_max:
+        invalidation.append(f'Phase0={phase0_val:.3f} (crowded zone >{phase0_max}) — high positioning noise, reduced edge')
 
     # M2 EMA failure
     if m2_status == 'FAIL':

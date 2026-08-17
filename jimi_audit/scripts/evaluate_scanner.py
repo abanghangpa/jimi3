@@ -22,7 +22,7 @@ from src.config import CONFIG
 from src.utils.data_handler import load_data, resample_ohlcv
 from src.utils.indicators import (
     calc_ema, calc_macd, calc_rsi, calc_atr, calc_vwap, calc_vol_ratio,
-    calc_swing_bias, calc_phase0, calc_phase0_1h, calc_trend_state,
+    calc_swing_bias, calc_phase0, calc_phase0_1h, calc_phase0_crypto, calc_trend_state,
 )
 from src.modules.m1_macd_v2 import score_m1_v2 as score_m1
 from src.modules.m2_ema import score_m2
