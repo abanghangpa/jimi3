@@ -239,6 +239,109 @@ def find_next_unswept(price, direction, magnets, liq_levels, exclude_below=None,
 # MAIN FUNCTION: CALCULATE ALL LEVELS
 # ═══════════════════════════════════════════════════════════════
 
+
+def find_strongest_liquidity(entry_price, direction, liq_levels, sr_levels=None,
+                              min_dist_pct=0.003, max_targets=3, cfg=None):
+    """Find TP targets based on liquidity STRENGTH, not distance.
+
+    Picks the strongest unswept liquidity pools as TP targets.
+    Much better than distance-based for capturing real moves.
+
+    Args:
+        entry_price: entry price
+        direction: 'LONG' or 'SHORT'
+        liq_levels: dict with 'above'/'below' lists
+        sr_levels: S/R levels for additional targets
+        min_dist_pct: minimum distance from entry (0.3% default)
+        max_targets: max TP targets to return
+        cfg: config dict
+
+    Returns:
+        list of dicts: [{'price': float, 'strength': float, 'source': str, 'dist_pct': float}, ...]
+        sorted by price (ascending for SHORT, descending for LONG)
+    """
+    cfg = cfg or {}
+    candidates = []
+
+    # From liquidation levels (primary source)
+    if liq_levels and isinstance(liq_levels, dict):
+        side = 'below' if direction == 'SHORT' else 'above'
+        for lvl in liq_levels.get(side, []):
+            p = lvl.get('price', 0)
+            swept = lvl.get('swept', False)
+            if p <= 0 or swept:
+                continue
+            dist_pct = abs(p - entry_price) / entry_price
+            if dist_pct < min_dist_pct:
+                continue
+            strength = lvl.get('strength', 1)
+            cascade = lvl.get('cascade_risk', 'LOW')
+            # Boost cascade risk levels
+            if cascade == 'HIGH':
+                strength *= 1.3
+            elif cascade == 'MED':
+                strength *= 1.1
+            candidates.append({
+                'price': p, 'strength': strength,
+                'source': lvl.get('type', 'LIQ'),
+                'dist_pct': dist_pct, 'cascade': cascade
+            })
+
+    # From S/R levels (secondary source — lower weight)
+    if sr_levels:
+        for sr in sr_levels:
+            if len(sr) < 3:
+                continue
+            p, strength, sr_type = sr[0], sr[1], sr[2]
+            if sr_type == 'SUPPORT' and direction == 'SHORT':
+                dist_pct = abs(p - entry_price) / entry_price
+                if dist_pct >= min_dist_pct:
+                    candidates.append({
+                        'price': p, 'strength': strength * 0.5,  # S/R weighted lower
+                        'source': 'SR_SUPPORT',
+                        'dist_pct': dist_pct, 'cascade': 'LOW'
+                    })
+            elif sr_type == 'RESISTANCE' and direction == 'LONG':
+                dist_pct = abs(p - entry_price) / entry_price
+                if dist_pct >= min_dist_pct:
+                    candidates.append({
+                        'price': p, 'strength': strength * 0.5,
+                        'source': 'SR_RESISTANCE',
+                        'dist_pct': dist_pct, 'cascade': 'LOW'
+                    })
+
+    if not candidates:
+        return []
+
+    # Sort by strength (strongest first)
+    candidates.sort(key=lambda x: x['strength'], reverse=True)
+
+    # Pick top N, then sort by price for proper TP ordering
+    selected = candidates[:max_targets * 2]  # take extra, filter later
+
+    # Remove duplicates (within 0.2% of each other)
+    filtered = []
+    for c in selected:
+        too_close = False
+        for f in filtered:
+            if abs(c['price'] - f['price']) / entry_price < 0.002:
+                too_close = True
+                break
+        if not too_close:
+            filtered.append(c)
+
+    # Take top N by strength
+    filtered = filtered[:max_targets]
+
+    # Sort by price: ascending for SHORT (TP1 > TP2 > TP3 in price),
+    # descending for LONG (TP1 < TP2 < TP3 in price)
+    if direction == 'SHORT':
+        filtered.sort(key=lambda x: x['price'], reverse=True)
+    else:
+        filtered.sort(key=lambda x: x['price'])
+
+    return filtered
+
 def calc_trade_levels(entry_price, direction, atr_1h, vol_ratio,
                       magnets, sr_levels, liq_levels, cfg=None):
     """Calculate SL/TP using liquidity-aware logic with ATR fallback.
@@ -290,28 +393,18 @@ def calc_trade_levels(entry_price, direction, atr_1h, vol_ratio,
             sl = entry_price + sl_dist
         sl_source = 'ATR'
 
-    # ── TP1: Nearest unswept pool ──
-    tp1_target = None
-    if _cfg(cfg, 'TP1_USE_MAGNET'):
-        tp1_target = find_next_unswept(
-            entry_price, direction, magnets, liq_levels, cfg=cfg)
+    # ── TP: Liquidity-strength-based targets ──
+    # Pick TPs by strongest liquidity pools, not nearest distance
+    liq_targets = find_strongest_liquidity(
+        entry_price, direction, liq_levels, sr_levels,
+        min_dist_pct=_cfg(cfg, 'TP1_MAGNET_MIN_DIST_PCT', 0.003),
+        max_targets=3, cfg=cfg)
 
-    if tp1_target is not None:
-        tp1 = tp1_target
-        tp1_source = 'UNSWEPT_POOL'
-        # If pool is closer than minimum TP, keep minimum TP instead
-        tp1_min_dollar = _cfg(cfg, 'TP1_MIN_DOLLAR')
-        if tp1_min_dollar:
-            tp1_dist_actual = abs(tp1 - entry_price)
-            if tp1_dist_actual < tp1_min_dollar:
-                # Pool is too close — use minimum TP
-                if direction == 'LONG':
-                    tp1 = entry_price + tp1_min_dollar
-                else:
-                    tp1 = entry_price - tp1_min_dollar
-                tp1_source = 'ATR'
-            # else: pool is beyond minimum — use pool as TP
+    if len(liq_targets) >= 1:
+        tp1 = liq_targets[0]['price']
+        tp1_source = liq_targets[0]['source']
     else:
+        # ATR fallback
         tp1_dist = _cfg(cfg, 'TP1_ATR') * atr
         tp1_min_dollar = _cfg(cfg, 'TP1_MIN_DOLLAR')
         if tp1_min_dollar and tp1_dist < tp1_min_dollar:
@@ -322,22 +415,9 @@ def calc_trade_levels(entry_price, direction, atr_1h, vol_ratio,
             tp1 = entry_price - tp1_dist
         tp1_source = 'ATR'
 
-    # ── TP2: Next unswept pool beyond TP1, or ATR ──
-    tp2_target = find_next_unswept(
-        entry_price, direction, magnets, liq_levels,
-        exclude_below=tp1 if direction == 'LONG' else None,
-        cfg=cfg)
-
-    # For SHORT, exclude_above
-    if direction == 'SHORT' and tp2_target is None:
-        tp2_target = find_next_unswept(
-            entry_price, direction, magnets, liq_levels,
-            exclude_below=tp1,  # tp1 is below for SHORT
-            cfg=cfg)
-
-    if tp2_target is not None and abs(tp2_target - entry_price) > abs(tp1 - entry_price):
-        tp2 = tp2_target
-        tp2_source = 'UNSWEPT_POOL'
+    if len(liq_targets) >= 2:
+        tp2 = liq_targets[1]['price']
+        tp2_source = liq_targets[1]['source']
     else:
         tp2_mult = _cfg(cfg, 'TP2_ATR')
         tp2_dist = tp2_mult * atr
@@ -347,21 +427,9 @@ def calc_trade_levels(entry_price, direction, atr_1h, vol_ratio,
             tp2 = entry_price - tp2_dist
         tp2_source = 'ATR'
 
-    # ── TP3: Furthest pool or ATR ──
-    tp3_target = find_next_unswept(
-        entry_price, direction, magnets, liq_levels,
-        exclude_below=tp2 if direction == 'LONG' else None,
-        cfg=cfg)
-
-    if direction == 'SHORT' and tp3_target is None:
-        tp3_target = find_next_unswept(
-            entry_price, direction, magnets, liq_levels,
-            exclude_below=tp2,
-            cfg=cfg)
-
-    if tp3_target is not None and abs(tp3_target - entry_price) > abs(tp2 - entry_price):
-        tp3 = tp3_target
-        tp3_source = 'UNSWEPT_POOL'
+    if len(liq_targets) >= 3:
+        tp3 = liq_targets[2]['price']
+        tp3_source = liq_targets[2]['source']
     else:
         tp3_mult = _cfg(cfg, 'TP3_ATR')
         tp3_dist = tp3_mult * atr
