@@ -35,3 +35,4 @@ jimi_audit/EVAL.md.save
 # Runtime scanner output
 jimi_audit/full_report.json
 jimi_scan_result.json
+depth_env/
