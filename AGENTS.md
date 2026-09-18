@@ -416,6 +416,44 @@ Do not hide behind the blocker.
 
 ---
 
+## 19. Remote Agent Protocol
+
+When operating on this VPS via SSH (as a remote/different OpenClaw agent), you MUST follow this protocol in addition to all other rules.
+
+### On Arrival (before starting work)
+1. Read `THINKING.md` — follow the analytical framework
+2. Read `skills/` — check for relevant skills
+3. Read `memory/YYYY-MM-DD.md` (today + yesterday) — get recent context
+4. Read `MEMORY.md` — get durable knowledge
+
+### During Work
+- Follow all procedures in AGENTS.md, SOUL.md, THINKING.md
+- Use skills from `skills/` when applicable
+- Log failures to `memory/lessons.md` immediately
+- Log successes to `memory/successes.md`
+- Auto-create skills after complex tasks (see §11 /learn auto-creation rule)
+
+### On Completion (MANDATORY — do not skip)
+Before disconnecting, you MUST:
+
+1. **Write daily log** to `memory/YYYY-MM-DD.md`:
+   - What was done
+   - Decisions made and why
+   - Discoveries, patterns, lessons
+   - Failures, root causes, fixes
+   - Unfinished work, next steps
+
+2. **Commit code changes** with clear messages
+
+3. **Update MEMORY.md** if you learned something durable
+
+4. **Create/update skills** if you developed a reusable procedure
+
+### Why This Matters
+The primary agent uses `memory_search` to recall past work. If you don't write your daily log, your work is invisible to future sessions. The daily log is the handover layer — write it as if the next agent needs to continue your work without asking you.
+
+---
+
 ## 20. Daily Logging
 
 After meaningful work, update the daily memory log.
