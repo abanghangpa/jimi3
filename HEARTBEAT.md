@@ -1,19 +1,12 @@
-# HEARTBEAT.md - Write to Daily Log
+# HEARTBEAT.md
 
-## MANDATORY: Write to memory/YYYY-MM-DD.md EVERY heartbeat
+# STAMPEDE Alert Forwarding
+# Check for pending STAMPEDE alerts and forward to WhatsApp
+# The signal bot writes alerts to pending_whatsapp_alerts.txt
+# This heartbeat picks them up and sends via WhatsApp
 
-Every heartbeat cycle, append to today's memory file. No exceptions.
-
-### Steps:
-
-1. Append to memory/YYYY-MM-DD.md (today UTC) — BOTH local AND VPS.
-
-2. Mirror to VPS via paramiko (same content as local).
-
-### Rules:
-- Every heartbeat = every write. No skipping.
-- Write to BOTH local and VPS memory files.
-- Keep under 5 lines.
-- Nothing happened? Write All quiet. Still write.
-- Errors? Write them.
-
+## Check STAMPEDE Alerts
+- Read `/root/.openclaw/workspace/stampede/pending_whatsapp_alerts.txt`
+- If it has content, send each alert to WhatsApp +601112827947 using the message tool
+- After sending, clear the file (write empty string)
+- If file is empty or doesn't exist, skip silently
